@@ -415,8 +415,16 @@
     padding-left: 32px;
     padding-right: 32px;
   }
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 60px;
+    min-height: auto;
+  }
   .projectCardFeatured {
     grid-template-columns: 1fr;
+  }
+  .projectCardInner {
+    padding: 36px 32px;
   }
   .projectImageArea {
     min-height: 260px;
@@ -428,6 +436,9 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .aboutRight {
+    padding-top: 0;
+  }
   .aboutStats {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -435,5 +446,54 @@
     flex-direction: column;
     gap: 20px;
     text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero, .work, .footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .about {
+    padding: 60px 20px;
+  }
+  .hero {
+    padding-top: 100px;
+    padding-bottom: 48px;
+  }
+  .heroSub {
+    font-size: 16px;
+  }
+  .work {
+    padding-top: 48px;
+    padding-bottom: 64px;
+  }
+  .projectCardInner {
+    padding: 28px 20px;
+  }
+  .projectTitle {
+    font-size: 24px;
+  }
+  .projectTitleMuted {
+    font-size: 20px;
+  }
+  .projectImageArea {
+    min-height: 200px;
+  }
+  .aboutStats {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .statNum {
+    font-size: 26px;
+  }
+  .footerLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+  .footer {
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 }

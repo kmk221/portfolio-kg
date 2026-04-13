@@ -310,6 +310,51 @@ img {
   background-size: 200px 200px;
 }
 
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-text {
+  max-width: 900px;
+  flex-shrink: 1;
+}
+
+.hero-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.7s forwards;
+}
+
+.hero-pill {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hero-pill--blue {
+  background: rgba(144,161,185,0.12);
+  border: 1px solid rgba(144,161,185,0.25);
+  color: var(--deep-blue);
+}
+
+.hero-pill--warm {
+  background: rgba(177,124,93,0.08);
+  border: 1px solid rgba(177,124,93,0.2);
+  color: var(--terracotta);
+}
+
 .hero-eyebrow {
   font-size: 13px;
   font-weight: 600;
@@ -1727,18 +1772,168 @@ img {
   50% { opacity: 0.2; transform: scale(0.7); }
 }
 
-/* Responsive concept card layouts */
-@media (max-width: 960px) {
-  .concept-card-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .concept-card-grid > *:first-child {
-    aspect-ratio: 16/9;
-  }
+/* ── Rules Case Study Responsive Helpers ── */
+.rules-problem-cards > div {
+  flex-direction: row;
 }
 
-@media (max-width: 700px) {
-  .business-impact-grid {
-    grid-template-columns: 1fr !important;
+/* ── Case study hero screen illustrations ── */
+.cs-hero-screens { overflow-x: auto; }
+.cs-hero-screens > div { flex-shrink: 0; }
+
+/* Responsive section padding utility */
+.cs-section-pad { padding: var(--section-padding) var(--side-padding); }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════ */
+
+/* ── Tablet / Small Desktop (≤960px) ── */
+@media (max-width: 960px) {
+  :root {
+    --side-padding: 48px;
+    --section-padding: 80px;
   }
+
+  /* Hero */
+  .home-hero { padding: 120px 40px 80px; }
+  .hero-content { flex-direction: column; align-items: flex-start; }
+  .hero-pills { flex-direction: row; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+  .hero-pill { font-size: 12px; padding: 6px 14px; }
+
+  /* Work section */
+  .work-section { padding: 60px 40px 80px; }
+  .project-card { grid-template-columns: 1fr; }
+  .project-card-image { min-height: 280px; }
+  .project-card-content { padding: 40px 36px; }
+
+  /* About */
+  .about-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 40px; }
+
+  /* Footer */
+  .footer { padding: 48px 40px; }
+
+  /* Case study grids */
+  .concept-card-grid { grid-template-columns: 1fr !important; }
+  .concept-card-grid > *:first-child { aspect-ratio: 16/9; }
+  .details-grid { grid-template-columns: 1fr; }
+  .details-col { border-right: none; border-bottom: 1px solid rgba(144, 161, 185, 0.15); }
+  .details-col:last-child { border-bottom: none; }
+  .concept-row { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .process-grid::before { display: none; }
+  .outcome-grid { grid-template-columns: 1fr 1fr; }
+  .ds-grid { grid-template-columns: 1fr 1fr; }
+  .insight-grid { grid-template-columns: 1fr 1fr; }
+
+  /* App.jsx inline layout overrides */
+  .beyond-grid { grid-template-columns: 1fr !important; }
+  .glass-card-pair { grid-template-columns: 1fr 1fr !important; }
+
+  /* Case study headings */
+  .cs-hero { padding: 120px var(--side-padding) 0; }
+  .cs-hero-image { height: 400px; }
+  .cs-tldr { padding: var(--section-padding) var(--side-padding); }
+  .cs-tldr-inner { min-height: auto; }
+  .cs-tldr-heading { font-size: 56px; }
+  .cs-tldr-text { font-size: 20px; }
+  .cs-framing { padding: var(--section-padding) var(--side-padding); }
+  .cs-content { padding: var(--section-padding) var(--side-padding); }
+  .cs-h2 { font-size: 36px; }
+  .cs-h3 { font-size: 24px; }
+  .cs-meta-bar { padding: 32px; flex-wrap: wrap; gap: 24px; }
+  .stat-number { font-size: 36px; }
+  .impact-number { font-size: 32px; }
+  .finding-callout { padding: 28px 32px; }
+  .quote-block { padding: 20px 24px; }
+
+  /* Hero screen mockups scale down */
+  .cs-hero-screens { gap: 20px; transform: scale(0.85); transform-origin: center bottom; }
+
+  /* Rules case study — problem cards stack */
+  .rules-problem-cards > div { flex-direction: column !important; min-height: auto !important; }
+  .rules-problem-cards > div > div:first-child { width: 100% !important; padding: 32px !important; }
+  .rules-problem-cards > div > div:last-child { padding: 28px 32px !important; }
+
+  /* Rules case study — grids become responsive */
+  .rules-cs-page [style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+
+/* ── Mobile (≤700px) ── */
+@media (max-width: 700px) {
+  :root {
+    --side-padding: 20px;
+    --section-padding: 60px;
+  }
+
+  /* Hero */
+  .home-hero { padding: 100px 20px 60px; }
+  .hero-pills { margin-top: 32px; }
+  .hero-pill { font-size: 11px; padding: 6px 12px; }
+  .hero-name { letter-spacing: -1.5px; }
+
+  /* Work section */
+  .work-section { padding: 48px 20px 64px; }
+  .project-card-image { min-height: 220px; }
+  .project-card-content { padding: 28px 24px; }
+  .project-title { font-size: 22px; }
+  .project-meta { flex-wrap: wrap; gap: 16px; }
+
+  /* About */
+  .about-section { padding: 60px 20px; gap: 32px; }
+  .about-heading { font-size: 28px; }
+  .skills-grid { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer { padding: 32px 20px; flex-direction: column; gap: 20px; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+
+  /* All case study grids → single column */
+  .business-impact-grid { grid-template-columns: 1fr !important; }
+  .stats-row { grid-template-columns: 1fr; }
+  .stat-item { padding: 24px 20px; }
+  .stat-number { font-size: 32px; }
+  .issue-grid { grid-template-columns: 1fr; }
+  .reflection-grid { grid-template-columns: 1fr; }
+  .next-steps-grid { grid-template-columns: 1fr; }
+  .outcome-grid { grid-template-columns: 1fr; }
+  .ds-grid { grid-template-columns: 1fr; }
+  .insight-grid { grid-template-columns: 1fr; }
+  .impact-stats { grid-template-columns: 1fr; }
+  .impact-stat { padding: 24px 20px; }
+  .impact-number { font-size: 28px; }
+  .audit-grid { grid-template-columns: 1fr; }
+  .app-grid { grid-template-columns: 1fr; }
+  .principle-row { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr; gap: 24px; }
+
+  /* Case study typography & spacing */
+  .cs-hero { padding: 100px var(--side-padding) 0; }
+  .cs-hero-title { font-size: 26px; }
+  .cs-hero-subtitle { font-size: 16px; margin-bottom: 32px; }
+  .cs-hero-image { height: 260px; }
+  .cs-tldr-heading { font-size: 40px; }
+  .cs-tldr-text { font-size: 17px; }
+  .cs-h2 { font-size: 28px; margin-bottom: 32px; }
+  .cs-h3 { font-size: 20px; }
+  .cs-body { font-size: 16px; }
+  .cs-section-heading { font-size: 22px; }
+  .cs-meta-bar { flex-direction: column; padding: 24px; gap: 20px; align-items: flex-start; }
+  .finding-callout { padding: 24px; }
+  .finding-callout-text { font-size: 16px; }
+  .quote-text { font-size: 16px; }
+  .quote-block { padding: 16px 20px; }
+
+  /* Journey table scroll on mobile */
+  .journey-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Section label */
+  .section-label { margin-bottom: 32px; }
+
+  /* Hero screen mockups on mobile */
+  .cs-hero-screens { gap: 16px; transform: scale(0.55); transform-origin: center bottom; }
+
+  /* Rules case study — tighter padding on problem cards */
+  .rules-problem-cards > div > div:first-child { padding: 20px !important; }
+  .rules-problem-cards > div > div:last-child { padding: 20px !important; }
 }

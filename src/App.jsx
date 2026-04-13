@@ -35,35 +35,28 @@ export default function App() {
 
       {/* Hero */}
       <section className="home-hero">
-        <div style={{ maxWidth: 900 }}>
-          <p className="hero-eyebrow">UX Designer · Product Thinker</p>
-          <h1 className="hero-name">Kristin Garza<span>.</span></h1>
-          <p className="hero-title">
-            I design for clarity in complex systems — turning data-dense workflows into intuitive,
-            high-impact experiences for enterprise users.
-          </p>
-          <div className="hero-actions">
-            <a href="#work" className="btn-primary">
-              View Work <span style={{ fontSize: 18, lineHeight: 1 }}>↓</span>
-            </a>
-            <a href="mailto:kmkerney221@gmail.com" className="btn-secondary">Get in Touch</a>
+        <div className="hero-content">
+          <div className="hero-text">
+            <p className="hero-eyebrow">UX Designer · Product Thinker</p>
+            <h1 className="hero-name">Kristin Garza<span>.</span></h1>
+            <p className="hero-title">
+              I design for clarity in complex systems — turning data-dense workflows into intuitive,
+              high-impact experiences for enterprise users.
+            </p>
+            <div className="hero-actions">
+              <a href="#work" className="btn-primary">
+                View Work <span style={{ fontSize: 18, lineHeight: 1 }}>↓</span>
+              </a>
+              <a href="mailto:kmkerney221@gmail.com" className="btn-secondary">Get in Touch</a>
+            </div>
           </div>
-        </div>
-        <div style={{
-          position: 'absolute', right: '80px', top: '50%', transform: 'translateY(-50%)',
-          display: 'flex', flexDirection: 'column', gap: 12,
-          opacity: 0, animation: 'fadeUp 0.6s ease 0.7s forwards'
-        }}>
-          {['Product Strategy', 'Platform Ecosystems', 'Systems Thinking', 'Enterprise UX', 'AI-Augmented Design'].map((skill, i) => (
-            <span key={skill} style={{
-              display: 'inline-block', padding: '8px 16px',
-              background: i % 2 === 0 ? 'rgba(144,161,185,0.12)' : 'rgba(177,124,93,0.08)',
-              border: `1px solid ${i % 2 === 0 ? 'rgba(144,161,185,0.25)' : 'rgba(177,124,93,0.2)'}`,
-              borderRadius: 8, fontSize: 13, fontWeight: 500,
-              color: i % 2 === 0 ? 'var(--deep-blue)' : 'var(--terracotta)',
-              animation: `fadeUp 0.5s ease ${0.8 + i * 0.1}s both`
-            }}>{skill}</span>
-          ))}
+          <div className="hero-pills">
+            {['Product Strategy', 'Platform Ecosystems', 'Systems Thinking', 'Enterprise UX', 'AI-Augmented Design'].map((skill, i) => (
+              <span key={skill} className={`hero-pill ${i % 2 === 0 ? 'hero-pill--blue' : 'hero-pill--warm'}`}
+                style={{ animation: `fadeUp 0.5s ease ${0.8 + i * 0.1}s both` }}
+              >{skill}</span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -134,7 +127,7 @@ export default function App() {
                 </div>
                 <div className="project-meta-item">
                   <span className="project-meta-label">Platform</span>
-                  <span className="project-meta-value">Wealthscape</span>
+                  <span className="project-meta-value">Enterprise Platform</span>
                 </div>
                 <div className="project-meta-item">
                   <span className="project-meta-label">Status</span>
@@ -275,7 +268,7 @@ export default function App() {
                 </div>
                 <div className="project-meta-item">
                   <span className="project-meta-label">Platform</span>
-                  <span className="project-meta-value">Wealthscape</span>
+                  <span className="project-meta-value">Enterprise Platform</span>
                 </div>
               </div>
             </div>
@@ -359,7 +352,7 @@ export default function App() {
                 </p>
                 <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(144,161,185,0.1)',
                   display: 'flex', gap: 16, fontSize: 12 }}>
-                  <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Platform: Wealthscape</span>
+                  <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Platform: Enterprise Platform</span>
                   <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Status: Shipped</span>
                 </div>
               </div>
@@ -464,7 +457,7 @@ export default function App() {
           background: 'radial-gradient(circle, rgba(144,161,185,0.1) 0%, transparent 70%)',
           filter: 'blur(80px)', pointerEvents: 'none' }} />
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto',
+        <div className="beyond-grid" style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto',
           display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 5vw, 80px)', alignItems: 'center' }}>
 
           {/* Left: Text content */}
@@ -532,7 +525,7 @@ export default function App() {
             </div>
 
             {/* Two smaller glass cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="glass-card-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div style={{
                 background: 'rgba(243,239,217,0.04)',
                 backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
@@ -697,7 +690,7 @@ export default function App() {
             professionals respects their expertise and gets out of their way.
           </p>
           <p className="about-body">
-            Most recently, I led UX for trading platforms at Fidelity Investments — unifying 15+ applications
+            Most recently, I led UX for trading platforms at a leading financial services firm — unifying 15+ applications
             under a cohesive design system and streamlining high-stakes workflows for institutional investors.
             I'm now exploring my next opportunity to bring systems thinking and enterprise design leadership
             to complex product challenges.

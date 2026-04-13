@@ -835,7 +835,7 @@ export default function RulesCaseStudy(){
             <div style={{background:'white',border:`1px solid rgba(202,213,226,0.35)`,borderRadius:14,overflow:'hidden',display:'flex',flexDirection:'row',alignItems:'stretch',borderLeft:`4px solid ${accent}`}}>
               <div style={{background:'#f4f3f0',borderRight:'1px solid rgba(202,213,226,0.4)',padding:32,display:'flex',alignItems:'center',justifyContent:'center',width:'42%',flexShrink:0}}>
                 <div style={{display:'flex',alignItems:'center',gap:8}}>
-                  {[{bar:'#d4e0ec',title:'Wealthscape — Rules',rows:['U023 — Equity Buy…','U030 — NF Training…','U058 — Reject Order…']},{bar:'#e2efda',title:'Excel / SharePoint',rows:['Rule | Rationale | Date','U023 | Equity res…','U030 | Training ID…']}].map((app,i)=>[
+                  {[{bar:'#d4e0ec',title:'Platform — Rules',rows:['U023 — Equity Buy…','U030 — NF Training…','U058 — Reject Order…']},{bar:'#e2efda',title:'Excel / SharePoint',rows:['Rule | Rationale | Date','U023 | Equity res…','U030 | Training ID…']}].map((app,i)=>[
                     i===1 && <div key="arrow" style={{display:'flex',flexDirection:'column',alignItems:'center',gap:2,color:'#c8723a',fontSize:16,fontWeight:700,lineHeight:1}}>⇄<span style={{fontSize:7,color:'#999',fontStyle:'italic',whiteSpace:'nowrap'}}>copy &amp; paste</span></div>,
                     <div key={app.title} style={{border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:100}}>
                       <div style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,background:app.bar,borderBottom:'1px solid rgba(0,0,0,0.1)',color:'#1a1a1a'}}>{app.title}</div>
@@ -859,7 +859,7 @@ export default function RulesCaseStudy(){
                 <div style={{position:'relative',width:160,margin:'0 auto'}}>
                   <div style={{border:'1px solid #b8b8b8',borderRadius:3,overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
                     <div style={{background:'#2a2a6e',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                      <span style={{fontSize:8.5,color:'white',fontWeight:700}}>Wealthscape™</span>
+                      <span style={{fontSize:8.5,color:'white',fontWeight:700}}>Platform™</span>
                       <div style={{display:'flex',gap:8,alignItems:'center'}}>
                         <span style={{fontSize:7.5,color:'rgba(255,255,255,0.65)'}}>🏠</span>
                         <span style={{fontSize:8,color:'rgba(255,255,255,0.65)',background:'rgba(255,255,255,0.15)',borderRadius:'50%',width:14,height:14,display:'inline-flex',alignItems:'center',justifyContent:'center'}}>?</span>

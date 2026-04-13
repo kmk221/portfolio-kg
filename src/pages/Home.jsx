@@ -52,7 +52,7 @@ export default function Home() {
                   <span className={styles.dot}>·</span>
                   <span>8 weeks</span>
                   <span className={styles.dot}>·</span>
-                  <span>Wealthscape Platform</span>
+                  <span>Enterprise Platform</span>
                 </div>
               </div>
               <div className={styles.projectArrow}>

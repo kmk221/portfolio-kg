@@ -3,7 +3,7 @@ import Nav from '../components/Nav.jsx'
 
 const accent='#7D91A5',accentDark='#3A4C5E',accentMid='rgba(125,145,165,0.4)',accentLight='rgba(125,145,165,0.12)',accentPale='#e8eaec',textLight='#edeef0',warmGray='#59504a',deepBlue='#62748e',cream='#F6F6F1',pageBg='#FFFFFC',borderLight='rgba(202,213,226,0.2)',terracotta='#b17c5d'
 const sideP='clamp(20px, 5vw, 80px)',contentW='1200px'
-const sec=(bg)=>({width:'100%',padding:`140px ${sideP}`,background:bg})
+const sec=(bg)=>({width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`,background:bg})
 const ct={maxWidth:contentW,width:'100%',margin:'0 auto'}
 
 function StepLabel({children,light}){
@@ -1153,11 +1153,11 @@ function IterationCards(){
 }
 
 export default function RulesCaseStudy(){
-  return(<div style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:warmGray,background:cream,overflowX:'hidden'}}>
+  return(<div className="rules-cs-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:warmGray,background:cream,overflowX:'hidden'}}>
     <Nav/>
 
     {/* HERO */}
-    <section style={{background:'#ededee',paddingTop:140,paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden'}}>
+    <section style={{background:'#ededee',paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden'}}>
       <div style={ct}>
         <div style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap',marginBottom:20,opacity:0,animation:'fadeUp 0.7s ease 0.1s forwards'}}>
           <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(46,74,107,0.55)'}}>UX Case Study</span>
@@ -1310,7 +1310,7 @@ export default function RulesCaseStudy(){
         </div>
 
         <div style={{marginTop:56}}>
-          <div style={{display:'flex',flexDirection:'column',gap:20}}>
+          <div className="rules-problem-cards" style={{display:'flex',flexDirection:'column',gap:20}}>
 
             {/* 01 — Findability */}
             <div style={{display:'flex',flexDirection:'row',alignItems:'stretch',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)',minHeight:340}}>
@@ -1418,7 +1418,7 @@ export default function RulesCaseStudy(){
                 <div style={{transform:'scale(1.55)',transformOrigin:'center center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:10}}>
 
-                  {/* Wealthscape window */}
+                  {/* Platform window */}
                   <div style={{border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:138}}>
                     <div style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,background:'#d4e0ec',borderBottom:'1px solid rgba(0,0,0,0.1)',color:'#1a1a1a'}}>Platform — Rules</div>
                     {['U023 — Equity Buy Cap','U030 — NF Training Hold','U058 — Reject Order Flag'].map(r=>(

@@ -1,0 +1,2724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+          font-size: 13px;
+          color: #2e3d4a;
+          background: linear-gradient(145deg, #dde8f8 0%, #E8E8EA 50%, #ede8f5 100%);
+          height: 100vh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── TOP NAV ── */
+        .top-nav {
+          background: rgba(38,48,62,0.90);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 0 18px;
+          gap: 2px;
+          flex-shrink: 0;
+          border-bottom: 2px solid #427DDB;
+          box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+        }
+        .nav-btn {
+          background: none;
+          border: none;
+          color: #a8b8cc;
+          padding: 5px 11px;
+          cursor: pointer;
+          border-radius: 5px;
+          font-size: 12.5px;
+          font-family: inherit;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          letter-spacing: -0.1px;
+          transition: background 0.12s, color 0.12s;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,0.09); color: #fff; }
+        .nav-btn svg { flex-shrink: 0; }
+        .nav-sep { width: 1px; height: 18px; background: rgba(255,255,255,0.12); margin: 0 3px; }
+
+        /* ── BODY LAYOUT ── */
+        .body-layout { display: flex; flex: 1; overflow: hidden; }
+
+        /* ── ICON SIDEBAR ── */
+        .icon-sidebar {
+          width: 46px;
+          background: #344150;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px 0;
+          gap: 2px;
+          flex-shrink: 0;
+          border-right: 1px solid #2d3a45;
+        }
+        .s-icon {
+          width: 34px; height: 34px;
+          display: flex; align-items: center; justify-content: center;
+          border-radius: 7px;
+          cursor: pointer;
+          color: #5e7898;
+          position: relative;
+          transition: background 0.12s, color 0.12s;
+        }
+        .s-icon:hover { background: rgba(255,255,255,0.08); color: #c4d3e4; }
+        .s-icon.active { background: rgba(66,125,219,0.22); color: #7EB9F4; }
+        .s-icon svg { width: 17px; height: 17px; }
+        .s-badge {
+          position: absolute; top: 3px; right: 3px;
+          background: #e53935; color: #fff;
+          font-size: 8px; font-weight: 700;
+          min-width: 13px; height: 13px;
+          border-radius: 7px; display: flex; align-items: center; justify-content: center;
+          padding: 0 3px; line-height: 1;
+        }
+        .s-spacer { flex: 1; }
+
+        /* ── PAGE CONTENT ── */
+        .page-content {
+          flex: 1; min-height: 0; display: flex; flex-direction: column;
+          overflow: hidden; padding: 16px 18px 14px 16px; gap: 12px;
+        }
+        .page-header { display: flex; align-items: center; justify-content: space-between; }
+        .page-title { font-size: 18px; font-weight: 700; color: #2c3540; letter-spacing: -0.4px; }
+        .help-btn {
+          width: 22px; height: 22px; border-radius: 50%;
+          background: #427DDB; color: #fff;
+          border: none; cursor: pointer;
+          font-size: 12px; font-weight: 600; font-family: inherit;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+          box-shadow: 0 1px 3px rgba(66,125,219,0.32);
+        }
+
+        /* ── CONFIRMATION BANNER ── */
+        .confirm-banner {
+          background: #f0faf4; border: 1px solid #7ec99a;
+          border-left: 4px solid #3a7252;
+          border-radius: 6px; padding: 9px 14px;
+          display: flex; align-items: flex-start; gap: 8px;
+          font-size: 12.5px; line-height: 1.5;
+        }
+        .confirm-banner.hidden { display: none; }
+        .confirm-banner .cb-icon { color: #3a7252; flex-shrink: 0; margin-top: 1px; }
+        .confirm-banner .cb-dismiss {
+          margin-left: auto; background: none; border: none;
+          cursor: pointer; color: #5a8c6e; font-size: 17px; line-height: 1;
+          padding: 0 2px; flex-shrink: 0;
+        }
+        .confirm-banner .cb-dismiss:hover { color: #2c3540; }
+
+        /* ── THREE PANELS ── */
+        .panels { display: flex; gap: 10px; flex: 1; min-height: 0; overflow: hidden; flex-wrap: nowrap; }
+
+        /* ── PANEL BASE ── */
+        .panel {
+          background: rgba(253,252,249,0.88);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.62);
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 2px 12px rgba(66,125,219,0.10), 0 1px 3px rgba(9,30,66,0.06);
+        }
+        .panel-hd {
+          padding: 11px 16px;
+          border-bottom: 1px solid rgba(220,220,222,0.7);
+          font-weight: 600; font-size: 13.5px; color: #2c3540;
+          background: rgba(253,252,249,0.60);
+          letter-spacing: -0.15px;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .panel-menu-btn {
+          background: none; border: none; cursor: pointer; color: #8a9aaa;
+          padding: 2px 4px; border-radius: 4px; font-size: 16px; line-height: 1;
+          position: relative; transition: background 0.1s, color 0.1s;
+        }
+        .panel-menu-btn:hover { background: rgba(0,0,0,0.06); color: #2e3d4a; }
+        .panel-menu-pop {
+          display: none; position: absolute; top: 100%; right: 0; margin-top: 4px;
+          background: #fff; border: 1px solid #DCDCDE; border-radius: 8px;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.12); min-width: 180px; z-index: 100;
+          padding: 4px 0;
+        }
+        .panel-menu-pop.open { display: block; }
+        .panel-menu-pop .pm-item {
+          padding: 8px 14px; font-size: 12.5px; font-weight: 400; color: #2e3d4a;
+          cursor: pointer; transition: background 0.08s;
+        }
+        .panel-menu-pop .pm-item:hover { background: #F2F5FA; }
+
+        /* ── FILTER CHIPS & POPOVER ── */
+        .chips-area { display: flex; align-items: center; gap: 5px; flex: 1; flex-wrap: wrap; min-width: 0; }
+        .chip {
+          display: inline-flex; align-items: center; gap: 2px;
+          background: #EBF1FE; color: #427DDB;
+          padding: 3px 6px 3px 9px; border-radius: 999px;
+          font-size: 11.5px; font-weight: 500; white-space: nowrap;
+          border: 1px solid #B8D0FC;
+        }
+        .chip-remove {
+          background: none; border: none; cursor: pointer;
+          color: #427DDB; font-size: 14px; line-height: 1;
+          padding: 0 2px; opacity: 0.55; display: flex; align-items: center;
+        }
+        .chip-remove:hover { opacity: 1; }
+
+        /* ── FILTER PANEL ── */
+        .filter-panel { width: 260px; flex-shrink: 0; min-height: 0; transition: width 0.2s ease; }
+        .filter-panel.collapsed { width: 0; overflow: hidden; border: none; box-shadow: none; background: transparent; backdrop-filter: none; }
+        .filter-panel.collapsed .panel-hd,
+        .filter-panel.collapsed .filter-body,
+        .filter-panel.collapsed .filter-footer { display: none; }
+
+        .filter-collapse-btn {
+          background: none; border: none; cursor: pointer; color: #8a9aaa;
+          display: flex; align-items: center; gap: 6px; padding: 0;
+          font-size: 13.5px; font-weight: 600; color: #2c3540; letter-spacing: -0.15px;
+          font-family: inherit;
+        }
+        .filter-collapse-btn:hover { color: #427DDB; }
+        .filter-collapse-btn svg { width: 14px; height: 14px; transition: transform 0.2s; }
+
+        /* Collapsed vertical tab */
+        .filter-tab {
+          display: none; writing-mode: vertical-lr; text-orientation: mixed;
+          background: rgba(253,252,249,0.88); backdrop-filter: blur(14px);
+          border: 1px solid rgba(255,255,255,0.62); border-radius: 8px;
+          box-shadow: 0 2px 12px rgba(66,125,219,0.10), 0 1px 3px rgba(9,30,66,0.06);
+          padding: 14px 8px; cursor: pointer; flex-shrink: 0;
+          font-size: 12px; font-weight: 600; color: #8a9aaa; letter-spacing: 0.03em;
+          align-items: center; gap: 8px; min-height: 0;
+          transition: background 0.12s, color 0.12s;
+        }
+        .filter-tab:hover { background: #EBF1FE; color: #427DDB; }
+        .filter-tab.visible { display: flex; }
+        .filter-tab svg { width: 14px; height: 14px; transform: rotate(0deg); flex-shrink: 0; }
+        .filter-tab .ft-label { white-space: nowrap; }
+
+        .filter-body { padding: 18px 20px; overflow-y: auto; flex: 1; }
+
+        /* ── FILTER SECTIONS ── */
+        .filter-section { margin-bottom: 4px; }
+        .filter-section-hd {
+          display: flex; align-items: center; gap: 6px;
+          font-size: 13px; font-weight: 600; color: #2c3540;
+          cursor: pointer; padding: 8px 0; user-select: none;
+          border-bottom: 1px solid #E4E4E6; margin-bottom: 12px;
+        }
+        .filter-section-hd:hover { color: #427DDB; }
+        .filter-section-hd .section-chevron {
+          transition: transform 0.15s; flex-shrink: 0; color: #8a9aaa;
+        }
+        .filter-section-hd.open .section-chevron { transform: rotate(0deg); }
+        .filter-section-hd:not(.open) .section-chevron { transform: rotate(-90deg); }
+        .filter-section-body { }
+
+        .form-grp { margin-bottom: 16px; }
+        .form-lbl {
+          display: block; font-size: 11px; font-weight: 600;
+          text-transform: uppercase; letter-spacing: 0.06em;
+          color: #8a9aaa; margin-bottom: 5px;
+        }
+        .form-ctrl {
+          width: 100%; padding: 7px 10px;
+          border: 1.5px solid #C8C8CA; border-radius: 5px;
+          font-size: 13px; font-family: inherit; outline: none;
+          transition: border-color 0.15s, box-shadow 0.15s;
+          background: #FAFAFA; color: #2e3d4a;
+        }
+        select.form-ctrl {
+          padding-right: 32px;
+          -webkit-appearance: none; -moz-appearance: none; appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b7a8d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 12px center;
+        }
+        .form-ctrl:focus { border-color: #427DDB; box-shadow: 0 0 0 3px rgba(66,125,219,0.14); }
+
+        .filter-footer {
+          padding: 8px 14px; border-top: 1px solid #DCDCDE;
+          display: flex; align-items: center; justify-content: space-between; background: #FAFAFA;
+          flex-shrink: 0;
+        }
+
+        /* ── ORDERS PANEL ── */
+        .orders-panel { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+        .orders-hd-left { display: flex; align-items: baseline; gap: 10px; flex-shrink: 0; }
+        .orders-hd-title { font-weight: 600; font-size: 13.5px; letter-spacing: -0.15px; color: #2c3540; }
+        .orders-count { font-size: 11.5px; color: #8a9aaa; }
+
+        /* ── PAGE-LEVEL TABS ── */
+        .page-tabs {
+          display: flex; gap: 0;
+          border-bottom: 2px solid rgba(220,220,222,0.5);
+          flex-shrink: 0;
+        }
+        .page-tab {
+          background: none; border: none; cursor: pointer;
+          padding: 9px 16px; font-size: 13.5px; color: #8a9aaa;
+          font-weight: 600; border-bottom: 2px solid transparent;
+          position: relative; bottom: -2px;
+          transition: color 0.12s, border-color 0.12s;
+          font-family: inherit; letter-spacing: -0.15px;
+        }
+        .page-tab:hover { color: #2e3d4a; }
+        .page-tab.active { color: #427DDB; border-bottom-color: #427DDB; }
+
+        /* ── TABS (inner) ── */
+        .tab-bar { display: flex; gap: 0; border-bottom: 1px solid #DCDCDE; }
+        .tab-btn {
+          background: none; border: none; cursor: pointer;
+          padding: 9px 14px; font-size: 12.5px; color: #8a9aaa;
+          font-weight: 500; border-bottom: 2px solid transparent;
+          position: relative; bottom: -1px;
+          transition: color 0.12s, border-color 0.12s;
+        }
+        .tab-btn:hover { color: #2e3d4a; }
+        .tab-btn.active { color: #427DDB; border-bottom-color: #427DDB; }
+
+        .table-scroll { overflow-y: auto; flex: 1; }
+
+        /* ── ORDERS TABLE ── */
+        .orders-table { width: 100%; border-collapse: collapse; }
+        .orders-table thead th {
+          padding: 9px 14px;
+          text-align: left;
+          font-size: 10.5px; font-weight: 600;
+          text-transform: uppercase; letter-spacing: 0.07em;
+          color: #8a9aaa;
+          border-bottom: 1px solid #D4D4D6;
+          background: #F2F2F4;
+          position: sticky; top: 0; z-index: 1;
+          white-space: nowrap;
+        }
+        .orders-table thead th.sortable, .orders-table thead th.sortable-sent { cursor: pointer; user-select: none; }
+        .orders-table thead th.sortable:hover, .orders-table thead th.sortable-sent:hover { color: #427DDB; }
+        .sort-arrow { display: none; margin-left: 5px; vertical-align: middle; }
+        .sort-arrow svg { display: block; }
+        th.sorted-asc .sort-arrow, th.sorted-desc .sort-arrow { display: inline-block; }
+        th.sorted-desc .sort-arrow svg { transform: rotate(180deg); }
+        .orders-table tbody tr { cursor: pointer; transition: background 0.1s; }
+        .orders-table tbody tr:hover { background: #EEEEF0; }
+        .orders-table tbody tr.selected { background: #EBF1FE; }
+        .orders-table tbody tr.selected td:first-child { border-left: 3px solid #427DDB; padding-left: 11px; }
+        .orders-table tbody td {
+          padding: 9px 14px;
+          border-bottom: 1px solid #E4E4E6;
+          font-size: 12.5px; vertical-align: middle;
+        }
+        .checkbox-cell { width: 36px; }
+        .checkbox-cell input[type="checkbox"], .header-checkbox { width: 14px; height: 14px; accent-color: #427DDB; cursor: pointer; }
+
+        .status-pill {
+          display: inline-flex; align-items: center; gap: 5px;
+          font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em;
+          padding: 3px 10px; border-radius: 999px;
+        }
+        .status-pip {
+          width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+        }
+        .status-pill.buy { background: rgba(78,148,102,0.18); color: #2e6b46; border-radius: 4px; }
+        .status-pill.buy .status-pip { background: #4a8a62; }
+        .status-pill.sell { background: rgba(222,53,11,0.14); color: #c4300a; border-radius: 4px; }
+        .status-pill.sell .status-pip { background: #de350b; }
+
+        /* ── SENDING OVERLAY ── */
+        .sending-spinner {
+          width: 36px; height: 36px; margin: 0 auto;
+          border: 3px solid #E4E4E6; border-top-color: #427DDB;
+          border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── NEWLY SENT ROW HIGHLIGHT ── */
+        @keyframes rowFadeIn {
+          0% { background-color: #dce8fc; }
+          100% { background-color: transparent; }
+        }
+        .order-row.just-sent {
+          animation: rowFadeIn 2s ease-out forwards;
+        }
+        .order-row.just-sent td { border-left-color: transparent; }
+
+        /* ── REVIEW BANNER ── */
+        .review-banner { background: #EBF1FE; border-bottom: 1px solid #c5d6f0; padding: 10px 16px; }
+        .review-banner-inner {
+          display: flex; align-items: center; gap: 10px;
+          font-size: 12.5px; font-weight: 500; color: #2c3540;
+        }
+
+        /* ── ALERT ICONS ── */
+        .alert-icon { vertical-align: middle; shape-rendering: geometricPrecision; }
+
+        /* ── ROW ACTIONS MENU ── */
+        .row-action-btn {
+          color: #6b7a8d; cursor: pointer; font-size: 18px; font-weight: 700;
+          padding: 2px 6px; border-radius: 4px; transition: background 0.1s, color 0.1s;
+          display: inline-block; text-align: center;
+        }
+        .row-action-btn:hover { background: #E4E4E6; color: #2e3d4a; }
+        .row-action-menu {
+          display: none; position: absolute; right: 0; top: calc(100% + 2px);
+          background: #fff; border: 1px solid #DCDCDE; border-radius: 8px;
+          box-shadow: 0 8px 30px rgba(9,30,66,0.14), 0 2px 8px rgba(9,30,66,0.08);
+          min-width: 170px; z-index: 600; padding: 6px 0;
+          animation: popFadeIn 0.12s ease-out;
+        }
+        .row-action-menu.open { display: block; }
+
+        /* ── ROW DRAWER ── */
+        .row-chevron {
+          width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+          cursor: pointer; border-radius: 4px; color: #8a9aaa;
+          transition: background 0.1s, color 0.1s, transform 0.2s;
+          flex-shrink: 0;
+        }
+        .row-chevron:hover { background: #EEEEF0; color: #2e3d4a; }
+        .row-chevron.open { transform: rotate(90deg); color: #427DDB; }
+        .row-chevron svg { width: 14px; height: 14px; }
+        .detail-drawer {
+          display: none; background: #F7F8FA; border-bottom: 1px solid #E4E4E6;
+        }
+        .detail-drawer.open { display: table-row; }
+        .detail-drawer td { padding: 0 !important; border-bottom: 1px solid #D4D4D6; }
+        .drawer-summary {
+          display: flex; align-items: center; gap: 6px;
+          padding: 11px 20px 10px 50px;
+          border-bottom: 1px solid #EDEDEF;
+          animation: drawerSlide 0.15s ease-out;
+          flex-wrap: wrap;
+        }
+        .drawer-summary-item { font-size: 12.5px; color: #2e3d4a; font-weight: 500; }
+        .drawer-summary-item.mono { }
+        .drawer-summary-item.buy-text { color: #3a7252; font-weight: 600; }
+        .drawer-summary-item.sell-text { color: #de350b; font-weight: 600; }
+        .drawer-sep { color: #C8C8CA; font-size: 12px; margin: 0 2px; }
+        .drawer-details {
+          display: flex; gap: 40px; padding: 14px 20px 16px 50px;
+          animation: drawerSlide 0.15s ease-out;
+        }
+        @keyframes drawerSlide {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .drawer-col { flex: 1; min-width: 0; }
+        .drawer-col-title {
+          font-size: 11px; font-weight: 700; color: #2c3540;
+          margin-bottom: 10px; letter-spacing: -0.1px;
+        }
+        .drawer-attr { display: flex; margin-bottom: 7px; }
+        .drawer-attr-lbl { font-size: 11.5px; color: #8a9aaa; font-weight: 500; width: 120px; flex-shrink: 0; }
+        .drawer-attr-val { font-size: 12.5px; color: #2e3d4a; }
+
+        /* ── GRID HEADER ── */
+        .grid-header {
+          padding: 10px 14px 0 14px; border-bottom: 1px solid #DCDCDE;
+          background: #FAFAFA; flex-shrink: 0;
+        }
+        .grid-header-row {
+          display: flex; align-items: baseline; gap: 8px;
+          margin-bottom: 8px;
+        }
+        .grid-header-title { font-weight: 600; font-size: 13px; color: #2c3540; letter-spacing: -0.1px; }
+        .grid-header-count { font-size: 12px; color: #8a9aaa; font-weight: 400; }
+        .grid-header-spacer { flex: 1; }
+        .grid-col-config {
+          display: flex; align-items: center; gap: 5px;
+          font-size: 11.5px; color: #8a9aaa; cursor: pointer;
+          transition: color 0.12s;
+        }
+        .grid-col-config:hover { color: #427DDB; }
+        .grid-col-config svg { flex-shrink: 0; }
+        .grid-header-filters {
+          display: flex; align-items: center; gap: 8px;
+          padding-bottom: 10px;
+        }
+        .grid-header-filters.hidden { display: none; }
+        .grid-filters-label {
+          font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+          letter-spacing: 0.06em; color: #8a9aaa; white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* ── GRID PAGINATION ── */
+        .grid-pagination {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 8px 14px; border-top: 1px solid #DCDCDE; background: #FAFAFA;
+          flex-shrink: 0;
+        }
+
+        /* ── GRID FOOTER ── */
+        .grid-footer {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 8px 14px; border-top: 1px solid #DCDCDE; background: #FAFAFA;
+          gap: 12px; flex-shrink: 0;
+        }
+        .gf-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .gf-right { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+        .page-info { font-size: 11.5px; color: #8a9aaa; }
+        .pagination-controls { display: flex; align-items: center; gap: 4px; }
+        .page-btn {
+          background: none; border: 1px solid #DCDCDE; border-radius: 4px;
+          padding: 4px 10px; font-size: 12px; cursor: pointer; color: #5a6878;
+          font-family: inherit; transition: background 0.1s, border-color 0.1s, color 0.1s;
+        }
+        .page-btn:hover:not(:disabled) { background: #EBF1FE; border-color: #427DDB; color: #427DDB; }
+        .page-btn:disabled { opacity: 0.35; cursor: default; }
+        .page-btn.active { background: #427DDB; color: #fff; border-color: #427DDB; }
+        .selection-summary { display: flex; align-items: center; gap: 10px; }
+        .selection-info { font-size: 12.5px; color: #8a9aaa; }
+        .selection-info.active { color: #2c3540; font-weight: 600; }
+        .selection-value { font-size: 12.5px; color: #2c3540; font-weight: 600; padding-left: 10px; border-left: 1px solid #D4D4D6; }
+
+        /* Select button */
+        .gf-select-wrap { position: relative; }
+        .gf-select-btn {
+          background: #fff; border: 1px solid #DCDCDE; border-radius: 5px;
+          padding: 6px 12px; font-size: 12.5px; cursor: pointer; color: #5a6878;
+          font-family: inherit; display: flex; align-items: center; gap: 6px;
+          transition: border-color 0.12s; font-weight: 500;
+          min-width: 220px; max-width: 260px;
+        }
+        .gf-select-btn .gf-select-label {
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; text-align: left;
+        }
+        .gf-select-btn.has-selection { border-color: #427DDB; color: #2c3540; }
+        .gf-select-btn:hover { border-color: #427DDB; color: #427DDB; }
+
+        /* Send split button */
+        .gf-send-wrap { display: flex; align-items: stretch; position: relative; border-radius: 6px; }
+        .gf-send-wrap .gf-send-main {
+          display: flex; align-items: center; gap: 6px;
+          border-radius: 6px 0 0 6px !important; box-shadow: none !important; border: none !important;
+        }
+        .gf-send-wrap .gf-send-caret {
+          border-radius: 0 6px 6px 0 !important; padding: 6px 9px; min-width: 0;
+          box-shadow: none !important; border: none !important;
+          border-left: 1px solid rgba(255,255,255,0.3) !important;
+        }
+        .gf-send-wrap .gf-send-main:disabled,
+        .gf-send-wrap .gf-send-caret:disabled {
+          background: #b8c4d2 !important; cursor: not-allowed; opacity: 1;
+        }
+        .gf-send-wrap .gf-send-caret:disabled { border-left-color: rgba(255,255,255,0.2) !important; }
+
+        /* Popovers */
+        .gf-popover {
+          display: none; position: absolute; bottom: calc(100% + 6px); left: 0;
+          background: #fff; border: 1px solid #DCDCDE; border-radius: 8px;
+          box-shadow: 0 8px 30px rgba(9,30,66,0.14), 0 2px 8px rgba(9,30,66,0.08);
+          min-width: 260px; z-index: 500; padding: 6px 0;
+          animation: popFadeIn 0.12s ease-out;
+        }
+        .gf-popover.gf-popover-right { left: auto; right: 0; min-width: 200px; }
+        .gf-popover.open { display: block; }
+        @keyframes popFadeIn {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .gf-pop-item {
+          display: flex; align-items: center; gap: 8px;
+          padding: 8px 16px; font-size: 13px; color: #2e3d4a; cursor: pointer;
+          transition: background 0.08s;
+        }
+        .gf-pop-item span:not(.status-pill):not(.status-pip) { display: inline; }
+        .gf-pop-item:hover { background: #F2F5FA; }
+        .gf-pop-item label { display: flex; align-items: center; gap: 10px; cursor: pointer; width: 100%; }
+        .gf-pop-item input[type="checkbox"] { accent-color: #427DDB; margin: 0; }
+        .gf-pop-pill-item { cursor: pointer; }
+        .gf-pop-link { color: #427DDB; font-weight: 500; }
+        .gf-pop-link:hover { background: #EBF1FE; }
+        .select-popover .gf-pop-item { padding-left: 38px; }
+        .select-popover .gf-pop-item .pop-check { margin-left: -22px; }
+        .select-popover .gf-pop-item .pop-check[style*="display:none"] + span,
+        .select-popover .gf-pop-item .pop-check[style*="display: none"] + span { margin-left: 0; }
+        .gf-pop-action { font-weight: 500; }
+        .gf-pop-danger { color: #c0392b; }
+        .gf-pop-danger:hover { background: #fef2f2; }
+        .gf-pop-divider { height: 1px; background: #EDEDEF; margin: 4px 0; }
+
+        /* ── BUTTONS ── */
+        .btn {
+          padding: 6px 14px; border-radius: 5px;
+          font-size: 12.5px; font-weight: 500; font-family: inherit;
+          cursor: pointer; border: 1px solid transparent;
+          letter-spacing: -0.1px;
+          transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+        }
+        .btn-primary { background: #427DDB; color: #fff; border: none; box-shadow: 0 2px 8px rgba(66,125,219,0.38); }
+        .btn-primary:hover { background: #3668C4; box-shadow: 0 4px 14px rgba(66,125,219,0.48); }
+        .btn-primary:disabled { background: #b8c4d2; cursor: not-allowed; box-shadow: none; }
+        .btn-success { background: #427DDB; color: #fff; border: none; box-shadow: 0 2px 8px rgba(66,125,219,0.32); }
+        .btn-success:hover { background: #3668C4; box-shadow: 0 4px 14px rgba(66,125,219,0.42); }
+        .btn-ghost { background: #FAFAFA; color: #6b7d8a; border-color: #C8C8CA; }
+        .btn-ghost:hover { background: #EEEEF0; border-color: #b8c4d2; color: #2e3d4a; }
+        .btn-danger { background: #de350b; color: #fff; border-color: #de350b; }
+        .btn-danger:hover { background: #bf2600; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+          display: none; position: fixed;
+          inset: 0; background: rgba(9,30,66,0.5);
+          z-index: 1000; align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+          background: rgba(253,252,249,0.94);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.68);
+          width: 820px; max-height: 82vh;
+          overflow: hidden; display: flex; flex-direction: column;
+          box-shadow: 0 20px 60px rgba(66,125,219,0.18), 0 4px 20px rgba(9,30,66,0.12);
+        }
+        .modal.small { width: 520px; }
+        .modal-hd {
+          padding: 16px 20px; border-bottom: 1px solid #DCDCDE;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .modal-title { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; color: #2c3540; }
+        .modal-close {
+          background: none; border: none; cursor: pointer;
+          color: #8a9aaa; font-size: 20px; line-height: 1; padding: 0 3px;
+        }
+        .modal-close:hover { color: #2e3d4a; }
+        .modal-body { padding: 22px 24px; overflow-y: auto; flex: 1; }
+        .modal-ft {
+          padding: 13px 20px; border-top: 1px solid #DCDCDE;
+          display: flex; justify-content: flex-end; gap: 8px; background: #F2F2F4;
+        }
+
+        /* ── SECTION CARD ── */
+        .sec-card { border: 1px solid #D4D4D6; border-radius: 6px; margin-bottom: 10px; overflow: hidden; }
+        .sec-card-hd {
+          padding: 8px 12px; background: #F2F2F4;
+          border-bottom: 1px solid #D4D4D6;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .sec-card-title { font-weight: 600; font-size: 12.5px; color: #2c3540; }
+        .sec-card-body { padding: 11px 12px; }
+        .attr-row { display: flex; align-items: flex-start; margin-bottom: 9px; }
+        .attr-lbl { color: #8a9aaa; font-size: 11.5px; font-weight: 500; width: 104px; flex-shrink: 0; padding-top: 1px; }
+        .attr-val { font-size: 12.5px; color: #2e3d4a; flex: 1; }
+
+        /* ── TOAST ── */
+        .toast {
+          position: fixed; bottom: 20px; left: 50%;
+          transform: translateX(-50%); z-index: 2000;
+          background: rgba(38,48,62,0.95); backdrop-filter: blur(16px);
+          border-radius: 8px; padding: 12px 16px;
+          display: flex; align-items: center; gap: 10px;
+          font-size: 13px; color: #fff;
+          opacity: 0; pointer-events: none;
+          transition: opacity 0.2s;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }
+        .toast.show { opacity: 1; pointer-events: auto; }
+        .toast .t-icon { color: #7EB9F4; }
+
+        /* ── STEP NAV ── */
+        .step-nav {
+          position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 2000;
+          background: rgba(38,48,62,0.92); backdrop-filter: blur(16px);
+          border-radius: 50px; padding: 6px 8px;
+          display: flex; align-items: center; gap: 4px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }
+        .step-nav-btn {
+          background: rgba(255,255,255,0.12); border: none; color: #a8b8cc;
+          padding: 5px 12px; border-radius: 50px; font-size: 11px; font-weight: 600;
+          cursor: pointer; white-space: nowrap; font-family: inherit;
+          transition: background 0.12s, color 0.12s;
+        }
+        .step-nav-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
+        .step-nav-btn.active { background: #427DDB; color: #fff; }
+        .step-nav-arrow {
+          background: none; border: none; color: #a8b8cc; cursor: pointer;
+          padding: 5px 8px; font-size: 14px; transition: color 0.12s;
+        }
+        .step-nav-arrow:hover { color: #fff; }
+
+        /* ── DETAIL LAYER ── */
+        .detail-layer-overlay {
+          display: none; position: fixed; inset: 0;
+          background: rgba(9,30,66,0.5);
+          z-index: 1100;
+          align-items: center; justify-content: center;
+        }
+        .detail-layer-overlay.open { display: flex; }
+        .detail-layer {
+          width: 860px; max-width: 90vw; height: 85vh;
+          background: rgba(253,252,249,0.94);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.68);
+          box-shadow: 0 20px 60px rgba(66,125,219,0.18), 0 4px 20px rgba(9,30,66,0.12);
+          display: flex; flex-direction: column;
+          animation: detailFadeIn 0.18s ease-out;
+          overflow: hidden;
+        }
+        @keyframes detailFadeIn {
+          from { transform: scale(0.97) translateY(8px); opacity: 0; }
+          to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .dl-hd {
+          padding: 18px 24px 0 24px;
+          border-bottom: 1px solid #DCDCDE;
+          flex-shrink: 0;
+        }
+        .dl-hd-top {
+          display: flex; align-items: flex-start; justify-content: space-between;
+          margin-bottom: 14px;
+        }
+        .dl-hd-title { font-size: 17px; font-weight: 700; color: #2c3540; letter-spacing: -0.3px; }
+        .dl-hd-subtitle { font-size: 12.5px; color: #8a9aaa; margin-top: 3px; }
+        .dl-close {
+          background: none; border: none; cursor: pointer;
+          color: #8a9aaa; font-size: 22px; line-height: 1; padding: 0 4px;
+          transition: color 0.12s;
+        }
+        .dl-close:hover { color: #2e3d4a; }
+        .dl-tabs {
+          display: flex; gap: 0;
+        }
+        .dl-tab {
+          background: none; border: none; cursor: pointer;
+          padding: 9px 16px; font-size: 12.5px; color: #8a9aaa;
+          font-weight: 500; border-bottom: 2px solid transparent;
+          position: relative; bottom: -1px;
+          transition: color 0.12s, border-color 0.12s;
+          font-family: inherit;
+        }
+        .dl-tab:hover { color: #2e3d4a; }
+        .dl-tab.active { color: #427DDB; border-bottom-color: #427DDB; }
+        .dl-body {
+          flex: 1; overflow-y: auto; padding: 20px 24px;
+        }
+        .dl-section {
+          margin-bottom: 22px;
+        }
+        .dl-section-title {
+          font-size: 10.5px; font-weight: 600; text-transform: uppercase;
+          letter-spacing: 0.08em; color: #8a9aaa; margin-bottom: 12px;
+          padding-bottom: 6px; border-bottom: 1px solid #EDEDEF;
+        }
+        .dl-grid {
+          display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px;
+        }
+        .dl-grid-3 {
+          display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 24px;
+        }
+        .dl-field {}
+        .dl-field-lbl { font-size: 11px; color: #8a9aaa; font-weight: 500; margin-bottom: 2px; }
+        .dl-field-val { font-size: 13px; color: #2e3d4a; font-weight: 500; }
+        .dl-field-val.mono { }
+        .dl-divider { height: 1px; background: #EDEDEF; margin: 18px 0; }
+        .dl-tab-panel { display: none; }
+        .dl-tab-panel.active { display: block; }
+        .dl-timeline-item {
+          display: flex; gap: 12px; padding: 10px 0;
+          border-bottom: 1px solid #F2F2F4;
+        }
+        .dl-timeline-item:last-child { border-bottom: none; }
+        .dl-timeline-dot {
+          width: 8px; height: 8px; border-radius: 50%;
+          background: #427DDB; flex-shrink: 0; margin-top: 5px;
+        }
+        .dl-timeline-dot.gray { background: #C8C8CA; }
+        .dl-timeline-content { flex: 1; }
+        .dl-timeline-label { font-size: 12.5px; color: #2e3d4a; font-weight: 500; }
+        .dl-timeline-meta { font-size: 11px; color: #8a9aaa; margin-top: 2px; }
+        .dl-compliance-tag {
+          display: inline-flex; align-items: center; gap: 4px;
+          padding: 4px 10px; border-radius: 4px; font-size: 11.5px; font-weight: 500;
+        }
+        .dl-compliance-tag.pass { background: #f0faf4; color: #3a7252; border: 1px solid #7ec99a; }
+        .dl-compliance-tag.warn { background: #fef8ed; color: #b8860b; border: 1px solid #f0d080; }
+        .dl-compliance-tag.fail { background: #fef2f2; color: #c0392b; border: 1px solid #f5b5b5; }
+        .dl-alloc-row {
+          display: flex; align-items: center; gap: 12px; padding: 8px 0;
+          border-bottom: 1px solid #F2F2F4; font-size: 12.5px;
+        }
+        .dl-alloc-row:last-child { border-bottom: none; }
+        .dl-alloc-acct { color: #2e3d4a; font-weight: 500; width: 130px; flex-shrink: 0; }
+        .dl-alloc-bar-wrap { flex: 1; height: 6px; background: #EDEDEF; border-radius: 3px; overflow: hidden; }
+        .dl-alloc-bar { height: 100%; background: #427DDB; border-radius: 3px; transition: width 0.3s; }
+        .dl-alloc-val { color: #8a9aaa; font-size: 11.5px; width: 80px; text-align: right; flex-shrink: 0; }
+        .drawer-link {
+          display: inline-flex; align-items: center; gap: 5px;
+          color: #427DDB; font-size: 11.5px; font-weight: 500;
+          cursor: pointer; text-decoration: none;
+          margin-top: 10px; padding: 4px 0;
+          transition: color 0.12s;
+        }
+        .drawer-link:hover { color: #3668C4; text-decoration: underline; }
+        .drawer-link svg { width: 12px; height: 12px; }
+
+        /* ── SCROLLBARS ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #C8C8CA; border-radius: 3px; }
+
+        /* ── SUCCESS STATE ── */
+        .success-checkmark {
+          width: 64px; height: 64px; border-radius: 50%;
+          background: rgba(78,148,102,0.13);
+          display: flex; align-items: center; justify-content: center;
+          margin: 20px auto;
+          color: #3a7252;
+        }
+        .success-checkmark svg { width: 32px; height: 32px; }
+
+        .modal-body.success-body {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 40px 20px;
+        }
+        .success-title { font-size: 16px; font-weight: 600; color: #2c3540; margin-bottom: 8px; }
+        .success-subtitle { font-size: 13px; color: #8a9aaa; margin-bottom: 20px; }
+
+        /* ── ERROR BANNER ── */
+        .error-banner {
+          background: #fef2f2; border: 1px solid #f5b5b5;
+          border-left: 4px solid #c0392b;
+          border-radius: 6px; padding: 9px 14px;
+          display: flex; align-items: flex-start; gap: 8px;
+          font-size: 12.5px; line-height: 1.5;
+          margin-bottom: 16px;
+        }
+        .error-banner .eb-icon { color: #c0392b; flex-shrink: 0; margin-top: 1px; }
+
+        /* ── WARNING BANNER ── */
+        .warning-banner {
+          background: #fef8f0; border: 1px solid #f5d5b8;
+          border-left: 4px solid #e67e22;
+          border-radius: 6px; padding: 9px 14px;
+          display: flex; align-items: flex-start; gap: 8px;
+          font-size: 12.5px; line-height: 1.5;
+          margin-bottom: 16px;
+        }
+        .warning-banner .wb-icon { color: #e67e22; flex-shrink: 0; margin-top: 1px; }
+
+        /* ── VERIFICATION MODAL DETAILS ── */
+        .vm-section { margin-bottom: 20px; }
+        .vm-section:last-child { margin-bottom: 0; }
+        .vm-section-title { font-weight: 600; font-size: 13px; color: #2c3540; margin-bottom: 12px; }
+        .vm-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .vm-stat-card {
+          border: 1px solid #D4D4D6; border-radius: 6px;
+          padding: 12px; background: #F9F9FA;
+        }
+        .vm-stat-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: #8a9aaa; margin-bottom: 4px; }
+        .vm-stat-value { font-size: 16px; font-weight: 600; color: #2c3540; }
+
+        .vm-details-table { width: 100%; border-collapse: collapse; }
+        .vm-details-table th {
+          padding: 9px 14px;
+          text-align: left;
+          font-size: 10.5px; font-weight: 600;
+          text-transform: uppercase; letter-spacing: 0.07em;
+          color: #8a9aaa;
+          border-bottom: 1px solid #D4D4D6;
+          background: #F2F2F4;
+          position: sticky; top: 0; z-index: 1;
+        }
+        .vm-details-table td {
+          padding: 9px 14px;
+          border-bottom: 1px solid #E4E4E6;
+          font-size: 12.5px; vertical-align: middle;
+        }
+        .vm-details-table tbody tr:hover { background: #EEEEF0; }
+
+        .vm-sidebar-list { display: flex; flex-direction: column; gap: 8px; }
+        .vm-sidebar-item {
+          padding: 10px 12px; background: #F9F9FA;
+          border: 1px solid #D4D4D6; border-radius: 5px;
+          font-size: 12.5px; color: #2e3d4a;
+          cursor: pointer; transition: background 0.1s, border-color 0.1s;
+        }
+        .vm-sidebar-item:hover { background: #EEEEF0; border-color: #b8c4d2; }
+        .vm-sidebar-item.active { background: #EBF1FE; border-color: #427DDB; color: #427DDB; }
+        /* ── VERIFY ALERT CARDS ── */
+        .vm-alert-card {
+          border-radius: 6px; padding: 12px 14px; margin-bottom: 10px;
+          transition: opacity 0.2s, background 0.2s;
+        }
+        .vm-alert-card-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
+        .vm-alert-card-reason { font-size: 12px; color: #5a6878; margin-bottom: 6px; line-height: 1.4; }
+        .vm-alert-card-meta { font-size: 11px; color: #8a9aaa; margin-bottom: 8px; }
+        .vm-alert-card-actions { display: flex; align-items: center; gap: 12px; }
+        .vm-alert-tag {
+          font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.02em;
+        }
+        .vm-alert-tag.error { background: rgba(192,57,43,0.12); color: #c0392b; }
+        .vm-alert-tag.warning { background: rgba(212,136,15,0.12); color: #b8700a; }
+        .vm-link-btn {
+          background: none; border: none; color: #427DDB; font-size: 11.5px; font-weight: 500;
+          cursor: pointer; padding: 0; font-family: inherit;
+        }
+        .vm-link-btn:hover { text-decoration: underline; }
+        .vm-action-btn {
+          font-size: 11.5px !important; padding: 5px 10px !important;
+          display: inline-flex !important; align-items: center; gap: 5px;
+        }
+
+        .vm-sidebar-warning { border-left: 3px solid #d4880f; }
+        .vm-sidebar-warning.active { background: #fffbeb; border-color: #d4880f; color: #b8700a; }
+        .vm-sidebar-error { border-left: 3px solid #c0392b; }
+        .vm-sidebar-error.active { background: #fef2f2; border-color: #c0392b; color: #c0392b; }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <button class="nav-btn">
+    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button class="nav-btn">
+    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    Menu
+    <svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="nav-sep"></div>
+  <button class="nav-btn">
+    <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+    User Options
+    <svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="nav-sep"></div>
+  <button class="nav-btn">
+    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    Sign Out
+  </button>
+</nav>
+
+<div class="body-layout">
+
+  <aside class="icon-sidebar">
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+    </div>
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    </div>
+    <div class="s-icon" style="position:relative">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      <span class="s-badge">3</span>
+    </div>
+    <div class="s-icon active">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+    </div>
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    </div>
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    </div>
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="14 2 18 6 7 17 3 17 3 13 14 2"/></svg>
+    </div>
+    <div class="s-spacer"></div>
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <div class="s-icon">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+    </div>
+    <div class="s-icon" style="margin-bottom: 6px;">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+  </aside>
+
+  <div class="page-content">
+    <div class="page-header">
+      <h1 class="page-title">Order Management</h1>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="help-btn" title="Help">?</button>
+      </div>
+    </div>
+
+    <div class="confirm-banner hidden" id="successBanner">
+      <span class="cb-icon">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </span>
+      <span id="successMsg"><strong>Confirmation:</strong> Orders sent successfully.</span>
+      <button class="cb-dismiss" onclick="document.getElementById('successBanner').classList.add('hidden')">×</button>
+    </div>
+
+    <!-- PAGE-LEVEL TABS -->
+    <div class="page-tabs">
+      <button class="page-tab active" id="tabDrafted" onclick="switchTab('drafted')">Drafted Orders (<span id="draftCount">589</span>)</button>
+      <button class="page-tab" id="tabSent" onclick="switchTab('sent')">Sent Orders (<span id="sentCount">235</span>)</button>
+    </div>
+
+    <div class="panels">
+      <!-- COLLAPSED FILTER TAB -->
+      <div class="filter-tab" id="filterTab" onclick="expandFilter()">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        <span class="ft-label">Filter & Sort</span>
+      </div>
+
+      <!-- FILTER PANEL -->
+      <div class="panel filter-panel" id="filterPanel">
+        <div class="panel-hd">
+          <button class="filter-collapse-btn" onclick="collapseFilter()">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            Filter & Sort
+          </button>
+          <button class="panel-menu-btn" onclick="togglePanelMenu(event)">
+            ⋮
+            <div class="panel-menu-pop" id="panelMenuPop">
+              <div class="pm-item" onclick="panelMenuAction('default')">Set as Default</div>
+              <div class="pm-item" onclick="panelMenuAction('reset')">Reset to Default</div>
+              <div class="pm-item" onclick="panelMenuAction('saveView')">Save as View</div>
+            </div>
+          </button>
+        </div>
+        <div class="filter-body">
+          <!-- Pinned Section -->
+          <div class="filter-section">
+            <div class="filter-section-hd open" onclick="toggleFilterSection(this)">
+              <svg class="section-chevron" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              Pinned
+            </div>
+            <div class="filter-section-body">
+              <div class="form-grp" id="filterStatusGroup" style="display:none">
+                <label class="form-lbl">Status</label>
+                <select class="form-ctrl" id="filterStatus">
+                  <option value="">All</option>
+                  <option value="Filled">Filled</option>
+                  <option value="Partially Filled">Partially Filled</option>
+                  <option value="Held">Held</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Order Type</label>
+                <select class="form-ctrl" id="assetType">
+                  <option value="">All</option>
+                  <option value="Option">Option</option>
+                  <option value="Equity">Equity</option>
+                  <option value="Mutual Fund">Mutual Fund</option>
+                  <option value="ETF">ETF</option>
+                </select>
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Order Batch</label>
+                <select class="form-ctrl" id="filterBatch">
+                  <option value="">All</option>
+                  <option value="batch1">3.22.2026 9:22 AM - Rebal (JRL)</option>
+                  <option value="batch2">3.24.2026 8:30 AM - Multi-Order (PSC)</option>
+                  <option value="batch3">3.24.2026 8:30 AM - Block (SRD)</option>
+                  <option value="batch4">3.24.2026 8:30 AM - Options (HVC)</option>
+                  <option value="batch5">3.25.2026 10:15 AM - Rebal (JRL)</option>
+                  <option value="batch6">3.26.2026 2:45 PM - Multi-Order (KTW)</option>
+                  <option value="batch7">3.27.2026 11:00 AM - Block (PSC)</option>
+                </select>
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Action</label>
+                <select class="form-ctrl" id="side">
+                  <option value="">All</option>
+                  <option value="BUY">Buy</option>
+                  <option value="SELL">Sell</option>
+                </select>
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Account #</label>
+                <input type="text" class="form-ctrl" id="filterAccount" placeholder="ACC-0000000">
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Rep Code</label>
+                <input type="text" class="form-ctrl" id="filterRep" placeholder="AAA">
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">CUSIP / Symbol / SEDOL</label>
+                <input type="text" class="form-ctrl" id="filterSecurity" placeholder="AAPL, MSFT...">
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Order ID</label>
+                <input type="text" class="form-ctrl" id="filterOrderId" placeholder="ORD-000000">
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Section -->
+          <div class="filter-section">
+            <div class="filter-section-hd" onclick="toggleFilterSection(this)">
+              <svg class="section-chevron" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              Additional
+            </div>
+            <div class="filter-section-body" style="display:none">
+              <div class="form-grp">
+                <label class="form-lbl">Alerts</label>
+                <select class="form-ctrl" id="filterAlert">
+                  <option value="">All</option>
+                  <option value="any">Has alerts or errors</option>
+                  <option value="error">Errors only</option>
+                  <option value="warning">Warnings only</option>
+                  <option value="none">No alerts</option>
+                </select>
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Min Value</label>
+                <input type="number" class="form-ctrl" id="minValue" placeholder="$0">
+              </div>
+              <div class="form-grp">
+                <label class="form-lbl">Max Value</label>
+                <input type="number" class="form-ctrl" id="maxValue" placeholder="$999,999">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sort Section -->
+          <div class="filter-section">
+            <div class="filter-section-hd" onclick="toggleFilterSection(this)">
+              <svg class="section-chevron" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              Sort
+            </div>
+            <div class="filter-section-body" style="display:none">
+              <p style="font-size:11.5px;color:#9aaab8;font-style:italic;padding:4px 0">Sort options</p>
+            </div>
+          </div>
+        </div>
+        <div class="filter-footer">
+          <button style="background:none;border:none;color:#427DDB;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;padding:0" onclick="resetFilterStep()" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Clear</button>
+          <button class="btn btn-primary" onclick="applyFilterStep()">Apply</button>
+        </div>
+      </div>
+
+      <!-- ORDERS PANEL -->
+      <div class="panel orders-panel">
+        <!-- GRID HEADER with title + filter pills -->
+        <div class="grid-header" id="gridHeader">
+          <div class="grid-header-row">
+            <span class="grid-header-title" id="gridHeaderTitle">Drafted Orders</span>
+            <span class="grid-header-count" id="gridHeaderCount">589 of 589</span>
+            <span class="grid-header-spacer"></span>
+            <span class="grid-col-config" id="gridColConfig" onclick="openColumnSettings()" title="Configure visible columns">
+              <span id="gridColConfigText">Displaying 8 of 41 columns</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            </span>
+          </div>
+          <div class="grid-header-filters" id="activeFiltersBar">
+            <span class="grid-filters-label">ACTIVE FILTERS:</span>
+            <div class="chips-area" id="filterChips"></div>
+          </div>
+        </div>
+
+        <!-- REVIEW BANNER -->
+        <div id="reviewBanner" class="review-banner" style="display:none">
+          <div class="review-banner-inner">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span id="reviewBannerText">Reviewing orders for send</span>
+            <button class="btn btn-ghost" style="margin-left:auto;font-size:11px;padding:4px 10px" onclick="goToStep(1)">← Back to Filter</button>
+            <button class="btn btn-primary" style="font-size:11px;padding:4px 12px" onclick="goToStep(3)">Continue to Verify →</button>
+          </div>
+        </div>
+
+        <!-- DRAFTED ORDERS TABLE -->
+        <div id="step1View" class="table-scroll">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th style="width:28px"></th>
+                <th style="width:36px"><input type="checkbox" id="headerCheckbox" class="header-checkbox" onchange="toggleHeaderCheckbox()" title="Select all"></th>
+                <th class="sortable" onclick="sortTable('type')">Order Type<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable" onclick="sortTable('symbol')">Symbol<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable" onclick="sortTable('side')">Action<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable" onclick="sortTable('qty')">Quantity<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable" onclick="sortTable('price')">Price<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable" onclick="sortTable('account')">Account<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable" onclick="sortTable('alert')" style="text-align:center">Alerts<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th style="width:50px;text-align:center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- SENT ORDERS TABLE -->
+        <div id="step6View" class="table-scroll" style="display:none">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th style="width:28px"></th>
+                <th style="width:36px"></th>
+                <th class="sortable-sent" onclick="sortSentTable('type')">Order Type<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable-sent" onclick="sortSentTable('symbol')">Symbol<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable-sent" onclick="sortSentTable('side')">Action<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable-sent" onclick="sortSentTable('qty')">Quantity<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable-sent" onclick="sortSentTable('price')">Price<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable-sent" onclick="sortSentTable('account')">Account<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th class="sortable-sent" onclick="sortSentTable('status')">Status<span class="sort-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="6"/><polyline points="6 10 12 4 18 10"/></svg></span></th>
+                <th style="width:40px"></th>
+              </tr>
+            </thead>
+            <tbody id="sentTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- SHARED PAGINATION ROW -->
+        <div class="grid-pagination" id="gridPagination">
+          <span class="page-info" id="pageInfo">Showing 1–20 of 589 orders</span>
+          <div class="pagination-controls" id="paginationControls"></div>
+        </div>
+
+        <!-- SHARED FOOTER BAR -->
+        <div class="grid-footer" id="gridFooter">
+          <div class="gf-left">
+            <div class="gf-select-wrap">
+              <button class="gf-select-btn" id="selectMenuBtn" onclick="toggleSelectMenu(event)">
+                <span class="gf-select-label" id="selectBtnLabel">Select...</span>
+                <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="gf-popover select-popover" id="selectPopover">
+                <div class="gf-pop-item" onclick="bulkSelect('allPage')"><svg id="allPageCheck" class="pop-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg><span>All on page (<span id="selPageCount">20</span>)</span></div>
+                <div class="gf-pop-item" onclick="bulkSelect('allFiltered')"><svg id="allFilteredCheck" class="pop-check" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#427DDB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg><span>All that match current filters (<span id="selFilteredCount">589</span>)</span></div>
+                <div class="gf-pop-divider"></div>
+                <div class="gf-pop-item" onclick="bulkSelect('allBuy')"><span class="status-pill buy" style="font-size:10px;padding:2px 7px"><span class="status-pip"></span>BUY</span> <span>All buy orders (<span id="selBuyCount">0</span>)</span></div>
+                <div class="gf-pop-item" onclick="bulkSelect('allSell')"><span class="status-pill sell" style="font-size:10px;padding:2px 7px"><span class="status-pip"></span>SELL</span> <span>All sell orders (<span id="selSellCount">0</span>)</span></div>
+                <div class="gf-pop-divider"></div>
+                <div class="gf-pop-item" onclick="bulkSelect('allOrders')"><span>All orders (<span id="selAllCount">589</span>)</span></div>
+                <div class="gf-pop-item" onclick="bulkSelect('allMine')"><span>All orders I created (<span id="selMineCount">0</span>)</span></div>
+                <div class="gf-pop-divider"></div>
+                <div class="gf-pop-item gf-pop-link" onclick="bulkSelect('none')">Clear selection</div>
+              </div>
+            </div>
+            <div class="selection-summary" id="selectionSummary">
+              <span class="selection-info" id="selectionInfo">No orders selected</span>
+              <span class="selection-value" id="selectionValue" style="display:none"></span>
+            </div>
+          </div>
+          <div class="gf-right">
+            <div class="gf-send-wrap">
+              <button class="btn btn-primary gf-send-main" id="sendBtn" onclick="sendSelectedOrders()" disabled>
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                Verify & Send
+              </button>
+              <button class="btn btn-primary gf-send-caret" id="sendCaretBtn" onclick="toggleSendMenu(event)" disabled>
+                <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="gf-popover gf-popover-right" id="sendPopover">
+                <div class="gf-pop-item gf-pop-action" onclick="closeSendMenu()">Edit</div>
+                <div class="gf-pop-item gf-pop-action" onclick="closeSendMenu()">Copy Selected Orders</div>
+                <div class="gf-pop-divider"></div>
+                <div class="gf-pop-item gf-pop-action gf-pop-danger" onclick="closeSendMenu()">Delete</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- VERIFICATION MODAL -->
+<div class="modal-overlay" id="verificationModal">
+  <div class="modal" style="width:900px;height:80vh">
+    <div class="modal-hd">
+      <span class="modal-title">Order Verification</span>
+      <button class="modal-close" onclick="closeVerification()">×</button>
+    </div>
+    <div class="modal-body" style="display:flex;gap:20px;overflow:hidden;flex:1;min-height:0">
+      <!-- Left sidebar -->
+      <div style="width:220px;flex-shrink:0;border-right:1px solid #DCDCDE;overflow-y:auto;padding-right:14px;margin-right:8px">
+        <div class="vm-sidebar-list" id="orderGroupsList"></div>
+      </div>
+      <!-- Right content -->
+      <div style="flex:1;overflow-y:auto;padding-right:4px">
+        <div id="verificationContent"></div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-ghost" onclick="closeVerification()">Cancel</button>
+      <button class="btn btn-primary" id="confirmSendBtn" onclick="goToStep(4)">Confirm & Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- SENDING OVERLAY -->
+<div id="sendingOverlay" style="display:none;position:fixed;inset:0;background:rgba(9,30,66,0.55);z-index:3000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:40px 50px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.2);min-width:420px;position:relative">
+    <!-- Close button (shown on success phase) -->
+    <button id="sendingOverlayClose" onclick="closeSendingOverlay()" style="display:none;position:absolute;top:14px;right:16px;background:none;border:none;cursor:pointer;color:#8a9aaa;font-size:22px;line-height:1;padding:0 3px" onmouseover="this.style.color='#2e3d4a'" onmouseout="this.style.color='#8a9aaa'">×</button>
+    <!-- Spinner phase -->
+    <div id="sendingPhaseSpinner">
+      <div class="sending-spinner"></div>
+      <div style="font-size:15px;font-weight:600;color:#2c3540;margin-top:16px" id="sendingText">Processing orders...</div>
+      <div style="font-size:12.5px;color:#8a9aaa;margin-top:6px" id="sendingSubtext">Routing to execution venues</div>
+    </div>
+    <!-- Success phase -->
+    <div id="sendingPhaseSuccess" style="display:none">
+      <div class="success-checkmark" style="margin:0 auto 16px">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:17px;font-weight:700;color:#2c3540;margin-bottom:28px">Orders Sent Successfully</div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button class="btn btn-ghost" onclick="closeSendingOverlay()" style="min-width:180px">Return to <strong>Drafted Orders</strong></button>
+        <button class="btn btn-primary" onclick="goToStep(6)" style="min-width:220px">View in <strong>Sent Orders</strong></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL LAYER -->
+<div class="detail-layer-overlay" id="detailLayerOverlay" onclick="if(event.target===this)closeDetailLayer()">
+  <div class="detail-layer">
+    <div class="dl-hd">
+      <div class="dl-hd-top">
+        <div>
+          <div class="dl-hd-title" id="dlTitle">Order ORD-000001</div>
+          <div class="dl-hd-subtitle" id="dlSubtitle">AAPL · Apple Inc · BUY</div>
+        </div>
+        <button class="dl-close" onclick="closeDetailLayer()">×</button>
+      </div>
+      <div class="dl-tabs">
+        <button class="dl-tab active" onclick="switchDetailTab('overview',this)">Overview</button>
+        <button class="dl-tab" onclick="switchDetailTab('execution',this)">Execution</button>
+        <button class="dl-tab" onclick="switchDetailTab('compliance',this)">Compliance</button>
+        <button class="dl-tab" onclick="switchDetailTab('allocation',this)">Allocation</button>
+        <button class="dl-tab" onclick="switchDetailTab('history',this)">History</button>
+      </div>
+    </div>
+    <div class="dl-body" id="dlBody"></div>
+  </div>
+</div>
+
+
+<script>
+/* ── DATA GENERATION ── */
+const SYMBOLS = [
+  {sym:'AAPL',name:'Apple Inc',sec:'037833100'},
+  {sym:'TSLA',name:'Tesla Inc',sec:'88160R101'},
+  {sym:'MSFT',name:'Microsoft Corp',sec:'594918104'},
+  {sym:'META',name:'Meta Platforms Inc',sec:'30303M102'},
+  {sym:'AMZN',name:'Amazon.com Inc',sec:'023135106'},
+  {sym:'JPM',name:'JPMorgan Chase & Co',sec:'46625H100'},
+  {sym:'NVDA',name:'NVIDIA Corp',sec:'67066G104'},
+  {sym:'GOOGL',name:'Alphabet Inc Cl A',sec:'02079K305'},
+  {sym:'SPY',name:'SPDR S&P 500 ETF',sec:'78462F103'},
+  {sym:'QQQ',name:'Invesco QQQ Trust',sec:'46090E103'},
+  {sym:'VTI',name:'Vanguard Total Stock',sec:'922908769'},
+  {sym:'IWM',name:'iShares Russell 2000',sec:'464287655'},
+  {sym:'GS',name:'Goldman Sachs Group',sec:'38141G104'},
+  {sym:'BAC',name:'Bank of America Corp',sec:'060505104'},
+  {sym:'DIS',name:'Walt Disney Co',sec:'254687106'},
+  {sym:'NFLX',name:'Netflix Inc',sec:'64110L106'},
+  {sym:'V',name:'Visa Inc',sec:'92826C839'},
+  {sym:'MA',name:'Mastercard Inc',sec:'57636Q104'},
+  {sym:'COST',name:'Costco Wholesale',sec:'22160K105'},
+  {sym:'HD',name:'Home Depot Inc',sec:'437076102'}
+];
+const TYPES = ['Equity','Equity','Equity','Option','Option','Mutual Fund','ETF'];
+const GROUPS = ['Portfolio A','Portfolio B','Portfolio C','Portfolio D'];
+const ACCOUNTS = ['ACC-7291004','ACC-3847201','ACC-5592810','ACC-1038472','ACC-8820156','ACC-6614039'];
+const BATCHES = ['batch1','batch2','batch3','batch4','batch5','batch6','batch7'];
+const REPS = ['Chen, Sarah','Rodriguez, Michael','Park, Emily','Kim, David','Walsh, Thomas'];
+const STATUSES_DRAFT = ['Draft','Draft','Draft','Draft','Pending Review'];
+
+function generateOrders(count) {
+  const arr = [];
+  for (let i = 0; i < count; i++) {
+    const s = SYMBOLS[i % SYMBOLS.length];
+    const side = Math.random() > 0.45 ? 'BUY' : 'SELL';
+    const qty = Math.floor(Math.random() * 900 + 10) * 5;
+    const basePrice = {AAPL:182,TSLA:246,MSFT:380,META:496,AMZN:179,JPM:174,NVDA:871,GOOGL:139,SPY:446,QQQ:385,VTI:238,IWM:198,GS:412,BAC:37,DIS:105,NFLX:625,V:275,MA:462,COST:735,HD:342}[s.sym]||200;
+    const price = +(basePrice + (Math.random()-0.5)*basePrice*0.04).toFixed(2);
+    arr.push({
+      id: i+1,
+      symbol: s.sym,
+      name: s.name,
+      cusip: s.sec,
+      side,
+      qty,
+      price,
+      type: TYPES[i % TYPES.length],
+      group: GROUPS[i % GROUPS.length],
+      account: ACCOUNTS[i % ACCOUNTS.length],
+      rep: REPS[i % REPS.length],
+      status: STATUSES_DRAFT[i % STATUSES_DRAFT.length],
+      settlementDate: '2026-04-08',
+      timeInForce: Math.random()>0.7 ? 'GTC' : 'Day',
+      notes: i%7===0 ? 'Rebalance trade' : (i%11===0 ? 'Client-directed' : ''),
+      alert: [43,52,108].includes(i+1) ? 'error' : [22,64,23,30,45,66,80,94].includes(i+1) ? 'warning' : 'none',
+      batch: BATCHES[i % BATCHES.length]
+    });
+  }
+  return arr;
+}
+
+const orders = generateOrders(589);
+let filteredOrders = [...orders];
+let selectedIds = new Set();
+let currentStep = 1;
+let currentPage = 1;
+let sortCol = null;
+let sortDir = 'asc';
+let lastSentCount = 0;
+let lastSentBatch = '';
+let lastSentIds = new Set();
+
+/* ── GENERATE SENT ORDERS ── */
+// Specific indices for non-Filled statuses in pre-generated sent orders
+const SENT_PARTIAL_IDS = new Set([18, 67, 134, 189]);  // 4 partially filled
+const SENT_HELD_IDS = new Set([42, 103]);               // 2 held
+function generateSentOrders(count) {
+  const arr = [];
+  for (let i = 0; i < count; i++) {
+    const s = SYMBOLS[(i+3) % SYMBOLS.length];
+    const side = Math.random() > 0.42 ? 'BUY' : 'SELL';
+    const qty = Math.floor(Math.random() * 900 + 10) * 5;
+    const basePrice = {AAPL:182,TSLA:246,MSFT:380,META:496,AMZN:179,JPM:174,NVDA:871,GOOGL:139,SPY:446,QQQ:385,VTI:238,IWM:198,GS:412,BAC:37,DIS:105,NFLX:625,V:275,MA:462,COST:735,HD:342}[s.sym]||200;
+    const price = +(basePrice + (Math.random()-0.5)*basePrice*0.04).toFixed(2);
+    const status = SENT_PARTIAL_IDS.has(i) ? 'Partially Filled' : SENT_HELD_IDS.has(i) ? 'Held' : 'Filled';
+    arr.push({
+      id: 10000+i+1,
+      symbol: s.sym,
+      name: s.name,
+      cusip: s.sec,
+      side,
+      qty,
+      price,
+      group: GROUPS[(i+1) % GROUPS.length],
+      account: ACCOUNTS[(i+2) % ACCOUNTS.length],
+      rep: REPS[(i+1) % REPS.length],
+      status: status,
+      type: status === 'Partially Filled' ? 'Limit' : TYPES[(i+2) % TYPES.length],
+      settlementDate: '2026-04-07',
+      timeInForce: Math.random()>0.7 ? 'GTC' : 'Day',
+      notes: i%9===0 ? 'Rebalance trade' : (i%13===0 ? 'Client-directed' : '')
+    });
+  }
+  return arr;
+}
+let sentOrders = generateSentOrders(235);
+let sentPage = 1;
+const PAGE_SIZE = 20;
+let openDrawerId = null;
+
+/* ── CHEVRON SVG ── */
+const chevronSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>`;
+
+/* ── SORT ── */
+function sortTable(col) {
+  if (sortCol === col) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortCol = col;
+    sortDir = 'asc';
+  }
+  const alertRank = { error: 0, warning: 1, none: 2 };
+  filteredOrders.sort((a, b) => {
+    let va = a[col], vb = b[col];
+    if (col === 'alert') { va = alertRank[va]; vb = alertRank[vb]; }
+    else if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return sortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  // Update header classes
+  document.querySelectorAll('#step1View th.sortable').forEach(th => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+  });
+  const idx = ['type','symbol','side','qty','price','account','alert'].indexOf(col);
+  const ths = document.querySelectorAll('#step1View th.sortable');
+  if (ths[idx]) ths[idx].classList.add(sortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+  currentPage = 1;
+  renderOrdersTable();
+  updateSelectionDisplay();
+}
+
+/* ── SORT SENT TABLE ── */
+let sentSortCol = null, sentSortDir = 'asc';
+function sortSentTable(col) {
+  if (sentSortCol === col) {
+    sentSortDir = sentSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sentSortCol = col;
+    sentSortDir = 'asc';
+  }
+  const statusRank = { Filled: 0, 'Partially Filled': 1, Held: 2, Rejected: 3 };
+  sentOrders.sort((a, b) => {
+    let va = a[col], vb = b[col];
+    if (col === 'status') { va = statusRank[va] ?? 9; vb = statusRank[vb] ?? 9; }
+    else if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return sentSortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sentSortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  document.querySelectorAll('#step6View th.sortable-sent').forEach(th => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+  });
+  const cols = ['type','symbol','side','qty','price','account','status'];
+  const idx = cols.indexOf(col);
+  const ths = document.querySelectorAll('#step6View th.sortable-sent');
+  if (ths[idx]) ths[idx].classList.add(sentSortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+  sentPage = 1;
+  renderSentOrdersTable();
+}
+
+/* ── RENDER TABLE ── */
+function renderOrdersTable() {
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageOrders = filteredOrders.slice(start, start + PAGE_SIZE);
+  const tbody = document.getElementById('ordersTableBody');
+
+  tbody.innerHTML = pageOrders.map(order => {
+    const totalValue = (order.qty * order.price);
+    const sidePill = order.side === 'BUY'
+      ? `<span class="status-pill buy"><span class="status-pip"></span>BUY</span>`
+      : `<span class="status-pill sell"><span class="status-pip"></span>SELL</span>`;
+    const isSelected = selectedIds.has(order.id);
+    const isOpen = openDrawerId === order.id;
+    const hasWarning = order.id % 7 === 0;
+    return `
+      <tr class="order-row ${isSelected?'selected':''}" data-id="${order.id}">
+        <td style="width:28px;padding:9px 4px 9px 10px">
+          <div class="row-chevron ${isOpen?'open':''}" onclick="toggleDrawer(${order.id},event)">${chevronSVG}</div>
+        </td>
+        <td class="checkbox-cell"><input type="checkbox" class="order-checkbox" data-id="${order.id}" ${isSelected?'checked':''} onchange="updateSelection()"></td>
+        <td>${order.type}</td>
+        <td><strong>${order.symbol}</strong></td>
+        <td>${sidePill}</td>
+        <td>${order.qty.toLocaleString()}</td>
+        <td>$${order.price.toFixed(2)}</td>
+        <td style="font-size:11.5px;color:#8a9aaa">${order.account}</td>
+        <td style="text-align:center">${order.alert === 'error' ? '<svg class="alert-icon" title="Error" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.75"/><line x1="8" y1="5" x2="8" y2="8.5"/><circle cx="8" cy="10.75" r="0.6" fill="#c0392b" stroke="none"/></svg>' : order.alert === 'warning' ? '<svg class="alert-icon" title="Warning" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#d4880f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.9 2.4L1.2 12a1.2 1.2 0 001.1 1.8h11.4a1.2 1.2 0 001.1-1.8L9.1 2.4a1.2 1.2 0 00-2.2 0z"/><line x1="8" y1="6" x2="8" y2="9.25"/><circle cx="8" cy="11.25" r="0.6" fill="#d4880f" stroke="none"/></svg>' : ''}</td>
+        <td style="width:50px;position:relative;text-align:center"><span class="row-action-btn" onclick="toggleRowMenu(${order.id},event)">⋮</span><div class="row-action-menu" id="rowMenu-${order.id}"><div class="gf-pop-item gf-pop-action" onclick="rowAction('edit',${order.id})">Edit Order</div><div class="gf-pop-item gf-pop-action" onclick="rowAction('copy',${order.id})">Copy Order</div><div class="gf-pop-item gf-pop-action" onclick="rowAction('duplicate',${order.id})">Duplicate</div><div class="gf-pop-divider"></div><div class="gf-pop-item gf-pop-action gf-pop-danger" onclick="rowAction('delete',${order.id})">Delete</div></div></td>
+      </tr>
+      <tr class="detail-drawer ${isOpen?'open':''}" data-drawer="${order.id}">
+        <td colspan="10">
+          <div class="drawer-summary">
+            <span class="drawer-summary-item">${order.account}</span>
+            <span class="drawer-sep">|</span>
+            <span class="drawer-summary-item">${order.rep}</span>
+            <span class="drawer-sep">|</span>
+            <span class="drawer-summary-item ${order.side==='BUY'?'buy-text':'sell-text'}">${order.side==='BUY'?'Buy':'Sell'}</span>
+            <span class="drawer-summary-item">${order.qty.toLocaleString()} Shares <strong>${order.symbol}</strong></span>
+          </div>
+          <div class="drawer-details">
+            <div class="drawer-col">
+              <div class="drawer-col-title">Security</div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Type</span><span class="drawer-attr-val">${order.type}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">CUSIP</span><span class="drawer-attr-val">${order.cusip}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Security Desc.</span><span class="drawer-attr-val">${order.name}</span></div>
+              <div class="drawer-col-title" style="margin-top:14px">Price</div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Price</span><span class="drawer-attr-val">$${order.price.toFixed(2)}</span></div>
+            </div>
+            <div class="drawer-col">
+              <div class="drawer-col-title">Additional Details</div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Status</span><span class="drawer-attr-val">${order.status}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Account Type</span><span class="drawer-attr-val">${order.group}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Condition</span><span class="drawer-attr-val">${order.timeInForce}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order ID</span><span class="drawer-attr-val">ORD-${String(order.id).padStart(6,'0')}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Entry Date/Time</span><span class="drawer-attr-val">2026-04-03 14:${String(22+order.id%30).padStart(2,'0')}</span></div>
+            </div>
+          </div>
+          <div style="padding:2px 20px 14px 50px">
+            <a class="drawer-link" onclick="openDetailLayer(${order.id})">Full Order Details <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+
+  document.getElementById('draftCount').textContent = orders.length;
+  renderPagination();
+}
+
+/* ── TOGGLE DRAWER ── */
+function toggleDrawer(id, e) {
+  e.stopPropagation();
+  openDrawerId = openDrawerId === id ? null : id;
+  renderOrdersTable();
+}
+
+/* ── PAGINATION ── */
+function renderPagination() {
+  const totalPages = Math.ceil(filteredOrders.length / PAGE_SIZE);
+  const start = (currentPage-1)*PAGE_SIZE + 1;
+  const end = Math.min(currentPage*PAGE_SIZE, filteredOrders.length);
+  document.getElementById('pageInfo').textContent = `Showing ${start}–${end} of ${filteredOrders.length} orders`;
+
+  let btns = '';
+  btns += `<button class="page-btn" onclick="changePage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+
+  const maxVisible = 7;
+  let pages = [];
+  if (totalPages <= maxVisible) {
+    for (let i=1;i<=totalPages;i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (currentPage > 3) pages.push('...');
+    for (let i=Math.max(2,currentPage-1);i<=Math.min(totalPages-1,currentPage+1);i++) pages.push(i);
+    if (currentPage < totalPages-2) pages.push('...');
+    pages.push(totalPages);
+  }
+
+  pages.forEach(p => {
+    if (p==='...') { btns += `<span style="padding:0 4px;color:#8a9aaa">…</span>`; }
+    else { btns += `<button class="page-btn ${p===currentPage?'active':''}" onclick="changePage(${p})">${p}</button>`; }
+  });
+
+  btns += `<button class="page-btn" onclick="changePage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`;
+  document.getElementById('paginationControls').innerHTML = btns;
+}
+
+function changePage(page) {
+  const totalPages = Math.ceil(filteredOrders.length / PAGE_SIZE);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  openDrawerId = null;
+  renderOrdersTable();
+  document.getElementById('step1View').scrollTop = 0;
+}
+
+/* ── SELECTION ── */
+function updateSelection() {
+  document.querySelectorAll('.order-checkbox').forEach(cb => {
+    const id = parseInt(cb.dataset.id);
+    if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+  });
+  document.querySelectorAll('.order-row').forEach(row => {
+    row.classList.toggle('selected', selectedIds.has(parseInt(row.dataset.id)));
+  });
+  updateSelectionDisplay();
+}
+
+/* ── FILTER SECTION TOGGLE ── */
+function toggleFilterSection(hd) {
+  const body = hd.nextElementSibling;
+  const isOpen = hd.classList.contains('open');
+  hd.classList.toggle('open');
+  body.style.display = isOpen ? 'none' : '';
+}
+
+/* ── FILTERS ── */
+function applyFilterStep() {
+  const status = document.getElementById('filterStatus').value;
+  const assetType = document.getElementById('assetType').value;
+  const batch = document.getElementById('filterBatch').value;
+  const side = document.getElementById('side').value;
+  const account = document.getElementById('filterAccount').value.trim();
+  const rep = document.getElementById('filterRep').value.trim().toUpperCase();
+  const security = document.getElementById('filterSecurity').value.trim().toUpperCase();
+  const orderId = document.getElementById('filterOrderId').value.trim();
+  const minValue = parseFloat(document.getElementById('minValue').value) || 0;
+  const maxValue = parseFloat(document.getElementById('maxValue').value) || Infinity;
+  const alertFilter = document.getElementById('filterAlert').value;
+
+  filteredOrders = orders.filter(o => {
+    if (status && o.status !== status) return false;
+    if (assetType && o.type !== assetType) return false;
+    if (batch && o.batch !== batch) return false;
+    if (side && o.side !== side) return false;
+    if (account && !o.account.includes(account)) return false;
+    if (rep && o.rep !== rep) return false;
+    if (security && !o.symbol.includes(security) && !o.cusip.includes(security)) return false;
+    if (orderId && !String(o.id).padStart(6,'0').includes(orderId)) return false;
+    const value = o.qty * o.price;
+    if (value < minValue || value > maxValue) return false;
+    if (alertFilter === 'any' && !(o.alert === 'warning' || o.alert === 'error')) return false;
+    if (alertFilter === 'error' && o.alert !== 'error') return false;
+    if (alertFilter === 'warning' && o.alert !== 'warning') return false;
+    if (alertFilter === 'none' && (o.alert === 'warning' || o.alert === 'error')) return false;
+    return true;
+  });
+
+  currentPage = 1;
+  openDrawerId = null;
+  renderOrdersTable();
+  renderFilterChips();
+}
+
+function renderFilterChips() {
+  const chips = [];
+  const status = document.getElementById('filterStatus').value;
+  const assetType = document.getElementById('assetType').value;
+  const batch = document.getElementById('filterBatch');
+  const batchVal = batch.value;
+  const batchLabel = batchVal ? batch.options[batch.selectedIndex].text : '';
+  const side = document.getElementById('side').value;
+  const account = document.getElementById('filterAccount').value.trim();
+  const rep = document.getElementById('filterRep').value.trim();
+  const security = document.getElementById('filterSecurity').value.trim();
+  const orderId = document.getElementById('filterOrderId').value.trim();
+  const minValue = document.getElementById('minValue').value;
+  const maxValue = document.getElementById('maxValue').value;
+  const alertFilter = document.getElementById('filterAlert').value;
+  const alertLabels = { any: 'Has alerts or errors', error: 'Errors only', warning: 'Warnings only', none: 'No alerts' };
+
+  if (status) chips.push(`Status: ${status}`);
+  if (assetType) chips.push(`Type: ${assetType}`);
+  if (batchVal) chips.push(`Batch: ${batchLabel}`);
+  if (side) chips.push(`Action: ${side}`);
+  if (account) chips.push(`Account: ${account}`);
+  if (rep) chips.push(`Rep: ${rep}`);
+  if (security) chips.push(`Security: ${security}`);
+  if (orderId) chips.push(`Order ID: ${orderId}`);
+  if (minValue) chips.push(`Min: $${parseInt(minValue).toLocaleString()}`);
+  if (maxValue) chips.push(`Max: $${parseInt(maxValue).toLocaleString()}`);
+  if (alertFilter) chips.push(`Alerts: ${alertLabels[alertFilter]}`);
+
+  const filtersBar = document.getElementById('activeFiltersBar');
+  if (chips.length) {
+    document.getElementById('filterChips').innerHTML =
+      chips.map(c => `<div class="chip">${c}<button class="chip-remove" onclick="this.parentElement.remove()">×</button></div>`).join('');
+    filtersBar.style.display = '';
+  } else {
+    document.getElementById('filterChips').innerHTML = '';
+    filtersBar.style.display = 'none';
+  }
+  updateGridHeaderCount();
+}
+
+function resetFilterStep() {
+  document.getElementById('filterStatus').value = '';
+  document.getElementById('assetType').value = '';
+  document.getElementById('filterBatch').value = '';
+  document.getElementById('side').value = '';
+  document.getElementById('filterAccount').value = '';
+  document.getElementById('filterRep').value = '';
+  document.getElementById('filterSecurity').value = '';
+  document.getElementById('filterOrderId').value = '';
+  document.getElementById('minValue').value = '';
+  document.getElementById('maxValue').value = '';
+  document.getElementById('filterAlert').value = '';
+  applyFilterStep();
+}
+
+/* ── VERIFICATION MODAL ── */
+let verifyGroups = [];
+
+function renderVerificationModal() {
+  const sel = orders.filter(o => selectedIds.has(o.id));
+  verifyGroups = [];
+
+  // Build groups: type+side combos
+  const typeSideMap = new Map();
+  sel.forEach(o => {
+    const key = `${o.type} — ${o.side === 'BUY' ? 'Buys' : 'Sells'}`;
+    if (!typeSideMap.has(key)) typeSideMap.set(key, []);
+    typeSideMap.get(key).push(o);
+  });
+
+  // Sort: MF groups separate, equity grouped
+  const sortOrder = ['Equity — Buys','Equity — Sells','ETF — Buys','ETF — Sells','Option — Buys','Option — Sells','Mutual Fund — Buys','Mutual Fund — Sells'];
+  sortOrder.forEach(key => {
+    if (typeSideMap.has(key)) {
+      verifyGroups.push({ key, orders: typeSideMap.get(key), type: 'normal' });
+    }
+  });
+
+  // Alerts group — warnings
+  const warnings = sel.filter(o => o.alert === 'warning');
+  if (warnings.length > 0) {
+    verifyGroups.push({ key: `Warnings (${warnings.length})`, orders: warnings, type: 'warning' });
+  }
+  // Alerts group — errors
+  const errors = sel.filter(o => o.alert === 'error');
+  if (errors.length > 0) {
+    verifyGroups.push({ key: `Errors (${errors.length})`, orders: errors, type: 'error' });
+  }
+
+  const groupsList = document.getElementById('orderGroupsList');
+  groupsList.innerHTML = verifyGroups.map((g, idx) => {
+    const icon = g.type === 'error'
+      ? '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="8" cy="8" r="6.75"/><line x1="8" y1="5" x2="8" y2="8.5"/><circle cx="8" cy="10.75" r="0.6" fill="#c0392b" stroke="none"/></svg>'
+      : g.type === 'warning'
+      ? '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#d4880f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M6.9 2.4L1.2 12a1.2 1.2 0 001.1 1.8h11.4a1.2 1.2 0 001.1-1.8L9.1 2.4a1.2 1.2 0 00-2.2 0z"/><line x1="8" y1="6" x2="8" y2="9.25"/><circle cx="8" cy="11.25" r="0.6" fill="#d4880f" stroke="none"/></svg>'
+      : '';
+    const borderClass = g.type === 'error' ? ' vm-sidebar-error' : g.type === 'warning' ? ' vm-sidebar-warning' : '';
+    return `
+    <div class="vm-sidebar-item${borderClass} ${idx===0?'active':''}" onclick="selectVerifyGroup(this,${idx})">
+      <div style="display:flex;align-items:center;gap:6px">${icon}<span>${g.key}</span></div>
+      <div style="font-size:10px;color:#8a9aaa">${g.orders.length} orders · $${(g.orders.reduce((s,o)=>s+o.qty*o.price,0)/1000).toFixed(0)}K</div>
+    </div>`;
+  }).join('');
+
+  // Add divider before alerts if they exist
+  if (warnings.length > 0 || errors.length > 0) {
+    const normalCount = verifyGroups.filter(g => g.type === 'normal').length;
+    const items = groupsList.querySelectorAll('.vm-sidebar-item');
+    if (items[normalCount]) {
+      const divider = document.createElement('div');
+      divider.style.cssText = 'border-top:1px solid #D4D4D6;margin:8px 0;';
+      items[normalCount].parentNode.insertBefore(divider, items[normalCount]);
+    }
+  }
+
+  selectVerifyGroup(groupsList.querySelector('.vm-sidebar-item'), 0);
+}
+
+const ALERT_REASONS = {
+  warning: [
+    'Position concentration nearing 5% limit for account',
+    'Order size exceeds soft limit — review recommended'
+  ],
+  error: [
+    'Restricted security — account has an active restriction against purchasing this security'
+  ]
+};
+
+function selectVerifyGroup(element, idx) {
+  document.querySelectorAll('.vm-sidebar-item').forEach(el => el.classList.remove('active'));
+  element.classList.add('active');
+
+  const g = verifyGroups[idx];
+  const groupOrders = g.orders;
+  const totalValue = groupOrders.reduce((sum,o)=>sum+(o.qty*o.price),0);
+  const content = document.getElementById('verificationContent');
+
+  let html = `<div class="vm-section"><div class="vm-section-title">${g.key}</div>`;
+
+  if (g.type === 'error') {
+    html += `<div class="error-banner"><span class="eb-icon">⊘</span><span><strong>${groupOrders.length} order${groupOrders.length!==1?'s have':' has'} errors</strong> that will prevent ${groupOrders.length!==1?'them':'it'} from being sent. Remove or defer to continue.</span></div>`;
+  } else if (g.type === 'warning') {
+    html += `<div class="warning-banner"><span class="wb-icon">⚠</span><span><strong>${groupOrders.length} order${groupOrders.length!==1?'s have':' has'} warnings.</strong> These can still be sent, or you can defer them for later review.</span></div>`;
+  }
+
+  if (g.type === 'normal') {
+    // Standard table view for normal groups
+    html += `<div class="vm-stats">
+      <div class="vm-stat-card"><div class="vm-stat-label">Total Orders</div><div class="vm-stat-value">${groupOrders.length}</div></div>
+      <div class="vm-stat-card"><div class="vm-stat-label">Total Value</div><div class="vm-stat-value">$${totalValue.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+    </div>`;
+    html += `<table class="vm-details-table"><thead><tr><th>Symbol</th><th>Side</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>`;
+    groupOrders.forEach(o => {
+      html += `<tr>
+        <td>${o.symbol}</td>
+        <td>${o.side==='BUY'?'<span class="status-pill buy"><span class="status-pip"></span>BUY</span>':'<span class="status-pill sell"><span class="status-pip"></span>SELL</span>'}</td>
+        <td>${o.qty.toLocaleString()}</td><td>$${o.price.toFixed(2)}</td>
+        <td>$${(o.qty*o.price).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>`;
+    });
+    html += `</tbody></table>`;
+  } else {
+    // Card view for warning/error groups
+    groupOrders.forEach((o, i) => {
+      const isError = o.alert === 'error';
+      const borderColor = isError ? '#c0392b' : '#d4880f';
+      const reason = isError ? ALERT_REASONS.error[i % ALERT_REASONS.error.length] : ALERT_REASONS.warning[i % ALERT_REASONS.warning.length];
+      const excluded = o._excluded;
+      const deferred = o._deferred;
+      const acted = excluded || deferred;
+
+      html += `<div class="vm-alert-card" style="background:${acted ? '#f8f8f8' : '#fff'};border-left:3px solid ${acted ? '#b0bac8' : borderColor};${acted ? 'opacity:0.55' : ''}">
+        <div class="vm-alert-card-hd">
+          <div>
+            <strong>${o.symbol}</strong>
+            <span style="margin-left:8px">${o.side==='BUY'?'<span class="status-pill buy"><span class="status-pip"></span>BUY</span>':'<span class="status-pill sell"><span class="status-pip"></span>SELL</span>'}</span>
+            <span style="margin-left:8px;color:#5a6878;font-size:12px">${o.qty.toLocaleString()} @ $${o.price.toFixed(2)}</span>
+          </div>
+          <span class="vm-alert-tag ${o.alert}">${isError ? 'Error' : 'Warning'}</span>
+        </div>
+        <div class="vm-alert-card-reason">${reason}</div>
+        <div class="vm-alert-card-meta">${o.account} · ORD-${String(o.id).padStart(6,'0')}</div>
+        <div class="vm-alert-card-actions">
+          ${acted
+            ? `<span style="color:#8a9aaa;font-size:11.5px;font-weight:500">${excluded ? 'Removed from send' : 'Deferred for later'}</span>
+               <button class="vm-link-btn" onclick="verifyRestore(${o.id},${idx})">Undo</button>`
+            : `<button class="vm-link-btn" style="color:#c0392b" onclick="verifyExclude(${o.id},${idx})">Remove from Send</button>
+               <span style="color:#D4D4D6">|</span>
+               <button class="vm-link-btn" onclick="verifyDefer(${o.id},${idx})">Defer for Later</button>`}
+        </div>
+      </div>`;
+    });
+  }
+
+  html += `</div>`;
+  content.innerHTML = html;
+}
+
+function verifyExclude(orderId, groupIdx) {
+  const o = orders.find(o => o.id === orderId);
+  if (o) { o._excluded = true; o._deferred = false; selectedIds.delete(orderId); }
+  refreshVerifySidebar(groupIdx);
+}
+
+function verifyDefer(orderId, groupIdx) {
+  const o = orders.find(o => o.id === orderId);
+  if (o) { o._deferred = true; o._excluded = false; selectedIds.delete(orderId); }
+  refreshVerifySidebar(groupIdx);
+}
+
+function verifyRestore(orderId, groupIdx) {
+  const o = orders.find(o => o.id === orderId);
+  if (o) { o._excluded = false; o._deferred = false; selectedIds.add(orderId); }
+  refreshVerifySidebar(groupIdx);
+}
+
+function refreshVerifySidebar(activeGroupIdx) {
+  // Recalculate counts for normal groups (exclude removed/deferred orders)
+  const sel = orders.filter(o => selectedIds.has(o.id));
+  const groupsList = document.getElementById('orderGroupsList');
+  const items = groupsList.querySelectorAll('.vm-sidebar-item');
+
+  verifyGroups.forEach((g, idx) => {
+    if (g.type === 'normal') {
+      const activeOrders = g.orders.filter(o => !o._excluded && !o._deferred);
+      const val = activeOrders.reduce((s,o) => s + o.qty * o.price, 0);
+      const infoEl = items[idx]?.querySelector('div:last-child');
+      if (infoEl) infoEl.textContent = `${activeOrders.length} orders · $${(val/1000).toFixed(0)}K`;
+    }
+  });
+
+  // Update confirm button
+  const confirmBtn = document.getElementById('confirmSendBtn');
+  confirmBtn.textContent = `Confirm & Send ${selectedIds.size} Orders`;
+
+  // Re-render active group content
+  selectVerifyGroup(items[activeGroupIdx], activeGroupIdx);
+}
+
+/* ── SENT ORDERS TABLE ── */
+function getFilteredSentOrders() {
+  if (lastSentIds.size > 0) return sentOrders.filter(o => lastSentIds.has(o.id));
+  return sentOrders;
+}
+
+function renderSentOrdersTable() {
+  const filtered = getFilteredSentOrders();
+  const start = (sentPage-1)*PAGE_SIZE;
+  const pageOrders = filtered.slice(start, start+PAGE_SIZE);
+  const tbody = document.getElementById('sentTableBody');
+
+  tbody.innerHTML = pageOrders.map(order => {
+    const totalValue = order.qty * order.price;
+    const sidePill = order.side==='BUY'
+      ? `<span class="status-pill buy"><span class="status-pip"></span>BUY</span>`
+      : `<span class="status-pill sell"><span class="status-pip"></span>SELL</span>`;
+    const statusColors = { Filled:'#3a7252', 'Partially Filled':'#7c3aed', Held:'#d4880f', Rejected:'#c0392b' };
+    const statusColor = statusColors[order.status] || '#3a7252';
+    const isSentOpen = sentOpenDrawerId === order.id;
+    return `
+      <tr class="order-row${lastSentIds.has(order.id) ? ' just-sent' : ''}" data-id="${order.id}">
+        <td style="width:28px;padding:9px 4px 9px 10px">
+          <div class="row-chevron ${isSentOpen?'open':''}" onclick="toggleSentDrawer(${order.id},this,event)">${chevronSVG}</div>
+        </td>
+        <td class="checkbox-cell"><input type="checkbox" class="order-checkbox" data-id="${order.id}"></td>
+        <td>${order.type}</td>
+        <td><strong>${order.symbol}</strong></td>
+        <td>${sidePill}</td>
+        <td>${order.qty.toLocaleString()}</td>
+        <td>$${order.price.toFixed(2)}</td>
+        <td style="font-size:11.5px;color:#8a9aaa">${order.account}</td>
+        <td><span style="color:${statusColor};font-weight:500;font-size:12px">${order.status}</span></td>
+        <td style="width:40px"><span style="color:#b0bac8;cursor:pointer;font-size:16px">⋮</span></td>
+      </tr>
+      <tr class="detail-drawer ${isSentOpen?'open':''}" data-drawer="sent-${order.id}">
+        <td colspan="10">
+          <div class="drawer-summary">
+            <span class="drawer-summary-item">${order.account}</span>
+            <span class="drawer-sep">|</span>
+            <span class="drawer-summary-item">${order.rep}</span>
+            <span class="drawer-sep">|</span>
+            <span class="drawer-summary-item ${order.side==='BUY'?'buy-text':'sell-text'}">${order.side==='BUY'?'Buy':'Sell'}</span>
+            <span class="drawer-summary-item">${order.qty.toLocaleString()} Shares <strong>${order.symbol}</strong></span>
+          </div>
+          <div class="drawer-details">
+            <div class="drawer-col">
+              <div class="drawer-col-title">Security</div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Type</span><span class="drawer-attr-val">${order.type}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">CUSIP</span><span class="drawer-attr-val">${order.cusip}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Security Desc.</span><span class="drawer-attr-val">${order.name}</span></div>
+              <div class="drawer-col-title" style="margin-top:14px">Price</div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Price</span><span class="drawer-attr-val">$${order.price.toFixed(2)}</span></div>
+            </div>
+            <div class="drawer-col">
+              <div class="drawer-col-title">Additional Details</div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Status</span><span class="drawer-attr-val" style="color:${statusColor};font-weight:500">${order.status}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Account Type</span><span class="drawer-attr-val">${order.group}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order Condition</span><span class="drawer-attr-val">${order.timeInForce}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Order ID</span><span class="drawer-attr-val">ORD-${String(order.id).padStart(6,'0')}</span></div>
+              <div class="drawer-attr"><span class="drawer-attr-lbl">Settlement</span><span class="drawer-attr-val">${order.settlementDate}</span></div>
+            </div>
+          </div>
+          <div style="padding:2px 20px 14px 50px">
+            <a class="drawer-link" onclick="openDetailLayer(${order.id})">Full Order Details <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+        </td>
+      </tr>`;
+  }).join('');
+
+  // Update shared pagination for sent
+  renderSentPagination();
+}
+
+let sentOpenDrawerId = null;
+
+function renderSentPagination() {
+  const filtered = getFilteredSentOrders();
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const start = (sentPage-1)*PAGE_SIZE + 1;
+  const end = Math.min(sentPage*PAGE_SIZE, filtered.length);
+  document.getElementById('pageInfo').textContent = `Showing ${start}–${end} of ${filtered.length} orders`;
+
+  let btns = `<button class="page-btn" onclick="changeSentPage(${sentPage-1})" ${sentPage===1?'disabled':''}>‹</button>`;
+  const maxVisible = 7;
+  if (totalPages <= maxVisible) {
+    for (let i=1;i<=totalPages;i++) btns += `<button class="page-btn ${i===sentPage?'active':''}" onclick="changeSentPage(${i})">${i}</button>`;
+  } else {
+    btns += `<button class="page-btn ${sentPage===1?'active':''}" onclick="changeSentPage(1)">1</button>`;
+    if (sentPage > 3) btns += `<span style="padding:0 4px;color:#8a9aaa">…</span>`;
+    for (let i=Math.max(2,sentPage-1);i<=Math.min(totalPages-1,sentPage+1);i++) btns += `<button class="page-btn ${i===sentPage?'active':''}" onclick="changeSentPage(${i})">${i}</button>`;
+    if (sentPage < totalPages-2) btns += `<span style="padding:0 4px;color:#8a9aaa">…</span>`;
+    btns += `<button class="page-btn ${sentPage===totalPages?'active':''}" onclick="changeSentPage(${totalPages})">${totalPages}</button>`;
+  }
+  btns += `<button class="page-btn" onclick="changeSentPage(${sentPage+1})" ${sentPage>=totalPages?'disabled':''}>›</button>`;
+  document.getElementById('paginationControls').innerHTML = btns;
+}
+
+function toggleSentDrawer(id, chevEl, e) {
+  e.stopPropagation();
+  sentOpenDrawerId = sentOpenDrawerId === id ? null : id;
+  renderSentOrdersTable();
+}
+
+function changeSentPage(page) {
+  const totalPages = Math.ceil(getFilteredSentOrders().length / PAGE_SIZE);
+  if (page<1||page>totalPages) return;
+  sentPage = page;
+  renderSentOrdersTable();
+  document.getElementById('step6View').scrollTop = 0;
+}
+
+/* ── STEP NAVIGATION ── */
+function goToStep(step) {
+  const previousStep = currentStep;
+  currentStep = step;
+  document.querySelectorAll('.step-nav-btn').forEach((btn,idx) => { btn.classList.toggle('active', idx+1===step); });
+
+  document.getElementById('step1View').style.display = (step<=2) ? '' : 'none';
+  document.getElementById('step6View').style.display = step===6 ? '' : 'none';
+  if (step !== 6) document.getElementById('successBanner').classList.add('hidden');
+  document.getElementById('tabDrafted').classList.toggle('active', step!==6);
+  document.getElementById('tabSent').classList.toggle('active', step===6);
+  if (step===6) document.getElementById('sentCount').textContent = sentOrders.length;
+  document.getElementById('draftCount').textContent = orders.length;
+  if (step === 6) {
+    // Show "Recently Sent" filter chip if coming from send flow
+    if (lastSentIds.size > 0) {
+      const batchEl = document.getElementById('filterBatch');
+      const batchLabel = lastSentBatch && batchEl.querySelector(`option[value="${lastSentBatch}"]`)
+        ? batchEl.querySelector(`option[value="${lastSentBatch}"]`).textContent
+        : '';
+      const chipLabel = batchLabel
+        ? `Recently Sent: ${batchLabel}`
+        : `Recently Sent: ${lastSentIds.size} orders`;
+      document.getElementById('filterChips').innerHTML =
+        `<div class="chip" style="background:#f0faf4;color:#3a7252;border-color:#7ec99a">${chipLabel}<button class="chip-remove" style="color:#3a7252" onclick="clearSentFilter()">×</button></div>`;
+      document.getElementById('activeFiltersBar').style.display = '';
+    } else {
+      document.getElementById('activeFiltersBar').style.display = 'none';
+    }
+  } else {
+    renderFilterChips(); // shows/hides based on active filters
+  }
+  // Update grid header title
+  document.getElementById('gridHeaderTitle').textContent = step===6 ? 'Sent Orders' : 'Drafted Orders';
+  document.getElementById('gridColConfigText').textContent = step===6 ? 'Displaying 8 of 41 columns' : 'Displaying 8 of 41 columns';
+  updateGridHeaderCount();
+  // Show/hide Status filter based on tab
+  document.getElementById('filterStatusGroup').style.display = step===6 ? '' : 'none';
+  // Hide modals/verification for steps 3-5, show footer+pagination always
+  const showGrid = (step<=2 || step===6);
+  document.getElementById('gridFooter').style.display = showGrid ? '' : 'none';
+  document.getElementById('gridPagination').style.display = showGrid ? '' : 'none';
+
+  if (step === 1) {
+    selectedIds.clear();
+    applyFilterStep();
+    document.getElementById('verificationModal').classList.remove('open');
+    // Clear sent filter
+    lastSentIds.clear();
+    // Restore Verify & Send button
+    const sendSvg = '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>';
+    document.getElementById('sendBtn').innerHTML = `${sendSvg} Verify & Send`;
+    document.getElementById('sendBtn').onclick = sendSelectedOrders;
+    document.getElementById('sendBtn').disabled = true;
+    document.getElementById('sendCaretBtn').style.display = '';
+    document.getElementById('sendCaretBtn').disabled = true;
+  } else if (step === 2) {
+    // If no orders selected yet, select all filtered orders
+    if (selectedIds.size === 0) {
+      filteredOrders.forEach(o => selectedIds.add(o.id));
+    }
+    renderOrdersTable();
+    updateSelection();
+    document.getElementById('verificationModal').classList.remove('open');
+
+  } else if (step === 3 || step === 4) {
+    renderVerificationModal();
+    document.getElementById('verificationModal').classList.add('open');
+
+    const batchElV = document.getElementById('filterBatch');
+    const batchLabelV = batchElV.value ? batchElV.options[batchElV.selectedIndex].text : '';
+    document.querySelector('#verificationModal .modal-title').textContent = batchLabelV ? `Order Verification — ${batchLabelV}` : 'Order Verification';
+    const confirmBtn = document.getElementById('confirmSendBtn');
+    confirmBtn.textContent = `Confirm & Send ${selectedIds.size} Orders`;
+    confirmBtn.onclick = () => goToStep(5);
+    confirmBtn.style.background = '';
+    confirmBtn.style.boxShadow = '';
+  } else if (step === 5) {
+    // Step 5: Show sending overlay FIRST, then reveal success modal
+    const newlySent = orders.filter(o => selectedIds.has(o.id));
+    lastSentCount = newlySent.length;
+    lastSentIds = new Set(newlySent.map(o => o.id));
+    lastSentBatch = document.getElementById('filterBatch').value;
+    // Assign realistic statuses: 3 partially filled, 1 held, rest filled
+    newlySent.forEach((o, i) => {
+      if (i === 4 || i === 19 || i === 37) {
+        o.status = 'Partially Filled'; o.type = 'Limit';
+      } else if (i === 11) {
+        o.status = 'Held';
+      } else {
+        o.status = 'Filled';
+      }
+    });
+    sentOrders = [...newlySent, ...sentOrders];
+    document.getElementById('sentCount').textContent = sentOrders.length;
+    // Hide verification, show sending overlay
+    document.getElementById('verificationModal').classList.remove('open');
+    showSendingOverlay();
+  } else if (step === 6) {
+    const cameFromSend = [5].includes(previousStep);
+    sentPage = 1;
+
+    document.getElementById('sendingOverlay').style.display = 'none';
+    if (cameFromSend) {
+      document.getElementById('successBanner').classList.remove('hidden');
+      document.getElementById('successMsg').innerHTML = `<strong>${lastSentCount} orders sent successfully.</strong> Orders are now being executed. Track their status below.`;
+    }
+    renderSentOrdersTable();
+    // Reset bottom bar to default state
+    selectedIds.clear();
+    document.getElementById('selectionInfo').textContent = 'No orders selected';
+    document.getElementById('selectionInfo').classList.remove('active');
+    document.getElementById('selectionValue').style.display = 'none';
+    const selectBtn = document.getElementById('selectMenuBtn');
+    const selectLabel = document.getElementById('selectBtnLabel');
+    selectLabel.textContent = 'Select...';
+    selectBtn.classList.remove('has-selection');
+    // Change button to Cancel (disabled)
+    const cancelSvg = '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    document.getElementById('sendBtn').innerHTML = `${cancelSvg} Cancel`;
+    document.getElementById('sendBtn').disabled = true;
+    document.getElementById('sendBtn').onclick = null;
+    document.getElementById('sendCaretBtn').style.display = 'none';
+    // Clear row highlight animation after it completes (but keep filter)
+    if (cameFromSend) setTimeout(() => {
+      document.querySelectorAll('.order-row.just-sent').forEach(row => row.classList.remove('just-sent'));
+    }, 2500);
+  }
+}
+
+function sendSelectedOrders() {
+  // If nothing manually selected, select all filtered orders
+  if (selectedIds.size === 0) {
+    filteredOrders.forEach(o => selectedIds.add(o.id));
+    renderOrdersTable();
+    updateSelectionDisplay();
+  }
+  // Go straight to verification
+  goToStep(4);
+}
+
+function showSendingOverlay() {
+  const overlay = document.getElementById('sendingOverlay');
+  overlay.style.display = 'flex';
+  document.getElementById('sendingPhaseSpinner').style.display = '';
+  document.getElementById('sendingPhaseSuccess').style.display = 'none';
+  document.getElementById('sendingOverlayClose').style.display = 'none';
+  document.getElementById('sendingText').textContent = 'Processing orders...';
+  document.getElementById('sendingSubtext').textContent = 'Routing to execution venues';
+  setTimeout(() => {
+    document.getElementById('sendingPhaseSpinner').style.display = 'none';
+    document.getElementById('sendingPhaseSuccess').style.display = '';
+    document.getElementById('sendingOverlayClose').style.display = '';
+  }, 2000);
+}
+
+function togglePanelMenu(e) {
+  e.stopPropagation();
+  const pop = document.getElementById('panelMenuPop');
+  pop.classList.toggle('open');
+  if (pop.classList.contains('open')) {
+    setTimeout(() => document.addEventListener('click', closePanelMenu, { once: true }), 0);
+  }
+}
+function closePanelMenu() {
+  document.getElementById('panelMenuPop').classList.remove('open');
+}
+function panelMenuAction(action) {
+  closePanelMenu();
+  const labels = { default: 'Current filters saved as default', reset: 'Filters reset to default', saveView: 'View saved successfully' };
+  const toast = document.createElement('div');
+  toast.textContent = labels[action] || action;
+  toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2c3540;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.15)';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
+}
+
+function openColumnSettings() {
+  // Prototype placeholder — would open a column configuration panel
+  const toast = document.createElement('div');
+  toast.textContent = 'Column configuration panel would open here';
+  toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2c3540;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.15)';
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 2000);
+}
+
+function closeSendingOverlay() {
+  document.getElementById('sendingOverlay').style.display = 'none';
+  goToStep(1);
+}
+
+function closeVerification() {
+  // Clean up temporary flags
+  orders.forEach(o => { delete o._excluded; delete o._deferred; });
+  document.getElementById('verificationModal').classList.remove('open');
+  goToStep(1);
+}
+
+function downloadExport() {
+  const csv = ['Symbol,Side,Quantity,Price,Total Value,Status,Sent Time'];
+  const now = new Date().toLocaleTimeString();
+  sentOrders.forEach(o => { csv.push(`${o.symbol},${o.side},${o.qty},$${o.price.toFixed(2)},$${(o.qty*o.price).toFixed(2)},SENT,${now}`); });
+  const blob = new Blob([csv.join('\n')],{type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'sent-orders.csv'; a.click();
+}
+
+/* ── BULK SELECT ── */
+function bulkSelect(val) {
+  const start = (currentPage-1)*PAGE_SIZE;
+  const pageOrders = filteredOrders.slice(start, start+PAGE_SIZE);
+  if (val === 'allPage') {
+    pageOrders.forEach(o => selectedIds.add(o.id));
+  } else if (val === 'allFiltered') {
+    filteredOrders.forEach(o => selectedIds.add(o.id));
+  } else if (val === 'allBuy') {
+    filteredOrders.filter(o => o.side==='BUY').forEach(o => selectedIds.add(o.id));
+  } else if (val === 'allSell') {
+    filteredOrders.filter(o => o.side==='SELL').forEach(o => selectedIds.add(o.id));
+  } else if (val === 'allOrders') {
+    orders.forEach(o => selectedIds.add(o.id));
+  } else if (val === 'allMine') {
+    orders.filter(o => o.rep==='Chen, Sarah').forEach(o => selectedIds.add(o.id));
+  } else if (val === 'none') {
+    selectedIds.clear();
+  }
+  closeSelectMenu();
+  renderOrdersTable();
+  updateSelectionDisplay();
+}
+
+function updateSelectionDisplay() {
+  const count = selectedIds.size;
+  const infoEl = document.getElementById('selectionInfo');
+  const valueEl = document.getElementById('selectionValue');
+  if (count === 0) {
+    infoEl.textContent = 'No orders selected';
+    infoEl.classList.remove('active');
+    valueEl.style.display = 'none';
+  } else {
+    infoEl.textContent = `${count} order${count!==1?'s':''} selected`;
+    infoEl.classList.add('active');
+    const batchEl = document.getElementById('filterBatch');
+    const batchLabel = batchEl.value ? batchEl.options[batchEl.selectedIndex].text : '';
+    if (batchLabel) {
+      valueEl.innerHTML = batchLabel;
+      valueEl.style.display = '';
+    } else {
+      valueEl.style.display = 'none';
+    }
+  }
+  document.getElementById('sendBtn').disabled = count === 0;
+  const sendSvg = '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>';
+  document.getElementById('sendBtn').innerHTML = count === 0
+    ? `${sendSvg} Verify & Send`
+    : `${sendSvg} Verify & Send (${count})`;
+  document.getElementById('sendCaretBtn').disabled = count === 0;
+  // Update counts in popover
+  const start = (currentPage-1)*PAGE_SIZE;
+  const pageCount = Math.min(PAGE_SIZE, filteredOrders.length - start);
+  document.getElementById('selPageCount').textContent = pageCount;
+  document.getElementById('selFilteredCount').textContent = filteredOrders.length;
+  document.getElementById('selBuyCount').textContent = filteredOrders.filter(o=>o.side==='BUY').length;
+  document.getElementById('selSellCount').textContent = filteredOrders.filter(o=>o.side==='SELL').length;
+  document.getElementById('selAllCount').textContent = orders.length;
+  document.getElementById('selMineCount').textContent = orders.filter(o=>o.rep==='Chen, Sarah').length;
+  // Sync header checkbox state
+  updateHeaderCheckbox();
+}
+
+function toggleHeaderCheckbox() {
+  const cb = document.getElementById('headerCheckbox');
+  if (cb.checked) {
+    filteredOrders.forEach(o => selectedIds.add(o.id));
+  } else {
+    filteredOrders.forEach(o => selectedIds.delete(o.id));
+  }
+  cb.indeterminate = false;
+  renderOrdersTable();
+  updateSelectionDisplay();
+}
+
+function updateHeaderCheckbox() {
+  const cb = document.getElementById('headerCheckbox');
+  if (!cb) return;
+  const selectedFiltered = filteredOrders.filter(o => selectedIds.has(o.id)).length;
+  const allPageCheck = document.getElementById('allPageCheck');
+  const allFilteredCheck = document.getElementById('allFilteredCheck');
+  const selectBtn = document.getElementById('selectMenuBtn');
+  const selectLabel = document.getElementById('selectBtnLabel');
+
+  // Check if all on current page are selected
+  const start = (currentPage-1)*PAGE_SIZE;
+  const pageOrders = filteredOrders.slice(start, start+PAGE_SIZE);
+  const selectedOnPage = pageOrders.filter(o => selectedIds.has(o.id)).length;
+  const allPageSelected = selectedOnPage === pageOrders.length && pageOrders.length > 0;
+  const allFilteredSelected = selectedFiltered === filteredOrders.length && filteredOrders.length > 0;
+
+  // When all filtered are selected, only show the filtered check (not page check)
+  if (allPageCheck) allPageCheck.style.display = (allPageSelected && !allFilteredSelected) ? 'inline' : 'none';
+  if (allFilteredCheck) allFilteredCheck.style.display = allFilteredSelected ? 'inline' : 'none';
+
+  if (selectedFiltered === 0) {
+    cb.checked = false;
+    cb.indeterminate = false;
+    selectLabel.textContent = 'Select...';
+    selectBtn.classList.remove('has-selection');
+  } else if (allFilteredSelected) {
+    cb.checked = true;
+    cb.indeterminate = false;
+    selectLabel.textContent = 'All that match current filters';
+    selectBtn.classList.add('has-selection');
+  } else {
+    cb.checked = false;
+    cb.indeterminate = true;
+    selectLabel.textContent = `${selectedIds.size} selected`;
+    selectBtn.classList.add('has-selection');
+  }
+}
+
+function updateGridHeaderCount() {
+  const el = document.getElementById('gridHeaderCount');
+  if (currentStep === 6) {
+    if (lastSentIds.size > 0) {
+      el.textContent = `${lastSentIds.size} of ${sentOrders.length}`;
+    } else {
+      el.textContent = `${sentOrders.length} of ${sentOrders.length}`;
+    }
+  } else {
+    el.textContent = filteredOrders.length === orders.length
+      ? `${orders.length}`
+      : `${filteredOrders.length} of ${orders.length}`;
+  }
+}
+
+/* ── POPOVER TOGGLES ── */
+function toggleSelectMenu(e) {
+  e.stopPropagation();
+  const pop = document.getElementById('selectPopover');
+  const wasOpen = pop.classList.contains('open');
+  closeAllPopovers();
+  if (!wasOpen) pop.classList.add('open');
+}
+function closeSelectMenu() {
+  document.getElementById('selectPopover').classList.remove('open');
+}
+function toggleSendMenu(e) {
+  e.stopPropagation();
+  const pop = document.getElementById('sendPopover');
+  const wasOpen = pop.classList.contains('open');
+  closeAllPopovers();
+  if (!wasOpen) pop.classList.add('open');
+}
+function closeSendMenu() {
+  document.getElementById('sendPopover').classList.remove('open');
+}
+function closeAllPopovers() {
+  document.querySelectorAll('.gf-popover').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.row-action-menu').forEach(m => m.classList.remove('open'));
+}
+document.addEventListener('click', closeAllPopovers);
+
+function toggleRowMenu(id, e) {
+  e.stopPropagation();
+  const menu = document.getElementById('rowMenu-' + id);
+  const wasOpen = menu.classList.contains('open');
+  closeAllPopovers();
+  if (!wasOpen) menu.classList.add('open');
+}
+function rowAction(action, id) {
+  closeAllPopovers();
+  // Prototype placeholder — just close the menu
+}
+
+function clearSentFilter() {
+  lastSentIds.clear();
+  renderSentOrdersTable();
+  document.getElementById('activeFiltersBar').style.display = 'none';
+  document.getElementById('filterChips').innerHTML = '';
+  document.getElementById('gridHeaderTitle').textContent = 'Sent Orders';
+  updateGridHeaderCount();
+}
+
+function switchTab(tab) {
+  if (tab === 'sent') { goToStep(6); }
+  else { goToStep(1); }
+}
+
+/* ── DETAIL LAYER ── */
+let detailOrder = null;
+let detailTab = 'overview';
+
+function openDetailLayer(id) {
+  detailOrder = orders.find(o => o.id === id) || sentOrders.find(o => o.id === id);
+  if (!detailOrder) return;
+  detailTab = 'overview';
+  document.getElementById('dlTitle').textContent = `Order ORD-${String(detailOrder.id).padStart(6,'0')}`;
+  const sideLbl = detailOrder.side === 'BUY' ? 'Buy' : 'Sell';
+  document.getElementById('dlSubtitle').textContent = `${detailOrder.symbol} · ${detailOrder.name} · ${sideLbl}`;
+  document.querySelectorAll('.dl-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  renderDetailTab();
+  document.getElementById('detailLayerOverlay').classList.add('open');
+}
+
+function closeDetailLayer() {
+  document.getElementById('detailLayerOverlay').classList.remove('open');
+  detailOrder = null;
+}
+
+function switchDetailTab(tab, btn) {
+  detailTab = tab;
+  document.querySelectorAll('.dl-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderDetailTab();
+}
+
+function renderDetailTab() {
+  const o = detailOrder;
+  if (!o) return;
+  const body = document.getElementById('dlBody');
+  const totalValue = o.qty * o.price;
+  const fmtVal = v => '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const ordId = 'ORD-'+String(o.id).padStart(6,'0');
+  const tradeDate = '2026-04-04';
+  const createDate = '2026-04-03 14:'+String(22+o.id%30).padStart(2,'0')+':'+String(o.id%60).padStart(2,'0');
+  const brokerDealers = ['Morgan Stanley','Goldman Sachs','JP Morgan','Citadel Securities','Virtu Financial'];
+  const broker = brokerDealers[o.id % brokerDealers.length];
+  const venues = ['NYSE','NASDAQ','ARCA','BATS','IEX'];
+  const venue = venues[o.id % venues.length];
+  const commRate = (0.003 + (o.id%5)*0.001).toFixed(4);
+  const commission = (o.qty * parseFloat(commRate)).toFixed(2);
+  const avgFillPrice = (o.price + (Math.random()-0.5)*0.12).toFixed(2);
+  const slippage = (avgFillPrice - o.price).toFixed(4);
+
+  if (detailTab === 'overview') {
+    body.innerHTML = `
+      <div class="dl-section">
+        <div class="dl-section-title">Order Information</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Order ID</div><div class="dl-field-val mono">${ordId}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Status</div><div class="dl-field-val">${o.status}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Order Type</div><div class="dl-field-val">${o.type}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Action</div><div class="dl-field-val">${o.side === 'BUY' ? '<span style="color:#3a7252;font-weight:600">BUY</span>' : '<span style="color:#de350b;font-weight:600">SELL</span>'}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Time in Force</div><div class="dl-field-val">${o.timeInForce}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Created</div><div class="dl-field-val">${createDate}</div></div>
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Security</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Symbol</div><div class="dl-field-val" style="font-weight:600">${o.symbol}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Name</div><div class="dl-field-val">${o.name}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">CUSIP</div><div class="dl-field-val mono">${o.cusip}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Asset Class</div><div class="dl-field-val">${o.type}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Exchange</div><div class="dl-field-val">${venue}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Currency</div><div class="dl-field-val">USD</div></div>
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Pricing & Value</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Quantity</div><div class="dl-field-val">${o.qty.toLocaleString()} shares</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Limit Price</div><div class="dl-field-val">${fmtVal(o.price)}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Estimated Value</div><div class="dl-field-val" style="font-weight:700;font-size:14px">${fmtVal(totalValue)}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Est. Commission</div><div class="dl-field-val">${fmtVal(parseFloat(commission))}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Net Amount</div><div class="dl-field-val">${fmtVal(totalValue + (o.side==='BUY'?1:-1)*parseFloat(commission))}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Commission Rate</div><div class="dl-field-val">${commRate}/share</div></div>
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Account & Settlement</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Account</div><div class="dl-field-val mono">${o.account}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Rep Code</div><div class="dl-field-val">${o.rep}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Portfolio</div><div class="dl-field-val">${o.group}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Trade Date</div><div class="dl-field-val">${tradeDate}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Settlement Date</div><div class="dl-field-val">${o.settlementDate}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Settlement Type</div><div class="dl-field-val">T+1 (Regular)</div></div>
+        </div>
+      </div>
+      ${o.notes ? `<div class="dl-section"><div class="dl-section-title">Notes</div><div style="font-size:13px;color:#2e3d4a;line-height:1.55;padding:8px 12px;background:#F7F8FA;border-radius:6px;border:1px solid #EDEDEF">${o.notes}</div></div>` : ''}
+    `;
+  } else if (detailTab === 'execution') {
+    const fillPct = o.status === 'Draft' ? 0 : Math.floor(Math.random()*40+60);
+    const filledQty = Math.round(o.qty * fillPct / 100);
+    body.innerHTML = `
+      <div class="dl-section">
+        <div class="dl-section-title">Execution Summary</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Broker/Dealer</div><div class="dl-field-val">${broker}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Execution Venue</div><div class="dl-field-val">${venue}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Avg Fill Price</div><div class="dl-field-val">${fmtVal(parseFloat(avgFillPrice))}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Slippage</div><div class="dl-field-val" style="color:${parseFloat(slippage)>=0?'#3a7252':'#de350b'}">${parseFloat(slippage)>=0?'+':''}${slippage}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Fill Rate</div><div class="dl-field-val">${fillPct}%</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Filled / Total</div><div class="dl-field-val">${filledQty.toLocaleString()} / ${o.qty.toLocaleString()}</div></div>
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Fill Breakdown</div>
+        <div style="border:1px solid #EDEDEF;border-radius:6px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead><tr style="background:#F2F2F4">
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Fill ID</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Time</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Qty</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Price</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Venue</th>
+            </tr></thead>
+            <tbody>
+              ${[1,2,3].map((f,i) => {
+                const fQty = i<2 ? Math.floor(filledQty*[0.45,0.35,0.2][i]) : filledQty - Math.floor(filledQty*0.45) - Math.floor(filledQty*0.35);
+                const fPrice = (parseFloat(avgFillPrice) + (Math.random()-0.5)*0.06).toFixed(2);
+                const fTime = `09:${30+i*12}:${String(o.id%60).padStart(2,'0')}`;
+                return `<tr style="border-top:1px solid #F2F2F4">
+                  <td style="padding:8px 12px;color:#8a9aaa;font-size:12px">F-${String(o.id*100+f).padStart(8,'0')}</td>
+                  <td style="padding:8px 12px">${fTime}</td>
+                  <td style="padding:8px 12px;text-align:right">${fQty.toLocaleString()}</td>
+                  <td style="padding:8px 12px;text-align:right">${fmtVal(parseFloat(fPrice))}</td>
+                  <td style="padding:8px 12px">${venues[(o.id+i)%venues.length]}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Routing Details</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Order Routing</div><div class="dl-field-val">Smart Order Router (SOR)</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Algo Strategy</div><div class="dl-field-val">${['VWAP','TWAP','Implementation Shortfall','Arrival Price'][o.id%4]}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Urgency</div><div class="dl-field-val">${['Low','Medium','High'][o.id%3]}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Dark Pool</div><div class="dl-field-val">${o.id%3===0?'Enabled':'Disabled'}</div></div>
+        </div>
+      </div>
+    `;
+  } else if (detailTab === 'compliance') {
+    const checks = [
+      { name: 'Pre-trade Validation', status: o.id%13===0?'warn':'pass', detail: o.id%13===0?'Position concentration nearing 5% limit':'All pre-trade checks passed' },
+      { name: 'Restricted List Screen', status: 'pass', detail: 'Security not found on restricted list' },
+      { name: 'Insider Trading Check', status: 'pass', detail: 'No open window restrictions' },
+      { name: 'Position Limit Check', status: o.id%7===0?'warn':'pass', detail: o.id%7===0?'Post-trade position exceeds soft limit for account':'Within defined position limits' },
+      { name: 'Best Execution Review', status: o.id%19===0?'fail':'pass', detail: o.id%19===0?'Requires manual review — deviation from benchmark':'Meets best execution criteria' },
+      { name: 'Suitability Assessment', status: 'pass', detail: 'Consistent with account investment profile' },
+      { name: 'AML/KYC Verification', status: 'pass', detail: 'Account verified and in good standing' },
+      { name: 'Cross-trade Check', status: 'pass', detail: 'No cross-trade conflicts detected' },
+    ];
+    body.innerHTML = `
+      <div class="dl-section">
+        <div class="dl-section-title">Compliance Status</div>
+        <div style="display:flex;gap:12px;margin-bottom:16px">
+          <div class="dl-compliance-tag pass">✓ ${checks.filter(c=>c.status==='pass').length} Passed</div>
+          ${checks.filter(c=>c.status==='warn').length ? `<div class="dl-compliance-tag warn">⚠ ${checks.filter(c=>c.status==='warn').length} Warning</div>` : ''}
+          ${checks.filter(c=>c.status==='fail').length ? `<div class="dl-compliance-tag fail">✕ ${checks.filter(c=>c.status==='fail').length} Failed</div>` : ''}
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Compliance Checks</div>
+        <div style="border:1px solid #EDEDEF;border-radius:6px;overflow:hidden">
+          ${checks.map((c,i) => `
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;${i>0?'border-top:1px solid #F2F2F4':''}">
+              <span style="font-size:13px;margin-top:1px">${c.status==='pass'?'<span style="color:#3a7252">✓</span>':c.status==='warn'?'<span style="color:#b8860b">⚠</span>':'<span style="color:#c0392b">✕</span>'}</span>
+              <div style="flex:1">
+                <div style="font-size:12.5px;font-weight:500;color:#2e3d4a">${c.name}</div>
+                <div style="font-size:11.5px;color:#8a9aaa;margin-top:2px">${c.detail}</div>
+              </div>
+              <div class="dl-compliance-tag ${c.status}" style="font-size:10.5px;padding:2px 8px">${c.status==='pass'?'Pass':c.status==='warn'?'Warning':'Failed'}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Approval Chain</div>
+        <div class="dl-grid">
+          <div class="dl-field"><div class="dl-field-lbl">Compliance Officer</div><div class="dl-field-val">${['Sarah Chen','Michael Rodriguez','Emily Park','David Kim'][o.id%4]}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Review Status</div><div class="dl-field-val">${o.status==='Pending Review'?'Pending':'Auto-approved'}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Risk Score</div><div class="dl-field-val">${['Low','Low','Medium','Low','Medium'][o.id%5]}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Last Review</div><div class="dl-field-val">${createDate}</div></div>
+        </div>
+      </div>
+    `;
+  } else if (detailTab === 'allocation') {
+    const allocs = [
+      { acct: o.account, pct: 40 + o.id%20 },
+      { acct: ACCOUNTS[(o.id+1)%ACCOUNTS.length], pct: 25 + o.id%10 },
+      { acct: ACCOUNTS[(o.id+2)%ACCOUNTS.length], pct: 0 },
+    ];
+    allocs[2].pct = 100 - allocs[0].pct - allocs[1].pct;
+    body.innerHTML = `
+      <div class="dl-section">
+        <div class="dl-section-title">Allocation Summary</div>
+        <div class="dl-grid" style="margin-bottom:16px">
+          <div class="dl-field"><div class="dl-field-lbl">Total Quantity</div><div class="dl-field-val">${o.qty.toLocaleString()} shares</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Total Value</div><div class="dl-field-val" style="font-weight:600">${fmtVal(totalValue)}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Allocation Method</div><div class="dl-field-val">${['Pro-rata','Equal Weight','Custom'][o.id%3]}</div></div>
+          <div class="dl-field"><div class="dl-field-lbl">Accounts</div><div class="dl-field-val">${allocs.length}</div></div>
+        </div>
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Account Allocations</div>
+        ${allocs.map(a => {
+          const aQty = Math.round(o.qty * a.pct/100);
+          const aVal = aQty * o.price;
+          return `
+            <div class="dl-alloc-row">
+              <span class="dl-alloc-acct">${a.acct}</span>
+              <div class="dl-alloc-bar-wrap"><div class="dl-alloc-bar" style="width:${a.pct}%"></div></div>
+              <span class="dl-alloc-val">${a.pct}% · ${aQty.toLocaleString()}</span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Allocation Details</div>
+        <div style="border:1px solid #EDEDEF;border-radius:6px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead><tr style="background:#F2F2F4">
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Account</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Shares</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Value</th>
+              <th style="padding:8px 12px;text-align:right;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Weight</th>
+            </tr></thead>
+            <tbody>
+              ${allocs.map(a => {
+                const aQty = Math.round(o.qty * a.pct/100);
+                return `<tr style="border-top:1px solid #F2F2F4">
+                  <td style="padding:8px 12px;font-weight:500;font-size:12px">${a.acct}</td>
+                  <td style="padding:8px 12px;text-align:right">${aQty.toLocaleString()}</td>
+                  <td style="padding:8px 12px;text-align:right">${fmtVal(aQty*o.price)}</td>
+                  <td style="padding:8px 12px;text-align:right">${a.pct}%</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } else if (detailTab === 'history') {
+    const events = [
+      { time: createDate, label: 'Order Created', detail: `Created by ${o.rep} via batch import`, active: false },
+      { time: createDate.replace(/:\d{2}$/, ':'+String((parseInt(createDate.slice(-2))+3)%60).padStart(2,'0')), label: 'Compliance Pre-check', detail: 'Automated compliance screening passed', active: false },
+      { time: '2026-04-03 15:01:22', label: 'Assigned to Portfolio', detail: `Allocated to ${o.group}`, active: false },
+      { time: '2026-04-04 08:30:00', label: 'Market Open Queue', detail: 'Order queued for market open execution', active: false },
+      { time: '2026-04-04 09:30:15', label: 'Submitted to Broker', detail: 'Routed via Smart Order Router', active: false },
+    ];
+    if (o.status === 'Pending Review') {
+      events.push({ time: '2026-04-04 09:31:00', label: 'Pending Compliance Review', detail: 'Awaiting manual review — flagged for position limit', active: true });
+    } else {
+      events.push({ time: 'Pending', label: 'Awaiting Submission', detail: 'Order in draft status', active: true });
+    }
+    events.reverse();
+    body.innerHTML = `
+      <div class="dl-section">
+        <div class="dl-section-title">Order Timeline</div>
+        ${events.map(ev => `
+          <div class="dl-timeline-item">
+            <div class="dl-timeline-dot ${ev.active?'':'gray'}"></div>
+            <div class="dl-timeline-content">
+              <div class="dl-timeline-label">${ev.label}</div>
+              <div class="dl-timeline-meta">${ev.detail}</div>
+              <div class="dl-timeline-meta">${ev.time}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="dl-section">
+        <div class="dl-section-title">Modification Log</div>
+        <div style="border:1px solid #EDEDEF;border-radius:6px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead><tr style="background:#F2F2F4">
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Date</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">User</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Field</th>
+              <th style="padding:8px 12px;text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;color:#8a9aaa;letter-spacing:0.06em">Change</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-top:1px solid #F2F2F4">
+                <td style="padding:8px 12px;color:#8a9aaa">${createDate.split(' ')[0]}</td>
+                <td style="padding:8px 12px">${o.rep}</td>
+                <td style="padding:8px 12px">Quantity</td>
+                <td style="padding:8px 12px"><span style="color:#de350b;text-decoration:line-through">${(o.qty-100).toLocaleString()}</span> → <span style="color:#3a7252">${o.qty.toLocaleString()}</span></td>
+              </tr>
+              <tr style="border-top:1px solid #F2F2F4">
+                <td style="padding:8px 12px;color:#8a9aaa">${createDate.split(' ')[0]}</td>
+                <td style="padding:8px 12px">System</td>
+                <td style="padding:8px 12px">Price</td>
+                <td style="padding:8px 12px">Market price updated at open</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+}
+
+/* ── FILTER COLLAPSE/EXPAND ── */
+function collapseFilter() {
+  document.getElementById('filterPanel').classList.add('collapsed');
+  document.getElementById('filterTab').classList.add('visible');
+}
+function expandFilter() {
+  document.getElementById('filterPanel').classList.remove('collapsed');
+  document.getElementById('filterTab').classList.remove('visible');
+}
+
+/* ── INIT ── */
+renderOrdersTable();
+renderFilterChips();
+updateSelectionDisplay();
+goToStep(1);
+</script>
+
+</body>
+</html>

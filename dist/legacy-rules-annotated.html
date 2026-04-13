@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance Rules — Legacy Prototype</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: #000;
+      background: #fff;
+      line-height: 1.3;
+    }
+
+    /* ── Screen management ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── Page wrapper ── */
+    .page { padding: 14px 20px 160px; min-height: 100vh; }
+
+    /* ── Page title with left border + underline ── */
+    .page-title {
+      font-size: 15px;
+      font-weight: bold;
+      border-left: 4px solid #222;
+      padding-left: 7px;
+      margin-bottom: 10px;
+      text-decoration: underline;
+    }
+
+    /* ── Back link ── */
+    .nav-back {
+      display: inline-block;
+      font-size: 11px;
+      color: #0000bb;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .nav-back:hover { color: #cc0000; }
+
+    /* ── Legacy button ── */
+    .btn {
+      padding: 3px 13px;
+      font-size: 11.5px;
+      font-family: Arial, sans-serif;
+      background: #dce4ed;
+      border: 2px outset #b0bcc8;
+      cursor: pointer;
+      color: #000;
+    }
+    .btn:hover { background: #c8d8e8; }
+    .btn:active { border-style: inset; }
+
+    /* ════════════════════════════════════════
+       SCREEN 1 · RULES LIST
+    ════════════════════════════════════════ */
+    .rules-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .rules-tbl th {
+      background: #b4c8dc;
+      border: 1px solid #7a96ae;
+      padding: 5px 8px;
+      font-weight: bold;
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .rules-tbl td {
+      border: 1px solid #c4d0dc;
+      padding: 3px 8px;
+      vertical-align: top;
+    }
+    .rules-tbl td { background: #ffffff; }
+    .rules-tbl tr:hover td { background: #fffacd; }
+
+    .rule-id-link {
+      color: #0000cc;
+      text-decoration: underline;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .rule-id-link:hover { color: #cc0000; }
+
+    td.chk { text-align: center; vertical-align: middle; }
+    td.chk svg { display: inline-block; vertical-align: middle; }
+    td.detail { font-size: 10.5px; line-height: 1.4; max-width: 360px; }
+
+    /* ════════════════════════════════════════
+       SCREEN 3 · KEYWORD SELECTION
+    ════════════════════════════════════════ */
+    .kw-top-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+    .kw-instruction { font-size: 12px; font-weight: bold; margin-bottom: 12px; }
+    .kw-section { margin-bottom: 20px; }
+    .kw-heading { font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+
+    .kw-cols {
+      display: flex;
+      margin-left: 190px;
+      gap: 60px;
+    }
+    .kw-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 210px;
+    }
+    .kw-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+    }
+    .kw-item input { flex-shrink: 0; cursor: pointer; }
+
+    /* ════════════════════════════════════════
+       SCREENS 2 & 4 · RULE DETAILS FORM
+    ════════════════════════════════════════ */
+    .req-note { font-size: 11px; color: #cc0000; margin-bottom: 8px; }
+
+    .rule-header-bar {
+      display: flex;
+      border: 1px solid #999;
+      background: #dce8f4;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .rule-hcell {
+      padding: 5px 10px;
+      border-right: 1px solid #999;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .rule-hcell:last-child { border-right: none; }
+    .rule-hcell input[type="text"] {
+      border: 1px solid #666;
+      padding: 2px 5px;
+      font-size: 12px;
+      font-family: Arial, sans-serif;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    /* Criteria row */
+    .crit-row {
+      display: flex;
+      border: 1px solid #aaa;
+      border-top: none;
+    }
+    .crit-row:first-child { border-top: 1px solid #aaa; }
+
+    .crit-label {
+      width: 164px;
+      min-width: 164px;
+      background: #dce4ec;
+      border-right: 1px solid #aaa;
+      padding: 6px 8px;
+      font-weight: bold;
+      font-size: 11px;
+    }
+    .req { color: #cc0000; }
+
+    .crit-op {
+      width: 128px;
+      min-width: 128px;
+      border-right: 1px solid #aaa;
+      padding: 4px 6px;
+      display: flex;
+      align-items: flex-start;
+      padding-top: 5px;
+    }
+    .crit-op select {
+      font-size: 11px;
+      padding: 2px 3px;
+      font-family: Arial, sans-serif;
+      border: 1px solid #888;
+    }
+
+    .crit-vals { flex: 1; padding: 4px 8px; }
+
+    .crit-and {
+      width: 36px;
+      min-width: 36px;
+      border-left: 1px solid #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #555;
+      background: #f4f4f4;
+    }
+
+    /* Value checkbox grids */
+    .val-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 20px;
+    }
+    .val-single { display: flex; flex-direction: column; gap: 1px; }
+    .val-item {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      padding: 1px 0;
+      white-space: nowrap;
+    }
+    .val-item input { flex-shrink: 0; cursor: pointer; }
+
+    /* Bottom bars */
+    .action-bar {
+      border: 1px solid #aaa;
+      background: #eef2f6;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .action-bar label { font-weight: bold; }
+    .action-bar select { font-size: 11px; padding: 2px 4px; font-family: Arial, sans-serif; }
+    .active-toggle { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+
+    .applies-bar {
+      border: 1px solid #aaa;
+      border-top: none;
+      background: #eef2f6;
+      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 11px;
+    }
+    .applies-bar label { font-weight: bold; }
+    .apply-item { display: flex; align-items: center; gap: 4px; }
+
+    .form-btns {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SCREEN 1 · RULES LIST
+══════════════════════════════════════════════════════════════════ -->
+<div id="scr-list" class="screen active">
+<div class="page">
+  <div class="page-title">Rules</div>
+
+  <table class="rules-tbl" id="rules-table">
+    <thead>
+      <tr>
+        <th>Rule Id</th>
+        <th>Rule Name</th>
+        <th>Active</th>
+        <th>Investment<br>Professional</th>
+        <th>Managed<br>Account<br>Advisor</th>
+        <th>Investor</th>
+        <th>Super<br>Trader</th>
+        <th>Detail</th>
+      </tr>
+    </thead>
+    <tbody id="tbody-rules"></tbody>
+  </table>
+
+  <div style="margin-top:14px;" id="create-rule-btn-wrap">
+    <button class="btn" onclick="go('scr-keywords')">Create Rule</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SCREEN 2 · VIEW / EDIT EXISTING RULE
+══════════════════════════════════════════════════════════════════ -->
+<div id="scr-view" class="screen">
+<div class="page">
+  <span class="nav-back" onclick="go('scr-list')">« Back to Rules</span>
+  <div class="page-title">Rule Details</div>
+  <div class="req-note">* = Required Field</div>
+
+  <div class="rule-header-bar">
+    <div class="rule-hcell"><strong>Rule Id:</strong>&nbsp;<span id="view-id"></span></div>
+    <div class="rule-hcell"><strong>Rule Name:*</strong>&nbsp;<input type="text" id="view-name"></div>
+  </div>
+
+  <div id="view-criteria">
+    <!-- Account Class -->
+    <div class="crit-row">
+      <div class="crit-label">Account Class<span class="req">*</span></div>
+      <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+      <div class="crit-vals"><div class="val-grid" id="view-acctclass"></div></div>
+      <div class="crit-and">AND</div>
+    </div>
+    <!-- Action -->
+    <div class="crit-row">
+      <div class="crit-label">Action<span class="req">*</span></div>
+      <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+      <div class="crit-vals"><div class="val-grid" id="view-action"></div></div>
+      <div class="crit-and">AND</div>
+    </div>
+    <!-- Account Number -->
+    <div class="crit-row">
+      <div class="crit-label">Account Number<span class="req">*</span></div>
+      <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+      <div class="crit-vals">
+        <div class="val-single">
+          <div class="val-item"><input type="checkbox" checked>&nbsp;123-456789-0</div>
+          <div class="val-item"><input type="checkbox" checked>&nbsp;033000086</div>
+          <div class="val-item"><input type="checkbox">&nbsp;033000493</div>
+        </div>
+      </div>
+      <div class="crit-and">AND</div>
+    </div>
+    <!-- Accepting Rep -->
+    <div class="crit-row">
+      <div class="crit-label">Accepting Rep<span class="req">*</span></div>
+      <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+      <div class="crit-vals">
+        <div class="val-single">
+          <div class="val-item"><input type="checkbox" checked>&nbsp;123</div>
+          <div class="val-item"><input type="checkbox" checked>&nbsp;456</div>
+        </div>
+      </div>
+      <div class="crit-and"></div>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <label>Action:</label>
+    <select><option>REVIEW</option><option>REPORT</option><option>REJECT</option></select>
+    <div class="active-toggle"><label>Active:</label><input type="checkbox" checked></div>
+  </div>
+  <div class="applies-bar">
+    <label>Applies To:*</label>
+    <div class="apply-item"><input type="checkbox" checked>&nbsp;Investment Professional</div>
+    <div class="apply-item"><input type="checkbox" checked>&nbsp;Managed Account Advisor</div>
+    <div class="apply-item"><input type="checkbox" checked>&nbsp;Investor</div>
+    <div class="apply-item"><input type="checkbox" checked>&nbsp;Super Trader</div>
+  </div>
+  <div class="form-btns">
+    <button class="btn" onclick="go('scr-keywords')">Choose Keywords</button>
+    <button class="btn">Save Rule</button>
+    <button class="btn" onclick="go('scr-list')">Cancel</button>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SCREEN 3 · KEYWORD SELECTION
+══════════════════════════════════════════════════════════════════ -->
+<div id="scr-keywords" class="screen">
+<div class="page">
+  <span class="nav-back" onclick="go('scr-list')">« Back to Rules</span>
+  <div class="page-title">Rule Keywords</div>
+  <div class="kw-instruction">Select 1 to 4 keywords:</div>
+
+  <div class="kw-top-bar">
+    <button class="btn" onclick="go('scr-list')">Cancel</button>
+    <button class="btn" onclick="go('scr-new')">Next &gt;&gt;</button>
+  </div>
+
+  <div class="kw-section" id="kw-acct-section">
+    <div class="kw-heading">Account Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-acct-L"></div>
+      <div class="kw-col" id="kw-acct-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Suitability Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-suit-L"></div>
+      <div class="kw-col" id="kw-suit-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Investment Professional Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-ip-L"></div>
+      <div class="kw-col" id="kw-ip-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Order Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-ord-L"></div>
+      <div class="kw-col" id="kw-ord-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Security Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-sec-L"></div>
+      <div class="kw-col" id="kw-sec-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Client / Investor Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-cli-L"></div>
+      <div class="kw-col" id="kw-cli-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Regulatory / Compliance Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-reg-L"></div>
+      <div class="kw-col" id="kw-reg-R"></div>
+    </div>
+  </div>
+
+  <div class="kw-section">
+    <div class="kw-heading">Transaction / Settlement Related</div>
+    <div class="kw-cols">
+      <div class="kw-col" id="kw-txn-L"></div>
+      <div class="kw-col" id="kw-txn-R"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SCREEN 4 · NEW RULE DETAILS
+══════════════════════════════════════════════════════════════════ -->
+<div id="scr-new" class="screen">
+<div class="page">
+  <span class="nav-back" onclick="go('scr-keywords')">« Back to Keywords</span>
+  <div class="page-title">Rule Details</div>
+  <div class="req-note">* = Required Field</div>
+
+  <div class="rule-header-bar">
+    <div class="rule-hcell"><strong>Rule Id:</strong>&nbsp;New Rule</div>
+    <div class="rule-hcell"><strong>Rule Name:*</strong>&nbsp;<input type="text"></div>
+  </div>
+
+  <!-- Account Class — 52 checkboxes -->
+  <div class="crit-row">
+    <div class="crit-label">Account Class<span class="req">*</span></div>
+    <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+    <div class="crit-vals"><div class="val-grid" id="new-acctclass"></div></div>
+    <div class="crit-and">AND</div>
+  </div>
+
+  <!-- Symbol / CUSIP / SEDOL — single text input -->
+  <div class="crit-row" id="new-symbol">
+    <div class="crit-label">Symbol / CUSIP / SEDOL<span class="req">*</span></div>
+    <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+    <div class="crit-vals" style="display:flex; align-items:center;">
+      <input type="text" style="width:200px; border:1px solid #888; padding:2px 4px; font-size:11px; font-family:Arial,sans-serif;">
+    </div>
+    <div class="crit-and">AND</div>
+  </div>
+
+  <!-- Action — 17 checkboxes -->
+  <div class="crit-row">
+    <div class="crit-label">Action<span class="req">*</span></div>
+    <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+    <div class="crit-vals"><div class="val-grid" id="new-action"></div></div>
+    <div class="crit-and">AND</div>
+  </div>
+
+  <!-- Proceeds Instructions — 6 checkboxes -->
+  <div class="crit-row">
+    <div class="crit-label">Proceeds Instructions<span class="req">*</span></div>
+    <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+    <div class="crit-vals"><div class="val-grid" id="new-proceeds"></div></div>
+    <div class="crit-and">AND</div>
+  </div>
+
+  <!-- Securities Upload -->
+  <div class="crit-row">
+    <div class="crit-label">Securities Upload<span class="req">*</span></div>
+    <div class="crit-op"><select><option>Equal to</option><option>Not equal to</option></select></div>
+    <div class="crit-vals">
+      <div class="val-single">
+        <div class="val-item"><input type="checkbox">&nbsp;Yes</div>
+        <div class="val-item"><input type="checkbox">&nbsp;No</div>
+      </div>
+    </div>
+    <div class="crit-and">AND</div>
+  </div>
+
+  <div class="action-bar">
+    <label>Action:</label>
+    <select><option>REVIEW</option><option>REPORT</option><option>REJECT</option></select>
+    <div class="active-toggle"><label>Active:</label><input type="checkbox"></div>
+  </div>
+  <div class="applies-bar">
+    <label>Applies To:*</label>
+    <div class="apply-item"><input type="checkbox">&nbsp;Investment Professional</div>
+    <div class="apply-item"><input type="checkbox">&nbsp;Managed Account Advisor</div>
+    <div class="apply-item"><input type="checkbox">&nbsp;Investor</div>
+    <div class="apply-item"><input type="checkbox">&nbsp;Super Trader</div>
+  </div>
+  <div class="form-btns">
+    <button class="btn" onclick="go('scr-keywords')">Choose Keywords</button>
+    <button class="btn">Save Rule</button>
+    <button class="btn" onclick="go('scr-list')">Cancel</button>
+  </div>
+</div>
+</div>
+
+
+<script>
+/* ── Navigation ── */
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── Data ── */
+const RULES = [
+  { id:'U010', name:'Restricted Symbol Watch List',           active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Action =[ S], If Position Source =[ A], If Symbol / CUSIP / SEDOL =[ AAPL, MSFT, AMZN, CAKE, TSLA, META, QQQ, SPY, SPF, AA, BBB, NVDA, ... ]' },
+  { id:'U011', name:'Rep Account Number Monitor',             active:'Yes', ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Accepting Rep =[ 123, 456], If Account Number =[ 033000086]' },
+  { id:'U012', name:'Low Dollar Order Cap',                   active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Number =[ 033370983], If Order Value >= [ CAP 70.00]' },
+  { id:'U013', name:'Multi-Account Hold Flag',                active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Account Number =[ 033000256, 044000123, 044000456, 044000789, 055000111, 055000222, 055000333, 055000444, 066000555, 066000666, 066000777, ... ]' },
+  { id:'U014', name:'Commission Variance Threshold',          active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Commission Variance > 2.50 %' },
+  { id:'U015', name:'Rep Code Restriction',                   active:'No',  ip:true,  maa:false, inv:false, st:false, detail:"REVIEW, If Accepting Rep =[ B'[]]" },
+  { id:'U016', name:'Multi-Branch Activity Review',           active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Branch =[ 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, ... ]' },
+  { id:'U017', name:'Comm Override Below Threshold',          active:'Yes', ip:false, maa:false, inv:false, st:true,  detail:'REPORT, If Account Number =[ 033000493], If Commission Override < 9.0 % of Principal Order Value' },
+  { id:'U018', name:'Comm Variance Low Value Order',          active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REPORT, If Commission Variance > 2.50 %, If Order Value >= [ CAP 100.00], If Commission Schedule =[ AA]' },
+  { id:'U020', name:'Listed OTC Security Review',             active:'No',  ip:true,  maa:false, inv:false, st:true,  detail:'REVIEW, If Security Type =[ LISTED/OTC]' },
+  { id:'U021', name:'Option Level RR2 Comm Check',            active:'No',  ip:false, maa:false, inv:true,  st:false, detail:'REVIEW, If Option Level = 1, If Account RR2 <> [ 123, 45@], If Commission Schedule <> [ 12]' },
+  { id:'U022', name:'Stale Account Activity Flag',            active:'No',  ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Last Change Date >= 16 months' },
+  { id:'U023', name:'Investment Purpose Speculative',         active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Investment Purpose =[ A, B]' },
+  { id:'U024', name:'ACAT Low Value Order Review',            active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Order Value >= [ ACAT 50.00]' },
+  { id:'U025', name:'Reject Suspended Rep',                   active:'Yes', ip:false, maa:false, inv:false, st:false, detail:'REJECT, If Accepting Rep =[ ZZZ]' },
+  { id:'U026', name:'Reject Blacklisted Securities',          active:'Yes', ip:false, maa:false, inv:false, st:false, detail:'REJECT, If Symbol / CUSIP / SEDOL =[ SNOW, RAIN, HAIL, SLEET, WIND, CLOUD, STORM, FROST, MIST, FOG, ICE, DRIZZLE, FLURRY, BLIZZARD, SQUALL, ... ]' },
+  { id:'U027', name:'Bond Hold Rep Account Screen',           active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Security Type =[ CORPORATE BO, GOVT BOND, MUNI BOND, BOND, HIGH YIELD, CONVERTIBLE, AGENCY BOND, ... ], If Accepting Rep =[ YSH, YSH2, YSH3 ], If Account Number =[ 033000140, 033000892, 033000043, 033000711, 033000822, 033000933, 044000001, ... ]' },
+  { id:'U028', name:'Commission Override Elevated',           active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Commission Override > 5.00' },
+  { id:'U029', name:'Large Cap Equity Symbol Watch',          active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Symbol / CUSIP / SEDOL =[ AAPL, MSFT, AMZN, TSLA, META, GOOGL, NVDA, QQQ, SPY, VTI, BRK, JPM, BAC, WFC, GS, MS, MCO, V, MA, ... ]' },
+  { id:'U030', name:'UIT Misc Fee Override',                  active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Security Type =[ EQUITY UIT, BOND UIT, UIT, MUNICIPAL BOND UIT, GOVT BOND UIT, MONEY MARKET UIT, BALANCED UIT, ... ], If Action =[ S], If Miscellaneous Fee Override >= 10.00, If Account Number =[ 033000086, 033000256, 033000493, 033370983, 044000123, 044000456, ... ]' },
+  { id:'U035', name:'Single Symbol Hold Monitor',             active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Symbol / CUSIP / SEDOL =[ MCD 1], If Action =[ B]' },
+  { id:'U036', name:'Bulk Account Securities Upload',         active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'null, If Account Number Upload = [Account Number], If Securities Upload =[ K], If Account RR Upload = [Account RRs]' },
+  { id:'U037', name:'Price Variance Alert',                   active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Variance From Price >= [11.00]' },
+  { id:'U038', name:'Order Value Net Worth Ratio',            active:'No',  ip:false, maa:false, inv:true,  st:false, detail:'REVIEW, If Value of Order > 2.00 % Net Worth, If Order Value >= [ CAP 999.00, CC 999.00]' },
+  { id:'U039', name:'Commission Override Pct Monitor',        active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Commission Override >= 5.0 % of Principal Order Value' },
+  { id:'U040', name:'Domestic Tax Residency Check',           active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Country of Tax Residence =[ 001]' },
+  { id:'U041', name:'Federal Tax Bracket Review',             active:'No',  ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Federal Tax Bracket >= Not Asked' },
+  { id:'U042', name:'Investor Net Worth Order Ratio',         active:'No',  ip:false, maa:false, inv:true,  st:false, detail:'REVIEW, If Value of Order > 9.00 % Net Worth' },
+  { id:'U043', name:'Derivatives Multi-Account Screen',       active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Security Type =[ DEBT OPTION, EQUITY OPTION, INDEX OPTION, OPTION, FUTURE, FORWARD, SWAP, WARRANT, ... ], If Account Number =[ 033000256, 044000123, 055000789, 066000456, 077000321, ... ], If Portal ID/FBSI ID =[ 3711059610, 3711059611, 3711059612, 3711059613, ... ]' },
+  { id:'U044', name:'Duplicate Order Check',               active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Potential Duplicate Order, If Option Level = 2, If Daily Order' },
+  { id:'U045', name:'Commission Schedule AA',              active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Commission Schedule =[ AA, BB, CC]' },
+  { id:'U046', name:'Branch 456 Monitor',                  active:'Yes', ip:false, maa:false, inv:true,  st:false, detail:'REVIEW, If Branch =[ 456], If Security Type =[ MUTUAL FUND]' },
+  { id:'U047', name:'Net Worth Flag',                      active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REPORT, If Account Net Worth >= [ 500000.00]' },
+  { id:'U048', name:'Wire Transfer Review',                active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Proceeds Instructions =[ WIRE TRANSFER], If Order Value >= [ CAP 25000.00]' },
+  { id:'U049', name:'Equity Option Screen',               active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ EQUITY OPTION], If Option Level < 2' },
+  { id:'U050', name:'High Value Order Monitor',           active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Order Value >= [ CAP 100000.00]' },
+  { id:'U051', name:'Branch 789 Watch',                   active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Branch =[ 789]' },
+  { id:'U052', name:'Penny Stock Alert',                  active:'Yes', ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Security Type =[ OTC BB, PINK SHEET], If Order Value >= [ CAP 5000.00]' },
+  { id:'U053', name:'Concentrated Position Flag',         active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REPORT, If Value of Order > 20.00 % Net Worth' },
+  { id:'U054', name:'Same Day Trade Duplicate',           active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Potential Duplicate Order, If Trade Date = Today' },
+  { id:'U055', name:'Restricted Securities List',         active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Symbol / CUSIP / SEDOL =[ AAPL, MSFT, AMZN, CAKE, TSLA, META, QQQ, SPY, SPF, AA, BBB, NVDA, AMD, INTC, BABA, NFLX, GOOG, UBER, LYFT, SNAP, PINS, ZM, COIN, HOOD, RIVN, LCID, ... ]' },
+  { id:'U056', name:'T+1 Settlement Check',               active:'No',  ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Settlement Date < T+1, If Security Type =[ EQUITY]' },
+  { id:'U057', name:'529 Plan Contribution Limit',        active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ 529 PLAN], If Action =[ CONTRIBUTION], If Order Value >= [ CAP 17000.00]' },
+  { id:'U058', name:'IRA Excess Contribution',            active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ IRA - TRADITIONAL, ROTH IRA], If Action =[ CONTRIBUTION]' },
+  { id:'U059', name:'Rep 222 Activity Monitor',           active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Accepting Rep =[ 222]' },
+  { id:'U060', name:'Bond Maturity Screen',               active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Security Type =[ GOVT BOND, MUNI BOND, CORPORATE BO, HIGH YIELD, CONVERTIBLE BOND, AGENCY BOND, MORTGAGE BACKED, ASSET BACKED, TREASURY, TIPS, ... ], If Account Class =[ CASH, MARGIN, IRA - TRADITIONAL, ROTH IRA, SEP IRA, SIMPLE IRA, 401(K), ... ], If Order Value >= [ CAP 50000.00]' },
+  { id:'U061', name:'Foreign Account Wire',               active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Account Class =[ FOREIGN ACCOUNT], If Proceeds Instructions =[ WIRE TRANSFER]' },
+  { id:'U062', name:'Discretionary Oversize',             active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REPORT, If Account Class =[ DISCRETIONARY], If Order Value >= [ CAP 250000.00]' },
+  { id:'U063', name:'Low Price High Quantity',            active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Order Quantity >= 50000, If Security Type =[ EQUITY]' },
+  { id:'U064', name:'Comm Override 15pct',                active:'No',  ip:true,  maa:false, inv:false, st:true,  detail:'REPORT, If Commission Override >= 15.0 % of Principal Order Value' },
+  { id:'U065', name:'Margin Account Short Sell',          active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ MARGIN], If Action =[ SELL SHORT]' },
+  { id:'U066', name:'Annuity Switch Flag',                active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ VARIABLE ANNUITY, FIXED ANNUITY], If Action =[ SWITCH]' },
+  { id:'U067', name:'Mutual Fund Exchange Cap',           active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ MUTUAL FUND], If Action =[ EXCHANGE IN, EXCHANGE OUT], If Order Value >= [ CAP 10000.00]' },
+  { id:'U068', name:'Managed Acct Large Redemption',      active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REPORT, If Account Class =[ MANAGED ACCOUNT], If Action =[ REDEMPTION], If Order Value >= [ CAP 500000.00]' },
+  { id:'U069', name:'Options Level 0 Block',              active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Option Level = 0, If Security Type =[ EQUITY OPTION, INDEX OPTION]' },
+  { id:'U070', name:'Estate Account Transfer',            active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Account Class =[ ESTATE], If Action =[ TRANSFER OUT]' },
+  { id:'U071', name:'Wrap Fee Override Check',            active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ WRAP ACCOUNT], If Fee Override > 3.00 %' },
+  { id:'U072', name:'Branch 101 Comm Monitor',            active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Branch =[ 101], If Commission Variance > 5.00 %' },
+  { id:'U073', name:'UIT Buy Only',                       active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ EQUITY UIT, BOND UIT], If Action =[ SELL, SELL SHORT]' },
+  { id:'U074', name:'Tax Bracket Suitability',            active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Federal Tax Bracket >= 32 %, If Security Type =[ MUNI BOND]' },
+  { id:'U075', name:'Stock Plan Restricted Window',       active:'No',  ip:false, maa:false, inv:false, st:true,  detail:'REJECT, If Account Class =[ STOCK PLAN], If Action =[ SELL]' },
+  { id:'U076', name:'Roth IRA Age Check',                 active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ ROTH IRA], If Action =[ DISTRIBUTION]' },
+  { id:'U077', name:'Comm Sched Mismatch',                active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REPORT, If Commission Schedule =[ ZZ, YY, XX]' },
+  { id:'U078', name:'Large Print Order',                  active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Order Quantity >= 100000, If Security Type =[ EQUITY, OTC BB]' },
+  { id:'U079', name:'Proceeds Check ACH',                 active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Proceeds Instructions =[ ACH], If Order Value >= [ CAP 50000.00]' },
+  { id:'U080', name:'Daily Trade Limit',                  active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Daily Order, If Order Value >= [ CAP 200000.00]' },
+  { id:'U081', name:'UGMA Minor Account',                 active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ UGMA, UTMA], If Action =[ SELL, TRANSFER OUT]' },
+  { id:'U082', name:'Rep 333 Large Ticket',               active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REPORT, If Accepting Rep =[ 333], If Order Value >= [ CAP 75000.00]' },
+  { id:'U083', name:'Futures Margin Req',                 active:'Yes', ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Account Class =[ FUTURES ACCOUNT], If Action =[ BUY]' },
+  { id:'U084', name:'Prime Brokerage Monitor',            active:'No',  ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Account Class =[ PRIME BROKERAGE], If Commission Override > 2.50' },
+  { id:'U085', name:'Sell Short Inventory',               active:'Yes', ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Action =[ SELL SHORT], If Security Type =[ EQUITY, EQUITY OPTION]' },
+  { id:'U086', name:'Tender Offer Screen',                active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ TENDER], If Order Value >= [ CAP 25000.00]' },
+  { id:'U087', name:'Investment Purpose Mismatch',        active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Investment Purpose =[ SPECULATION], If Account Class =[ IRA - TRADITIONAL, ROTH IRA]' },
+  { id:'U088', name:'Penny Stock Qty Limit',              active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Security Type =[ PINK SHEET], If Order Quantity >= 500000' },
+  { id:'U089', name:'Portfolio Value Concentration',      active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REPORT, If Portfolio Value < 10000.00, If Order Value >= [ CAP 5000.00]' },
+  { id:'U090', name:'Charitable Trust Distribution',      active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Account Class =[ CHARITABLE REMAINDER TRUST], If Action =[ DISTRIBUTION]' },
+  { id:'U091', name:'KEOGH Contribution Max',             active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ KEOGH, SOLO 401(K)], If Action =[ CONTRIBUTION], If Order Value >= [ CAP 66000.00]' },
+  { id:'U092', name:'RR2 Override Alert',                 active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REPORT, If Account RR2 <> [ ], If Commission Override > 10.0 %' },
+  { id:'U093', name:'Bond Junk Grade Screen',             active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ HIGH YIELD BOND, JUNK BOND], If Risk Tolerance =[ CONSERVATIVE]' },
+  { id:'U094', name:'Branch 200 New Accounts',            active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Branch =[ 200], If Account Open Date <= 30 days' },
+  { id:'U095', name:'TOD Account Transfer',               active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Account Class =[ TRANSFER ON DEATH], If Action =[ TRANSFER OUT]' },
+  { id:'U096', name:'Offshore Account Flag',              active:'Yes', ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Country of Tax Residence <> [ 001], If Order Value >= [ CAP 10000.00]' },
+  { id:'U097', name:'Supervisory Override Needed',        active:'No',  ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Commission Override >= 20.0 % of Principal Order Value' },
+  { id:'U098', name:'Partial Fill Monitor',               active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ BUY, SELL], If Order Value >= [ CAP 150000.00], If Daily Order' },
+  { id:'U099', name:'Rep 444 Annuity Sales',              active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Accepting Rep =[ 444], If Security Type =[ VARIABLE ANNUITY, FIXED ANNUITY]' },
+  { id:'U100', name:'Index Option Level Check',           active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Security Type =[ INDEX OPTION], If Option Level < 3, If Account Class =[ CASH, MARGIN, IRA - TRADITIONAL, ROTH IRA, ADVISORY, DISCRETIONARY, NON-DISCRETIONARY, WRAP ACCOUNT, MANAGED ACCOUNT, ... ], If Accepting Rep =[ 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, ... ]' },
+  { id:'U101', name:'Cash Account Margin Block',          active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REJECT, If Account Class =[ CASH], If Action =[ SELL SHORT, BUY TO COVER]' },
+  { id:'U102', name:'Pension Distribution Age',           active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ PENSION, DEFINED BENEFIT], If Action =[ DISTRIBUTION]' },
+  { id:'U103', name:'Comm Schedule Review QQ',            active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Commission Schedule =[ QQ]' },
+  { id:'U104', name:'Municipal Bond Tax State',           active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ MUNI BOND], If Account State <> [ NY, CA, TX]' },
+  { id:'U105', name:'Rights Expiration Flag',             active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ RIGHTS, SUBSCRIPTION], If Settlement Date <= 5 days' },
+  { id:'U106', name:'Oversize IRA Rollover',              active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ IRA - TRADITIONAL, SEP IRA], If Action =[ TRANSFER IN], If Order Value >= [ CAP 500000.00]' },
+  { id:'U107', name:'Custodial Account Buy',              active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ CUSTODIAL], If Action =[ BUY], If Order Value >= [ CAP 20000.00]' },
+  { id:'U108', name:'Employee Benefit Vesting',           active:'Yes', ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Account Class =[ EMPLOYEE BENEFIT], If Action =[ SELL, DISTRIBUTION]' },
+  { id:'U109', name:'Rep 555 Variance Alert',             active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REPORT, If Accepting Rep =[ 555], If Variance from Price >= [5.00]' },
+  { id:'U110', name:'Short Account Exposure',             active:'Yes', ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Account Class =[ SHORT ACCOUNT], If Order Value >= [ CAP 50000.00]' },
+  { id:'U111', name:'Profit Sharing Loan Check',          active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ PROFIT SHARING, MONEY PURCHASE], If Action =[ DISTRIBUTION]' },
+  { id:'U112', name:'New Issue Restriction',              active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Security Type =[ IPO, NEW ISSUE], If Account Class =[ PRIME BROKERAGE]' },
+  { id:'U113', name:'Comm Override Supervisor',           active:'Yes', ip:false, maa:false, inv:false, st:true,  detail:'REVIEW, If Commission Override >= 8.0 % of Principal Order Value, If Branch =[ 100, 101, 102]' },
+  { id:'U114', name:'SIMPLE IRA Contribution',            active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ SIMPLE IRA], If Action =[ CONTRIBUTION], If Order Value >= [ CAP 16000.00]' },
+  { id:'U115', name:'Variance from NAV Alert',            active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ MUTUAL FUND, ETF], If Variance from Price >= [2.00]' },
+  { id:'U116', name:'Guardian Account Transfer',          active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Account Class =[ GUARDIANSHIP, CONSERVATORSHIP], If Action =[ TRANSFER OUT, JOURNAL]' },
+  { id:'U117', name:'Oversize Equity Purchase',           active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REPORT, If Security Type =[ EQUITY], If Action =[ BUY], If Order Value >= [ CAP 1000000.00]' },
+  { id:'U118', name:'Rep 666 Block',                      active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Accepting Rep =[ 666]' },
+  { id:'U119', name:'Proceeds Hold Check',                active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Proceeds Instructions =[ HOLD], If Order Value >= [ CAP 100000.00]' },
+  { id:'U120', name:'Margin Call Warning',                active:'Yes', ip:true,  maa:true,  inv:false, st:true,  detail:'REVIEW, If Account Class =[ MARGIN, MARGIN STOCK LOAN], If Action =[ SELL]' },
+  { id:'U121', name:'Community Property Sell',            active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ COMMUNITY PROPERTY], If Action =[ SELL, TRANSFER OUT]' },
+  { id:'U122', name:'Cash Mgmt Sweep Monitor',            active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ CASH MANAGEMENT], If Order Value >= [ CAP 500000.00]' },
+  { id:'U123', name:'Branch 303 Commission Audit',        active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REPORT, If Branch =[ 303], If Commission Override > 0.00' },
+  { id:'U124', name:'High Yield Bond Suitability',        active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ HIGH YIELD BOND], If Risk Tolerance =[ LOW, CONSERVATIVE]' },
+  { id:'U125', name:'Transfer In Large Amount',           active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Action =[ TRANSFER IN], If Order Value >= [ CAP 250000.00]' },
+  { id:'U126', name:'Rep 777 New Client',                 active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Accepting Rep =[ 777], If Account Open Date <= 90 days' },
+  { id:'U127', name:'Defined Benefit Lump Sum',           active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ DEFINED BENEFIT], If Action =[ DISTRIBUTION], If Order Value >= [ CAP 50000.00]' },
+  { id:'U128', name:'ETF Commission Override',            active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Security Type =[ ETF], If Commission Override > 1.00 %' },
+  { id:'U129', name:'401K Hardship Withdraw',             active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ 401(K), 403(B)], If Action =[ DISTRIBUTION], If Investment Purpose =[ HARDSHIP]' },
+  { id:'U130', name:'Rep 888 Suitability Flag',           active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Accepting Rep =[ 888], If Risk Tolerance =[ CONSERVATIVE], If Security Type =[ EQUITY OPTION]' },
+  { id:'U131', name:'Charitable Lead Distribution',       active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Account Class =[ CHARITABLE LEAD TRUST], If Action =[ DISTRIBUTION]' },
+  { id:'U132', name:'Joint Account Large Wire',           active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ JOINT TENANTS, JOINT], If Proceeds Instructions =[ WIRE TRANSFER], If Order Value >= [ CAP 100000.00]' },
+  { id:'U133', name:'Subscription Rights Expiry',         active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ SUBSCRIPTION, RIGHTS], If Security Type =[ EQUITY]' },
+  { id:'U134', name:'Branch 404 Activity',                active:'Yes', ip:true,  maa:false, inv:false, st:true,  detail:'REVIEW, If Branch =[ 404], If Action =[ SELL SHORT]' },
+  { id:'U135', name:'IRA Prohibited Transaction',         active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Account Class =[ IRA - TRADITIONAL, ROTH IRA, SEP IRA, SIMPLE IRA, BENEFICIARY IRA, SOLO 401(K), ... ], If Security Type =[ COLLECTIBLES, LIFE INSURANCE, REAL ESTATE, S-CORP STOCK, NUMISMATIC COINS, ARTWORK, ANTIQUES, ... ], If Accepting Rep =[ 200, 201, 202, 203, 204, 205, 206, 207, 208, ... ]' },
+  { id:'U136', name:'Large Misc Fee Alert',               active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REPORT, If Miscellaneous Fee >= 500.00' },
+  { id:'U137', name:'Non-Discretionary Override',         active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ NON-DISCRETIONARY], If Commission Override > 5.0 %' },
+  { id:'U138', name:'Target Benefit Withdrawal',          active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ TARGET BENEFIT], If Action =[ DISTRIBUTION]' },
+  { id:'U139', name:'Exchange Out Cap',                   active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ EXCHANGE OUT], If Order Value >= [ CAP 100000.00]' },
+  { id:'U140', name:'Rep 999 Monitoring',                 active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Accepting Rep =[ 999], If Order Value >= [ CAP 25000.00]' },
+  { id:'U141', name:'Beneficiary IRA Stretch',            active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ BENEFICIARY IRA], If Action =[ DISTRIBUTION]' },
+  { id:'U142', name:'Convertible Bond Screen',            active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ CONVERTIBLE BOND], If Order Value >= [ CAP 50000.00]' },
+  { id:'U143', name:'Rep 111 Comm Schedule',              active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Accepting Rep =[ 111], If Commission Schedule =[ ZZ, YY]' },
+  { id:'U144', name:'Sell All Position Flag',             active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ SELL], If Order Quantity >= Position Quantity' },
+  { id:'U145', name:'Money Purchase Contribution',        active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Account Class =[ MONEY PURCHASE], If Action =[ CONTRIBUTION], If Order Value >= [ CAP 66000.00]' },
+  { id:'U146', name:'Trust Discretionary Check',          active:'No',  ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ TRUST - INDIVIDUAL, TRUST - CORPORATE], If Commission Override > 3.00' },
+  { id:'U147', name:'Options Expiry Monitor',             active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REVIEW, If Security Type =[ EQUITY OPTION, INDEX OPTION], If Settlement Date <= 3 days' },
+  { id:'U148', name:'Branch 505 Equity Trades',           active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REPORT, If Branch =[ 505], If Security Type =[ EQUITY], If Order Value >= [ CAP 50000.00]' },
+  { id:'U149', name:'Partnership Large Withdrawal',       active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ PARTNERSHIP], If Action =[ DISTRIBUTION, REDEMPTION], If Order Value >= [ CAP 100000.00]' },
+  { id:'U150', name:'Variance Price Bond',                active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ CORPORATE BO, GOVT BOND], If Variance from Price >= [3.00]' },
+  { id:'U151', name:'ACH Limit Check',                    active:'Yes', ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Proceeds Instructions =[ ACH], If Order Value >= [ CAP 25000.00]' },
+  { id:'U152', name:'Rep 001 Block All',                  active:'No',  ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Accepting Rep =[ 001]' },
+  { id:'U153', name:'Margin Loan Rate Alert',             active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ MARGIN STOCK LOAN], If Order Value >= [ CAP 500000.00]' },
+  { id:'U154', name:'Options Account Approval',           active:'Yes', ip:true,  maa:true,  inv:true,  st:true,  detail:'REJECT, If Account Class =[ OPTIONS ACCOUNT], If Option Level < 1' },
+  { id:'U155', name:'Branch 606 High Comm',               active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REPORT, If Branch =[ 606], If Commission Variance > 3.00 %' },
+  { id:'U156', name:'Advisory Fee Waiver Check',          active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REVIEW, If Account Class =[ ADVISORY], If Fee Override = 0.00' },
+  { id:'U157', name:'Reinvest Dividend Monitor',          active:'No',  ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Action =[ REINVEST], If Security Type =[ MUTUAL FUND, EQUITY]' },
+  { id:'U158', name:'International Securities',           active:'Yes', ip:true,  maa:true,  inv:true,  st:false, detail:'REVIEW, If Security Type =[ ADR, FOREIGN EQUITY], If Order Value >= [ CAP 50000.00]' },
+  { id:'U159', name:'Rep 202 Annuity Cap',                active:'No',  ip:true,  maa:false, inv:false, st:false, detail:'REVIEW, If Accepting Rep =[ 202], If Security Type =[ VARIABLE ANNUITY], If Order Value >= [ CAP 200000.00]' },
+  { id:'U160', name:'Trust Large Distribution',           active:'Yes', ip:true,  maa:true,  inv:false, st:false, detail:'REPORT, If Account Class =[ TRUST - INDIVIDUAL, TRUST - CORPORATE], If Action =[ DISTRIBUTION], If Order Value >= [ CAP 250000.00]' },
+];
+
+const ACCT_CLASS = [
+  'CASH','MARGIN','IRA - TRADITIONAL','ROTH IRA','SEP IRA','SIMPLE IRA',
+  '401(K)','403(B)','529 PLAN','TRUST - INDIVIDUAL','TRUST - CORPORATE',
+  'CORPORATE','PARTNERSHIP','JOINT TENANTS','TENANTS IN COMMON',
+  'CUSTODIAL','UGMA','UTMA','BENEFICIARY IRA','ESTATE',
+  'PENSION','PROFIT SHARING','MONEY PURCHASE','TARGET BENEFIT',
+  'DEFINED BENEFIT','KEOGH','SOLO 401(K)','INDIVIDUAL','JOINT',
+  'COMMUNITY PROPERTY','TRANSFER ON DEATH','GUARDIANSHIP',
+  'CONSERVATORSHIP','CHARITABLE REMAINDER TRUST','CHARITABLE LEAD TRUST',
+  'VARIABLE ANNUITY','FIXED ANNUITY','MUTUAL FUND','MANAGED ACCOUNT',
+  'WRAP ACCOUNT','ADVISORY','DISCRETIONARY','NON-DISCRETIONARY',
+  'PRIME BROKERAGE','STOCK PLAN','EMPLOYEE BENEFIT','FOREIGN ACCOUNT',
+  'CASH MANAGEMENT','MARGIN STOCK LOAN','SHORT ACCOUNT',
+  'OPTIONS ACCOUNT','FUTURES ACCOUNT'
+];
+
+const ACTIONS = [
+  'BUY','SELL','SELL SHORT','BUY TO COVER','EXCHANGE IN','EXCHANGE OUT',
+  'TRANSFER IN','TRANSFER OUT','JOURNAL','REINVEST','TENDER',
+  'RIGHTS','SUBSCRIPTION','CONTRIBUTION','DISTRIBUTION','SWITCH','REDEMPTION'
+];
+
+const PROCEEDS = [
+  'HOLD','REINVEST','SEND CHECK','WIRE TRANSFER','ACH','JOURNAL TO ACCOUNT'
+];
+
+const KW = {
+  acctL: [
+    'Account Number','Account Net Worth','Account Registration','Account Type','Account Class',
+    'Account Status','Account Open Date','Account State','Account Risk Level','Account Model',
+    'Branch Code','Rep Code','Accepting Rep','Commission Schedule','Portfolio Value',
+    'Account Age','Account Balance','Margin Equity Ratio','Account Restriction Code','Account Sub-Type',
+    'Account Tier','Account Currency','Account Source of Funds','Account Last Activity Date','Account Division',
+  ],
+  acctR: [
+    'Account RR','Account RR2','Account Supervisor','Commission Variance','Commission Override',
+    'Country of Tax Residence','Federal Tax Bracket','Fee Override','Investment Purpose',
+    'Last Change Date','Managed Account Flag','Account Category','Portal ID / FBSI ID',
+    'Securities Upload','Account Custodian',
+    'Account Region','Account Primary Rep','Account Secondary Rep','Account Household ID',
+    'Introducing Broker','Account Agreement Date','Account Office','Account Agreement Type',
+    'Margin Balance','Account Restriction Expiry Date',
+  ],
+  suitL: [
+    'Option Level','Investment Objective','Risk Tolerance','Time Horizon',
+    'Liquidity Needs','Annual Income','Net Worth',
+    'Liquid Assets','Total Assets','Estimated Annual Expenses',
+    'Speculative Percentage','Income Needs','Growth Objective',
+  ],
+  suitR: [
+    'Liquid Net Worth','Tax Status','Investment Experience','Dividend Reinvestment',
+    'Suitability Score','Suitability Review Date','Capital Preservation',
+    'Risk Capacity','Conservative Objective','Aggressive Objective',
+    'Margin Suitability','Derivatives Experience',
+  ],
+  ipL: [
+    'Accepting Rep','Investment Professional ID',
+    'Rep Branch','Rep License Type','Rep Registration State',
+    'Rep CRD Number','Rep Supervision Level','Rep Principal',
+  ],
+  ipR: [
+    'Rep Type','Rep Status','Rep Credentials',
+    'Rep Production Level','Rep Hire Date','Rep Termination Date',
+    'Rep Series 7','Rep Series 66','Rep IAR Status','Rep OSJ Branch',
+  ],
+  ordL: [
+    'Action','Symbol / CUSIP / SEDOL','Security Type','Order Value',
+    'Position Source','Proceeds Instructions','Variance from Price','Daily Order',
+    'Order Quantity','Order Price','Order Entry Time','Order Source',
+    'Order Capacity','Clearing Firm','Net Amount','Commission Amount',
+  ],
+  ordR: [
+    'Miscellaneous Fee','Option Level','Potential Duplicate Order','Principal Order Value',
+    'Trade Date','Settlement Date','Order Quantity','Order Price',
+    'Fee Type','Execution Venue','Order Memo','Order Route',
+    'Accrued Interest','Order Fill Status','Partial Fill Quantity','Order Expiry Type',
+  ],
+  secL: [
+    'Symbol / CUSIP / SEDOL','Security Type','Security Description','Exchange Listed',
+    'Margin Eligible','Restricted Security','Option Eligible','Security Country',
+    'Security Currency','Security Rating','Security Maturity Date','Security Coupon Rate',
+    'Security Yield','Security Sector','Security Industry',
+  ],
+  secR: [
+    'IPO / New Issue Flag','Restricted Period','Security Market Cap',
+    'ETF Underlying Index','Option Expiry Date','Option Strike Price',
+    'Option Type (Call / Put)','Security ISIN','Security Exchange','Security Issuer',
+    'Security Duration','Security Convexity','Security Callable Flag',
+    'Security Convertible Flag','Security Dividend Yield',
+  ],
+  cliL: [
+    'Client Age','Client Date of Birth','Client Citizenship','Client State of Residence',
+    'Client Tax ID Type','Client Employment Status','Client Employer Name',
+    'Client Occupation','Client Annual Salary','Client Dependents',
+    'Client Entity Type','Client Legal Status','Client Account Opening Channel',
+  ],
+  cliR: [
+    'Power of Attorney on File','Trusted Contact on File','Political Exposure (PEP)',
+    'OFAC / Sanctions Status','AML Review Status','KYC Completion Date',
+    'Client Risk Rating','Client Due Diligence Level','Client Verification Status',
+    'Client Beneficial Owner','Client Control Person','Client Exempt Status',
+    'Client Last Review Date',
+  ],
+  regL: [
+    'Regulation T Requirement','Rule 4210 Margin','Pattern Day Trader Flag',
+    'Regulation S-P Privacy','Regulation BI Obligation','Wash Sale Flag',
+    'Short Sale Rule 10a-1','FINRA Rule 2111 Suitability','SEC Rule 15c3-3',
+    'Regulation SHO Locate','Rule 144 Volume Limit','Form 4 Filing Required',
+  ],
+  regR: [
+    'FINRA 4512 Customer Info','Blue Sheet Reportable','Large Trader ID',
+    'TRACE Reportable Trade','MSRB Reportable Trade','CAT Reportable Event',
+    'Form 1099 Required','Suspicious Activity Flag','CTR Threshold Trigger',
+    'FATCA Reportable Account','CRS Reportable Account','Regulation D Exempt',
+  ],
+  txnL: [
+    'Settlement Date','Trade Date','Clearing Firm','Clearing Method',
+    'Settlement Currency','Settlement Country','Delivery vs Payment',
+    'Fail to Deliver Flag','Buy-In Notice','Settlement Instructions',
+    'Custodian Bank','DTC Participant Number',
+  ],
+  txnR: [
+    'Net Settlement Amount','Accrued Interest','Settlement Variance',
+    'FX Rate Applied','FX Conversion Required','Correspondent Bank',
+    'SWIFT Code','ABA Routing Number','Settlement Status',
+    'Reclaim / Reversal Flag','Corporate Action Pending','Ex-Dividend Date',
+  ],
+};
+
+/* ── Helpers ── */
+function fillValGrid(id, items, checked = []) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  items.forEach(item => {
+    const d = document.createElement('div');
+    d.className = 'val-item';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    if (checked.includes(item)) cb.checked = true;
+    d.appendChild(cb);
+    d.appendChild(document.createTextNode('\u00a0' + item));
+    el.appendChild(d);
+  });
+}
+
+function fillKwCol(id, items) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  items.forEach(kw => {
+    const d = document.createElement('div');
+    d.className = 'kw-item';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    d.appendChild(cb);
+    d.appendChild(document.createTextNode('\u00a0' + kw));
+    el.appendChild(d);
+  });
+}
+
+/* ── Build rules table ── */
+function buildRulesTable() {
+  const tbody = document.getElementById('tbody-rules');
+  RULES.forEach((r, i) => {
+    const tr = document.createElement('tr');
+    const chk = `<svg width="11" height="9" viewBox="0 0 11 9" xmlns="http://www.w3.org/2000/svg"><polyline points="1,4.5 4,7.5 10,1" fill="none" stroke="#2a7a2a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    tr.innerHTML = `
+      <td><span class="rule-id-link" data-id="${r.id}">${r.id}</span></td>
+      <td>${r.name}</td>
+      <td>${r.active}</td>
+      <td class="chk">${r.ip  ? chk : ''}</td>
+      <td class="chk">${r.maa ? chk : ''}</td>
+      <td class="chk">${r.inv ? chk : ''}</td>
+      <td class="chk">${r.st  ? chk : ''}</td>
+      <td class="detail">${r.detail}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  tbody.addEventListener('click', e => {
+    const link = e.target.closest('.rule-id-link');
+    if (!link) return;
+    const rule = RULES.find(r => r.id === link.dataset.id);
+    if (!rule) return;
+    document.getElementById('view-id').textContent = rule.id;
+    document.getElementById('view-name').value = rule.name;
+    fillValGrid('view-acctclass', ACCT_CLASS, ['CASH','MARGIN','IRA - TRADITIONAL']);
+    fillValGrid('view-action', ACTIONS, ['BUY','SELL']);
+    go('scr-view');
+  });
+}
+
+/* ── Init ── */
+buildRulesTable();
+
+// New rule form
+fillValGrid('new-acctclass', ACCT_CLASS);
+fillValGrid('new-action', ACTIONS);
+fillValGrid('new-proceeds', PROCEEDS);
+
+// Pre-fill view rule defaults (shown when navigating directly)
+fillValGrid('view-acctclass', ACCT_CLASS, ['CASH','MARGIN','IRA - TRADITIONAL']);
+fillValGrid('view-action', ACTIONS, ['BUY','SELL']);
+
+// Keywords
+fillKwCol('kw-acct-L', KW.acctL);
+fillKwCol('kw-acct-R', KW.acctR);
+fillKwCol('kw-suit-L', KW.suitL);
+fillKwCol('kw-suit-R', KW.suitR);
+fillKwCol('kw-ip-L',   KW.ipL);
+fillKwCol('kw-ip-R',   KW.ipR);
+fillKwCol('kw-ord-L',  KW.ordL);
+fillKwCol('kw-ord-R',  KW.ordR);
+fillKwCol('kw-sec-L',  KW.secL);
+fillKwCol('kw-sec-R',  KW.secR);
+fillKwCol('kw-cli-L',  KW.cliL);
+fillKwCol('kw-cli-R',  KW.cliR);
+fillKwCol('kw-reg-L',  KW.regL);
+fillKwCol('kw-reg-R',  KW.regR);
+fillKwCol('kw-txn-L',  KW.txnL);
+fillKwCol('kw-txn-R',  KW.txnR);
+</script>
+<!-- ═══════════════════════════════════════════
+     ANNOTATION SYSTEM — clean rebuild
+═══════════════════════════════════════════ -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* One overlay div — the single source of truth for dimming */
+  #hl-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 900;
+    background: rgba(20, 32, 28, 0.72);
+    pointer-events: none;
+  }
+
+  /* The ring — sits above the overlay */
+  #hl-ring {
+    display: none;
+    position: fixed; z-index: 901;
+    border: 2px solid #4a7c6f;
+    pointer-events: none;
+    box-shadow: 0 0 0 1px rgba(74,124,111,0.25);
+  }
+
+  /* Callout card — glassmorphism */
+  #hl-callout {
+    display: none;
+    position: fixed; z-index: 902;
+    background: rgba(251,250,244,0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(202,213,226,0.35);
+    border-radius: 14px;
+    padding: 20px 24px;
+    width: 310px;
+    box-shadow: 0 12px 48px rgba(20,32,28,0.18), 0 2px 8px rgba(20,32,28,0.08);
+    font-family: 'Inter', sans-serif;
+  }
+  #hl-callout .c-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #4a7c6f; margin-bottom: 7px;
+  }
+  #hl-callout .c-title {
+    font-size: 15px; font-weight: 700; color: #3a3530;
+    margin-bottom: 9px; line-height: 1.3;
+  }
+  #hl-callout .c-body {
+    font-size: 12.5px; line-height: 1.7; color: #62748e;
+  }
+
+  /* Chrome-style find bar */
+  #hl-ctrlf {
+    display: none;
+    position: fixed; top: 58px; right: 0; z-index: 903; /* top overridden dynamically in hlRender */
+    background: rgba(251,250,244,0.95);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid rgba(202,213,226,0.4);
+    border-bottom: 1px solid rgba(202,213,226,0.4);
+    border-radius: 0 0 0 8px;
+    padding: 7px 12px;
+    font-family: 'Inter', sans-serif;
+    display: none; align-items: center; gap: 8px;
+    box-shadow: 0 4px 16px rgba(20,32,28,0.1);
+  }
+
+  /* Nav bar — glassmorphism to match case study nav */
+  #hl-nav {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 910;
+    background: rgba(251,250,244,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(202,213,226,0.25);
+    box-shadow: 0 2px 20px rgba(20,32,28,0.07);
+    font-family: 'Inter', sans-serif;
+    flex-direction: column;
+  }
+  .nav-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+  }
+  /* Screen label row — clickable, sits below main nav row */
+  #hl-screen-row {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 6px 32px 8px;
+    border-top: 1px solid rgba(74,124,111,0.12);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #hl-screen-row:hover { background: rgba(74,124,111,0.05); }
+  #hl-pill-text {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #2d5c52;
+  }
+  #hl-pill-chevron {
+    font-size: 12px; color: #4a7c6f;
+    transition: transform 0.25s; line-height: 1;
+  }
+  #hl-nav.expanded #hl-pill-chevron { transform: rotate(180deg); }
+  /* Description drawer */
+  #hl-pill-desc-row {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+    border-top: 0px solid rgba(74,124,111,0.12);
+  }
+  #hl-nav.expanded #hl-pill-desc-row {
+    max-height: 80px;
+    border-top-width: 1px;
+  }
+  #hl-pill-desc {
+    padding: 10px 80px 14px;
+    font-size: 12.5px; line-height: 1.6; color: #62748e;
+    text-align: center;
+  }
+  #hl-nav .nav-left { display: flex; flex-direction: column; gap: 5px; }
+  #hl-nav .nav-context {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #4a7c6f;
+  }
+  #hl-nav .nav-title { display: none; }
+  #hl-nav .nav-center { display: flex; gap: 8px; align-items: center; }
+  #hl-nav .nav-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(144,161,185,0.3);
+    border: none; padding: 0; cursor: pointer; transition: all 0.2s;
+  }
+  #hl-nav .nav-dot.on { background: #4a7c6f; transform: scale(1.35); }
+  #hl-nav .nav-right { display: flex; align-items: center; gap: 8px; }
+
+  .hl-btn {
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+    padding: 7px 20px; border-radius: 20px; cursor: pointer; border: none;
+    transition: all 0.18s; letter-spacing: 0.02em;
+  }
+  .hl-btn-ghost {
+    background: transparent; color: #59504a;
+    border: 1px solid rgba(89,80,74,0.25);
+  }
+  .hl-btn-ghost:hover { background: rgba(89,80,74,0.06); }
+  .hl-btn-primary { background: #4a7c6f; color: #f6fbde; }
+  .hl-btn-primary:hover { background: #2d5c52; }
+  .hl-btn-exit {
+    background: transparent; color: #59504a;
+    border: 1px solid rgba(89,80,74,0.25);
+  }
+  .hl-btn-exit:hover { background: rgba(89,80,74,0.06); color: #b17c5d; border-color: rgba(177,124,93,0.3); }
+  .hl-step-count { font-size: 11px; font-weight: 600; color: #90a1b9; }
+
+  /* Trigger button */
+  #hl-trigger {
+    position: fixed; bottom: 28px; right: 28px; z-index: 800;
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700;
+    padding: 12px 22px; border-radius: 24px;
+    background: #4a7c6f; color: #f6fbde; border: none; cursor: pointer;
+    box-shadow: 0 4px 24px rgba(74,124,111,0.4);
+    display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  #hl-trigger:hover { background: #2d5c52; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(74,124,111,0.35); }
+
+  /* Pulse ring behind the button */
+  #hl-trigger::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 28px;
+    border: 2px solid rgba(74,124,111,0.5);
+    animation: hl-pulse 2s ease-out infinite;
+    pointer-events: none;
+  }
+  #hl-trigger::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 28px;
+    border: 2px solid rgba(74,124,111,0.25);
+    animation: hl-pulse 2s ease-out 0.6s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes hl-pulse {
+    0%   { inset: -4px; opacity: 1; }
+    100% { inset: -18px; opacity: 0; }
+  }
+</style>
+
+<!-- DOM elements -->
+<div id="hl-overlay"></div>
+<div id="hl-ring"></div>
+<div id="hl-callout">
+  <div class="c-label" id="hl-label"></div>
+  <div class="c-title" id="hl-title"></div>
+  <div class="c-body"  id="hl-body"></div>
+</div>
+<div id="hl-ctrlf">
+  <span style="font-size:11px;color:#5f6368;font-weight:500;">Find:</span>
+  <span style="background:white;border:1px solid #dadce0;border-radius:3px;padding:2px 8px;font-size:12px;color:#202124;min-width:160px;display:inline-flex;align-items:center;gap:4px;">
+    <span style="opacity:0.3;">|</span><span style="flex:1"></span>
+    <span style="font-size:11px;color:#80868b;white-space:nowrap;">63 of 63</span>
+  </span>
+  <span style="display:flex;gap:2px;">
+    <button style="background:none;border:none;color:#5f6368;font-size:14px;cursor:default;padding:2px 4px;">∧</button>
+    <button style="background:none;border:none;color:#5f6368;font-size:14px;cursor:default;padding:2px 4px;">∨</button>
+  </span>
+  <span style="width:1px;height:16px;background:#dadce0;margin:0 2px;"></span>
+  <button style="background:none;border:none;color:#5f6368;font-size:16px;cursor:default;padding:2px 5px;">×</button>
+</div>
+<div id="hl-nav">
+  <div class="nav-main-row">
+    <div class="nav-left">
+      <div class="nav-context" id="hl-nav-context"></div>
+      <div class="nav-title"   id="hl-nav-title"></div>
+    </div>
+    <div class="nav-center" id="hl-dots"></div>
+    <div class="nav-right">
+      <span class="hl-step-count" id="hl-count"></span>
+      <button class="hl-btn hl-btn-ghost" id="hl-prev" onclick="hlPrev()">← Back</button>
+      <button class="hl-btn hl-btn-primary" id="hl-next" onclick="hlNext()">Next →</button>
+      <button class="hl-btn hl-btn-exit" onclick="hlExit()">Exit</button>
+    </div>
+  </div>
+  <div id="hl-screen-row" onclick="hlPillToggle()">
+    <span id="hl-pill-text"></span>
+    <span id="hl-pill-chevron">▾</span>
+  </div>
+  <div id="hl-pill-desc-row">
+    <div id="hl-pill-desc"></div>
+  </div>
+</div>
+
+<button id="hl-trigger" onclick="hlStart()">
+  <span style="width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:9px;">▶</span>
+  Guided Walkthrough
+</button>
+
+<script>
+// ─────────────────────────────────────────────
+//  STEPS
+// ─────────────────────────────────────────────
+const HL_STEPS = [
+  {
+    screen: 'scr-list', context: 'Rules List — Usability Issues',
+    label: 'Issue 1 of 7', title: 'Rule logic in technical shorthand',
+    body: 'Rule logic is written in system syntax — "REJECT, If Action =[ BUY], If Security Type =[ VARIABLE ANNUITY]" — not plain language. Requires expert knowledge to read at a glance.',
+    target: 'first-detail-cell', callout: 'left', scroll: 'top',
+  },
+  {
+    screen: 'scr-list', context: 'Rules List — Usability Issues',
+    label: 'Issue 2 of 7', title: 'Rule logic truncated mid-sentence',
+    body: 'Long conditions are cut off with no way to read the full logic without clicking into every rule individually — slowing down every routine review.',
+    target: 'first-detail-cell', callout: 'left', scroll: 'top',
+  },
+  {
+    screen: 'scr-list', context: 'Rules List — Usability Issues',
+    label: 'Issue 3 of 7', title: 'A wall of undifferentiated text',
+    body: '60+ rules in a flat table with no visual hierarchy, no status filtering, and no way to distinguish active from inactive rules at a glance.',
+    target: 'rules-table', callout: 'top-right', scroll: 'top', topStrip: true,
+  },
+  {
+    screen: 'scr-list', context: 'Rules List — Usability Issues',
+    label: 'Issue 4 of 7', title: 'Ctrl+F is the only search',
+    body: 'No search bar, no filtering by keyword, status, or rule type. To find a specific rule, users resort to Ctrl+F — or copy the entire list into Excel.',
+    target: 'hl-ctrlf', callout: 'bottom-right', scroll: 'top', ctrlF: true,
+  },
+  {
+    screen: 'scr-list', context: 'Rules List — Usability Issues',
+    label: 'Issue 5 of 7', title: '"Create Rule" is buried at the bottom',
+    body: 'To create a new rule, users must scroll past every existing rule. There is no persistent action or shortcut from the top of the page.',
+    target: 'create-rule-btn-wrap', callout: 'bottom-right', scroll: 'bottom', cutout: true,
+  },
+  {
+    screen: 'scr-keywords', context: 'Keyword Selection — Usability Issues',
+    label: 'Issue 6 of 7', title: 'Keywords are names only — no descriptions',
+    body: '140+ keywords listed with no descriptions, no examples, and no grouping beyond broad category headers.\n\nUsers must pick blind — the only way to learn is to guess, hit Next, see what fields appear, decide it\'s wrong, come back and try again. Users described bouncing back and forth multiple times before landing on the right combination.',
+    target: 'kw-acct-L', callout: 'right', scroll: 'top',
+  },
+  {
+    screen: 'scr-new', context: 'Rule Details — Usability Issues',
+    label: 'Issue 7 of 7', title: 'Unintuitive controls with no guardrails',
+    body: 'Inputs are visually cluttered and undifferentiated spatially. They are also unintuitive and/or have little affordance as to the proper input values and no feedback to provide guardrails to users.\n\nEx 1: Account Class displays a wall of checkboxes that\'s hard to scan.\n\nEx 2: Symbol / CUSIP / SEDOL is a single text input that accepts up to 20,000 comma-separated values — with no instruction, no validation, and no autocomplete.',
+    target: 'new-acctclass-and-symbol', callout: 'top-right', scroll: 'top',
+  },
+];
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let hlCurrent = -1;
+
+// ─────────────────────────────────────────────
+//  HELPERS — show/hide individual elements
+// ─────────────────────────────────────────────
+function showEl(id, flex)  { document.getElementById(id).style.display = flex ? 'flex' : 'block'; }
+function hideEl(id)        { document.getElementById(id).style.display = 'none'; }
+
+// ─────────────────────────────────────────────
+//  CLEAR — resets ALL overlay state to zero
+// ─────────────────────────────────────────────
+function hlClear() {
+  hideEl('hl-overlay');
+  hideEl('hl-ring');
+  hideEl('hl-callout');
+  hideEl('hl-ctrlf');
+  // Remove clip-path and reset top offset from overlay
+  document.getElementById('hl-overlay').style.clipPath = '';
+  document.getElementById('hl-overlay').style.top = '0';
+}
+
+// ─────────────────────────────────────────────
+//  GET ELEMENT for a step target
+// ─────────────────────────────────────────────
+function hlGetEl(target) {
+  if (target === 'first-detail-cell') {
+    const rows = document.querySelectorAll('#tbody-rules tr');
+    return rows.length ? (rows[0].querySelector('td.detail') || rows[0].lastElementChild) : null;
+  }
+  if (target === 'create-rule-btn-wrap') {
+    return document.querySelector('#create-rule-btn-wrap .btn') || document.getElementById(target);
+  }
+  if (target === 'kw-acct-L') {
+    const col = document.getElementById('kw-acct-L');
+    if (!col) return null;
+    // Return synthetic element that measures live when getBoundingClientRect is called
+    return {
+      getBoundingClientRect: () => {
+        const items = [...col.querySelectorAll('.kw-item')];
+        if (!items.length) return col.getBoundingClientRect();
+        const rects  = items.map(i => i.getBoundingClientRect());
+        const top    = Math.min(...rects.map(r => r.top));
+        const bottom = Math.max(...rects.map(r => r.bottom));
+        const left   = Math.min(...rects.map(r => r.left));
+        const right  = Math.max(...rects.map(r => r.right));
+        return { top, bottom, left, right, width: right - left, height: bottom - top };
+      }
+    };
+  }
+  if (target === 'new-acctclass-and-symbol') {
+    const top = document.getElementById('new-acctclass')?.closest('.crit-row');
+    const bot = document.getElementById('new-symbol');
+    if (!top || !bot) return document.getElementById('new-acctclass');
+    return {
+      getBoundingClientRect: () => {
+        const r1 = top.getBoundingClientRect();
+        const r2 = bot.getBoundingClientRect();
+        return { top: r1.top, bottom: r2.bottom, left: r1.left, right: r1.right, width: r1.width, height: r2.bottom - r1.top };
+      }
+    };
+  }
+  return document.getElementById(target);
+}
+
+// ─────────────────────────────────────────────
+//  RENDER a step
+// ─────────────────────────────────────────────
+function hlRender(idx) {
+  const step = HL_STEPS[idx];
+
+  // Show ctrlF bar early if needed so it has layout before we measure it
+  if (step.ctrlF) {
+    showEl('hl-ctrlf', true);
+  } else {
+    hideEl('hl-ctrlf');
+  }
+
+  const el = hlGetEl(step.target);
+  if (!el) return;
+
+  const r = el.getBoundingClientRect();
+  const pad = 7;
+  const navBar = document.getElementById('hl-nav');
+  const navBottom = navBar ? navBar.getBoundingClientRect().bottom : 0;
+  const x1 = r.left - pad, y1 = Math.max(navBottom + 4, r.top - pad);
+  const x2 = r.right + pad, y2 = r.bottom + pad;
+
+  // 1. Overlay — always show; for ctrlF step, no cutout needed (browser UI stands alone)
+  const overlay = document.getElementById('hl-overlay');
+  const W = window.innerWidth, H = window.innerHeight;
+  overlay.style.top = '0';
+  if (step.topStrip) {
+    // Dim everything below the nav bar
+    overlay.style.clipPath = `polygon(
+      0px ${navBottom}px, ${W}px ${navBottom}px, ${W}px ${H}px, 0px ${H}px, 0px ${navBottom}px
+    )`;
+  } else if (step.ctrlF) {
+    // Plain dim — just punch out the nav bar area, no target cutout
+    overlay.style.clipPath = `polygon(
+      0px 0px, ${W}px 0px, ${W}px ${H}px, 0px ${H}px, 0px 0px,
+      0px 0px, ${W}px 0px, ${W}px ${navBottom}px, 0px ${navBottom}px, 0px 0px
+    )`;
+  } else {
+    const cutoutY1 = y1;
+    overlay.style.clipPath = `polygon(
+      0px 0px, ${W}px 0px, ${W}px ${H}px, 0px ${H}px, 0px 0px,
+      0px 0px, ${W}px 0px, ${W}px ${navBottom}px, 0px ${navBottom}px, 0px 0px,
+      ${x1}px ${cutoutY1}px, ${x1}px ${y2}px, ${x2}px ${y2}px, ${x2}px ${cutoutY1}px, ${x1}px ${cutoutY1}px
+    )`;
+  }
+  showEl('hl-overlay', false);
+
+  // 2. Ring — hidden on ctrlF and topStrip steps
+  const ring = document.getElementById('hl-ring');
+  if (step.ctrlF || step.topStrip) {
+    hideEl('hl-ring');
+  } else {
+    ring.style.left   = x1 + 'px';
+    ring.style.top    = y1 + 'px';
+    ring.style.width  = (x2 - x1) + 'px';
+    ring.style.height = (y2 - y1) + 'px';
+    showEl('hl-ring', false);
+  }
+
+  // 3. Callout
+  document.getElementById('hl-label').textContent = step.label;
+  document.getElementById('hl-title').textContent = step.title;
+  document.getElementById('hl-body').innerHTML = step.body
+    .split('\n\n')
+    .map(p => `<p style="margin:0 0 8px 0">${p}</p>`)
+    .join('');
+  const callout = document.getElementById('hl-callout');
+  const cw = 290, margin = 16;
+  callout.style.right = '';
+  callout.style.bottom = '';
+  if (step.callout === 'left') {
+    callout.style.left = Math.max(margin, x1 - cw - 16) + 'px';
+    callout.style.top  = Math.max(70, y1) + 'px';
+  } else if (step.callout === 'below') {
+    callout.style.left = Math.min(x1, window.innerWidth - cw - margin) + 'px';
+    callout.style.top  = (y2 + 12) + 'px';
+  } else if (step.callout === 'right') {
+    const leftPos = x2 + 16;
+    callout.style.left = (leftPos + cw < window.innerWidth - margin ? leftPos : Math.max(margin, x1 - cw - 16)) + 'px';
+    callout.style.top  = Math.max(70, Math.min(y1, window.innerHeight - 240)) + 'px';
+  } else if (step.callout === 'bottom-right') {
+    callout.style.right  = '24px';
+    callout.style.left   = 'auto';
+    callout.style.bottom = '24px';
+    callout.style.top    = 'auto';
+  } else if (step.callout === 'top-right') {
+    callout.style.right  = '24px';
+    callout.style.left   = 'auto';
+    callout.style.top    = (navBottom + 16) + 'px';
+    callout.style.bottom = 'auto';
+  }
+  showEl('hl-callout', false);
+
+  // 4. Ctrl+F bar — position below nav and reposition callout below the find bar
+  if (step.ctrlF) {
+    const ctrlf = document.getElementById('hl-ctrlf');
+    ctrlf.style.top = navBottom + 'px';
+    // Measure ctrlF bar height after positioning, then place callout below it
+    requestAnimationFrame(() => {
+      const ctrlfBottom = ctrlf.getBoundingClientRect().bottom;
+      callout.style.top = (ctrlfBottom + 12) + 'px';
+      callout.style.left = 'auto';
+      callout.style.right = '16px';
+      callout.style.bottom = '';
+    });
+  }
+
+  // 5. Nav bar
+  document.getElementById('hl-nav-context').textContent = step.context;
+  document.getElementById('hl-nav-title').textContent   = step.title;
+  document.getElementById('hl-count').textContent       = (idx + 1) + ' of ' + HL_STEPS.length;
+  const prevBtn = document.getElementById('hl-prev');
+  prevBtn.disabled = idx === 0;
+  prevBtn.style.opacity = idx === 0 ? '0.35' : '1';
+  prevBtn.style.cursor  = idx === 0 ? 'default' : 'pointer';
+  prevBtn.style.visibility = 'visible';
+  const nextBtn = document.getElementById('hl-next');
+  if (idx === HL_STEPS.length - 1) {
+    nextBtn.textContent = 'Finish'; nextBtn.onclick = hlExit;
+  } else {
+    nextBtn.textContent = 'Next →'; nextBtn.onclick = hlNext;
+  }
+
+  // Dots
+  const dotsEl = document.getElementById('hl-dots');
+  dotsEl.innerHTML = '';
+  HL_STEPS.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'nav-dot' + (i === idx ? ' on' : '');
+    d.onclick = () => hlGo(i);
+    dotsEl.appendChild(d);
+  });
+
+  showEl('hl-nav', true);
+
+  // Push page content below the nav bar so nothing is hidden under it
+  requestAnimationFrame(() => {
+    const navH = document.getElementById('hl-nav').getBoundingClientRect().height;
+    document.querySelectorAll('.page').forEach(p => p.style.paddingTop = (navH + 14) + 'px');
+  });
+}
+
+// ─────────────────────────────────────────────
+//  NAVIGATION
+// ─────────────────────────────────────────────
+function hlGo(idx) {
+  const step = HL_STEPS[idx];
+  const prev = hlCurrent >= 0 ? HL_STEPS[hlCurrent] : null;
+  hlCurrent = idx;
+
+  // Always clear everything first
+  hlClear();
+
+  // Switch screen if needed
+  let screenSwitched = false;
+  if (!prev || prev.screen !== step.screen) {
+    screenSwitched = true;
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(step.screen).classList.add('active');
+    // Update screen pill and keep it visible until next screen switch
+    const SCREEN_INFO = {
+      'scr-list':     { label: 'Screen 1 — Rules List',       desc: 'Where users come to locate and manage existing rules — viewing rule logic, active status, and which user types each rule applies to.' },
+      'scr-keywords': { label: 'Screen 2 — Choose Keywords',  desc: 'Where users select the building blocks of a rule. Each keyword unlocks a specific set of conditions and values that can be configured.' },
+      'scr-new':      { label: 'Screen 3 — Rule Details',     desc: 'Where users define the specific values and logic for each condition. The combination of keywords and values forms the complete rule.' },
+    };
+    const info = SCREEN_INFO[step.screen] || { label: step.screen, desc: '' };
+    document.getElementById('hl-pill-text').textContent = info.label;
+    document.getElementById('hl-pill-desc').textContent = info.desc;
+    document.getElementById('hl-nav').classList.remove('expanded');
+    // Screen row is always visible when nav is visible — no separate show needed
+  }
+
+  // Scroll then render — for bottom scroll, use scrollIntoView on the target element
+  // so we scroll exactly to it, then lock body scroll before measuring position
+  if (step.scroll === 'bottom') {
+    const targetEl = hlGetEl(step.target);
+    // Lock outer scroll immediately, then scroll only within the iframe
+    document.body.style.overflow = 'hidden';
+    if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      hlRender(idx);
+    }, 600);
+  } else {
+    // Lock outer scroll immediately before any internal scroll
+    document.body.style.overflow = 'hidden';
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    // Wait longer on screen switch to ensure new screen is fully laid out before measuring
+    const waitMs = screenSwitched ? 1000 : 300;
+    setTimeout(() => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        document.body.style.overflow = 'hidden';
+        hlRender(idx);
+      }));
+    }, waitMs);
+  }
+}
+
+function hlPillToggle() {
+  const nav = document.getElementById('hl-nav');
+  nav.classList.toggle('expanded');
+
+  if (hlCurrent < 0) return;
+
+  // Animate ring/overlay/callout continuously during the drawer transition
+  // so everything moves together in one fluid motion
+  const DURATION = 320; // must match CSS transition duration
+  const start = performance.now();
+
+  function tick(now) {
+    const elapsed = now - start;
+
+    // Update padding to match current nav height mid-animation
+    const navH = nav.getBoundingClientRect().height;
+    document.querySelectorAll('.page').forEach(p => p.style.paddingTop = (navH + 14) + 'px');
+
+    // Re-render highlight at current position
+    hlRender(hlCurrent);
+
+    if (elapsed < DURATION) {
+      requestAnimationFrame(tick);
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function hlStart() {
+  hideEl('hl-trigger');
+  showEl('hl-nav', true);
+  // Set screen and pill text before first render
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('scr-list').classList.add('active');
+  document.getElementById('hl-pill-text').textContent = 'Screen 1 — Rules List';
+  document.getElementById('hl-pill-desc').textContent = 'Where users come to locate and manage existing rules — viewing rule logic, active status, and which user types each rule applies to.';
+  hlCurrent = 0;
+  // Measure nav, set padding, lock scroll, render — all in one rAF so there's no bare-nav flash
+  requestAnimationFrame(() => {
+    const navH = document.getElementById('hl-nav').getBoundingClientRect().height;
+    document.querySelectorAll('.page').forEach(p => p.style.paddingTop = (navH + 14) + 'px');
+    document.documentElement.scrollTop = 0; document.body.scrollTop = 0;
+    requestAnimationFrame(() => {
+      document.body.style.overflow = 'hidden';
+      hlRender(0);
+    });
+  });
+}
+
+function hlNext() { if (hlCurrent < HL_STEPS.length - 1) hlGo(hlCurrent + 1); }
+function hlPrev() { if (hlCurrent > 0) hlGo(hlCurrent - 1); }
+
+// Auto-start walkthrough when opened with #autostart hash
+window.addEventListener('load', function() {
+  if (window.location.hash === '#autostart') {
+    hlStart();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (hlCurrent < 0) return; // walkthrough not active
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); hlNext(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); hlPrev(); }
+  if (e.key === 'Escape')                               { hlExit(); }
+});
+
+function hlExit() {
+  hlClear();
+  hideEl('hl-nav');
+  document.getElementById('hl-nav').classList.remove('expanded');
+  document.querySelectorAll('.page').forEach(p => p.style.paddingTop = '');
+  showEl('hl-trigger', true);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('scr-list').classList.add('active');
+  hlCurrent = -1;
+  document.body.style.overflow = '';
+  document.documentElement.scrollTop = 0; document.body.scrollTop = 0;
+}
+</script>
+</body>
+</html>

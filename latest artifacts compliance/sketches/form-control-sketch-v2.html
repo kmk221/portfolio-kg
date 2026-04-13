@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    background: #fff;
+    padding: 60px 80px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  h2 { font-size: 13pt; margin: 0 0 4px; }
+  .sub { font-size: 10pt; color: #555; margin-bottom: 32px; font-style: italic; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: center;
+    gap: 0;
+  }
+
+  .col-label {
+    font-size: 9pt;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  .box {
+    border: 1px solid #000;
+    padding: 16px 14px;
+    position: relative;
+  }
+
+  /* red X */
+  .box.no::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom right, transparent calc(50% - 0.5px), #c00 calc(50% - 0.5px), #c00 calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      linear-gradient(to bottom left,  transparent calc(50% - 0.5px), #c00 calc(50% - 0.5px), #c00 calc(50% + 0.5px), transparent calc(50% + 0.5px));
+    pointer-events: none;
+  }
+
+  .arrow { text-align: center; font-size: 18pt; }
+
+  /* simple field */
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .lbl { font-size: 10pt; min-width: 52px; }
+  .input-line {
+    border: 1px solid #000;
+    height: 18px;
+    flex: 1;
+  }
+
+  /* import box */
+  .import {
+    border: 1px dashed #000;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin-bottom: 8px;
+  }
+  .import span { font-size: 9pt; color: #555; }
+
+  .btn-row { display: flex; gap: 6px; }
+  .btn {
+    border: 1px solid #000;
+    padding: 2px 10px;
+    font-size: 9pt;
+    font-family: 'Times New Roman', serif;
+  }
+  .btn.fill { background: #000; color: #fff; }
+</style>
+</head>
+<body>
+
+  <h2>Better Form Controls to Match Inputs</h2>
+  <div class="sub">e.g. entering up to 20,000 values</div>
+
+  <div class="row">
+
+    <div>
+      <div class="col-label">single-line input</div>
+      <div class="box no">
+        <div class="field">
+          <span class="lbl">Values</span>
+          <div class="input-line"></div>
+        </div>
+        <div class="btn-row">
+          <div class="btn fill">Save</div>
+          <div class="btn">Cancel</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div>
+      <div class="col-label">import tool</div>
+      <div class="box">
+        <div class="import">
+          <span>↑ Upload CSV</span>
+          <span>or paste values</span>
+        </div>
+        <div class="btn-row">
+          <div class="btn fill">Add to List</div>
+          <div class="btn">Cancel</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rule Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #f0f2f4;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 680px;
+  }
+
+  .screen-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #8a9bb0;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* ── SHARED SHELL ── */
+  .shell {
+    background: #f7f8fa;
+    border: 1px solid #c8cdd3;
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #1a202c;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-bar {
+    background: #e8eaed;
+    border-bottom: 1px solid #c8cdd3;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── FORM LAYOUT ── */
+  .form-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+
+  .form-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .form-key {
+    width: 52px;
+    min-width: 52px;
+    font-size: 11px;
+    color: #555;
+    padding-top: 4px;
+  }
+
+  .form-controls { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+  /* ── SELECTS ── */
+  .sel {
+    border: 1px solid #aab0b8;
+    border-radius: 2px;
+    background: #fff;
+    padding: 3px 24px 3px 7px;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #333;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+    cursor: pointer;
+    width: 160px;
+  }
+
+  /* ── CHECKBOX LIST ── */
+  .cb-list {
+    border: 1px solid #aab0b8;
+    border-radius: 2px;
+    background: #fff;
+    padding: 5px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 140px;
+  }
+
+  .cb-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .cb-item input[type=checkbox] {
+    width: 12px;
+    height: 12px;
+    accent-color: #1a202c;
+    cursor: pointer;
+  }
+
+  /* ── ORDER DETAIL BADGES ── */
+  .badge-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 2px;
+  }
+
+  .badge {
+    padding: 2px 10px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+    text-align: center;
+    min-width: 52px;
+  }
+  .badge-blue  { background: #d0e4f7; color: #1a4a8a; border: 1px solid #a8c8ee; }
+  .badge-green { background: #c8e6c9; color: #1b5e20; border: 1px solid #a5d6a7; }
+  .badge-red   { background: #ffd0cc; color: #8a1a1a; border: 1px solid #f4a9a4; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid #d1d5da; margin: 4px 0; }
+
+  /* ════════════════════════════════
+     RULE BUILDER / WIZARD
+  ════════════════════════════════ */
+  .wizard-shell {
+    background: #fff;
+    border: 1px solid #c8cdd3;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #1a202c;
+    overflow: hidden;
+  }
+
+  .wizard-header {
+    padding: 8px 12px 4px;
+    border-bottom: 1px solid #e8eaed;
+  }
+
+  .wizard-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+  .wizard-sub   { font-size: 10px; color: #777; margin-bottom: 6px; }
+
+  /* step tabs */
+  .step-tabs {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .step-tab {
+    border: 1px solid #aab0b8;
+    border-radius: 2px;
+    padding: 3px 12px;
+    font-size: 10px;
+    background: #f0f2f4;
+    color: #555;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .step-tab.active {
+    background: #1a202c;
+    color: #fff;
+    border-color: #1a202c;
+  }
+
+  .step-tab.done {
+    background: #fff;
+    color: #1a202c;
+    border-color: #1a202c;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .step-tab.done::before { content: '✓'; font-size: 9px; color: #2a7a3b; }
+
+  .wizard-body { padding: 12px; }
+
+  .wizard-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  /* nested cb list with border */
+  .nested-cb-list {
+    border: 1px solid #c8cdd3;
+    border-radius: 2px;
+    background: #fafbfc;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 200px;
+  }
+
+  /* ── VARIANT: no active step (step 1 only shown) ── */
+  .ghost-tab {
+    border: 1px solid #d1d5da;
+    border-radius: 2px;
+    padding: 3px 12px;
+    font-size: 10px;
+    background: #fff;
+    color: #bbb;
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ══ SCREEN 1: Action form ══ -->
+  <div>
+    <div class="screen-label">01 — Action</div>
+    <div class="shell" style="max-width:360px;">
+      <div class="section-bar">Action</div>
+      <div class="form-body">
+
+        <!-- Label row -->
+        <div class="form-row">
+          <span class="form-key">Label</span>
+          <div class="form-controls">
+            <select class="sel">
+              <option> </option>
+            </select>
+            <div class="cb-list" style="max-width:160px;">
+              <div class="cb-item"><input type="checkbox" checked> Equals</div>
+              <div class="cb-item"><input type="checkbox"> Does Not Equal</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Action row -->
+        <div class="form-row">
+          <span class="form-key">Action</span>
+          <div class="form-controls">
+            <select class="sel">
+              <option> </option>
+            </select>
+            <div style="display:flex; gap:10px; align-items:flex-start;">
+              <div class="cb-list">
+                <div class="cb-item"><input type="checkbox" checked> Select All</div>
+                <div class="cb-item"><input type="checkbox" checked> Buy</div>
+                <div class="cb-item"><input type="checkbox"> Sell</div>
+                <div class="cb-item"><input type="checkbox"> Buy Fund</div>
+                <div class="cb-item"><input type="checkbox"> Sell Fund</div>
+                <div class="cb-item"><input type="checkbox"> Buy Calls to Open</div>
+                <div class="cb-item"><input type="checkbox"> Sell Calls to Open</div>
+                <div class="cb-item"><input type="checkbox"> Buy Puts to Open</div>
+                <div class="cb-item"><input type="checkbox"> Sell Puts to Open</div>
+              </div>
+              <div class="badge-col">
+                <div style="font-size:9px;color:#888;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:2px;">Order Details</div>
+                <div class="badge badge-blue">Buy</div>
+                <div class="badge badge-green">Sell</div>
+                <div class="badge badge-red">Fund</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: Rule Builder/Wizard — step 1 (no checkmark) ══ -->
+  <div>
+    <div class="screen-label">02 — Rule Builder / Wizard (Step 1)</div>
+    <div class="wizard-shell" style="max-width:480px;">
+      <div class="wizard-header">
+        <div class="wizard-title">Rule Builder/Wizard</div>
+        <div class="wizard-sub">I can help you build your rule.</div>
+        <div style="font-size:10px;color:#555;margin-bottom:8px;">Let's start by specifying an account type, security type or user type you want to build a rule for...</div>
+        <div class="step-tabs">
+          <div class="step-tab active">Account Type</div>
+          <div class="ghost-tab">Security Type</div>
+          <div class="ghost-tab">Trade Persona</div>
+        </div>
+      </div>
+      <div class="wizard-body">
+        <!-- empty state for step 1 -->
+        <div style="height:40px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: Rule Builder/Wizard — step 2 (Account Type done) ══ -->
+  <div>
+    <div class="screen-label">03 — Rule Wizard (Step 2 — Account Registration)</div>
+    <div class="wizard-shell" style="max-width:480px;">
+      <div class="wizard-header">
+        <div class="wizard-title">Rule Wizard</div>
+        <div class="wizard-sub">I can help you build your rule.</div>
+        <div style="font-size:10px;color:#555;margin-bottom:8px;">Let's start by specifying an account type, security type or user type you want to build a rule for...</div>
+        <div class="step-tabs">
+          <div class="step-tab done">Account Type</div>
+          <div class="step-tab active">Security Type</div>
+          <div class="ghost-tab">Trade Persona</div>
+        </div>
+      </div>
+      <div class="wizard-body">
+        <div class="wizard-section-label">Account Registration</div>
+        <div class="nested-cb-list">
+          <div class="cb-item"><input type="checkbox"> Select All</div>
+          <div class="cb-item"><input type="checkbox" checked> IRA</div>
+          <div class="cb-item"><input type="checkbox"> Individual Brokerage</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Lists — UI Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #1a1c1e;
+    min-height: 100vh;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  h1 {
+    color: #8a9bb0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .screen-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #4a5568;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-left: 2px;
+  }
+
+  /* ── SHELL ── */
+  .shell {
+    background: #f0f2f4;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #d8dde3;
+    font-size: 12px;
+    color: #1a202c;
+    position: relative;
+    min-height: 360px;
+  }
+
+  .shell-inner {
+    display: flex;
+    height: 100%;
+    min-height: 360px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 148px;
+    min-width: 148px;
+    background: #e8eaed;
+    border-right: 1px solid #d1d5da;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  .sidebar-top {
+    padding: 0 10px 10px;
+    border-bottom: 1px solid #d1d5da;
+    margin-bottom: 8px;
+  }
+
+  .btn-new {
+    width: 100%;
+    background: #1a202c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .btn-new::before { content: '+'; font-size: 14px; line-height: 1; }
+
+  .search-wrap {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #c8cdd3;
+    border-radius: 3px;
+    padding: 3px 6px;
+    gap: 4px;
+  }
+  .search-wrap input {
+    border: none;
+    outline: none;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: transparent;
+    width: 100%;
+    color: #333;
+  }
+  .search-icon { color: #999; font-size: 10px; }
+
+  .section-label {
+    padding: 4px 10px 3px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .section-label::before { content: '∨'; font-size: 9px; }
+
+  .list-item {
+    padding: 3px 10px 3px 14px;
+    font-size: 11px;
+    color: #333;
+    cursor: pointer;
+    line-height: 1.4;
+  }
+  .list-item.active { background: #d0d5db; font-weight: 500; }
+  .list-item:hover { background: #dde0e5; }
+  .list-item .sub { font-size: 9px; color: #888; display: block; }
+
+  /* ── MAIN AREA ── */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #f0f2f4;
+    border-bottom: 1px solid #d1d5da;
+  }
+
+  .topbar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a202c;
+    flex: 1;
+  }
+
+  .btn-outline {
+    border: 1px solid #b0b7bf;
+    background: #f0f2f4;
+    border-radius: 3px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .btn-outline.check::before { content: '✓ '; color: #2a7a3b; font-size: 10px; }
+
+  .tag-label {
+    font-size: 10px;
+    background: #1a202c;
+    color: #fff;
+    border-radius: 2px;
+    padding: 1px 6px;
+    font-weight: 500;
+  }
+
+  /* ── CHECKBOX TABLE ── */
+  .check-table { padding: 4px 8px; }
+  .check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 0;
+    font-size: 11px;
+  }
+  .check-row input[type=checkbox] { accent-color: #1a202c; width: 12px; height: 12px; }
+  .select-all { font-size: 11px; color: #555; padding: 2px 10px 4px; }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .modal {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #c8cdd3;
+    padding: 20px;
+    width: 260px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .modal-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #1a202c;
+  }
+
+  .form-row {
+    margin-bottom: 10px;
+  }
+
+  .form-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 3px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .form-input {
+    width: 100%;
+    border: 1px solid #c8cdd3;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #333;
+    outline: none;
+    background: #fafbfc;
+  }
+  .form-input:focus { border-color: #1a202c; }
+
+  .form-textarea {
+    width: 100%;
+    border: 1px solid #c8cdd3;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #333;
+    outline: none;
+    background: #fafbfc;
+    height: 60px;
+    resize: none;
+  }
+
+  .form-select {
+    width: 100%;
+    border: 1px solid #c8cdd3;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #333;
+    background: #fafbfc;
+    appearance: none;
+  }
+
+  .modal-footer { display: flex; justify-content: flex-end; margin-top: 14px; }
+
+  .btn-primary {
+    background: #1a202c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 16px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+  }
+
+  /* ── SCREEN 4 — ADD VALUES ── */
+  .add-values-bar {
+    padding: 8px 10px;
+    font-size: 11px;
+    color: #444;
+    border-bottom: 1px solid #d1d5da;
+    background: #f7f8fa;
+  }
+
+  .add-values-table {
+    flex: 1;
+    padding: 8px 10px;
+  }
+
+  .col-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 80px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #555;
+    padding: 3px 0;
+    border-bottom: 1px solid #d1d5da;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .dropdown-btn {
+    background: #1a202c;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+  }
+  .dropdown-btn::after { content: ' ▾'; font-size: 9px; }
+
+  .ghost-table {
+    margin-top: 8px;
+    background: #f0f2f4;
+    border: 1px dashed #c8cdd3;
+    border-radius: 3px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── MODAL — ADD VALUES FROM ── */
+  .avf-list { max-height: 200px; overflow-y: auto; }
+  .avf-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f2f4;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .avf-item:hover { background: #f7f8fa; }
+  .avf-item .arrow { color: #888; font-size: 12px; }
+  .avf-item .sub { font-size: 9px; color: #888; display: block; }
+
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* ── SCREEN 6 — SELECT ITEMS FROM LIST ── */
+  .check-scroll { max-height: 160px; overflow-y: auto; }
+
+  .modal-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid #b0b7bf;
+    border-radius: 3px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    color: #333;
+  }
+
+  /* dropdown menu */
+  .dropdown-menu {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #c8cdd3;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    min-width: 130px;
+    z-index: 20;
+    top: 28px; right: 0;
+  }
+  .dropdown-menu-item {
+    padding: 6px 12px;
+    font-size: 11px;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dropdown-menu-item:hover { background: #f0f2f4; }
+
+  /* side action buttons (screen 4) */
+  .side-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .btn-side {
+    border: 1px solid #b0b7bf;
+    background: #f0f2f4;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .active-highlight { background: #c8e6c9 !important; }
+
+</style>
+</head>
+<body>
+
+<h1>Security Lists — UI Screens</h1>
+
+<div class="grid">
+
+  <!-- ══ SCREEN 1: Lists overview with Blacklisted selected ══ -->
+  <div>
+    <div class="screen-label">01 — List Overview</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="sidebar">
+          <div class="sidebar-top">
+            <button class="btn-new">New List</button>
+            <div class="search-wrap">
+              <span class="search-icon">⌕</span>
+              <input type="text" placeholder="Search Lists">
+            </div>
+          </div>
+          <div class="section-label">Security Lists</div>
+          <div class="list-item active">Blacklisted <span class="sub">899 items</span></div>
+          <div class="list-item">Whitelisted <span class="sub">1305 items</span></div>
+          <div class="list-item">All MFs with Fees <span class="sub">307 items</span></div>
+          <div class="list-item">High Risk Penny Stocks <span class="sub">1089 items</span></div>
+          <div class="section-label">Rep Specific</div>
+          <div class="list-item">Branch 312 <span class="sub">415 items</span></div>
+          <div class="list-item">Active Traders <span class="sub">598 items</span></div>
+          <div class="list-item">MF Only Traders <span class="sub">407 items</span></div>
+        </div>
+        <div class="main">
+          <div class="topbar">
+            <span class="tag-label">Blacklisted</span>
+            <span style="font-size:10px;color:#666;margin-left:2px;">List Actions ▾</span>
+            <div style="flex:1"></div>
+            <button class="btn-outline check">View</button>
+            <button class="btn-outline">Edit</button>
+          </div>
+          <div class="check-table">
+            <div class="select-all">☐ Select All</div>
+            <div class="check-row"><input type="checkbox"> VTR</div>
+            <div class="check-row"><input type="checkbox"> WGE</div>
+            <div class="check-row"><input type="checkbox"> BKJ</div>
+            <div class="check-row"><input type="checkbox"> CVB</div>
+            <div class="check-row"><input type="checkbox"> MND</div>
+            <div class="check-row"><input type="checkbox"> PGI</div>
+            <div class="check-row"><input type="checkbox"> LNT</div>
+            <div class="check-row"><input type="checkbox"> REW</div>
+            <div class="check-row"><input type="checkbox"> FDS</div>
+            <div class="check-row"><input type="checkbox"> GHU</div>
+            <div class="check-row"><input type="checkbox"> VSN</div>
+            <div class="check-row"><input type="checkbox"> QAZ</div>
+            <div class="check-row"><input type="checkbox"> PLM</div>
+            <div class="check-row"><input type="checkbox"> CRM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: New List modal — empty ══ -->
+  <div>
+    <div class="screen-label">02 — New List (Empty)</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="sidebar">
+          <div class="sidebar-top">
+            <button class="btn-new">New List</button>
+            <div class="search-wrap">
+              <span class="search-icon">⌕</span>
+              <input type="text" placeholder="Search Lists">
+            </div>
+          </div>
+          <div class="section-label">Security Lists</div>
+          <div class="list-item">Blacklisted</div>
+          <div class="list-item">Whitelisted</div>
+          <div class="list-item">All MFs with Fees</div>
+          <div class="list-item">High Risk Penny Stocks</div>
+          <div class="section-label">Rep Specific</div>
+          <div class="list-item">Branch 312</div>
+          <div class="list-item">Active Traders</div>
+          <div class="list-item">MF Only Traders</div>
+          <div class="section-label">Ungrouped</div>
+          <div class="list-item active">New List <span class="sub">0 items</span></div>
+        </div>
+        <div class="main">
+          <div class="topbar">
+            <span class="topbar-title">New List</span>
+            <button class="btn-outline">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay">
+        <div class="modal" style="position:relative;">
+          <div class="modal-title">New List</div>
+          <div class="form-row">
+            <label class="form-label">List Name</label>
+            <input class="form-input" type="text" placeholder="Enter List Name">
+          </div>
+          <div class="form-row">
+            <label class="form-label">List Description</label>
+            <textarea class="form-textarea" placeholder="Enter List Description"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Add Tags</label>
+            <select class="form-select"><option value="">— select —</option></select>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-primary">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: New List modal — name filled ══ -->
+  <div>
+    <div class="screen-label">03 — New List (Named)</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="sidebar">
+          <div class="sidebar-top">
+            <button class="btn-new">New List</button>
+            <div class="search-wrap">
+              <span class="search-icon">⌕</span>
+              <input type="text" placeholder="Search Lists">
+            </div>
+          </div>
+          <div class="section-label">Security Lists</div>
+          <div class="list-item">Blacklisted</div>
+          <div class="list-item">Whitelisted</div>
+          <div class="list-item">All MFs with Fees</div>
+          <div class="list-item">High Risk Penny Stocks</div>
+          <div class="section-label">Rep Specific</div>
+          <div class="list-item">Branch 312</div>
+          <div class="list-item">Active Traders</div>
+          <div class="list-item">MF Only Traders</div>
+          <div class="section-label">Ungrouped</div>
+          <div class="list-item active">New List <span class="sub">0 items</span></div>
+        </div>
+        <div class="main">
+          <div class="topbar">
+            <span class="topbar-title">New List</span>
+            <button class="btn-outline">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay">
+        <div class="modal" style="position:relative;">
+          <div class="modal-title">New List</div>
+          <div class="form-row">
+            <label class="form-label">List Name</label>
+            <input class="form-input" type="text" value="Our favorite securities">
+          </div>
+          <div class="form-row">
+            <label class="form-label">List Description</label>
+            <textarea class="form-textarea" placeholder="Enter List Description"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Add Tags</label>
+            <select class="form-select"><option value="">— select —</option></select>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-primary">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 4: Our Favorite Securities — add values ══ -->
+  <div>
+    <div class="screen-label">04 — Add Values</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="sidebar">
+          <div class="sidebar-top">
+            <button class="btn-new">New List</button>
+            <div class="search-wrap">
+              <span class="search-icon">⌕</span>
+              <input type="text" placeholder="Search Lists">
+            </div>
+          </div>
+          <div class="section-label">Security Lists</div>
+          <div class="list-item">Blacklisted</div>
+          <div class="list-item">Whitelisted</div>
+          <div class="list-item">All MFs with Fees</div>
+          <div class="list-item">High Risk Penny Stocks</div>
+          <div class="section-label">Rep Specific</div>
+          <div class="list-item">Branch 312</div>
+          <div class="list-item">Active Traders</div>
+          <div class="list-item">MF Only Traders</div>
+          <div class="section-label">Ungrouped</div>
+          <div class="list-item active">Our Favorite Securities <span class="sub">4 items</span></div>
+        </div>
+        <div class="main">
+          <div class="topbar">
+            <span class="topbar-title">Our Favorite Securities</span>
+          </div>
+          <div class="add-values-bar">
+            Add values to your list by manually typing below, pasting a set of values into the table below, or adding from another list or external file.
+          </div>
+          <div class="add-values-table">
+            <div class="col-header">
+              <span>Select</span>
+              <span>Column B</span>
+              <span></span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 90px;gap:6px;align-items:flex-start;margin-top:4px;">
+              <input class="form-input" type="text" placeholder="Enter item here">
+              <div>
+                <div class="dropdown-btn" style="margin-bottom:4px;">Add From</div>
+                <div class="side-btns">
+                  <button class="btn-side">Import CSV</button>
+                  <button class="btn-side">Another List</button>
+                </div>
+              </div>
+            </div>
+            <div class="ghost-table">empty table — paste or type values</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 5: Add Values From — list picker ══ -->
+  <div>
+    <div class="screen-label">05 — Add Values From (List)</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="sidebar">
+          <div class="sidebar-top">
+            <button class="btn-new">New List</button>
+            <div class="search-wrap">
+              <span class="search-icon">⌕</span>
+              <input type="text" placeholder="Search Lists">
+            </div>
+          </div>
+          <div class="section-label">Security Lists</div>
+          <div class="list-item">Blacklisted</div>
+          <div class="list-item">Whitelisted</div>
+          <div class="list-item">All MFs with Fees</div>
+          <div class="list-item">High Risk Penny Stocks</div>
+          <div class="section-label">Rep Specific</div>
+          <div class="list-item">Branch 312</div>
+          <div class="list-item">Active Traders</div>
+          <div class="list-item">MF Only Traders</div>
+          <div class="section-label">Ungrouped</div>
+          <div class="list-item active">Our Favorite Securities</div>
+        </div>
+        <div class="main">
+          <div class="topbar">
+            <span class="topbar-title">Our Favorite Securities</span>
+          </div>
+          <div class="add-values-bar" style="font-size:10px;">
+            Add values to your list by manually typing below, pasting a set of values into the table below, or adding from another list or external file.
+          </div>
+          <div style="padding:8px 10px;display:flex;gap:6px;align-items:flex-start;">
+            <input class="form-input" type="text" placeholder="Enter item here" style="flex:1;">
+            <div>
+              <div class="side-btns">
+                <button class="btn-side">Import CSV</button>
+                <button class="btn-side">Another List</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay">
+        <div class="modal" style="position:relative;width:280px;">
+          <button class="modal-close">✕</button>
+          <div class="modal-title">Add Values From</div>
+          <div class="avf-list">
+            <div class="section-label" style="padding:4px 0 2px;font-size:10px;">Security Lists</div>
+            <div class="avf-item">
+              <div><strong>Blacklisted</strong><span class="sub">899 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="avf-item">
+              <div><strong>Whitelisted</strong><span class="sub">1305 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="avf-item">
+              <div><strong>All MFs with Fees</strong><span class="sub">307 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="avf-item">
+              <div><strong>High Risk Penny Stocks</strong><span class="sub">1089 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="section-label" style="padding:6px 0 2px;font-size:10px;">Rep Specific</div>
+            <div class="avf-item">
+              <div><strong>Branch 312</strong><span class="sub">415 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="avf-item">
+              <div><strong>Active Traders</strong><span class="sub">598 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="avf-item">
+              <div><strong>MF Only Traders</strong><span class="sub">407 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+            <div class="section-label" style="padding:6px 0 2px;font-size:10px;">Ungrouped</div>
+            <div class="avf-item">
+              <div><strong>Our Favorite Securities</strong><span class="sub">4 items</span></div>
+              <span class="arrow">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 6: Add Values From — select items ══ -->
+  <div>
+    <div class="screen-label">06 — Add Values From (Select)</div>
+    <div class="shell">
+      <div class="shell-inner">
+        <div class="sidebar">
+          <div class="sidebar-top">
+            <button class="btn-new">New List</button>
+            <div class="search-wrap">
+              <span class="search-icon">⌕</span>
+              <input type="text" placeholder="Search Lists">
+            </div>
+          </div>
+          <div class="section-label">Security Lists</div>
+          <div class="list-item active">Blacklisted <span class="sub">899 items</span></div>
+          <div class="list-item">Whitelisted</div>
+          <div class="list-item">All MFs with Fees</div>
+          <div class="list-item">High Risk Penny Stocks</div>
+          <div class="section-label">Rep Specific</div>
+          <div class="list-item">Branch 312</div>
+          <div class="list-item">Active Traders</div>
+          <div class="list-item">MF Only Traders</div>
+          <div class="section-label">Ungrouped</div>
+          <div class="list-item">Our Favorite Securities</div>
+        </div>
+        <div class="main">
+          <div class="topbar">
+            <span class="topbar-title">Our Favorite Securities</span>
+          </div>
+          <div class="add-values-bar" style="font-size:10px;">
+            Add a set of values into the table below.
+          </div>
+          <div style="padding:6px 10px;display:flex;gap:6px;">
+            <input class="form-input" type="text" placeholder="Enter item here" style="flex:1;">
+            <div class="side-btns" style="flex-direction:row;">
+              <button class="btn-side">Import CSV</button>
+              <button class="btn-side">Another List</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay">
+        <div class="modal" style="position:relative;width:290px;">
+          <button class="modal-close">✕</button>
+          <div class="modal-title">Add Values From</div>
+          <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:8px;">
+            Blacklisted <span style="font-weight:400;color:#888;font-size:10px;">899 items</span>
+          </div>
+          <div class="col-header" style="grid-template-columns:20px 1fr;">
+            <span>Select</span><span>Column B</span>
+          </div>
+          <div class="check-scroll">
+            <div class="check-row"><input type="checkbox" checked> <span>Select All</span></div>
+            <div class="check-row"><input type="checkbox" checked> YTB</div>
+            <div class="check-row"><input type="checkbox" checked> WGE</div>
+            <div class="check-row"><input type="checkbox"> BKJ</div>
+            <div class="check-row"><input type="checkbox"> PLM</div>
+            <div class="check-row"><input type="checkbox"> DKN</div>
+            <div class="check-row"><input type="checkbox"> QAZ</div>
+            <div class="check-row"><input type="checkbox"> GHU</div>
+            <div class="check-row"><input type="checkbox"> FDS</div>
+            <div class="check-row"><input type="checkbox"> REW</div>
+            <div class="check-row"><input type="checkbox"> HO</div>
+          </div>
+          <div class="modal-nav">
+            <button class="btn-secondary">Previous</button>
+            <button class="btn-primary">Add to List</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

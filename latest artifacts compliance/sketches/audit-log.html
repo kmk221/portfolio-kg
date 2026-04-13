@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    background: #fff;
+    padding: 40px 48px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    align-items: flex-end;
+  }
+
+  .filter-group { display: flex; flex-direction: column; gap: 4px; }
+  .filter-label { font-size: 9pt; color: #555; }
+
+  .filter-select {
+    border: 1px solid #000;
+    padding: 4px 28px 4px 10px;
+    font-size: 10pt;
+    font-family: 'Times New Roman', serif;
+    appearance: none;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23333'/%3E%3C/svg%3E") no-repeat right 8px center;
+    min-width: 150px;
+    cursor: pointer;
+  }
+
+  .filter-date {
+    border: 1px solid #000;
+    padding: 4px 10px;
+    font-size: 10pt;
+    font-family: 'Times New Roman', serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 140px;
+    color: #333;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5pt;
+  }
+
+  th {
+    border-bottom: 2px solid #000;
+    border-top: 1px solid #000;
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 10pt;
+  }
+
+  td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+  }
+
+  .user-cell { display: flex; align-items: center; gap: 8px; }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 9pt;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .user-info { display: flex; flex-direction: column; line-height: 1.3; }
+  .user-name { font-weight: bold; font-size: 10.5pt; }
+  .user-handle { font-size: 8.5pt; color: #777; }
+
+  .link { color: #00e; text-decoration: underline; font-size: 10pt; }
+
+  .timestamp { font-size: 9.5pt; color: #444; white-space: nowrap; }
+
+  tr:hover td { background: #f9f9f9; }
+</style>
+</head>
+<body>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">Action</span>
+      <select class="filter-select"><option>Select Action</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Select User</span>
+      <select class="filter-select"><option>Select Users</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Select Date</span>
+      <div class="filter-date">☐ &nbsp;December 2023</div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <table>
+    <thead>
+      <tr>
+        <th style="width:190px;">User</th>
+        <th style="width:190px;">Rule</th>
+        <th style="width:160px;">Action</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="avatar">AJ</div>
+            <div class="user-info">
+              <span class="user-name">Alice Johnson</span>
+              <span class="user-handle">@alice.j</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="link">Crypto ETF Rule</span></td>
+        <td>Rule Modified</td>
+        <td class="timestamp">2023-12-07 09:30</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="avatar">MG</div>
+            <div class="user-info">
+              <span class="user-name">Marcus Greene</span>
+              <span class="user-handle">@marcus.g</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="link">High Risk Penny Stocks</span></td>
+        <td>Rule Created</td>
+        <td class="timestamp">2023-12-07 09:15</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="avatar">ER</div>
+            <div class="user-info">
+              <span class="user-name">Emily Rodriguez</span>
+              <span class="user-handle">@emily.rod</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="link">Blacklist Rule U101</span></td>
+        <td>Status Change</td>
+        <td class="timestamp">2023-12-07 10:05</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="avatar">NC</div>
+            <div class="user-info">
+              <span class="user-name">Nathan Carter</span>
+              <span class="user-handle">@nathan.c</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="link">MF Only Traders</span></td>
+        <td>List Updated</td>
+        <td class="timestamp">2023-12-07 11:20</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="avatar">OP</div>
+            <div class="user-info">
+              <span class="user-name">Olivia Parker</span>
+              <span class="user-handle">@olivia.p</span>
+            </div>
+          </div>
+        </td>
+        <td><span class="link">Branch 312 Rule</span></td>
+        <td>Rule Deactivated</td>
+        <td class="timestamp">2023-12-07 13:44</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

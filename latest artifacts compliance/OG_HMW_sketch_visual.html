@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sprint Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #2d5c52;
+    --bg-deep: #243f3a;
+    --dot: rgba(255,255,255,0.05);
+    --accent: #4a7c6f;
+    --accent-light: rgba(74,124,111,0.2);
+    --text-light: #f6fbde;
+    --y: #f5e97a; --g: #b8e06a; --b: #7ec8f0; --o: #f5b87a; --p: #d4a8e8;
+    --line: rgba(246,251,222,0.3);
+  }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
+    background-size: 28px 28px;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  /* Board header */
+  .board-header { text-align: center; margin-bottom: 48px; }
+  .bh-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,251,222,0.5); margin-bottom: 8px; }
+  .bh-title { font-size: 22px; font-weight: 800; color: rgba(246,251,222,0.85); letter-spacing: -0.3px; }
+
+  /* Single horizontal scroll row */
+  .board-scroll {
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scroll-snap-type: x mandatory;
+  }
+  .board-scroll::-webkit-scrollbar { height: 5px; }
+  .board-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
+  .board-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+  .board-col {
+    flex: 0 0 320px;
+    scroll-snap-align: start;
+  }
+  .board-col.wide { flex: 0 0 440px; }
+
+  /* HMW card — darker glass */
+  .hmw {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .hmw-num { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(232,240,238,0.45); margin-bottom: 10px; }
+  .hmw-q   { font-size: 13px; font-weight: 600; line-height: 1.55; color: var(--text-light); }
+
+  /* Arrow */
+  .arrow { display:flex; flex-direction:column; align-items:center; margin-bottom:16px; }
+  .arrow-line { width:2px; height:20px; background:var(--line); }
+  .arrow-tip  { width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-top:8px solid var(--line); }
+
+  /* Stickies — Inter only */
+  .stickies { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sn {
+    border-radius: 4px; padding: 10px 11px; flex: 0 0 auto; width: 130px;
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; line-height: 1.5;
+    position: relative;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+  .sn::after { content:''; position:absolute; bottom:0; right:0; width:9px; height:9px; background:rgba(0,0,0,0.12); clip-path:polygon(100% 0,100% 100%,0 100%); border-radius:0 0 4px 0; }
+  .sn.y { background:var(--y); color:#1a1a00; }
+  .sn.g { background:var(--g); color:#0a2000; }
+  .sn.b { background:var(--b); color:#001a30; }
+  .sn.o { background:var(--o); color:#2a0e00; }
+  .sn.p { background:var(--p); color:#1a0028; }
+  .sn.w { width:180px; }
+  .sn.n { width:105px; }
+
+  /* === SKETCH FRAMES — light glass matching old HMW style === */
+  .sf {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 14px; margin-bottom: 12px;
+  }
+  .sf-label {
+    font-family: 'Caveat', cursive;
+    font-size: 15px; color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;
+  }
+  .sr { height: 8px; background: rgba(255,255,255,0.2); border-radius: 2px; margin-bottom: 6px; }
+  .sb { border:1px solid rgba(255,255,255,0.2); border-radius:5px; height:34px; margin-bottom:6px; display:flex; align-items:center; padding:0 8px; gap:8px; background: rgba(255,255,255,0.12); }
+  .scb { width:13px; height:13px; border:1.5px solid rgba(255,255,255,0.5); border-radius:2px; flex-shrink:0; }
+  .scb.on { background:rgba(255,255,255,0.7); border-color:rgba(255,255,255,0.9); }
+  .slt { height:6px; background:rgba(255,255,255,0.2); border-radius:2px; flex:1; }
+  .s-btn { display:inline-block; border:1px solid rgba(255,255,255,0.3); border-radius:5px; padding:4px 10px; font-family:'Caveat',cursive; font-size:14px; color:rgba(255,255,255,0.7); margin-right:4px; margin-top:4px; background: rgba(255,255,255,0.1); }
+  .s-btn.p { background:rgba(255,255,255,0.25); border-color:rgba(255,255,255,0.5); color:rgba(255,255,255,0.95); }
+  .s-search { display:flex; align-items:center; border:1px solid rgba(255,255,255,0.25); border-radius:5px; padding:5px 8px; margin-bottom:8px; gap:7px; background:rgba(255,255,255,0.15); }
+  .s-tag { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.35); border-radius:10px; padding:3px 9px; font-family:'Caveat',cursive; font-size:13px; color:rgba(255,255,255,0.95); margin-right:4px; margin-top:4px; }
+  .rl { border-radius:5px; padding:5px 8px; margin-bottom:5px; font-family:'Caveat',cursive; font-size:14px; line-height:1.3; }
+  .rl.if  { background:rgba(255,255,255,0.15); border-left:3px solid rgba(180,200,255,0.7); color:rgba(220,230,255,0.95); }
+  .rl.and { background:rgba(255,255,255,0.12); border-left:3px solid rgba(200,255,220,0.6); color:rgba(210,255,230,0.95); }
+  .rl.then{ background:rgba(255,200,150,0.2);  border-left:3px solid rgba(255,180,100,0.7); color:rgba(255,220,170,0.95); font-weight:600; }
+  .valid  { font-family:'Caveat',cursive; font-size:14px; color:rgba(255,255,255,0.85); margin-top:3px; }
+
+  /* Annotations — Inter */
+  .ann { display:inline-flex; align-items:flex-start; gap:5px; margin-top:8px; }
+  .ann-arrow { font-size:13px; color:rgba(255,220,150,0.95); flex-shrink:0; margin-top:1px; }
+  .ann-text  { font-family:'Inter',sans-serif; font-size:11px; font-weight:600; color:rgba(255,220,150,0.95); line-height:1.4; max-width:150px; }
+</style>
+</head>
+<body>
+
+<div class="board-header">
+  <div class="bh-label">Design Sprint — Ideation Session</div>
+  <div class="bh-title">How Might We → Concept Sketches</div>
+</div>
+
+<div class="board-scroll">
+
+  <!-- HMW 01 -->
+  <div class="board-col">
+    <div class="hmw"><div class="hmw-num">HMW 01</div><div class="hmw-q">Empower users to locate, understand, and manage the rules they need?</div></div>
+    <div class="arrow"><div class="arrow-line"></div><div class="arrow-tip"></div></div>
+    <div class="sf">
+      <div class="sf-label">Rules List — search on metadata</div>
+      <div class="s-search"><span style="font-size:36px;color:rgba(255,255,255,0.7);">⌕</span><div style="flex:1;height:5px;background:rgba(255,255,255,0.25);border-radius:2px;"></div></div>
+      <div style="margin-bottom:6px;"><span class="s-tag">Keyword</span><span class="s-tag">Active/Inactive</span><span class="s-tag">Channel</span></div>
+      <div class="sb"><div class="scb on"></div><div class="slt"></div></div>
+      <div class="sb"><div class="scb"></div><div class="slt" style="width:70%;"></div></div>
+      <div class="sb"><div class="scb"></div><div class="slt" style="width:85%;"></div></div>
+      <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">filter/search, select multiple → bulk edit</span></div>
+    </div>
+    <div class="stickies">
+      <div class="sn b">Search rules by keyword, channel, or status — not just by name</div>
+      <div class="sn g">Bulk actions: activate, deactivate, apply to multiple rules at once</div>
+      <div class="sn y">User-created tags to find thematically related rules</div>
+      <div class="sn b n">Rule preview on hover — see logic without clicking in</div>
+    </div>
+  </div>
+
+  <!-- HMW 02 -->
+  <div class="board-col">
+    <div class="hmw"><div class="hmw-num">HMW 02</div><div class="hmw-q">Make it easier to locate the right keywords for the rule you want to build?</div></div>
+    <div class="arrow"><div class="arrow-line"></div><div class="arrow-tip"></div></div>
+    <div class="sf">
+      <div class="sf-label">Keyword Assistant</div>
+      <div style="background:rgba(255,255,255,0.15);border-radius:4px;padding:5px 7px;margin-bottom:5px;">
+        <div class="sr" style="width:55%;background:rgba(255,255,255,0.4);"></div>
+        <div class="sr" style="width:80%;background:rgba(255,255,255,0.3);margin-top:3px;"></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:5px;">
+        <div style="background:rgba(255,255,255,0.1);border-radius:4px;padding:5px 7px;width:75%;">
+          <div class="sr" style="width:90%;background:rgba(255,255,255,0.15);"></div>
+          <div class="sr" style="width:60%;background:rgba(255,255,255,0.08);margin-top:3px;"></div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.12);border-radius:4px;padding:5px 7px;margin-bottom:7px;">
+        <div class="sr" style="background:rgba(255,255,255,0.35);"></div>
+        <div class="sr" style="width:80%;background:rgba(255,255,255,0.25);margin-top:3px;"></div>
+        <div class="sr" style="width:55%;background:rgba(255,255,255,0.25);margin-top:3px;"></div>
+      </div>
+      <div style="text-align:right;"><span class="s-btn p">Add to Rule</span></div>
+      <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">chat-based keyword suggestions + help links</span></div>
+    </div>
+    <div class="stickies">
+      <div class="sn y">Keyword descriptions surfaced inline — not buried in a help doc</div>
+      <div class="sn g w">Hover icon reveals definition + accepted values at point of selection</div>
+      <div class="sn b">Keyword assistant suggests relevant keywords based on what you're trying to restrict</div>
+      <div class="sn o n">Send transcript to support if still stuck</div>
+    </div>
+  </div>
+
+  <!-- HMW 03 -->
+  <div class="board-col">
+    <div class="hmw"><div class="hmw-num">HMW 03</div><div class="hmw-q">Make support content available where and when users actually need it?</div></div>
+    <div class="arrow"><div class="arrow-line"></div><div class="arrow-tip"></div></div>
+    <div class="sf">
+      <div class="sf-label">Help icon in-page — Rule Creation</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div class="sr" style="width:55%;height:6px;"></div>
+        <div style="display:flex;gap:4px;">
+          <div style="width:12px;height:18px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(255,255,255,0.85);">?</div>
+          <div style="width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);"></div>
+        </div>
+      </div>
+      <div class="sb"><div class="scb"></div><div class="slt"></div></div>
+      <div class="sb"><div class="scb on"></div><div class="slt" style="width:65%;"></div></div>
+      <div class="sb"><div class="scb"></div><div class="slt" style="width:75%;"></div></div>
+      <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">links directly to keyword and rule help content</span></div>
+    </div>
+    <div class="stickies">
+      <div class="sn b">Help icon links directly to keyword definition and relevant rule help content</div>
+      <div class="sn y w">Contextual help throughout the create rule flow — not just on the landing page</div>
+      <div class="sn g">Don't bury it — users shouldn't discover help by accident</div>
+    </div>
+  </div>
+
+  <!-- HMW 04 -->
+  <div class="board-col wide">
+    <div class="hmw"><div class="hmw-num">HMW 04</div><div class="hmw-q">Provide intuitive controls to input appropriate values when building rules?</div></div>
+    <div class="arrow"><div class="arrow-line"></div><div class="arrow-tip"></div></div>
+    <div class="row2x2">
+      <div class="sf">
+        <div class="sf-label">Rule Creation Wizard</div>
+        <div style="display:flex;gap:4px;margin-bottom:7px;">
+          <div style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.6);"></div>
+          <div style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.6);"></div>
+          <div style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.15);"></div>
+          <div style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.15);"></div>
+        </div>
+        <div class="sb"><div class="scb on"></div><div class="slt"></div></div>
+        <div class="sb"><div class="scb"></div><div class="slt" style="width:70%;"></div></div>
+        <div class="sb"><div class="scb"></div><div class="slt" style="width:80%;"></div></div>
+        <div style="margin-top:5px;text-align:right;"><span class="s-btn">Back</span><span class="s-btn p">Next</span></div>
+        <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">guided step-by-step with progress indicator</span></div>
+      </div>
+      <div class="sf">
+        <div class="sf-label">Add Values — Bulk</div>
+        <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:3px;padding:4px;margin-bottom:6px;">
+          <div class="sr"></div>
+          <div class="sr" style="width:80%;margin-top:3px;"></div>
+          <div class="sr" style="width:60%;margin-top:3px;"></div>
+        </div>
+        <div style="display:flex;gap:4px;margin-bottom:5px;">
+          <span class="s-btn" style="font-size:12px;">Import CSV</span>
+          <span class="s-btn" style="font-size:12px;">Paste values</span>
+        </div>
+        <div class="valid">✓ 12 valid &nbsp;✗ 2 invalid</div>
+        <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">inline validation — no more comma-separated guesswork</span></div>
+      </div>
+    </div>
+    <div class="stickies">
+      <div class="sn y w">Decision tree / guided wizard — give users somewhere to start</div>
+      <div class="sn g">Flexibility: start with wizard or go self-guided — user's choice</div>
+      <div class="sn b w">Bulk value input with CSV import, paste, or structured table — not a single text box</div>
+      <div class="sn o">Validate format on input — account numbers vs. security symbols have different formats</div>
+    </div>
+  </div>
+
+  <!-- HMW 05+06 -->
+  <div class="board-col wide">
+    <div class="hmw"><div class="hmw-num">HMW 05 + 06</div><div class="hmw-q">Give users confidence before go-live and a built-in audit trail after?</div></div>
+    <div class="arrow"><div class="arrow-line"></div><div class="arrow-tip"></div></div>
+    <div class="row2x2">
+      <div class="sf">
+        <div class="sf-label">Rule Logic Preview</div>
+        <div class="rl if">If Account No. is one of…</div>
+        <div class="rl and">and Action is Buy</div>
+        <div class="rl then">→ REJECTED</div>
+        <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">plain-language preview builds as you go</span></div>
+      </div>
+      <div class="sf">
+        <div class="sf-label">Rule Change History</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;gap:5px;align-items:flex-start;">
+            <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.3);border:1px solid rgba(74,160,120,0.3);flex-shrink:0;"></div>
+            <div style="flex:1;"><div class="sr" style="width:85%;height:5px;"></div><div class="sr" style="width:60%;height:4px;margin-top:3px;"></div></div>
+          </div>
+          <div style="display:flex;gap:5px;align-items:flex-start;">
+            <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,200,150,0.25);border:1px solid rgba(255,180,100,0.4);flex-shrink:0;"></div>
+            <div style="flex:1;"><div class="sr" style="width:75%;height:5px;"></div><div class="sr" style="width:55%;height:4px;margin-top:3px;"></div></div>
+          </div>
+          <div style="display:flex;gap:5px;align-items:flex-start;">
+            <div style="width:20px;height:20px;border-radius:50%;background:rgba(180,200,255,0.2);border:1px solid rgba(180,200,255,0.4);flex-shrink:0;"></div>
+            <div style="flex:1;"><div class="sr" style="width:90%;height:5px;"></div><div class="sr" style="width:50%;height:4px;margin-top:3px;"></div></div>
+          </div>
+        </div>
+        <div class="ann"><span class="ann-arrow">↑</span><span class="ann-text">rule-level or all-rules timeline — no more Excel</span></div>
+      </div>
+    </div>
+    <div class="stickies">
+      <div class="sn y w">Plain-language rule preview builds live as user adds clauses — confidence before activation</div>
+      <div class="sn b">Audit log at rule-level and across all rules — two view options</div>
+      <div class="sn g w">Free-form notes: capture why a rule was created or changed — inside the platform</div>
+      <div class="sn o">Prompt for change reason — optional or required by org</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -51,10 +51,16 @@ export default function App() {
             </div>
           </div>
           <div className="hero-pills">
-            {['Product Strategy', 'Platform Ecosystems', 'Systems Thinking', 'Enterprise UX', 'AI-Augmented Design'].map((skill, i) => (
-              <span key={skill} className={`hero-pill ${i % 2 === 0 ? 'hero-pill--blue' : 'hero-pill--warm'}`}
+            {[
+              { label: 'Product Strategy', variant: 'blue' },
+              { label: 'Platform Ecosystems', variant: 'gold' },
+              { label: 'Systems Thinking', variant: 'warm' },
+              { label: 'Enterprise UX', variant: 'blue' },
+              { label: 'AI-Augmented Design', variant: 'gold' },
+            ].map(({ label, variant }, i) => (
+              <span key={label} className={`hero-pill hero-pill--${variant}`}
                 style={{ animation: `fadeUp 0.5s ease ${0.8 + i * 0.1}s both` }}
-              >{skill}</span>
+              >{label}</span>
             ))}
           </div>
         </div>
@@ -67,17 +73,17 @@ export default function App() {
         {/* Order Management Case Study */}
         <Link to="/case-study/order-management" className="project-card" data-reveal>
           <div className="project-card-image" style={{
-            background: 'linear-gradient(135deg, #3a3525 0%, #241D15 100%)',
+            background: 'linear-gradient(135deg, #E6C07A 0%, #DDB365 100%)',
             position: 'relative', overflow: 'hidden', minHeight: 400,
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
             <div style={{ position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(rgba(179,134,107,0.12) 1px, transparent 1px)',
+              backgroundImage: 'radial-gradient(rgba(55,43,11,0.12) 1px, transparent 1px)',
               backgroundSize: '32px 32px' }} />
             <div style={{ position: 'relative', zIndex: 1, padding: 40, width: '100%' }}>
-              <div style={{ background: 'rgba(243,241,238,0.05)', border: '1px solid rgba(179,134,107,0.25)',
+              <div style={{ background: 'rgba(245,232,211,0.4)', border: '1px solid rgba(55,43,11,0.18)',
                 borderRadius: 8, padding: '16px 20px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(179,134,107,0.7)', letterSpacing: 1,
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(55,43,11,0.7)', letterSpacing: 1,
                   textTransform: 'uppercase', marginBottom: 12 }}>
                   Order Queue
                 </div>
@@ -88,26 +94,26 @@ export default function App() {
                 ].map(row => (
                   <div key={row.id} style={{ display: 'grid',
                     gridTemplateColumns: '1.2fr 0.8fr 0.8fr 1fr',
-                    padding: '8px 0', borderTop: '1px solid rgba(243,241,238,0.06)', alignItems: 'center' }}>
-                    <span style={{ fontSize: 11, color: 'rgba(243,241,238,0.55)', fontFamily: 'monospace' }}>{row.id}</span>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(243,241,238,0.9)' }}>{row.sym}</span>
-                    <span style={{ fontSize: 12, color: 'rgba(243,241,238,0.6)' }}>{row.qty}</span>
+                    padding: '8px 0', borderTop: '1px solid rgba(55,43,11,0.12)', alignItems: 'center' }}>
+                    <span style={{ fontSize: 11, color: 'rgba(55,43,11,0.6)', fontFamily: 'monospace' }}>{row.id}</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(55,43,11,0.95)' }}>{row.sym}</span>
+                    <span style={{ fontSize: 12, color: 'rgba(55,43,11,0.7)' }}>{row.qty}</span>
                     <span style={{ fontSize: 11, fontWeight: 700, textAlign: 'right',
-                      color: row.status === 'Verified' ? 'rgba(140,137,88,0.95)' : 'rgba(179,134,107,0.85)' }}>
+                      color: row.status === 'Verified' ? '#4A3408' : '#B86757' }}>
                       {row.status}
                     </span>
                   </div>
                 ))}
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                <div style={{ flex: 1, background: 'rgba(200,90,90,0.2)', border: '1px solid rgba(200,90,90,0.35)',
+                <div style={{ flex: 1, background: 'rgba(184,103,87,0.28)', border: '1px solid rgba(184,103,87,0.5)',
                   borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(243,241,238,0.6)', textAlign: 'center' }}>
+                  textTransform: 'uppercase', color: 'rgba(55,43,11,0.75)', textAlign: 'center' }}>
                   Before: Blind Send
                 </div>
-                <div style={{ flex: 1, background: 'rgba(140,137,88,0.25)', border: '1px solid rgba(140,137,88,0.4)',
+                <div style={{ flex: 1, background: 'rgba(55,43,11,0.22)', border: '1px solid rgba(55,43,11,0.4)',
                   borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(243,241,238,0.7)', textAlign: 'center' }}>
+                  textTransform: 'uppercase', color: 'rgba(245,232,211,0.95)', textAlign: 'center' }}>
                   After: Verified
                 </div>
               </div>
@@ -142,26 +148,26 @@ export default function App() {
         {/* Rules Case Study */}
         <Link to="/case-study/rules" className="project-card" data-reveal>
           <div className="project-card-image" style={{
-            background: 'linear-gradient(135deg, #2d5c52 0%, #4a7c6f 100%)',
+            background: 'linear-gradient(135deg, #D4DDE9 0%, #C4CFDF 100%)',
             position: 'relative', overflow: 'hidden', minHeight: 400,
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
             <div style={{ position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(rgba(246,251,222,0.08) 1px, transparent 1px)',
+              backgroundImage: 'radial-gradient(rgba(55,43,11,0.08) 1px, transparent 1px)',
               backgroundSize: '32px 32px' }} />
             <div style={{ position: 'relative', zIndex: 1, padding: 40, width: '100%' }}>
-              <div style={{ background: 'rgba(246,251,222,0.07)', border: '1px solid rgba(246,251,222,0.15)', borderRadius: 8, padding: '16px 20px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(246,251,222,0.5)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 12 }}>Rule Management</div>
+              <div style={{ background: 'rgba(245,232,211,0.45)', border: '1px solid rgba(55,43,11,0.14)', borderRadius: 8, padding: '16px 20px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(55,43,11,0.6)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 12 }}>Rule Management</div>
                 {[
                   { name: 'Crypto ETF Blacklist', status: 'Active' },
                   { name: 'Suitability Check — IRA', status: 'Active' },
                   { name: 'Foreign Equity Cap', status: 'Inactive' },
                 ].map(row => (
-                  <div key={row.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderTop: '1px solid rgba(246,251,222,0.06)' }}>
-                    <span style={{ fontSize: 13, color: 'rgba(246,251,222,0.8)' }}>{row.name}</span>
+                  <div key={row.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderTop: '1px solid rgba(55,43,11,0.1)' }}>
+                    <span style={{ fontSize: 13, color: 'rgba(55,43,11,0.85)' }}>{row.name}</span>
                     <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 20,
-                      background: row.status === 'Active' ? 'rgba(74,190,155,0.2)' : 'rgba(255,255,255,0.08)',
-                      color: row.status === 'Active' ? 'rgba(74,190,155,0.9)' : 'rgba(246,251,222,0.35)' }}>
+                      background: row.status === 'Active' ? 'rgba(221,179,101,0.35)' : 'rgba(55,43,11,0.08)',
+                      color: row.status === 'Active' ? '#6B4E14' : 'rgba(55,43,11,0.45)' }}>
                       {row.status}
                     </span>
                   </div>
@@ -198,24 +204,24 @@ export default function App() {
         {/* Positions Case Study */}
         <Link to="/case-study/positions" className="project-card" data-reveal>
           <div className="project-card-image" style={{
-            background: 'linear-gradient(135deg, #90a1b9 0%, #62748e 100%)',
+            background: 'linear-gradient(135deg, #C27A6E 0%, #B86757 100%)',
             position: 'relative', overflow: 'hidden', minHeight: 400,
             display: 'flex', alignItems: 'center', justifyContent: 'center'
           }}>
             <div style={{ position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(rgba(246,251,222,0.1) 1px, transparent 1px)',
+              backgroundImage: 'radial-gradient(rgba(245,232,211,0.14) 1px, transparent 1px)',
               backgroundSize: '32px 32px' }} />
             <div style={{ position: 'relative', zIndex: 1, padding: 40, width: '100%' }}>
-              <div style={{ background: 'rgba(246,251,222,0.07)', border: '1px solid rgba(246,251,222,0.15)',
+              <div style={{ background: 'rgba(245,232,211,0.08)', border: '1px solid rgba(245,232,211,0.2)',
                 borderRadius: 8, padding: '16px 20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(246,251,222,0.6)', letterSpacing: 1, textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(245,232,211,0.75)', letterSpacing: 1, textTransform: 'uppercase' }}>
                     Positions Panel
                   </span>
                   <div style={{ display: 'flex', gap: 4 }}>
                     {['AAPL','MSFT','GOOGL'].map(t => (
-                      <span key={t} style={{ fontSize: 10, fontWeight: 700, color: 'rgba(246,251,222,0.5)',
-                        background: 'rgba(246,251,222,0.07)', padding: '2px 6px', borderRadius: 4 }}>{t}</span>
+                      <span key={t} style={{ fontSize: 10, fontWeight: 700, color: 'rgba(245,232,211,0.65)',
+                        background: 'rgba(245,232,211,0.12)', padding: '2px 6px', borderRadius: 4 }}>{t}</span>
                     ))}
                   </div>
                 </div>
@@ -225,24 +231,24 @@ export default function App() {
                   { ticker: 'GOOGL', shares: '40 sh', value: '$55,200', change: '-0.8%', pos: false },
                 ].map(row => (
                   <div key={row.ticker} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                    padding: '8px 0', borderTop: '1px solid rgba(246,251,222,0.06)', alignItems: 'center' }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(246,251,222,0.9)' }}>{row.ticker}</span>
-                    <span style={{ fontSize: 12, color: 'rgba(246,251,222,0.5)' }}>{row.shares}</span>
-                    <span style={{ fontSize: 12, color: 'rgba(246,251,222,0.7)' }}>{row.value}</span>
-                    <span style={{ fontSize: 12, fontWeight: 600, textAlign: 'right',
-                      color: row.pos ? '#90d4a8' : '#e8857a' }}>{row.change}</span>
+                    padding: '8px 0', borderTop: '1px solid rgba(245,232,211,0.1)', alignItems: 'center' }}>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(245,232,211,0.95)' }}>{row.ticker}</span>
+                    <span style={{ fontSize: 12, color: 'rgba(245,232,211,0.6)' }}>{row.shares}</span>
+                    <span style={{ fontSize: 12, color: 'rgba(245,232,211,0.8)' }}>{row.value}</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, textAlign: 'right',
+                      color: row.pos ? '#DDB365' : 'rgba(245,232,211,0.55)' }}>{row.change}</span>
                   </div>
                 ))}
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                <div style={{ flex: 1, background: 'rgba(200,90,90,0.25)', border: '1px solid rgba(200,90,90,0.35)',
+                <div style={{ flex: 1, background: 'rgba(55,43,11,0.25)', border: '1px solid rgba(55,43,11,0.4)',
                   borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(246,251,222,0.6)', textAlign: 'center' }}>
+                  textTransform: 'uppercase', color: 'rgba(245,232,211,0.7)', textAlign: 'center' }}>
                   Before: Hidden drawer
                 </div>
-                <div style={{ flex: 1, background: 'rgba(90,170,130,0.25)', border: '1px solid rgba(90,170,130,0.35)',
+                <div style={{ flex: 1, background: 'rgba(221,179,101,0.3)', border: '1px solid rgba(221,179,101,0.5)',
                   borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(246,251,222,0.6)', textAlign: 'center' }}>
+                  textTransform: 'uppercase', color: 'rgba(245,232,211,0.9)', textAlign: 'center' }}>
                   After: Inline panel
                 </div>
               </div>
@@ -314,26 +320,26 @@ export default function App() {
             >
               <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--steel-blue)', background: 'rgba(144,161,185,0.12)', padding: '4px 10px', borderRadius: 20 }}>Coming soon</div>
               <div style={{
-                height: 180, background: 'linear-gradient(135deg, #3a3525, #4a3d2d)',
+                height: 180, background: 'linear-gradient(135deg, #372B0B, #2A1F08)',
                 position: 'relative', overflow: 'hidden',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24,
               }}>
                 <div style={{ position: 'absolute', inset: 0,
-                  backgroundImage: 'radial-gradient(rgba(179,134,107,0.1) 1px, transparent 1px)',
+                  backgroundImage: 'radial-gradient(rgba(184,103,87,0.14) 1px, transparent 1px)',
                   backgroundSize: '24px 24px' }} />
                 <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
                   <div style={{
-                    background: 'rgba(243,241,238,0.06)', border: '1px solid rgba(179,134,107,0.2)',
+                    background: 'rgba(245,232,211,0.06)', border: '1px solid rgba(184,103,87,0.3)',
                     borderRadius: 8, padding: '14px 16px', display: 'flex', gap: 12, alignItems: 'flex-start',
                   }}>
-                    <div style={{ width: 3, minHeight: 36, borderRadius: 2, background: 'rgba(179,134,107,0.5)', flexShrink: 0 }} />
+                    <div style={{ width: 3, minHeight: 36, borderRadius: 2, background: 'rgba(184,103,87,0.65)', flexShrink: 0 }} />
                     <div>
-                      <div style={{ fontSize: 11, color: 'rgba(243,241,238,0.7)', lineHeight: 1.5, marginBottom: 6 }}>
+                      <div style={{ fontSize: 11, color: 'rgba(245,232,211,0.75)', lineHeight: 1.5, marginBottom: 6 }}>
                         "Market quote data unified across 4 trading surfaces..."
                       </div>
                       <div style={{ display: 'flex', gap: 6 }}>
-                        <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: 'rgba(140,137,88,0.25)', color: 'rgba(243,241,238,0.6)', fontWeight: 700 }}>Reusable</span>
-                        <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: 'rgba(179,134,107,0.2)', color: 'rgba(243,241,238,0.6)', fontWeight: 700 }}>Design System</span>
+                        <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: 'rgba(221,179,101,0.3)', color: 'rgba(245,232,211,0.85)', fontWeight: 700 }}>Reusable</span>
+                        <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: 'rgba(184,103,87,0.28)', color: 'rgba(245,232,211,0.85)', fontWeight: 700 }}>Design System</span>
                       </div>
                     </div>
                   </div>
@@ -371,32 +377,32 @@ export default function App() {
             >
               <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--steel-blue)', background: 'rgba(144,161,185,0.12)', padding: '4px 10px', borderRadius: 20 }}>Coming soon</div>
               <div style={{
-                height: 180, background: 'linear-gradient(135deg, #2d5c52, #3a6e62)',
+                height: 180, background: 'linear-gradient(135deg, #D4DDE9, #C4CFDF)',
                 position: 'relative', overflow: 'hidden',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24,
               }}>
                 <div style={{ position: 'absolute', inset: 0,
-                  backgroundImage: 'radial-gradient(rgba(246,251,222,0.06) 1px, transparent 1px)',
+                  backgroundImage: 'radial-gradient(rgba(55,43,11,0.08) 1px, transparent 1px)',
                   backgroundSize: '24px 24px' }} />
                 <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
                   <div style={{ display: 'flex', gap: 12, alignItems: 'stretch' }}>
                     <div style={{
-                      flex: 1, background: 'rgba(200,90,90,0.15)', border: '1px solid rgba(200,90,90,0.25)',
+                      flex: 1, background: 'rgba(184,103,87,0.18)', border: '1px solid rgba(184,103,87,0.35)',
                       borderRadius: 8, padding: 14, textAlign: 'center',
                     }}>
                       <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
-                        color: 'rgba(246,251,222,0.4)', marginBottom: 8 }}>PM Proposal</div>
-                      <div style={{ fontSize: 18, color: 'rgba(230,120,110,0.7)' }}>✕</div>
-                      <div style={{ fontSize: 10, color: 'rgba(246,251,222,0.35)', marginTop: 4 }}>Low user value</div>
+                        color: 'rgba(55,43,11,0.55)', marginBottom: 8 }}>PM Proposal</div>
+                      <div style={{ fontSize: 18, color: '#B86757' }}>✕</div>
+                      <div style={{ fontSize: 10, color: 'rgba(55,43,11,0.5)', marginTop: 4 }}>Low user value</div>
                     </div>
                     <div style={{
-                      flex: 1, background: 'rgba(90,170,130,0.15)', border: '1px solid rgba(90,170,130,0.3)',
+                      flex: 1, background: 'rgba(221,179,101,0.22)', border: '1px solid rgba(221,179,101,0.42)',
                       borderRadius: 8, padding: 14, textAlign: 'center',
                     }}>
                       <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
-                        color: 'rgba(246,251,222,0.4)', marginBottom: 8 }}>Counter-Proposal</div>
-                      <div style={{ fontSize: 18, color: 'rgba(74,190,155,0.8)' }}>✓</div>
-                      <div style={{ fontSize: 10, color: 'rgba(246,251,222,0.35)', marginTop: 4 }}>Research-backed</div>
+                        color: 'rgba(55,43,11,0.55)', marginBottom: 8 }}>Counter-Proposal</div>
+                      <div style={{ fontSize: 18, color: '#8B6515' }}>✓</div>
+                      <div style={{ fontSize: 10, color: 'rgba(55,43,11,0.5)', marginTop: 4 }}>Research-backed</div>
                     </div>
                   </div>
                 </div>
@@ -441,20 +447,20 @@ export default function App() {
 
       {/* AI × Design — Standalone Section */}
       <section style={{
-        background: 'linear-gradient(135deg, #3d3d42 0%, #48484e 50%, #3d3d42 100%)',
+        background: 'linear-gradient(135deg, #B86757 0%, #C27A6E 50%, #B86757 100%)',
         position: 'relative', overflow: 'hidden',
         padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)',
       }}>
         {/* Dot grid */}
         <div style={{ position: 'absolute', inset: 0,
-          backgroundImage: 'radial-gradient(rgba(243,239,217,0.03) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(245,232,211,0.04) 1px, transparent 1px)',
           backgroundSize: '32px 32px', pointerEvents: 'none' }} />
         {/* Ambient glows */}
         <div style={{ position: 'absolute', top: -80, right: -100, width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(177,124,93,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(221,179,101,0.18) 0%, transparent 70%)',
           filter: 'blur(80px)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: -60, left: -80, width: 350, height: 350, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(144,161,185,0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(184,103,87,0.14) 0%, transparent 70%)',
           filter: 'blur(80px)', pointerEvents: 'none' }} />
 
         <div className="beyond-grid" style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto',
@@ -464,17 +470,17 @@ export default function App() {
           <div>
             <p style={{
               fontSize: 12, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase',
-              color: '#d4a07a', marginBottom: 20,
+              color: '#DDB365', marginBottom: 20,
               display: 'flex', alignItems: 'center', gap: 12,
             }}>
               Beyond the Work
-              <span style={{ flex: 1, height: 1, background: 'rgba(212,160,122,0.2)' }} />
+              <span style={{ flex: 1, height: 1, background: 'rgba(221,179,101,0.2)' }} />
             </p>
             <h2 style={{
               fontSize: 'clamp(28px, 3.5vw, 36px)', fontWeight: 700, lineHeight: 1.2,
-              color: '#f0ede6', marginBottom: 20,
+              color: '#F5E8D3', marginBottom: 20,
             }}>
-              AI × Design<span style={{ color: '#d4a07a' }}>.</span>
+              AI × Design<span style={{ color: '#DDB365' }}>.</span>
             </h2>
             <p style={{
               fontSize: 16, lineHeight: 1.7, color: 'rgba(213,209,201,0.6)',
@@ -488,19 +494,19 @@ export default function App() {
               {['AI & Craft', 'Design Process', 'Jenny Wen', 'Addy Osmani', 'Curated Reads'].map(tag => (
                 <span key={tag} style={{
                   fontSize: 12, fontWeight: 500, padding: '6px 16px', borderRadius: 100,
-                  background: 'rgba(243,239,217,0.05)',
-                  border: '1px solid rgba(243,239,217,0.09)',
-                  color: 'rgba(240,237,230,0.55)',
+                  background: 'rgba(245,232,211,0.14)',
+                  border: '1px solid rgba(245,232,211,0.22)',
+                  color: 'rgba(245,232,211,0.8)',
                 }}>{tag}</span>
               ))}
             </div>
             <Link to="/ai-design" style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
               padding: '13px 28px', borderRadius: 28,
-              background: '#d4a07a', color: '#2a2a2e',
+              background: '#DDB365', color: '#372B0B',
               fontSize: 14, fontWeight: 700, letterSpacing: '0.02em',
               textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(212,160,122,0.3)',
+              boxShadow: '0 4px 24px rgba(221,179,101,0.3)',
               transition: 'all 0.25s ease',
             }}>
               Explore Collection <span style={{ fontSize: 16 }}>→</span>
@@ -511,42 +517,42 @@ export default function App() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {/* Featured quote glass card */}
             <div style={{
-              background: 'rgba(243,239,217,0.05)',
+              background: 'rgba(245,232,211,0.14)',
               backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(243,239,217,0.1)',
+              border: '1px solid rgba(245,232,211,0.25)',
               borderRadius: 14, padding: '32px 36px',
-              boxShadow: '0 4px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(243,239,217,0.06)',
+              boxShadow: '0 4px 32px rgba(55,43,11,0.15), inset 0 1px 0 rgba(245,232,211,0.1)',
             }}>
-              <div style={{ fontSize: 40, lineHeight: 1, color: 'rgba(212,160,122,0.35)', fontFamily: 'Georgia, serif', marginBottom: 10 }}>"</div>
+              <div style={{ fontSize: 40, lineHeight: 1, color: 'rgba(221,179,101,0.35)', fontFamily: 'Georgia, serif', marginBottom: 10 }}>"</div>
               <p style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: 'rgba(240,237,230,0.85)', marginBottom: 14 }}>
                 The design process isn't dead — it just got a remix.
               </p>
-              <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(160,173,192,0.5)' }}>— Kristin Garza</p>
+              <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(221,179,101,0.75)' }}>— Kristin Garza</p>
             </div>
 
             {/* Two smaller glass cards */}
             <div className="glass-card-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div style={{
-                background: 'rgba(243,239,217,0.04)',
+                background: 'rgba(245,232,211,0.12)',
                 backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(243,239,217,0.08)',
+                border: '1px solid rgba(245,232,211,0.22)',
                 borderRadius: 12, padding: '22px 24px',
-                boxShadow: 'inset 0 1px 0 rgba(243,239,217,0.04)',
+                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.08)',
               }}>
-                <div style={{ height: 3, width: 32, borderRadius: 2, background: 'linear-gradient(90deg, #B17C5D, #d4a07a)', marginBottom: 14 }} />
+                <div style={{ height: 3, width: 32, borderRadius: 2, background: 'linear-gradient(90deg, #B86757, #DDB365)', marginBottom: 14 }} />
                 <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(240,237,230,0.8)', marginBottom: 6, lineHeight: 1.3 }}>
                   Don't Trust the Process
                 </p>
                 <p style={{ fontSize: 11, color: 'rgba(213,209,201,0.4)' }}>Jenny Wen</p>
               </div>
               <div style={{
-                background: 'rgba(243,239,217,0.04)',
+                background: 'rgba(245,232,211,0.12)',
                 backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(243,239,217,0.08)',
+                border: '1px solid rgba(245,232,211,0.22)',
                 borderRadius: 12, padding: '22px 24px',
-                boxShadow: 'inset 0 1px 0 rgba(243,239,217,0.04)',
+                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.08)',
               }}>
-                <div style={{ height: 3, width: 32, borderRadius: 2, background: 'linear-gradient(90deg, #7a8fa8, #a0b3c8)', marginBottom: 14 }} />
+                <div style={{ height: 3, width: 32, borderRadius: 2, background: 'linear-gradient(90deg, #C4CFDF, #9FB0C9)', marginBottom: 14 }} />
                 <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(240,237,230,0.8)', marginBottom: 6, lineHeight: 1.3 }}>
                   Comprehension Debt
                 </p>
@@ -592,17 +598,17 @@ export default function App() {
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
             >
               <div style={{
-                height: 200, background: 'linear-gradient(135deg, #f5f0eb, #ede8e3)',
+                height: 200, background: 'linear-gradient(135deg, #F5E8D3, #E8D9BE)',
                 position: 'relative', overflow: 'hidden',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 28,
               }}>
                 {/* Stylized line art hint */}
-                <svg width="180" height="140" viewBox="0 0 180 140" fill="none" style={{ opacity: 0.5 }}>
-                  <path d="M20 120 Q50 20 90 70 T160 30" stroke="var(--terracotta)" strokeWidth="2" fill="none" strokeLinecap="round" />
-                  <path d="M30 110 Q70 40 110 80 T170 50" stroke="var(--steel-blue)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeDasharray="4 6" />
-                  <circle cx="90" cy="70" r="8" stroke="var(--terracotta)" strokeWidth="1.5" fill="rgba(177,124,93,0.08)" />
-                  <circle cx="45" cy="55" r="5" stroke="var(--steel-blue)" strokeWidth="1" fill="rgba(144,161,185,0.08)" />
-                  <circle cx="140" cy="40" r="6" stroke="var(--terracotta)" strokeWidth="1" fill="rgba(177,124,93,0.06)" />
+                <svg width="180" height="140" viewBox="0 0 180 140" fill="none" style={{ opacity: 0.65 }}>
+                  <path d="M20 120 Q50 20 90 70 T160 30" stroke="#B86757" strokeWidth="2" fill="none" strokeLinecap="round" />
+                  <path d="M30 110 Q70 40 110 80 T170 50" stroke="#DDB365" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeDasharray="4 6" />
+                  <circle cx="90" cy="70" r="8" stroke="#B86757" strokeWidth="1.5" fill="rgba(184,103,87,0.1)" />
+                  <circle cx="45" cy="55" r="5" stroke="#DDB365" strokeWidth="1" fill="rgba(221,179,101,0.1)" />
+                  <circle cx="140" cy="40" r="6" stroke="#B86757" strokeWidth="1" fill="rgba(184,103,87,0.08)" />
                 </svg>
               </div>
               <div style={{ padding: '24px 28px' }}>
@@ -632,17 +638,17 @@ export default function App() {
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
             >
               <div style={{
-                height: 200, background: 'linear-gradient(135deg, #62748e, #90a1b9)',
+                height: 200, background: 'linear-gradient(135deg, #E6C07A, #DDB365)',
                 position: 'relative', overflow: 'hidden',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 28,
               }}>
                 <div style={{ position: 'absolute', inset: 0,
-                  backgroundImage: 'radial-gradient(rgba(246,251,222,0.08) 1px, transparent 1px)',
+                  backgroundImage: 'radial-gradient(rgba(55,43,11,0.12) 1px, transparent 1px)',
                   backgroundSize: '20px 20px' }} />
                 <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
                   <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
-                    color: 'rgba(246,251,222,0.5)', marginBottom: 8 }}>Vibe Coded</div>
-                  <div style={{ fontSize: 28, fontWeight: 700, color: 'rgba(246,251,222,0.9)', letterSpacing: '-0.02em' }}>{"</>"}</div>
+                    color: 'rgba(55,43,11,0.65)', marginBottom: 8 }}>Vibe Coded</div>
+                  <div style={{ fontSize: 28, fontWeight: 700, color: '#372B0B', letterSpacing: '-0.02em' }}>{"</>"}</div>
                 </div>
               </div>
               <div style={{ padding: '24px 28px' }}>

@@ -8,10 +8,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(243, 239, 217, 0.93);
+  background: rgba(245, 232, 211, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(202, 213, 226, 0.35);
+  border-bottom: 1px solid rgba(55, 43, 11, 0.08);
 }
 
 .logo {
@@ -19,7 +19,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #59504A;
+  color: #372B0B;
 }
 
 .links {
@@ -32,9 +32,9 @@
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.12em;
-  color: #59504A;
-  opacity: 0.6;
-  transition: opacity 0.2s ease;
+  color: #372B0B;
+  opacity: 0.65;
+  transition: opacity 0.2s ease, color 0.2s ease;
   text-transform: uppercase;
 }
 
@@ -43,8 +43,12 @@
   opacity: 1;
 }
 
+.links a:hover {
+  color: #B86757;
+}
+
 .active {
-  color: #B17C5D !important;
+  color: #B86757 !important;
   opacity: 1 !important;
 }
 

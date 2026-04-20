@@ -34,7 +34,7 @@ export default function Nav() {
             <li><Link to="/" style={isDark ? { color: 'rgba(213,209,201,0.7)' } : {}}>← All Work</Link></li>
           </>
         )}
-        <li><a href="mailto:kmkerney221@gmail.com" className="nav-cta" style={isDark ? { background: '#d4a07a', color: '#2a2a2e', borderColor: '#d4a07a' } : {}}>Get in touch</a></li>
+        <li><a href="mailto:kmkerney221@gmail.com" className="nav-cta" style={isDark ? { background: '#DDB365', color: '#2a2a2e', borderColor: '#DDB365' } : {}}>Get in touch</a></li>
       </ul>
     </nav>
   )

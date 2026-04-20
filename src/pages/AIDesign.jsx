@@ -32,38 +32,71 @@ const glassCard = {
 }
 
 const quotes = [
-  { text: "Start with a solution first — it's illegal in the old design process, but the rules have changed.", source: 'Jenny Wen · "Don\'t Trust the Process"' },
-  { text: 'Intuition is not guessing.', source: 'Jenny Wen · "Don\'t Trust the Process"' },
+  {
+    lines: [
+      '"This design process… we treat it as gospel. That\'s basically dead."',
+      'Designers should focus more on "supporting implementation and execution."',
+    ],
+    source: 'Jenny Wen · Lenny\'s Podcast, "The Design Process Is Dead"',
+    url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead',
+  },
+  {
+    lines: [
+      'Teams risk defaulting to pattern selection instead of problem definition — choosing components instead of questioning intent.',
+      "The opportunity isn't just to design faster — it's to design with clarity. Making decisions explicit, systems understandable, and experiences coherent across the product.",
+    ],
+    source: 'Addy Osmani · "Comprehension Debt"',
+    url: 'https://addyosmani.com/blog/comprehension-debt/',
+  },
+  {
+    lines: [
+      "The first thing AI gives you is generic by definition — it's the average of everything it's seen.",
+      "Taste is knowing what's good and being able to articulate why.",
+    ],
+    source: 'Dylan Field · Figma',
+    url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat',
+  },
 ]
 const wideQuote = {
-  text: 'The map is different every time — trust yourself, try new things, wield new tools.',
+  label: 'Hypothesis',
+  text: '"In a world where anyone can make anything — what matters is your ability to choose and curate what you make."',
   source: 'Jenny Wen · Hatch Conference 2025',
+  url: 'https://www.youtube.com/watch?v=4u94juYwLLM',
 }
 
 const contentPieces = [
-  { type: 'Talk', color: '#B17C5D', colorEnd: '#d4a07a', title: "Don't Trust the Process", tldr: "Jenny Wen on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Watch / Listen →', url: 'https://www.hatchconference.com/agenda/don-t-trust-the-process' },
+  { type: 'Podcast', color: '#a07bc4', colorEnd: '#b89bd4', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast — why the traditional linear design process doesn't hold up in the AI era, and what's replacing it. The episode that inspired this whole page.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
   { type: 'Article', color: '#7a8fa8', colorEnd: '#a0b3c8', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code — the growing gap between what we produce and what we actually understand.", cta: 'Read Article →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
-  { type: 'Perspective', color: '#5a9e8a', colorEnd: '#7bbfaa', title: "What ISN'T Replaceable by AI", tldr: "The case for focusing on the human skills AI can't replicate — judgment, context, empathy, and the ability to ask the right questions.", cta: 'Read More →', url: '#' },
-  { type: 'Talk', color: '#c4a26e', colorEnd: '#dbb98a', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch / Listen →', url: '#' },
+  { type: 'Podcast', color: '#8a7bb8', colorEnd: '#a896d1', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners on the Future of UX podcast — five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
+  { type: 'Podcast', color: '#7a6ba8', colorEnd: '#9887c4', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on Lenny's Podcast — why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
+  { type: 'Article', color: '#7a8fa8', colorEnd: '#a0b3c8', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale — and why human judgment still matters.', cta: 'Read Article →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
+  { type: 'Podcast', color: '#5d6db0', colorEnd: '#8593c9', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries — grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
+  { type: 'Talk', color: '#c4a26e', colorEnd: '#dbb98a', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch / Listen →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
+  { type: 'Substack', color: '#B17C5D', colorEnd: '#d4a07a', title: "Don't Trust the Process", tldr: "Jenny Wen's Substack post on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Read on Substack →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
 ]
 
 const voices = [
   { name: "Lenny's Newsletter", url: 'https://www.lennysnewsletter.com/' },
   { name: 'The Rundown AI', url: 'https://www.therundown.ai/' },
-  { name: 'Jenny Wen', url: '#' },
+  { name: 'Jenny Wen', url: 'http://jennywen.ca/' },
+  { name: 'Dive Club', url: 'https://www.dive.club/' },
+  { name: 'Patricia Reiners · Future of UX', url: 'https://podcasts.apple.com/us/podcast/future-of-ux-your-design-tech-and-user/id1480706373' },
+  { name: 'a16z Podcast', url: 'https://a16z.com/podcasts/a16z-show/' },
+  { name: 'Hard Fork · NYT', url: 'https://www.nytimes.com/column/hard-fork' },
   { name: 'NN/g AI Research', url: 'https://www.nngroup.com/topic/ai/' },
   { name: "Jakob Nielsen's Substack", url: 'https://jakobnielsenphd.substack.com/' },
   { name: 'Addy Osmani', url: 'https://addyosmani.com/' },
   { name: 'Design Observer', url: 'https://designobserver.com/' },
 ]
 
-function QuoteCard({ text, source, wide }) {
+function QuoteCard({ text, lines, source, url, wide, label }) {
   const base = wide
     ? { ...glassCard, gridColumn: '1 / -1', background: 'rgba(212,160,122,0.06)', borderColor: 'rgba(212,160,122,0.12)' }
     : { ...glassCard }
+  const quoteLines = lines || (text ? [text] : [])
   return (
     <div
-      style={{ ...base, padding: 32, cursor: 'default' }}
+      style={{ ...base, padding: 32, cursor: 'default', display: 'flex', flexDirection: 'column' }}
       onMouseEnter={e => {
         e.currentTarget.style.transform = 'translateY(-3px)'
         e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,0,0,0.15)'
@@ -77,9 +110,54 @@ function QuoteCard({ text, source, wide }) {
         e.currentTarget.style.background = wide ? 'rgba(212,160,122,0.06)' : creamGlass
       }}
     >
-      <div style={{ fontSize: 48, lineHeight: 1, color: terracotta, opacity: 0.4, marginBottom: 8, fontFamily: 'Georgia, serif' }}>"</div>
-      <p style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: textPrimary, marginBottom: 16 }}>{text}</p>
-      <p style={{ fontSize: 13, color: blueLabel, fontWeight: 600 }}>{source}</p>
+      <svg
+        viewBox="0 0 24 24" width="28" height="28" fill="none"
+        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+        style={{ color: terracotta, opacity: 0.55, marginBottom: 14, display: 'block' }}
+        aria-hidden="true"
+      >
+        <path d="M9 18h6" />
+        <path d="M10 21h4" />
+        <path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1.5 1.4 1.5 2.5v2h5v-2c0-1.1.7-1.8 1.5-2.5A6 6 0 0 0 12 3Z" />
+      </svg>
+      {label && (
+        <p style={{
+          fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase',
+          color: terracotta, marginBottom: 14,
+        }}>
+          {label}
+        </p>
+      )}
+      {quoteLines.map((line, i) => (
+        <p
+          key={i}
+          style={{
+            fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: textPrimary,
+            marginBottom: 16,
+            paddingBottom: i < quoteLines.length - 1 ? 16 : 0,
+            borderBottom: i < quoteLines.length - 1 ? '1px solid rgba(243,239,217,0.06)' : 'none',
+          }}
+        >
+          {line}
+        </p>
+      ))}
+      {url ? (
+        <a
+          href={url} target="_blank" rel="noreferrer"
+          style={{
+            fontSize: 13, color: blueLabel, fontWeight: 600, marginTop: 'auto',
+            textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6,
+            transition: 'color 0.2s ease',
+            alignSelf: 'flex-start',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.color = terracotta }}
+          onMouseLeave={e => { e.currentTarget.style.color = blueLabel }}
+        >
+          {source} <span style={{ fontSize: 11, opacity: 0.7 }}>↗</span>
+        </a>
+      ) : (
+        <p style={{ fontSize: 13, color: blueLabel, fontWeight: 600, marginTop: 'auto' }}>{source}</p>
+      )}
     </div>
   )
 }
@@ -152,14 +230,14 @@ export default function AIDesign() {
             fontSize: 'clamp(18px, 2.2vw, 22px)', fontWeight: 500, lineHeight: 1.7,
             color: textPrimary, maxWidth: 800,
             borderLeft: `3px solid ${terracotta}`, paddingLeft: 28,
-            margin: 0, marginBottom: 24,
+            margin: 0,
           }}>
-            The foundations of design thinking still exist — but AI has shuffled the order.
-            We can spit out deliverables faster, get answers back quicker, and iterate in
-            smaller chunks. It's not that research, validation, and discovery disappeared.
-            It's that the whole process got compressed and rearranged — and that's actually exciting.
+            AI compresses the design process — but it also introduces a new risk: we can
+            generate solutions faster than we can understand them. That's why my focus
+            isn't just on speed — it's on clarity. Ensuring that what we design is not
+            only usable, but explainable, scalable, and grounded in a shared understanding
+            across teams.
           </blockquote>
-          <p style={{ fontSize: 14, color: textMuted, fontStyle: 'italic', paddingLeft: 31 }}>— Kristin Garza</p>
         </div>
       </div>
 
@@ -167,15 +245,47 @@ export default function AIDesign() {
       <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
         <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 40 }}>Ideas I Keep Coming Back To</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-          {quotes.map((q, i) => <QuoteCard key={i} text={q.text} source={q.source} />)}
-          <QuoteCard text={wideQuote.text} source={wideQuote.source} wide />
+          {quotes.map((q, i) => <QuoteCard key={i} lines={q.lines} source={q.source} url={q.url} />)}
+          <QuoteCard text={wideQuote.text} source={wideQuote.source} label={wideQuote.label} url={wideQuote.url} wide />
+        </div>
+      </div>
+
+      {/* Where I Focus — deeper insight */}
+      <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
+        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 24 }}>Where I Focus</p>
+        <div style={{
+          ...glassCard, padding: 44, borderRadius: 16,
+          background: 'rgba(212,160,122,0.05)', borderColor: 'rgba(212,160,122,0.1)',
+        }}>
+          <h2 style={{
+            fontSize: 'clamp(22px, 2.6vw, 28px)', fontWeight: 700, lineHeight: 1.3,
+            color: textPrimary, marginBottom: 24, maxWidth: 760,
+          }}>
+            The biggest risk in the AI era isn't slow execution<span style={{ color: terracotta }}>.</span><br />
+            It's <span style={{ color: terracotta }}>comprehension debt</span>.
+          </h2>
+          <p style={{
+            fontSize: 17, lineHeight: 1.75, color: textPrimary, maxWidth: 780, marginBottom: 18,
+          }}>
+            AI has made it easy to generate interfaces — but much harder to maintain
+            shared understanding. In complex systems, the biggest risk isn't slow execution —
+            it's comprehension debt: shipping solutions that work, but that no one can fully
+            explain or evolve.
+          </p>
+          <p style={{
+            fontSize: 17, lineHeight: 1.75, color: textPrimary, maxWidth: 780, margin: 0,
+          }}>
+            My role as a designer is to reduce that risk — by designing not just screens, but
+            clarity: aligning teams around intent, making decisions explicit, and ensuring
+            the system holds together as it scales.
+          </p>
         </div>
       </div>
 
       {/* Content Carousel */}
       <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 12 }}>What I'm Reading & Listening To</p>
-        <p style={{ fontSize: 15, color: textMuted, marginBottom: 36 }}>Content that's shaped my thinking — swipe through for the pieces I keep sharing.</p>
+        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 12 }}>How AI is reshaping design</p>
+        <p style={{ fontSize: 15, color: textMuted, marginBottom: 36 }}>The talks, articles, and research shaping how I think about design in the age of AI — swipe through for the pieces I keep coming back to.</p>
         <div style={{
           display: 'flex', gap: 20, overflowX: 'auto',
           paddingBottom: 12, scrollSnapType: 'x mandatory',

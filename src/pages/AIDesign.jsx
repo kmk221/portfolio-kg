@@ -1,17 +1,19 @@
 import { useEffect } from 'react'
 import Nav from '../components/Nav.jsx'
 
-const pageBg = '#3d3d42'
-const cream = 'rgba(243,239,217,1)'
-const creamGlass = 'rgba(243,239,217,0.05)'
-const creamGlassHover = 'rgba(243,239,217,0.08)'
-const creamBorder = 'rgba(243,239,217,0.09)'
-const creamBorderHover = 'rgba(243,239,217,0.16)'
-const textPrimary = '#f0ede6'
-const textSecondary = 'rgba(213,209,201,0.6)'
-const textMuted = 'rgba(213,209,201,0.45)'
-const terracotta = '#d4a07a'
-const blueLabel = 'rgba(160,173,192,0.7)'
+const pageBg = '#C4CFDF'
+const cream = 'rgba(245,232,211,1)'
+const creamGlass = 'rgba(245,232,211,0.55)'
+const creamGlassHover = 'rgba(245,232,211,0.72)'
+const creamBorder = 'rgba(55,43,11,0.14)'
+const creamBorderHover = 'rgba(55,43,11,0.24)'
+const textPrimary = '#372B0B'
+const textSecondary = 'rgba(55,43,11,0.72)'
+const textMuted = 'rgba(55,43,11,0.55)'
+const terracotta = '#B86757'
+const gold = '#DDB365'
+const softBlue = '#C4CFDF'
+const blueLabel = '#5F7A9A'
 const sideP = 'clamp(24px, 5vw, 48px)'
 const contentW = '1100px'
 
@@ -20,14 +22,14 @@ const sec = (extra) => ({
   position: 'relative', zIndex: 1, ...extra
 })
 
-const divider = { borderBottom: '1px solid rgba(243,239,217,0.06)' }
+const divider = { borderBottom: '1px solid rgba(55,43,11,0.08)' }
 
 const glassCard = {
   background: creamGlass,
   backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
   border: `1px solid ${creamBorder}`,
   borderRadius: 14,
-  boxShadow: '0 2px 20px rgba(0,0,0,0.06), inset 0 1px 0 rgba(243,239,217,0.05)',
+  boxShadow: '0 4px 24px rgba(55,43,11,0.08), inset 0 1px 0 rgba(245,232,211,0.4)',
   transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease',
 }
 
@@ -65,14 +67,14 @@ const wideQuote = {
 }
 
 const contentPieces = [
-  { type: 'Podcast', color: '#a07bc4', colorEnd: '#b89bd4', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast — why the traditional linear design process doesn't hold up in the AI era, and what's replacing it. The episode that inspired this whole page.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
-  { type: 'Article', color: '#7a8fa8', colorEnd: '#a0b3c8', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code — the growing gap between what we produce and what we actually understand.", cta: 'Read Article →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
-  { type: 'Podcast', color: '#8a7bb8', colorEnd: '#a896d1', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners on the Future of UX podcast — five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
-  { type: 'Podcast', color: '#7a6ba8', colorEnd: '#9887c4', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on Lenny's Podcast — why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
-  { type: 'Article', color: '#7a8fa8', colorEnd: '#a0b3c8', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale — and why human judgment still matters.', cta: 'Read Article →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
-  { type: 'Podcast', color: '#5d6db0', colorEnd: '#8593c9', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries — grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
-  { type: 'Talk', color: '#c4a26e', colorEnd: '#dbb98a', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch / Listen →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
-  { type: 'Substack', color: '#B17C5D', colorEnd: '#d4a07a', title: "Don't Trust the Process", tldr: "Jenny Wen's Substack post on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Read on Substack →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
+  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast — why the traditional linear design process doesn't hold up in the AI era, and what's replacing it. The episode that inspired this whole page.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
+  { type: 'Article', color: '#5F7A9A', colorEnd: '#8FA5BF', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code — the growing gap between what we produce and what we actually understand.", cta: 'Read Article →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
+  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners on the Future of UX podcast — five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
+  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on Lenny's Podcast — why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
+  { type: 'Article', color: '#5F7A9A', colorEnd: '#8FA5BF', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale — and why human judgment still matters.', cta: 'Read Article →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
+  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries — grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
+  { type: 'Talk', color: '#DDB365', colorEnd: '#E6C07A', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch / Listen →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
+  { type: 'Substack', color: '#DDB365', colorEnd: '#E6C07A', title: "Don't Trust the Process", tldr: "Jenny Wen's Substack post on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Read on Substack →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
 ]
 
 const voices = [
@@ -91,7 +93,7 @@ const voices = [
 
 function QuoteCard({ text, lines, source, url, wide, label }) {
   const base = wide
-    ? { ...glassCard, gridColumn: '1 / -1', background: 'rgba(212,160,122,0.06)', borderColor: 'rgba(212,160,122,0.12)' }
+    ? { ...glassCard, gridColumn: '1 / -1', background: 'rgba(184,103,87,0.06)', borderColor: 'rgba(184,103,87,0.12)' }
     : { ...glassCard }
   const quoteLines = lines || (text ? [text] : [])
   return (
@@ -100,14 +102,14 @@ function QuoteCard({ text, lines, source, url, wide, label }) {
       onMouseEnter={e => {
         e.currentTarget.style.transform = 'translateY(-3px)'
         e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,0,0,0.15)'
-        e.currentTarget.style.borderColor = wide ? 'rgba(212,160,122,0.2)' : creamBorderHover
-        e.currentTarget.style.background = wide ? 'rgba(212,160,122,0.09)' : creamGlassHover
+        e.currentTarget.style.borderColor = wide ? 'rgba(184,103,87,0.2)' : creamBorderHover
+        e.currentTarget.style.background = wide ? 'rgba(184,103,87,0.09)' : creamGlassHover
       }}
       onMouseLeave={e => {
         e.currentTarget.style.transform = 'translateY(0)'
         e.currentTarget.style.boxShadow = base.boxShadow
-        e.currentTarget.style.borderColor = wide ? 'rgba(212,160,122,0.12)' : creamBorder
-        e.currentTarget.style.background = wide ? 'rgba(212,160,122,0.06)' : creamGlass
+        e.currentTarget.style.borderColor = wide ? 'rgba(184,103,87,0.12)' : creamBorder
+        e.currentTarget.style.background = wide ? 'rgba(184,103,87,0.06)' : creamGlass
       }}
     >
       <svg
@@ -135,7 +137,7 @@ function QuoteCard({ text, lines, source, url, wide, label }) {
             fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: textPrimary,
             marginBottom: 16,
             paddingBottom: i < quoteLines.length - 1 ? 16 : 0,
-            borderBottom: i < quoteLines.length - 1 ? '1px solid rgba(243,239,217,0.06)' : 'none',
+            borderBottom: i < quoteLines.length - 1 ? '1px solid rgba(55,43,11,0.1)' : 'none',
           }}
         >
           {line}
@@ -199,10 +201,26 @@ export default function AIDesign() {
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
-    <div style={{ background: pageBg, minHeight: '100vh', color: textSecondary, fontFamily: "'Inter', sans-serif", lineHeight: 1.6 }}>
-      {/* Ambient glow */}
-      <div style={{ position: 'fixed', top: -100, right: -180, width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(177,124,93,0.1) 0%, transparent 70%)', filter: 'blur(140px)', pointerEvents: 'none', zIndex: 0 }} />
-      <div style={{ position: 'fixed', bottom: 150, left: -120, width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(144,161,185,0.08) 0%, transparent 70%)', filter: 'blur(140px)', pointerEvents: 'none', zIndex: 0 }} />
+    <div style={{ background: pageBg, minHeight: '100vh', color: textSecondary, fontFamily: "'Inter', sans-serif", lineHeight: 1.6, position: 'relative' }}>
+      {/* Ambient multi-color wash — same 11-orb pattern as home/case studies,
+          tuned for the light soft-blue bg. Gold + coral pop against the cool
+          base; subtle white highlights soften the cycle. */}
+      <div style={{
+        position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0,
+        background: `
+          radial-gradient(1200px circle at 15% 2%, rgba(245, 232, 211, 0.45) 0%, transparent 35%),
+          radial-gradient(1100px circle at 92% 8%, rgba(221, 179, 101, 0.35) 0%, transparent 32%),
+          radial-gradient(1000px circle at 6% 18%, rgba(184, 103, 87, 0.28) 0%, transparent 30%),
+          radial-gradient(1200px circle at 88% 26%, rgba(245, 232, 211, 0.35) 0%, transparent 32%),
+          radial-gradient(950px circle at 18% 36%, rgba(221, 179, 101, 0.32) 0%, transparent 30%),
+          radial-gradient(1100px circle at 82% 46%, rgba(184, 103, 87, 0.26) 0%, transparent 32%),
+          radial-gradient(1000px circle at 8% 56%, rgba(245, 232, 211, 0.4) 0%, transparent 30%),
+          radial-gradient(1150px circle at 92% 66%, rgba(221, 179, 101, 0.3) 0%, transparent 32%),
+          radial-gradient(1050px circle at 12% 76%, rgba(184, 103, 87, 0.24) 0%, transparent 30%),
+          radial-gradient(1100px circle at 88% 86%, rgba(245, 232, 211, 0.32) 0%, transparent 32%),
+          radial-gradient(980px circle at 30% 96%, rgba(221, 179, 101, 0.26) 0%, transparent 28%)
+        `,
+      }} />
 
       <Nav />
 
@@ -255,7 +273,7 @@ export default function AIDesign() {
         <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 24 }}>Where I Focus</p>
         <div style={{
           ...glassCard, padding: 44, borderRadius: 16,
-          background: 'rgba(212,160,122,0.05)', borderColor: 'rgba(212,160,122,0.1)',
+          background: 'rgba(184,103,87,0.05)', borderColor: 'rgba(184,103,87,0.1)',
         }}>
           <h2 style={{
             fontSize: 'clamp(22px, 2.6vw, 28px)', fontWeight: 700, lineHeight: 1.3,
@@ -310,25 +328,25 @@ export default function AIDesign() {
                 background: creamGlass,
                 backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
                 border: `1px solid ${creamBorder}`,
-                fontSize: 14, fontWeight: 500, color: 'rgba(240,237,230,0.75)',
+                fontSize: 14, fontWeight: 500, color: 'rgba(55,43,11,0.78)',
                 textDecoration: 'none',
-                boxShadow: 'inset 0 1px 0 rgba(243,239,217,0.04)',
+                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.4)',
                 transition: 'all 0.25s ease',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.background = 'rgba(243,239,217,0.09)'
+                e.currentTarget.style.background = creamGlassHover
                 e.currentTarget.style.borderColor = creamBorderHover
                 e.currentTarget.style.transform = 'translateY(-1px)'
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(243,239,217,0.06)'
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(55,43,11,0.1), inset 0 1px 0 rgba(245,232,211,0.5)'
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.background = creamGlass
                 e.currentTarget.style.borderColor = creamBorder
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(243,239,217,0.04)'
+                e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(245,232,211,0.4)'
               }}
             >
-              {v.name} <span style={{ color: 'rgba(160,173,192,0.45)', fontSize: 12 }}>↗</span>
+              {v.name} <span style={{ color: 'rgba(55,43,11,0.4)', fontSize: 12 }}>↗</span>
             </a>
           ))}
         </div>
@@ -337,15 +355,15 @@ export default function AIDesign() {
       {/* Footer */}
       <footer style={{
         padding: '48px', textAlign: 'center', position: 'relative', zIndex: 1,
-        borderTop: '1px solid rgba(243,239,217,0.06)',
+        borderTop: '1px solid rgba(55,43,11,0.1)',
       }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(240,237,230,0.5)', marginBottom: 16 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(55,43,11,0.6)', marginBottom: 16 }}>
           kristin<span style={{ color: terracotta }}>.</span>garza · UX Designer
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', gap: 24 }}>
-          <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'rgba(213,209,201,0.4)', textDecoration: 'none' }}>LinkedIn</a>
-          <a href="mailto:kmkerney221@gmail.com" style={{ fontSize: 13, color: 'rgba(213,209,201,0.4)', textDecoration: 'none' }}>Email</a>
-          <a href="/resume.pdf" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'rgba(213,209,201,0.4)', textDecoration: 'none' }}>Resume</a>
+          <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'rgba(55,43,11,0.55)', textDecoration: 'none' }}>LinkedIn</a>
+          <a href="mailto:kmkerney221@gmail.com" style={{ fontSize: 13, color: 'rgba(55,43,11,0.55)', textDecoration: 'none' }}>Email</a>
+          <a href="/resume.pdf" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'rgba(55,43,11,0.55)', textDecoration: 'none' }}>Resume</a>
         </div>
       </footer>
     </div>

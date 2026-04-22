@@ -294,20 +294,36 @@ html::-webkit-scrollbar {          /* Chrome / Safari */
   color: var(--terracotta);
 }
 
-.nav-cta {
+/* Use a.nav-cta (element + class) so specificity matches .nav-links a
+   and source order wins — without this the .nav-links a hover/color rules
+   override and the button text ends up the same color as its background. */
+a.nav-cta {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.2px;
-  color: var(--terracotta) !important;
+  color: var(--terracotta);
   border: 1.5px solid var(--terracotta);
   padding: 8px 20px;
   border-radius: 6px;
-  transition: all 0.2s ease !important;
+  transition: all 0.2s ease;
 }
 
-.nav-cta:hover {
-  background: var(--terracotta) !important;
-  color: white !important;
+a.nav-cta:hover {
+  background: var(--terracotta);
+  color: white;
+}
+
+/* Dark-mode variant — gold pill with deep-brown text. */
+.nav--dark a.nav-cta {
+  color: #372B0B;
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.nav--dark a.nav-cta:hover {
+  background: #C99A48;
+  border-color: #C99A48;
+  color: #372B0B;
 }
 
 /* Homepage Hero */

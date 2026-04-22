@@ -33,6 +33,20 @@ export default function App() {
     <div ref={pageRef} style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Nav />
 
+      {/* Continuous gradient wrapper covering Hero + Work + Bits & Pieces */}
+      <div style={{
+        background: `
+          radial-gradient(900px circle at 15% 4%, rgba(196, 207, 223, 0.52) 0%, transparent 32%),
+          radial-gradient(760px circle at 92% 12%, rgba(221, 179, 101, 0.42) 0%, transparent 30%),
+          radial-gradient(680px circle at 6% 30%, rgba(184, 103, 87, 0.34) 0%, transparent 28%),
+          radial-gradient(820px circle at 88% 42%, rgba(196, 207, 223, 0.36) 0%, transparent 30%),
+          radial-gradient(640px circle at 18% 60%, rgba(221, 179, 101, 0.36) 0%, transparent 28%),
+          radial-gradient(720px circle at 82% 78%, rgba(184, 103, 87, 0.3) 0%, transparent 30%),
+          radial-gradient(600px circle at 30% 95%, rgba(221, 179, 101, 0.28) 0%, transparent 28%),
+          var(--cream)
+        `,
+      }}>
+
       {/* Hero */}
       <section className="home-hero">
         <div className="hero-content">
@@ -68,226 +82,166 @@ export default function App() {
 
       {/* Work */}
       <section className="work-section" id="work">
-        <div className="section-label">Selected Work</div>
+        <div className="work-header">
+          <div className="section-label">Selected Work</div>
+          <p className="work-intro">Three flagship case studies — each tackling complex data-dense workflows for institutional trading platforms.</p>
+        </div>
 
-        {/* Order Management Case Study */}
-        <Link to="/case-study/order-management" className="project-card" data-reveal>
-          <div className="project-card-image" style={{
-            background: 'linear-gradient(135deg, #E6C07A 0%, #DDB365 100%)',
-            position: 'relative', overflow: 'hidden', minHeight: 400,
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
-            <div style={{ position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(rgba(55,43,11,0.12) 1px, transparent 1px)',
-              backgroundSize: '32px 32px' }} />
-            <div style={{ position: 'relative', zIndex: 1, padding: 40, width: '100%' }}>
-              <div style={{ background: 'rgba(245,232,211,0.4)', border: '1px solid rgba(55,43,11,0.18)',
-                borderRadius: 8, padding: '16px 20px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(55,43,11,0.7)', letterSpacing: 1,
-                  textTransform: 'uppercase', marginBottom: 12 }}>
-                  Order Queue
-                </div>
+        <div className="work-grid">
+
+          {/* Order Management */}
+          <Link to="/case-study/order-management" className="case-card" data-reveal>
+            <div className="case-card-image" style={{
+              background: 'linear-gradient(135deg, #E6C07A 0%, #DDB365 100%)',
+            }}>
+              <div className="case-card-pattern" style={{
+                backgroundImage: 'radial-gradient(rgba(55,43,11,0.14) 1px, transparent 1px)',
+                backgroundSize: '28px 28px'
+              }} />
+              <div className="case-card-mock">
+                <div className="case-card-mock-label" style={{ color: 'rgba(55,43,11,0.7)' }}>Saved Orders</div>
                 {[
-                  { id: 'ORD-1042', sym: 'AAPL', qty: '5,000', status: 'Verified' },
-                  { id: 'ORD-1043', sym: 'MSFT', qty: '2,200', status: 'Pending' },
-                  { id: 'ORD-1044', sym: 'GOOGL', qty: '800', status: 'Verified' },
+                  { sym: 'AAPL', qty: '5,000', checked: true },
+                  { sym: 'MSFT', qty: '2,200', checked: true },
+                  { sym: 'GOOGL', qty: '800', checked: false },
                 ].map(row => (
-                  <div key={row.id} style={{ display: 'grid',
-                    gridTemplateColumns: '1.2fr 0.8fr 0.8fr 1fr',
-                    padding: '8px 0', borderTop: '1px solid rgba(55,43,11,0.12)', alignItems: 'center' }}>
-                    <span style={{ fontSize: 11, color: 'rgba(55,43,11,0.6)', fontFamily: 'monospace' }}>{row.id}</span>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(55,43,11,0.95)' }}>{row.sym}</span>
-                    <span style={{ fontSize: 12, color: 'rgba(55,43,11,0.7)' }}>{row.qty}</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, textAlign: 'right',
-                      color: row.status === 'Verified' ? '#4A3408' : '#B86757' }}>
-                      {row.status}
-                    </span>
+                  <div key={row.sym} className="case-card-mock-row" style={{
+                    borderColor: 'rgba(55,43,11,0.12)',
+                    gridTemplateColumns: 'auto 1fr auto',
+                    gap: 10
+                  }}>
+                    <span style={{
+                      width: 13, height: 13, borderRadius: 3,
+                      background: row.checked ? 'rgba(55,43,11,0.35)' : 'transparent',
+                      border: row.checked ? '1.5px solid rgba(55,43,11,0.35)' : '1.5px solid rgba(55,43,11,0.28)',
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      color: 'rgba(245,232,211,0.9)', fontSize: 9, fontWeight: 700, lineHeight: 1
+                    }}>{row.checked ? '✓' : ''}</span>
+                    <span style={{ fontWeight: 700, color: 'rgba(55,43,11,0.95)' }}>{row.sym}</span>
+                    <span style={{ color: 'rgba(55,43,11,0.65)', textAlign: 'right' }}>{row.qty}</span>
                   </div>
                 ))}
-              </div>
-              <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                <div style={{ flex: 1, background: 'rgba(184,103,87,0.28)', border: '1px solid rgba(184,103,87,0.5)',
-                  borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(55,43,11,0.75)', textAlign: 'center' }}>
-                  Before: Blind Send
-                </div>
-                <div style={{ flex: 1, background: 'rgba(55,43,11,0.22)', border: '1px solid rgba(55,43,11,0.4)',
-                  borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(245,232,211,0.95)', textAlign: 'center' }}>
-                  After: Verified
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="project-card-content">
-            <div>
-              <span className="project-tag">UX Case Study · Enterprise Trading</span>
-              <h2 className="project-title">Redesigning Order Management for Enterprise Trading</h2>
-              <p className="project-desc">
-                A forced migration became a design opportunity — rebuilding the order management surface to reduce trade entry errors, surface verification, and protect the order list.
-              </p>
-              <div className="project-meta">
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Role</span>
-                  <span className="project-meta-value">Lead UX Designer</span>
-                </div>
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Platform</span>
-                  <span className="project-meta-value">Enterprise Platform</span>
-                </div>
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Status</span>
-                  <span className="project-meta-value">Shipped ✓</span>
+                <div style={{
+                  display: 'flex', justifyContent: 'flex-end',
+                  marginTop: 10, paddingTop: 10,
+                  borderTop: '1px solid rgba(55,43,11,0.12)'
+                }}>
+                  <span style={{
+                    fontSize: 10, fontWeight: 700, letterSpacing: 0.6, textTransform: 'uppercase',
+                    color: 'rgba(55,43,11,0.75)',
+                    background: 'rgba(55,43,11,0.08)',
+                    border: '1px solid rgba(55,43,11,0.22)',
+                    padding: '4px 11px', borderRadius: 5,
+                    display: 'inline-flex', alignItems: 'center', gap: 5
+                  }}>Send <span style={{ fontSize: 11, lineHeight: 1 }}>→</span></span>
                 </div>
               </div>
             </div>
-            <div className="project-arrow">Read Case Study →</div>
-          </div>
-        </Link>
+            <div className="case-card-body">
+              <h3 className="case-card-title">Redesigning Order Management</h3>
+              <p className="case-card-sub">Simplifying the order management surface to enhance order visibility and reduce trade errors.</p>
+              <div className="case-card-foot">
+                <span className="case-card-arrow">Read case study →</span>
+              </div>
+            </div>
+          </Link>
 
-        {/* Rules Case Study */}
-        <Link to="/case-study/rules" className="project-card" data-reveal>
-          <div className="project-card-image" style={{
-            background: 'linear-gradient(135deg, #D4DDE9 0%, #C4CFDF 100%)',
-            position: 'relative', overflow: 'hidden', minHeight: 400,
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
-            <div style={{ position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(rgba(55,43,11,0.08) 1px, transparent 1px)',
-              backgroundSize: '32px 32px' }} />
-            <div style={{ position: 'relative', zIndex: 1, padding: 40, width: '100%' }}>
-              <div style={{ background: 'rgba(245,232,211,0.45)', border: '1px solid rgba(55,43,11,0.14)', borderRadius: 8, padding: '16px 20px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(55,43,11,0.6)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 12 }}>Rule Management</div>
-                {[
-                  { name: 'Crypto ETF Blacklist', status: 'Active' },
-                  { name: 'Suitability Check — IRA', status: 'Active' },
-                  { name: 'Foreign Equity Cap', status: 'Inactive' },
-                ].map(row => (
-                  <div key={row.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderTop: '1px solid rgba(55,43,11,0.1)' }}>
-                    <span style={{ fontSize: 13, color: 'rgba(55,43,11,0.85)' }}>{row.name}</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 20,
-                      background: row.status === 'Active' ? 'rgba(221,179,101,0.35)' : 'rgba(55,43,11,0.08)',
-                      color: row.status === 'Active' ? '#6B4E14' : 'rgba(55,43,11,0.45)' }}>
-                      {row.status}
-                    </span>
+          {/* Rules */}
+          <Link to="/case-study/rules" className="case-card" data-reveal data-reveal-delay="1">
+            <div className="case-card-image" style={{
+              background: 'linear-gradient(135deg, #D4DDE9 0%, #C4CFDF 100%)',
+            }}>
+              <div className="case-card-pattern" style={{
+                backgroundImage: 'radial-gradient(rgba(55,43,11,0.08) 1px, transparent 1px)',
+                backgroundSize: '28px 28px'
+              }} />
+              <div className="case-card-mock">
+                <div style={{
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
+                  gap: 8, marginBottom: 12
+                }}>
+                  <div style={{
+                    fontSize: 11, fontWeight: 700, color: 'rgba(55,43,11,0.85)',
+                    lineHeight: 1.25
+                  }}>
+                    Reject High Dollar TSLA Trades
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="project-card-content">
-            <div>
-              <span className="project-tag">UX Case Study · Enterprise Fintech</span>
-              <h2 className="project-title">Inside the Rule Engine — Compliance, Redesigned</h2>
-              <p className="project-desc">
-                From discovery to shipped product — redesigning rule management and creation for a complex compliance suite, replacing tribal knowledge with guided workflows.
-              </p>
-              <div className="project-meta">
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Role</span>
-                  <span className="project-meta-value">Lead UX Designer</span>
+                  <span style={{
+                    fontSize: 9, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase',
+                    padding: '2px 8px', borderRadius: 20,
+                    background: 'rgba(221,179,101,0.3)', color: 'rgba(107,78,20,0.85)',
+                    flexShrink: 0
+                  }}>Active</span>
                 </div>
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Timeline</span>
-                  <span className="project-meta-value">Q1–Q4 2025</span>
-                </div>
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Status</span>
-                  <span className="project-meta-value">Shipped ✓</span>
-                </div>
-              </div>
-            </div>
-            <div className="project-arrow">Read Case Study →</div>
-          </div>
-        </Link>
-
-        {/* Positions Case Study */}
-        <Link to="/case-study/positions" className="project-card" data-reveal>
-          <div className="project-card-image" style={{
-            background: 'linear-gradient(135deg, #C27A6E 0%, #B86757 100%)',
-            position: 'relative', overflow: 'hidden', minHeight: 400,
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
-            <div style={{ position: 'absolute', inset: 0,
-              backgroundImage: 'radial-gradient(rgba(245,232,211,0.14) 1px, transparent 1px)',
-              backgroundSize: '32px 32px' }} />
-            <div style={{ position: 'relative', zIndex: 1, padding: 40, width: '100%' }}>
-              <div style={{ background: 'rgba(245,232,211,0.08)', border: '1px solid rgba(245,232,211,0.2)',
-                borderRadius: 8, padding: '16px 20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: 'rgba(245,232,211,0.75)', letterSpacing: 1, textTransform: 'uppercase' }}>
-                    Positions Panel
-                  </span>
-                  <div style={{ display: 'flex', gap: 4 }}>
-                    {['AAPL','MSFT','GOOGL'].map(t => (
-                      <span key={t} style={{ fontSize: 10, fontWeight: 700, color: 'rgba(245,232,211,0.65)',
-                        background: 'rgba(245,232,211,0.12)', padding: '2px 6px', borderRadius: 4 }}>{t}</span>
-                    ))}
+                <div style={{
+                  display: 'flex', flexDirection: 'column', gap: 10,
+                  paddingTop: 10, borderTop: '1px solid rgba(55,43,11,0.12)'
+                }}>
+                  <div style={{ display: 'flex', gap: 10, fontSize: 10, lineHeight: 1.5 }}>
+                    <span style={{ fontWeight: 700, color: 'rgba(55,43,11,0.5)', minWidth: 32, letterSpacing: 0.4 }}>IF</span>
+                    <span style={{ color: 'rgba(55,43,11,0.6)' }}>ticker is <strong style={{ color: 'rgba(55,43,11,0.85)', fontWeight: 700 }}>TSLA</strong></span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10, fontSize: 10, lineHeight: 1.5 }}>
+                    <span style={{ fontWeight: 700, color: 'rgba(55,43,11,0.5)', minWidth: 32, letterSpacing: 0.4 }}>AND</span>
+                    <span style={{ color: 'rgba(55,43,11,0.6)' }}>value &gt; <strong style={{ color: 'rgba(55,43,11,0.85)', fontWeight: 700 }}>$100,000</strong></span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10, fontSize: 10, lineHeight: 1.5 }}>
+                    <span style={{ fontWeight: 700, color: 'rgba(55,43,11,0.5)', minWidth: 32, letterSpacing: 0.4 }}>THEN</span>
+                    <span style={{ color: 'rgba(55,43,11,0.6)' }}>reject the order</span>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="case-card-body">
+              <h3 className="case-card-title">Inside the Rule Engine</h3>
+              <p className="case-card-sub">Compliance rule management redesigned — replacing tribal knowledge with guided workflows.</p>
+              <div className="case-card-foot">
+                <span className="case-card-arrow">Read case study →</span>
+              </div>
+            </div>
+          </Link>
+
+          {/* Positions */}
+          <Link to="/case-study/positions" className="case-card case-card--dark-mock" data-reveal data-reveal-delay="2">
+            <div className="case-card-image" style={{
+              background: 'linear-gradient(135deg, #C27A6E 0%, #B86757 100%)',
+            }}>
+              <div className="case-card-pattern" style={{
+                backgroundImage: 'radial-gradient(rgba(245,232,211,0.18) 1px, transparent 1px)',
+                backgroundSize: '28px 28px'
+              }} />
+              <div className="case-card-mock">
+                <div className="case-card-mock-label" style={{ color: 'rgba(245,232,211,0.75)' }}>Positions Panel</div>
                 {[
-                  { ticker: 'AAPL', shares: '120 sh', value: '$21,240', change: '+2.4%', pos: true },
-                  { ticker: 'MSFT', shares: '85 sh', value: '$32,130', change: '+1.1%', pos: true },
-                  { ticker: 'GOOGL', shares: '40 sh', value: '$55,200', change: '-0.8%', pos: false },
+                  { ticker: 'AAPL', value: '$21,240', change: '+2.4%', pos: true },
+                  { ticker: 'MSFT', value: '$32,130', change: '+1.1%', pos: true },
+                  { ticker: 'GOOGL', value: '$55,200', change: '-0.8%', pos: false },
                 ].map(row => (
-                  <div key={row.ticker} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                    padding: '8px 0', borderTop: '1px solid rgba(245,232,211,0.1)', alignItems: 'center' }}>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(245,232,211,0.95)' }}>{row.ticker}</span>
-                    <span style={{ fontSize: 12, color: 'rgba(245,232,211,0.6)' }}>{row.shares}</span>
-                    <span style={{ fontSize: 12, color: 'rgba(245,232,211,0.8)' }}>{row.value}</span>
-                    <span style={{ fontSize: 12, fontWeight: 700, textAlign: 'right',
+                  <div key={row.ticker} className="case-card-mock-row" style={{ borderColor: 'rgba(245,232,211,0.12)' }}>
+                    <span style={{ fontWeight: 700, color: 'rgba(245,232,211,0.95)' }}>{row.ticker}</span>
+                    <span style={{ color: 'rgba(245,232,211,0.75)' }}>{row.value}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, textAlign: 'right',
                       color: row.pos ? '#DDB365' : 'rgba(245,232,211,0.55)' }}>{row.change}</span>
                   </div>
                 ))}
               </div>
-              <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                <div style={{ flex: 1, background: 'rgba(55,43,11,0.25)', border: '1px solid rgba(55,43,11,0.4)',
-                  borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(245,232,211,0.7)', textAlign: 'center' }}>
-                  Before: Hidden drawer
-                </div>
-                <div style={{ flex: 1, background: 'rgba(221,179,101,0.3)', border: '1px solid rgba(221,179,101,0.5)',
-                  borderRadius: 6, padding: '8px 12px', fontSize: 11, fontWeight: 700, letterSpacing: 1,
-                  textTransform: 'uppercase', color: 'rgba(245,232,211,0.9)', textAlign: 'center' }}>
-                  After: Inline panel
-                </div>
+            </div>
+            <div className="case-card-body">
+              <h3 className="case-card-title">Simplifying Positions Info</h3>
+              <p className="case-card-sub">Re-architected how portfolio positions surface in trading workflows — scaled platform-wide.</p>
+              <div className="case-card-foot">
+                <span className="case-card-arrow">Read case study →</span>
               </div>
             </div>
-          </div>
-          <div className="project-card-content">
-            <div>
-              <span className="project-tag">UX Case Study · Enterprise Fintech</span>
-              <h2 className="project-title">Simplifying Positions Information in Trading Applications</h2>
-              <p className="project-desc">
-                Re-architected how portfolio positions data surfaces within institutional trading workflows —
-                reducing context switching, improving scannability, and scaling the pattern platform-wide
-                via a new design system component.
-              </p>
-              <div className="project-meta">
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Role</span>
-                  <span className="project-meta-value">Lead UX Designer</span>
-                </div>
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Timeline</span>
-                  <span className="project-meta-value">8 weeks</span>
-                </div>
-                <div className="project-meta-item">
-                  <span className="project-meta-label">Platform</span>
-                  <span className="project-meta-value">Enterprise Platform</span>
-                </div>
-              </div>
-            </div>
-            <div className="project-arrow">Read Case Study →</div>
-          </div>
-        </Link>
+          </Link>
 
+        </div>
       </section>
 
       {/* Sneak Peeks — Mini work carousel */}
       <section style={{
         padding: '80px clamp(40px, 6vw, 80px) 100px',
-        background: 'var(--cream)',
+        background: 'transparent',
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{
@@ -330,16 +284,46 @@ export default function App() {
                 <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
                   <div style={{
                     background: 'rgba(245,232,211,0.06)', border: '1px solid rgba(184,103,87,0.3)',
-                    borderRadius: 8, padding: '14px 16px', display: 'flex', gap: 12, alignItems: 'flex-start',
+                    borderRadius: 8, padding: '12px 14px',
                   }}>
-                    <div style={{ width: 3, minHeight: 36, borderRadius: 2, background: 'rgba(184,103,87,0.65)', flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: 11, color: 'rgba(245,232,211,0.75)', lineHeight: 1.5, marginBottom: 6 }}>
-                        "Market quote data unified across 4 trading surfaces..."
+                    {/* Ticker header */}
+                    <div style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                      gap: 8, marginBottom: 10, paddingBottom: 10,
+                      borderBottom: '1px solid rgba(245,232,211,0.1)'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div style={{
+                          width: 22, height: 22, borderRadius: '50%',
+                          background: 'rgba(184,103,87,0.3)',
+                          border: '1px solid rgba(184,103,87,0.5)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: 11, fontWeight: 700,
+                          color: 'rgba(245,232,211,0.9)',
+                          fontFamily: 'Georgia, serif', fontStyle: 'italic',
+                          lineHeight: 1
+                        }}>B</div>
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(245,232,211,0.95)', lineHeight: 1.2 }}>BRK-A</div>
+                          <div style={{ fontSize: 9, color: 'rgba(245,232,211,0.55)', lineHeight: 1.2 }}>Berkshire Hathaway</div>
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', gap: 6 }}>
-                        <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: 'rgba(221,179,101,0.3)', color: 'rgba(245,232,211,0.85)', fontWeight: 700 }}>Reusable</span>
-                        <span style={{ fontSize: 9, padding: '2px 8px', borderRadius: 10, background: 'rgba(184,103,87,0.28)', color: 'rgba(245,232,211,0.85)', fontWeight: 700 }}>Design System</span>
+                      <span style={{ color: 'rgba(245,232,211,0.4)', fontSize: 12, lineHeight: 1 }}>⋮</span>
+                    </div>
+
+                    {/* Data rows */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10 }}>
+                        <span style={{ color: 'rgba(245,232,211,0.55)' }}>Last</span>
+                        <span style={{ color: 'rgba(245,232,211,0.95)', fontWeight: 700 }}>$735,920.00</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10 }}>
+                        <span style={{ color: 'rgba(245,232,211,0.55)' }}>Change</span>
+                        <span style={{ color: 'rgba(245,232,211,0.8)' }}>−$4,700 (0.64%)</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10 }}>
+                        <span style={{ color: 'rgba(245,232,211,0.55)' }}>Volume</span>
+                        <span style={{ color: 'rgba(245,232,211,0.8)' }}>388</span>
                       </div>
                     </div>
                   </div>
@@ -349,18 +333,13 @@ export default function App() {
                 <span style={{
                   fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
                   color: 'var(--terracotta)', marginBottom: 10, display: 'block',
-                }}>Design System · Trading</span>
+                }}>Design System</span>
                 <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--warm-gray)', lineHeight: 1.35, marginBottom: 10 }}>
                   Building a Reusable Quote Component
                 </h3>
                 <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--deep-blue)', opacity: 0.75 }}>
                   Designed and documented a unified market quote component adopted across 4 trading surfaces — replacing fragmented one-offs with a consistent, scalable pattern.
                 </p>
-                <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(144,161,185,0.1)',
-                  display: 'flex', gap: 16, fontSize: 12 }}>
-                  <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Platform: Enterprise Platform</span>
-                  <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Status: Shipped</span>
-                </div>
               </div>
             </div>
 
@@ -418,11 +397,6 @@ export default function App() {
                 <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--deep-blue)', opacity: 0.75 }}>
                   Used research and strategic vision work to push back on a PM-driven feature that would have added friction to critical trading workflows — and redirected effort toward what traders actually needed.
                 </p>
-                <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid rgba(144,161,185,0.1)',
-                  display: 'flex', gap: 16, fontSize: 12 }}>
-                  <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Impact: Feature killed</span>
-                  <span style={{ color: 'var(--deep-blue)', opacity: 0.65 }}>Outcome: Redirected</span>
-                </div>
               </div>
             </div>
 
@@ -445,22 +419,25 @@ export default function App() {
         </div>
       </section>
 
+      </div>
+      {/* End continuous gradient wrapper */}
+
       {/* AI × Design — Standalone Section */}
       <section style={{
-        background: 'linear-gradient(135deg, #B86757 0%, #C27A6E 50%, #B86757 100%)',
+        background: 'linear-gradient(135deg, #DDB365 0%, #E6C07A 50%, #DDB365 100%)',
         position: 'relative', overflow: 'hidden',
         padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)',
       }}>
         {/* Dot grid */}
         <div style={{ position: 'absolute', inset: 0,
-          backgroundImage: 'radial-gradient(rgba(245,232,211,0.04) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(55,43,11,0.08) 1px, transparent 1px)',
           backgroundSize: '32px 32px', pointerEvents: 'none' }} />
         {/* Ambient glows */}
         <div style={{ position: 'absolute', top: -80, right: -100, width: 400, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(221,179,101,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(184,103,87,0.3) 0%, transparent 70%)',
           filter: 'blur(80px)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: -60, left: -80, width: 350, height: 350, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(184,103,87,0.14) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(196,207,223,0.25) 0%, transparent 70%)',
           filter: 'blur(80px)', pointerEvents: 'none' }} />
 
         <div className="beyond-grid" style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto',
@@ -470,20 +447,20 @@ export default function App() {
           <div>
             <p style={{
               fontSize: 12, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase',
-              color: '#DDB365', marginBottom: 20,
+              color: '#B86757', marginBottom: 20,
               display: 'flex', alignItems: 'center', gap: 12,
             }}>
               Beyond the Work
-              <span style={{ flex: 1, height: 1, background: 'rgba(221,179,101,0.2)' }} />
+              <span style={{ flex: 1, height: 1, background: 'rgba(184,103,87,0.3)' }} />
             </p>
             <h2 style={{
               fontSize: 'clamp(28px, 3.5vw, 36px)', fontWeight: 700, lineHeight: 1.2,
-              color: '#F5E8D3', marginBottom: 20,
+              color: '#372B0B', marginBottom: 20,
             }}>
-              AI × Design<span style={{ color: '#DDB365' }}>.</span>
+              AI × Design<span style={{ color: '#B86757' }}>.</span>
             </h2>
             <p style={{
-              fontSize: 16, lineHeight: 1.7, color: 'rgba(213,209,201,0.6)',
+              fontSize: 16, lineHeight: 1.7, color: 'rgba(55,43,11,0.72)',
               marginBottom: 32, maxWidth: 480,
             }}>
               A running collection of ideas, talks, and articles shaping how I think about
@@ -491,22 +468,22 @@ export default function App() {
               real value lives.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 36 }}>
-              {['AI & Craft', 'Design Process', 'Jenny Wen', 'Addy Osmani', 'Curated Reads'].map(tag => (
+              {['AI & Craft', 'Design Process', 'Tools & Workflow', 'Future of UX', 'Curated Reads'].map(tag => (
                 <span key={tag} style={{
                   fontSize: 12, fontWeight: 500, padding: '6px 16px', borderRadius: 100,
-                  background: 'rgba(245,232,211,0.14)',
-                  border: '1px solid rgba(245,232,211,0.22)',
-                  color: 'rgba(245,232,211,0.8)',
+                  background: 'rgba(245,232,211,0.45)',
+                  border: '1px solid rgba(55,43,11,0.14)',
+                  color: 'rgba(55,43,11,0.78)',
                 }}>{tag}</span>
               ))}
             </div>
             <Link to="/ai-design" style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
               padding: '13px 28px', borderRadius: 28,
-              background: '#DDB365', color: '#372B0B',
+              background: '#B86757', color: '#F5E8D3',
               fontSize: 14, fontWeight: 700, letterSpacing: '0.02em',
               textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(221,179,101,0.3)',
+              boxShadow: '0 4px 24px rgba(184,103,87,0.3)',
               transition: 'all 0.25s ease',
             }}>
               Explore Collection <span style={{ fontSize: 16 }}>→</span>
@@ -517,46 +494,44 @@ export default function App() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {/* Featured quote glass card */}
             <div style={{
-              background: 'rgba(245,232,211,0.14)',
+              background: 'rgba(245,232,211,0.4)',
               backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(245,232,211,0.25)',
+              border: '1px solid rgba(55,43,11,0.14)',
               borderRadius: 14, padding: '32px 36px',
-              boxShadow: '0 4px 32px rgba(55,43,11,0.15), inset 0 1px 0 rgba(245,232,211,0.1)',
+              boxShadow: '0 4px 32px rgba(55,43,11,0.12), inset 0 1px 0 rgba(245,232,211,0.4)',
             }}>
-              <div style={{ fontSize: 40, lineHeight: 1, color: 'rgba(221,179,101,0.35)', fontFamily: 'Georgia, serif', marginBottom: 10 }}>"</div>
-              <p style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: 'rgba(240,237,230,0.85)', marginBottom: 14 }}>
+              <p style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: 'rgba(55,43,11,0.82)', margin: 0 }}>
                 The design process isn't dead — it just got a remix.
               </p>
-              <p style={{ fontSize: 12, fontWeight: 600, color: 'rgba(221,179,101,0.75)' }}>— Kristin Garza</p>
             </div>
 
             {/* Two smaller glass cards */}
             <div className="glass-card-pair" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div style={{
-                background: 'rgba(245,232,211,0.12)',
+                background: 'rgba(245,232,211,0.35)',
                 backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(245,232,211,0.22)',
+                border: '1px solid rgba(55,43,11,0.14)',
                 borderRadius: 12, padding: '22px 24px',
-                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.08)',
+                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.3)',
               }}>
-                <div style={{ height: 3, width: 32, borderRadius: 2, background: 'linear-gradient(90deg, #B86757, #DDB365)', marginBottom: 14 }} />
-                <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(240,237,230,0.8)', marginBottom: 6, lineHeight: 1.3 }}>
+                <div style={{ height: 3, width: 32, borderRadius: 2, background: '#B86757', marginBottom: 14 }} />
+                <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(55,43,11,0.85)', marginBottom: 6, lineHeight: 1.3 }}>
                   Don't Trust the Process
                 </p>
-                <p style={{ fontSize: 11, color: 'rgba(213,209,201,0.4)' }}>Jenny Wen</p>
+                <p style={{ fontSize: 11, color: 'rgba(55,43,11,0.5)' }}>Jenny Wen</p>
               </div>
               <div style={{
-                background: 'rgba(245,232,211,0.12)',
+                background: 'rgba(245,232,211,0.35)',
                 backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(245,232,211,0.22)',
+                border: '1px solid rgba(55,43,11,0.14)',
                 borderRadius: 12, padding: '22px 24px',
-                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.08)',
+                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.3)',
               }}>
-                <div style={{ height: 3, width: 32, borderRadius: 2, background: 'linear-gradient(90deg, #C4CFDF, #9FB0C9)', marginBottom: 14 }} />
-                <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(240,237,230,0.8)', marginBottom: 6, lineHeight: 1.3 }}>
+                <div style={{ height: 3, width: 32, borderRadius: 2, background: '#5F7A9A', marginBottom: 14 }} />
+                <p style={{ fontSize: 13, fontWeight: 700, color: 'rgba(55,43,11,0.85)', marginBottom: 6, lineHeight: 1.3 }}>
                   Comprehension Debt
                 </p>
-                <p style={{ fontSize: 11, color: 'rgba(213,209,201,0.4)' }}>Addy Osmani</p>
+                <p style={{ fontSize: 11, color: 'rgba(55,43,11,0.5)' }}>Addy Osmani</p>
               </div>
             </div>
           </div>
@@ -566,7 +541,12 @@ export default function App() {
       {/* Fun Projects — Passion work carousel */}
       <section style={{
         padding: '80px clamp(40px, 6vw, 80px) 100px',
-        background: 'var(--cream)',
+        background: `
+          radial-gradient(620px circle at 8% 25%, rgba(221, 179, 101, 0.35) 0%, transparent 55%),
+          radial-gradient(560px circle at 94% 60%, rgba(196, 207, 223, 0.32) 0%, transparent 55%),
+          radial-gradient(480px circle at 42% 92%, rgba(184, 103, 87, 0.24) 0%, transparent 55%),
+          var(--cream)
+        `,
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{
@@ -687,40 +667,44 @@ export default function App() {
 
       {/* About */}
       <section className="about-section" id="about">
-        <div data-reveal>
-          <p className="about-label">About</p>
-          <h2 className="about-heading">Designing for complexity, without adding to it</h2>
-          <p className="about-body">
-            I'm a UX designer specializing in enterprise financial applications — where the stakes
-            are high, the data is dense, and the users are experts. I believe good design for
-            professionals respects their expertise and gets out of their way.
-          </p>
-          <p className="about-body">
-            Most recently, I led UX for trading platforms at a leading financial services firm — unifying 15+ applications
-            under a cohesive design system and streamlining high-stakes workflows for institutional investors.
-            I'm now exploring my next opportunity to bring systems thinking and enterprise design leadership
-            to complex product challenges.
-          </p>
-        </div>
-        <div data-reveal data-reveal-delay="1">
-          <p className="about-label" style={{ marginBottom: 24 }}>Craft &amp; Approach</p>
-          <div className="skills-grid">
-            {['UX Research & Synthesis','Systems-level Thinking','Design System Contribution',
-              'Interaction Design','Stakeholder Facilitation','Prototyping & Testing',
-              'Data Visualization','Accessibility'].map(s => (
-              <div key={s} className="skill-chip">{s}</div>
-            ))}
+        <div className="about-inner">
+          <div data-reveal>
+            <p className="about-label">About</p>
+            <h2 className="about-heading">Designing for complexity, without adding to it</h2>
+            <p className="about-body">
+              I'm a UX designer specializing in complex, enterprise B2B applications — where the stakes
+              are high, the data is dense, and the users are experts. I believe good design for
+              professionals respects their expertise and gets out of their way.
+            </p>
+            <p className="about-body">
+              Most recently, I led UX for trading platforms at a leading financial services firm — unifying 15+ applications
+              under a cohesive design system and streamlining high-stakes workflows for institutional investors.
+              I'm now exploring my next opportunity to bring systems thinking and enterprise design leadership
+              to complex product challenges.
+            </p>
+          </div>
+          <div data-reveal data-reveal-delay="1">
+            <p className="about-label" style={{ marginBottom: 24 }}>Craft &amp; Approach</p>
+            <div className="skills-grid">
+              {['UX Research & Synthesis','Systems-level Thinking','Design System Contribution',
+                'Interaction Design','Stakeholder Facilitation','Prototyping & Testing',
+                'Data Visualization','Accessibility'].map(s => (
+                <div key={s} className="skill-chip">{s}</div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="footer">
-        <div className="footer-left">kristin<span>.garza</span> · UX Designer</div>
-        <div className="footer-links">
-          <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="mailto:kmkerney221@gmail.com">Email</a>
-          <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+        <div className="footer-inner">
+          <div className="footer-left">kristin<span>.garza</span> · UX Designer</div>
+          <div className="footer-links">
+            <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="mailto:kmkerney221@gmail.com">Email</a>
+            <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          </div>
         </div>
       </footer>
     </div>

@@ -1063,21 +1063,46 @@ export default function CaseStudy() {
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
-    <div className="cs-page">
+    <div className="cs-page positions-page">
       <Nav />
 
+      {/* Home-style ambient radial-gradient wrapper — same 11-orb wash used on
+          home and OM, cycling steel-blue → gold → terracotta down the full page. */}
+      <div style={{
+        background: `
+          radial-gradient(1200px circle at 15% 2%, rgba(196, 207, 223, 0.42) 0%, transparent 35%),
+          radial-gradient(1100px circle at 92% 8%, rgba(221, 179, 101, 0.34) 0%, transparent 32%),
+          radial-gradient(1000px circle at 6% 18%, rgba(184, 103, 87, 0.26) 0%, transparent 30%),
+          radial-gradient(1200px circle at 88% 26%, rgba(196, 207, 223, 0.30) 0%, transparent 32%),
+          radial-gradient(950px circle at 18% 36%, rgba(221, 179, 101, 0.28) 0%, transparent 30%),
+          radial-gradient(1100px circle at 82% 46%, rgba(184, 103, 87, 0.22) 0%, transparent 32%),
+          radial-gradient(1000px circle at 8% 56%, rgba(196, 207, 223, 0.32) 0%, transparent 30%),
+          radial-gradient(1150px circle at 92% 66%, rgba(221, 179, 101, 0.28) 0%, transparent 32%),
+          radial-gradient(1050px circle at 12% 76%, rgba(184, 103, 87, 0.22) 0%, transparent 30%),
+          radial-gradient(1100px circle at 88% 86%, rgba(196, 207, 223, 0.26) 0%, transparent 32%),
+          radial-gradient(980px circle at 30% 96%, rgba(221, 179, 101, 0.24) 0%, transparent 28%),
+          var(--cream)
+        `,
+      }}>
+
       {/* 1. HERO */}
-      <section style={{ background: 'rgba(251,250,244,0.3)', paddingTop: 'var(--section-padding)', paddingLeft: 'var(--side-padding)', paddingRight: 'var(--side-padding)', overflow: 'hidden' }}>
+      <section style={{
+        background: `
+          radial-gradient(rgba(245,232,211,0.14) 1px, transparent 1px) 0 0 / 28px 28px,
+          linear-gradient(135deg, #C27A6E 0%, #B86757 100%)
+        `,
+        paddingTop: 'var(--section-padding)', paddingLeft: 'var(--side-padding)', paddingRight: 'var(--side-padding)', overflow: 'hidden', position: 'relative'
+      }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(46,74,107,0.55)' }}>UX Case Study</span>
-            <span style={{ width: 1, height: 12, background: 'rgba(125,145,165,0.35)' }} />
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.85)' }}>UX Case Study</span>
+            <span style={{ width: 1, height: 12, background: 'rgba(245,232,211,0.35)' }} />
             {['Research', 'Strategy', 'Product Design', 'Design Systems'].map(tag => (
-              <span key={tag} style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(125,145,165,0.12)', color: 'var(--deep-blue)' }}>{tag}</span>
+              <span key={tag} style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'rgba(245,232,211,0.18)', color: 'rgba(245,232,211,0.95)' }}>{tag}</span>
             ))}
           </div>
-          <h1 className="cs-hero-title">Surfacing Positions Data in Trading Applications</h1>
-          <p className="cs-hero-subtitle">Designing in-flow context for institutional investing workflows</p>
+          <h1 className="cs-hero-title" style={{ color: '#F5E8D3' }}>Surfacing Positions Data in Trading Applications</h1>
+          <p className="cs-hero-subtitle" style={{ color: 'rgba(245,232,211,0.85)' }}>Designing in-flow context for institutional investing workflows</p>
         </div>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '48px auto 0', overflow: 'hidden', paddingBottom: 0 }}>
           <div className="cs-hero-screens" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 32, paddingTop: 48 }}>
@@ -1186,7 +1211,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 2. TL;DR */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 56 }}>
           <div>
             <h2 style={{ fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 700, color: 'var(--deep-blue)', lineHeight: 1.2, marginBottom: 20 }}>tl;dr</h2>
@@ -1226,7 +1251,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 4. PROJECT DETAILS */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Project Details</h2>
           <div className="details-grid">
@@ -1278,7 +1303,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 5. PROBLEM HYPOTHESIS */}
-      <section style={{ background: 'var(--cream)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Initial Problem Hypothesis &amp; Key Questions</h2>
           <p className="cs-body">Our trading platform serves professional traders managing complex institutional portfolios. <strong>The initial hypothesis was clear: positions data is critical to every trade decision, yet it remained hidden, secondary, or spatially competitive with the primary task.</strong> We set out to understand the full scope of this problem before proposing any solution.</p>
@@ -1297,15 +1322,15 @@ export default function CaseStudy() {
       </section>
 
       {/* 6. PROCESS */}
-      <section style={{ background: '#B17C5D', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: '#B86757', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
-          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#f6fbde', marginBottom: 56 }}>Design Process</p>
+          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#F5E8D3', marginBottom: 56 }}>Design Process</p>
           <img src="/process.svg" alt="Our design process" style={{ width: '100%', maxWidth: 900, display: 'block', margin: '0 auto' }} />
         </div>
       </section>
 
       {/* 7. PLATFORM AUDIT */}
-      <section style={{ background: 'var(--cream)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Platform Audit</h2>
           <p className="cs-body">I conducted a comprehensive audit of all trading platform applications to document how positions data was currently surfaced across the ecosystem.</p>
@@ -1376,7 +1401,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 8. HEURISTIC INSPECTION */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Heuristic Inspection</h2>
           <p className="cs-body">Across these applications, a heuristic evaluation surfaced consistent violations that compounded into significant workflow friction for advisors.</p>
@@ -1407,7 +1432,7 @@ export default function CaseStudy() {
       </section>
 
             {/* 9. SME INSIGHTS */}
-      <section style={{ background: 'var(--cream)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">SME Insights &amp; Analytics</h2>
           <p className="cs-body">Quantitative analytics and qualitative SME interviews validated the findings from the platform audit and heuristic evaluation.</p>
@@ -1431,7 +1456,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 10. JOURNEY MAPPING */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Journey Mapping</h2>
           <p className="cs-body">Mapping the end-to-end workflow revealed how positions friction compounded across every stage of the advisor's trading journey.</p>
@@ -1444,7 +1469,7 @@ export default function CaseStudy() {
       </section>
 
             {/* 11. INSIGHT SYNTHESIS */}
-      <section style={{ background: 'var(--cream)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Insight Synthesis</h2>
           <p className="cs-body">Across four research methods, three critical themes emerged consistently.</p>
@@ -1469,9 +1494,9 @@ export default function CaseStudy() {
       </section>
 
       {/* 12. PROBLEM DEFINED */}
-      <section style={{ background: '#9e6b63', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: '#B86757', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
-          <h2 className="cs-h2" style={{ color: '#f6fbde' }}>Problem: Validated &amp; Defined</h2>
+          <h2 className="cs-h2" style={{ color: '#F5E8D3' }}>Problem: Validated &amp; Defined</h2>
           <p style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.5, color: '#f6fbde', marginBottom: 20, marginTop: 32 }}>
             Portfolio positions data is prerequisite context for every trade decision — yet the current design treats it as supplementary, on-demand information. This structural mismatch forces advisors to choose between seeing their positions and entering a trade, two tasks that must happen simultaneously.
           </p>
@@ -1494,7 +1519,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 13. SOLUTION PARAMETERS */}
-      <section style={{ background: 'var(--cream)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Defining Solution Parameters</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 40 }}>
@@ -1530,7 +1555,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 14. IDEATION */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Ideation &amp; Lo-Fi Exploration</h2>
           <p className="cs-body">I explored multiple approaches to organizing positions data alongside trade entry, each with different tradeoffs around visibility, interaction cost, and space efficiency.</p>
@@ -1582,7 +1607,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 16. DESIGN SYSTEM */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Contribution to Design System</h2>
           <p className="cs-body">I partnered with the design system team to formalize the horizontal positions panel as an official design system component — enabling platform-wide adoption with minimal custom work per application.</p>
@@ -1611,7 +1636,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 17. ROLLOUT */}
-      <section style={{ background: 'var(--cream)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Scaling &amp; Rollout</h2>
           <p className="cs-body">Any change to live trading workflows required careful, staged rollout. We structured a phased approach that prioritized learning and iteration at each stage before expanding.</p>
@@ -1636,7 +1661,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 17b. MEASURING SUCCESS */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Measuring Success</h2>
           <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--deep-blue)', maxWidth: 700, marginBottom: 56 }}>
@@ -1782,7 +1807,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 19. REFLECTIONS */}
-      <section style={{ background: 'white', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Reflections &amp; Learnings</h2>
           <div style={{ padding: '32px 40px', background: 'rgba(251,250,244,0.5)', border: '1px solid rgba(177,124,93,0.15)', borderRadius: 12, marginBottom: 40 }}>
@@ -1855,6 +1880,9 @@ export default function CaseStudy() {
           <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         </div>
       </footer>
+
+      </div>
+      {/* End ambient gradient wrapper */}
     </div>
   )
 }

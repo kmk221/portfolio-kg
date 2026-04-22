@@ -60,10 +60,41 @@ img {
   max-width: 100%;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--cream); }
-::-webkit-scrollbar-thumb { background: var(--steel-blue); border-radius: 3px; }
+/* Main page vertical scrollbar — hidden by default */
+html {
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;        /* IE / old Edge */
+  scroll-behavior: smooth;
+}
+html::-webkit-scrollbar {          /* Chrome / Safari */
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Styled rounded translucent scrollbars for internal scrollable containers
+   (carousels, overflow panels, etc.) — only these show */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(55, 43, 11, 0.22);
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(55, 43, 11, 0.4);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
 /* Section base */
 .section {
@@ -286,21 +317,9 @@ img {
   flex-direction: column;
   justify-content: center;
   padding: 120px 80px 80px;
-  background: var(--cream);
+  background: transparent;
   position: relative;
   overflow: hidden;
-}
-
-.home-hero::before {
-  content: '';
-  position: absolute;
-  inset: -100px;
-  pointer-events: none;
-  background:
-    radial-gradient(560px circle at 85% 15%, rgba(196, 207, 223, 0.55) 0%, transparent 60%),
-    radial-gradient(480px circle at 10% 75%, rgba(221, 179, 101, 0.35) 0%, transparent 60%),
-    radial-gradient(420px circle at 65% 90%, rgba(184, 103, 87, 0.3) 0%, transparent 60%);
-  filter: blur(20px);
 }
 
 .home-hero::after {
@@ -320,6 +339,7 @@ img {
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
 }
@@ -457,7 +477,23 @@ img {
 /* Work section */
 .work-section {
   padding: 80px 80px 120px;
-  background: var(--cream);
+  background: transparent;
+}
+
+.work-header {
+  max-width: 1200px;
+  margin: 0 auto 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.work-intro {
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(55, 43, 11, 0.62);
+  max-width: 560px;
+  margin: 0;
 }
 
 .section-label {
@@ -465,8 +501,8 @@ img {
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--steel-blue);
-  margin-bottom: 48px;
+  color: var(--terracotta);
+  margin-bottom: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -476,7 +512,155 @@ img {
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(144, 161, 185, 0.3);
+  background: rgba(184, 103, 87, 0.25);
+}
+
+/* ── Case card grid ── */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.case-card {
+  background: #FEFDFB;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 48px rgba(55, 43, 11, 0.1);
+}
+
+.case-card-image {
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.case-card-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.case-card-mock {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: rgba(245, 232, 211, 0.45);
+  border: 1px solid rgba(55, 43, 11, 0.14);
+  border-radius: 8px;
+  padding: 12px 14px;
+  transition: transform 0.4s ease;
+}
+
+/* On coral cards, use a cream-tinted mock bg with lighter border */
+.case-card--dark-mock .case-card-mock {
+  background: rgba(245, 232, 211, 0.1);
+  border-color: rgba(245, 232, 211, 0.22);
+}
+
+.case-card:hover .case-card-mock {
+  transform: translateY(-2px);
+}
+
+.case-card-mock-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.case-card-mock-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+  border-top: 1px solid;
+  font-size: 11px;
+}
+
+.case-card-body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.case-card-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 2px;
+}
+
+.case-card-title {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--warm-gray);
+  margin: 0;
+}
+
+.case-card-sub {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(55, 43, 11, 0.62);
+  margin: 0;
+  flex: 1;
+}
+
+.case-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding-top: 14px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(55, 43, 11, 0.08);
+}
+
+.case-card-arrow {
+  color: var(--terracotta);
+  transition: gap 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.case-card:hover .case-card-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 960px) {
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .work-grid { grid-template-columns: 1fr; gap: 20px; }
+  .case-card-image { aspect-ratio: 16 / 10; }
 }
 
 /* Project card */
@@ -613,19 +797,38 @@ img {
 /* About section */
 .about-section {
   padding: 100px 80px;
-  background: #B86757;
+  background: rgba(196, 207, 223, 0.48);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  position: relative;
+}
+
+.about-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   align-items: center;
   position: relative;
+  z-index: 1;
 }
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(55, 43, 11, 0.16) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
 
 .about-section::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.06;
+  opacity: 0.04;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
@@ -637,7 +840,7 @@ img {
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--terracotta);
   margin-bottom: 24px;
 }
 
@@ -646,7 +849,7 @@ img {
   font-weight: 200;
   line-height: 1.2;
   letter-spacing: -1px;
-  color: var(--text-light);
+  color: var(--deep-brown);
   margin-bottom: 24px;
 }
 
@@ -654,7 +857,7 @@ img {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
-  color: rgba(245, 232, 211, 0.85);
+  color: rgba(55, 43, 11, 0.72);
   margin-bottom: 16px;
 }
 
@@ -668,9 +871,9 @@ img {
 .skill-chip {
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-light);
-  background: rgba(245, 232, 211, 0.12);
-  border: 1px solid rgba(245, 232, 211, 0.28);
+  color: rgba(55, 43, 11, 0.85);
+  background: rgba(245, 232, 211, 0.45);
+  border: 1px solid rgba(55, 43, 11, 0.14);
   padding: 10px 16px;
   border-radius: 8px;
   letter-spacing: 0.1px;
@@ -679,17 +882,22 @@ img {
 /* Footer */
 .footer {
   padding: 60px 80px;
-  background: #2A1F08;
+  background: var(--terracotta);
+  border-top: 1px solid rgba(221, 179, 101, 0.28);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(221, 179, 101, 0.15);
 }
 
 .footer-left {
   font-size: 14px;
   font-weight: 500;
-  color: rgba(245, 232, 211, 0.75);
+  color: rgba(245, 232, 211, 0.88);
 }
 
 .footer-left span {
@@ -704,13 +912,13 @@ img {
 .footer-links a {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(245, 232, 211, 0.65);
+  color: rgba(245, 232, 211, 0.72);
   transition: color 0.2s ease;
   letter-spacing: 0.2px;
 }
 
 .footer-links a:hover {
-  color: var(--terracotta);
+  color: var(--gold);
 }
 
 /* ═══════════════════════════════════════════
@@ -1962,3 +2170,16 @@ img {
   .rules-problem-cards > div > div:first-child { padding: 20px !important; }
   .rules-problem-cards > div > div:last-child { padding: 20px !important; }
 }
+
+/* ═══════════════════════════════════════════
+   POSITIONS CASE STUDY — SECTION TRANSPARENCY
+   Scoped overrides so the ambient gradient wrapper shows through.
+   Colored tier sections (framing = steel blue, problem = coral) keep
+   their own backgrounds; neutral sections go transparent.
+═══════════════════════════════════════════ */
+
+.positions-page.cs-page { background: transparent; }
+.positions-page .cs-hero { background: transparent; }
+.positions-page .cs-tldr { background: transparent; }
+.positions-page .cs-content { background: transparent; }
+.positions-page .cs-content--cream { background: transparent; }

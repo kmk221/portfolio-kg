@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Nav from '../components/Nav.jsx'
 
-const accent='#7D91A5',accentDark='#3A4C5E',accentMid='rgba(125,145,165,0.4)',accentLight='rgba(125,145,165,0.12)',accentPale='#e8eaec',textLight='#edeef0',warmGray='#59504a',deepBlue='#62748e',cream='#F6F6F1',pageBg='#FFFFFC',borderLight='rgba(202,213,226,0.2)',terracotta='#b17c5d'
+const accent='#5F7A9A',accentDark='#2C3B55',accentMid='rgba(196,207,223,0.5)',accentLight='rgba(196,207,223,0.28)',accentPale='#E6ECF2',textLight='#edeef0',warmGray='#372B0B',deepBlue='#2C3B55',cream='#F6F6F1',pageBg='#FFFFFC',borderLight='rgba(196,207,223,0.3)',terracotta='#B86757'
 const sideP='clamp(20px, 5vw, 80px)',contentW='1200px'
 const sec=(bg)=>({width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`,background:bg})
 const ct={maxWidth:contentW,width:'100%',margin:'0 auto'}
@@ -1156,17 +1156,44 @@ export default function RulesCaseStudy(){
   return(<div className="rules-cs-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:warmGray,background:cream,overflowX:'hidden'}}>
     <Nav/>
 
+    {/* Home-style ambient radial-gradient wrapper — same 11-orb wash used on
+        home and OM, cycling steel-blue → gold → terracotta down the full page. */}
+    <div style={{
+      background: `
+        radial-gradient(1200px circle at 15% 2%, rgba(196, 207, 223, 0.42) 0%, transparent 35%),
+        radial-gradient(1100px circle at 92% 8%, rgba(221, 179, 101, 0.34) 0%, transparent 32%),
+        radial-gradient(1000px circle at 6% 18%, rgba(184, 103, 87, 0.26) 0%, transparent 30%),
+        radial-gradient(1200px circle at 88% 26%, rgba(196, 207, 223, 0.30) 0%, transparent 32%),
+        radial-gradient(950px circle at 18% 36%, rgba(221, 179, 101, 0.28) 0%, transparent 30%),
+        radial-gradient(1100px circle at 82% 46%, rgba(184, 103, 87, 0.22) 0%, transparent 32%),
+        radial-gradient(1000px circle at 8% 56%, rgba(196, 207, 223, 0.32) 0%, transparent 30%),
+        radial-gradient(1150px circle at 92% 66%, rgba(221, 179, 101, 0.28) 0%, transparent 32%),
+        radial-gradient(1050px circle at 12% 76%, rgba(184, 103, 87, 0.22) 0%, transparent 30%),
+        radial-gradient(1100px circle at 88% 86%, rgba(196, 207, 223, 0.26) 0%, transparent 32%),
+        radial-gradient(980px circle at 30% 96%, rgba(221, 179, 101, 0.24) 0%, transparent 28%),
+        var(--cream)
+      `,
+    }}>
+
     {/* HERO */}
-    <section style={{background:'#ededee',paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden'}}>
+    <section style={{
+      background:`
+        radial-gradient(rgba(55,43,11,0.12) 1px, transparent 1px) 0 0 / 28px 28px,
+        linear-gradient(135deg, rgba(196, 207, 223, 0.55), rgba(196, 207, 223, 0.72))
+      `,
+      backdropFilter:'blur(10px)',
+      WebkitBackdropFilter:'blur(10px)',
+      paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden',position:'relative'
+    }}>
       <div style={ct}>
         <div style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap',marginBottom:20,opacity:0,animation:'fadeUp 0.7s ease 0.1s forwards'}}>
-          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(46,74,107,0.55)'}}>UX Case Study</span>
-          <span style={{width:1,height:12,background:'rgba(125,145,165,0.35)'}}/>
-          {['Research','Strategy','Product Design','Testing'].map(tag=>(<span key={tag} style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(125,145,165,0.12)',color:accentDark}}>{tag}</span>))}
-          <span style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(125,145,165,0.18)',color:accentDark,border:'1px solid rgba(125,145,165,0.3)'}}>Shipped ✓</span>
+          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(55,43,11,0.6)'}}>UX Case Study</span>
+          <span style={{width:1,height:12,background:'rgba(55,43,11,0.25)'}}/>
+          {['Research','Strategy','Product Design','Testing'].map(tag=>(<span key={tag} style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(245,232,211,0.4)',color:accentDark}}>{tag}</span>))}
+          <span style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(245,232,211,0.55)',color:accentDark,border:'1px solid rgba(55,43,11,0.18)'}}>Shipped ✓</span>
         </div>
-        <h1 style={{fontSize:42,fontWeight:700,lineHeight:1.25,letterSpacing:'-0.5px',color:accentDark,maxWidth:780,marginBottom:16,opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine — Compliance, Redesigned for Enterprise Trading</h1>
-        <p style={{fontSize:18,fontWeight:400,fontStyle:'italic',color:'rgba(46,74,107,0.6)',marginBottom:60,opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product — navigating complexity, prioritizing impact</p>
+        <h1 style={{fontSize:42,fontWeight:700,lineHeight:1.25,letterSpacing:'-0.5px',color:'#372B0B',maxWidth:780,marginBottom:16,opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine — Compliance, Redesigned for Enterprise Trading</h1>
+        <p style={{fontSize:18,fontWeight:400,fontStyle:'italic',color:'rgba(55,43,11,0.7)',marginBottom:60,opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product — navigating complexity, prioritizing impact</p>
       </div>
       <div style={{...ct,marginTop:48,overflow:'hidden',paddingBottom:0,opacity:0,animation:'fadeUp 0.7s ease 0.55s forwards'}}>
         <div style={{display:'flex',alignItems:'flex-end',justifyContent:'center',gap:32,paddingTop:48}}>
@@ -1218,7 +1245,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* TL;DR */}
-    <section style={sec(pageBg)}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <h2 style={{fontSize:72,fontWeight:800,color:accentDark,lineHeight:1,marginBottom:40}}>tl;dr</h2>
         <p style={{fontSize:20,fontWeight:500,lineHeight:1.65,letterSpacing:'-0.3px',color:'#7a4f35',maxWidth:820,marginBottom:72}}>Across a suite of compliance tools on an enterprise investing platform, we identified where to focus design effort — then redesigned the rule management and creation experience from the ground up. The result: a shipped, user-tested redesign that replaced tribal knowledge with guided workflows and shadow spreadsheets with built-in documentation.</p>
@@ -1229,7 +1256,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* FRAMING */}
-    <section style={sec('#ededee')}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <h2 style={{fontSize:28,fontWeight:900,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.3px'}}>finding the right problem <span style={{fontWeight:300}}>before designing the right solution</span></h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>This wasn't a project that started with a design brief. It started with two questions: across a complex, sprawling ecosystem of aging compliance tools — where do we even begin? How do we make an impact?</p>
@@ -1238,7 +1265,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* DISCOVERY */}
-    <section style={{...sec(cream),paddingTop:160,paddingBottom:160}}>
+    <section style={{...sec('transparent'),paddingTop:160,paddingBottom:160}}>
       <div style={ct}>
         <StepLabel>Step 01 — Discovery</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
@@ -1511,7 +1538,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* DESIGN SPRINT */}
-    <section style={sec('#ededee')}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 02 — Design Sprint</StepLabel>
         <h2 style={{fontSize:28,fontWeight:900,color:accentDark,marginBottom:8}}>Insights → How Might We → Concept Sketches</h2>
@@ -1533,7 +1560,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* PRIORITIZATION */}
-    <section style={sec(pageBg)}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 03 — Prioritization</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>Deciding Where to Start</h2>
@@ -1645,7 +1672,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* LOFI EXPLORATION */}
-    <section style={sec('#ededee')}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 04 — Lofi Exploration</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:12}}>Mapping the End-to-End Workflow</h2>
@@ -1655,7 +1682,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* ASIDE — List Manager / Tech Constraint */}
-    <section style={{...sec(pageBg),paddingTop:72,paddingBottom:80,background:pageBg}}>
+    <section style={{...sec('transparent'),paddingTop:72,paddingBottom:80}}>
       <div style={ct}>
         <StepLabel>Step 05 — A Closer Look</StepLabel>
         {/* Aside header */}
@@ -1905,7 +1932,7 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <section style={sec(cream)}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 06 — Design</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>The Redesign</h2>
@@ -1977,7 +2004,7 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <section style={sec(cream)}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 07 — Validate</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>What Changed After Testing</h2>
@@ -1997,7 +2024,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* OUTCOMES */}
-    <section style={sec('#ededee')}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Outcomes</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:accentDark,marginBottom:40}}>From shipped to what's next</h2>
@@ -2015,7 +2042,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* REFLECTION */}
-    <section style={sec(pageBg)}>
+    <section style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Reflection</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>What I carried forward</h2>
@@ -2043,11 +2070,14 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <footer style={{padding:`40px ${sideP}`,display:'flex',justifyContent:'space-between',alignItems:'center',borderTop:`1px solid ${borderLight}`,background:cream}}>
+    <footer style={{padding:`40px ${sideP}`,display:'flex',justifyContent:'space-between',alignItems:'center',borderTop:`1px solid ${borderLight}`,background:'transparent'}}>
       <div style={{fontSize:13,fontWeight:700,color:warmGray}}>kristin<span style={{color:accent}}>.garza</span> · UX Designer</div>
       <div style={{display:'flex',gap:28}}>
         {[['LinkedIn','https://www.linkedin.com/in/kristin-garza'],['Email','mailto:kmkerney221@gmail.com'],['Resume','/resume.pdf']].map(([label,href])=>(<a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" style={{fontSize:13,fontWeight:500,color:warmGray,opacity:0.75,textDecoration:'none'}}>{label}</a>))}
       </div>
     </footer>
+
+    </div>
+    {/* End ambient gradient wrapper */}
   </div>)
 }

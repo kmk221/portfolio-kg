@@ -1,24 +1,28 @@
-
-  :root {
-    --accent: #8C8958;
-    --accent-dark: #59573B;
-    --accent-mid: rgba(140,137,88,0.4);
-    --accent-light: rgba(140,137,88,0.1);
-    --peach: #B3866B;
-    --peach-light: rgba(179,134,107,0.12);
-    --espresso: #241D15;
-    --warm-gray: #4A4540;
-    --deep-text: #5C5A3E;
-    --cream: #F3F1EE;
-    --page-bg: #FAF9F6;
-    --section-alt: #E8E6DF;
-    --border-light: rgba(140,137,88,0.15);
+  /* Case study palette — scoped to .om-page so it inherits the home tokens
+     (--cream, --warm-gray, --terracotta, --deep-blue, --gold, etc.) from
+     styles.css instead of overriding them. OM-specific tokens remap to home
+     palette values so the case study reads as the same brand. */
+  .om-page {
+    --accent: var(--terracotta);                 /* was #8C8958 olive */
+    --accent-dark: #8F4638;                      /* deeper terracotta */
+    --accent-mid: rgba(184, 103, 87, 0.35);
+    --accent-light: rgba(184, 103, 87, 0.08);
+    --peach: var(--terracotta);                  /* was #B3866B */
+    --peach-light: rgba(184, 103, 87, 0.12);
+    --espresso: var(--deep-brown);               /* was #241D15 — uses home --deep-brown */
+    --deep-text: rgba(55, 43, 11, 0.72);
+    --page-bg: transparent;                      /* let the JSX radial gradient show through */
+    --section-alt: rgba(196, 207, 223, 0.28);    /* soft steel-blue wash — echoes home's cool sections */
     --side-p: clamp(20px, 5vw, 80px);
     --content-w: 1200px;
+
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--page-bg);
+    color: var(--warm-gray);
+    -webkit-font-smoothing: antialiased;
   }
 
   .om-page * { box-sizing: border-box; margin: 0; padding: 0; }
-  .om-page { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--page-bg); color: var(--warm-gray); -webkit-font-smoothing: antialiased; }
 
   .om-page .section { width: 100%; padding: 120px var(--side-p); }
   .om-page .container { max-width: var(--content-w); width: 100%; margin: 0 auto; }
@@ -41,12 +45,12 @@
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--accent-light); border: 1px solid var(--accent-mid); color: var(--accent-dark);
   }
-  .om-page .tag.shipped { background: rgba(179,134,107,0.15); border-color: rgba(179,134,107,0.35); color: #6B4A35; }
+  .om-page .tag.shipped { background: rgba(184,103,87,0.15); border-color: rgba(184,103,87,0.35); color: var(--accent-dark); }
 
   
   .om-page .placeholder {
     background: linear-gradient(135deg, #f0ebe3, #e8dfd5);
-    border: 1px dashed rgba(179,134,107,0.4);
+    border: 1px dashed rgba(184,103,87,0.4);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     color: var(--peach); font-size: 12px; font-weight: 600;
@@ -55,7 +59,7 @@
   .om-page .placeholder.dark {
     background: linear-gradient(135deg, #2a231b, #1e1812);
     border-color: rgba(255,255,255,0.1);
-    color: rgba(179,134,107,0.6);
+    color: rgba(184,103,87,0.6);
   }
 
   
@@ -92,24 +96,24 @@
   
   .om-page .quote-block {
     padding: 28px 32px; background: var(--peach-light);
-    border: 1px solid rgba(179,134,107,0.25); border-radius: 12px;
+    border: 1px solid rgba(184,103,87,0.25); border-radius: 12px;
     border-left: 4px solid var(--peach); margin-bottom: 32px;
   }
   .om-page .quote-block blockquote {
     font-size: 18px; font-style: italic; color: var(--warm-gray); line-height: 1.7; margin-bottom: 12px;
   }
-  .om-page .quote-block cite { font-size: 12px; font-weight: 600; color: #6B4A35; font-style: normal; }
+  .om-page .quote-block cite { font-size: 12px; font-weight: 600; color: var(--accent-dark); font-style: normal; }
 
   
   .om-page .callout {
     margin-top: 48px; padding: 28px 36px; background: var(--peach-light);
-    border: 1px solid rgba(179,134,107,0.25); border-radius: 12px;
+    border: 1px solid rgba(184,103,87,0.25); border-radius: 12px;
     display: flex; gap: 16px; align-items: flex-start;
   }
   .om-page .callout .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
   .om-page .callout .callout-label {
     font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: #6B4A35; margin-bottom: 6px;
+    color: var(--accent-dark); margin-bottom: 6px;
   }
   .om-page .callout p { font-size: 14px; line-height: 1.65; color: var(--warm-gray); }
 
@@ -155,19 +159,31 @@
   }
 
   
+  /* Outer hero-anim frame — matches the home page's AI × Design gold gradient
+     with the same dark-brown dot grid (rgba(55,43,11,0.08)) so this animated
+     stage visually ties to the "Beyond the Work" section on home. */
   .om-page .hero-anim {
     position: relative;
     height: 460px;
     border-radius: 12px 12px 0 0;
     overflow: hidden;
     background:
-      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0) 0 0 / 14px 14px,
-      linear-gradient(135deg, #3a3525 0%, #241D15 100%);
-    box-shadow: inset 0 0 140px rgba(0,0,0,0.45);
+      radial-gradient(circle at 1px 1px, rgba(55,43,11,0.1) 1px, transparent 0) 0 0 / 14px 14px,
+      linear-gradient(135deg, #DDB365 0%, #E6C07A 50%, #DDB365 100%);
+    box-shadow: inset 0 0 140px rgba(55,43,11,0.18);
+  }
+  /* Soft ambient glows + subtle vignette — echoes the blurred glow orbs in the
+     home's AI × Design section. */
+  .om-page .hero-anim::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(420px circle at 12% 10%, rgba(184,103,87,0.28) 0%, transparent 60%),
+      radial-gradient(380px circle at 88% 85%, rgba(196,207,223,0.22) 0%, transparent 60%);
+    filter: blur(20px);
   }
   .om-page .hero-anim::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%);
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(55,43,11,0.22) 100%);
     pointer-events: none;
   }
   .om-page .hero-anim-stage {
@@ -193,28 +209,28 @@
   .om-page .lofi-app {
     position: relative;
     width: 100%; height: 100%;
-    background: #F3F1EE;
+    background: #fbfaf4;
     border-radius: 14px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(140,137,88,0.2);
+    box-shadow: 0 30px 80px rgba(55,43,11,0.35), 0 0 0 1px rgba(55,43,11,0.18);
     display: grid;
     grid-template-rows: 22px 32px 1fr 38px;
     overflow: hidden;
   }
   .om-page .lofi-topbar {
-    background: #2c2820;
+    background: #2a1f08;
     display: flex; align-items: center; gap: 6px; padding-left: 14px;
   }
   .om-page .lofi-topbar span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.18); }
   .om-page .lofi-tabs {
     display: flex; align-items: center; gap: 28px; padding: 0 22px;
-    border-bottom: 1px solid rgba(140,137,88,0.18); background: #fff;
+    border-bottom: 1px solid rgba(55,43,11,0.18); background: #fff;
   }
-  .om-page .lofi-tab { width: 88px; height: 5px; border-radius: 3px; background: rgba(140,137,88,0.22); }
+  .om-page .lofi-tab { width: 88px; height: 5px; border-radius: 3px; background: rgba(55,43,11,0.22); }
   .om-page .lofi-tab.active { background: var(--peach); box-shadow: 0 2px 0 var(--peach); }
 
   .om-page .lofi-body {
     display: flex; align-items: stretch;
-    background: rgba(140,137,88,0.06);
+    background: rgba(55,43,11,0.06);
     position: relative;
     min-height: 0;
   }
@@ -222,8 +238,8 @@
   
   .om-page .lofi-filter {
     flex: 0 0 180px;
-    background: rgba(140,137,88,0.10);
-    border-right: 1px solid rgba(140,137,88,0.14);
+    background: rgba(55,43,11,0.10);
+    border-right: 1px solid rgba(55,43,11,0.14);
     padding: 14px 14px;
     display: flex; flex-direction: column; gap: 12px;
     overflow: hidden;
@@ -237,15 +253,15 @@
   }
   .om-page .lofi-filter-title { width: 70px; height: 8px; border-radius: 4px; background: var(--accent); opacity: 0.7; }
   .om-page .lofi-filter-section { display: flex; flex-direction: column; gap: 6px; }
-  .om-page .lofi-filter-label { width: 56px; height: 5px; border-radius: 3px; background: rgba(140,137,88,0.45); }
+  .om-page .lofi-filter-label { width: 56px; height: 5px; border-radius: 3px; background: rgba(55,43,11,0.45); }
   .om-page .lofi-input {
     width: 100%; height: 18px; border-radius: 4px; background: #fff;
-    border: 1px solid rgba(140,137,88,0.22);
+    border: 1px solid rgba(55,43,11,0.22);
   }
   .om-page .lofi-chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .om-page .lofi-chip {
     height: 16px; border-radius: 9px;
-    background: rgba(179,134,107,0.22); border: 1px solid rgba(179,134,107,0.4);
+    background: rgba(184,103,87,0.22); border: 1px solid rgba(184,103,87,0.4);
     opacity: 0;
     animation: chipIn 18s ease-in-out infinite;
   }
@@ -270,44 +286,44 @@
   }
   .om-page .lofi-grid-header {
     display: grid; grid-template-columns: 16px 56px 44px 1fr 70px; gap: 16px; align-items: center;
-    padding-bottom: 8px; border-bottom: 1px solid rgba(140,137,88,0.18); margin-bottom: 4px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(55,43,11,0.18); margin-bottom: 4px;
   }
-  .om-page .lofi-grid-header span { height: 5px; background: rgba(140,137,88,0.32); border-radius: 3px; }
+  .om-page .lofi-grid-header span { height: 5px; background: rgba(55,43,11,0.32); border-radius: 3px; }
   .om-page .lofi-row {
     display: grid; grid-template-columns: 16px 56px 44px 1fr 70px; gap: 16px; align-items: center;
     padding: 7px 4px; border-radius: 4px;
   }
-  .om-page .lofi-row.alt { background: rgba(140,137,88,0.06); }
+  .om-page .lofi-row.alt { background: rgba(55,43,11,0.06); }
   .om-page .lofi-check {
-    width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(140,137,88,0.45); background: #fff;
+    width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(55,43,11,0.45); background: #fff;
   }
   .om-page .lofi-row.sel .lofi-check {
     animation: checkFill 18s ease-in-out infinite;
   }
   .om-page .lofi-row.sel { animation: rowHighlight 18s ease-in-out infinite; }
   @keyframes checkFill {
-    0%, 60%  { background: #fff; border-color: rgba(140,137,88,0.45); }
+    0%, 60%  { background: #fff; border-color: rgba(55,43,11,0.45); }
     66%, 82% { background: var(--peach); border-color: var(--peach); }
-    88%, 100%{ background: #fff; border-color: rgba(140,137,88,0.45); }
+    88%, 100%{ background: #fff; border-color: rgba(55,43,11,0.45); }
   }
   @keyframes rowHighlight {
     0%, 60%  { background: transparent; }
-    66%, 82% { background: rgba(179,134,107,0.10); }
+    66%, 82% { background: rgba(184,103,87,0.10); }
     88%, 100%{ background: transparent; }
   }
-  .om-page .lofi-bar { height: 6px; border-radius: 3px; background: rgba(140,137,88,0.30); }
+  .om-page .lofi-bar { height: 6px; border-radius: 3px; background: rgba(55,43,11,0.30); }
   .om-page .lofi-pill {
-    height: 14px; border-radius: 8px; background: rgba(140,137,88,0.18);
-    border: 1px solid rgba(140,137,88,0.32);
+    height: 14px; border-radius: 8px; background: rgba(55,43,11,0.18);
+    border: 1px solid rgba(55,43,11,0.32);
   }
   .om-page .lofi-pill.buy { background: rgba(126,156,107,0.28); border-color: rgba(126,156,107,0.55); }
-  .om-page .lofi-pill.sell { background: rgba(179,134,107,0.28); border-color: rgba(179,134,107,0.55); }
+  .om-page .lofi-pill.sell { background: rgba(184,103,87,0.28); border-color: rgba(184,103,87,0.55); }
 
   
   .om-page .lofi-detail {
     flex: 0 0 0;
     background: #fff;
-    border-left: 1px solid rgba(140,137,88,0.18);
+    border-left: 1px solid rgba(55,43,11,0.18);
     padding: 0 0;
     display: flex; flex-direction: column; gap: 10px;
     overflow: hidden;
@@ -322,14 +338,14 @@
   .om-page .lofi-detail-title { width: 90px; height: 8px; border-radius: 4px; background: var(--peach); }
   .om-page .lofi-detail-row {
     display: flex; flex-direction: column; gap: 4px;
-    padding-bottom: 8px; border-bottom: 1px solid rgba(140,137,88,0.12);
+    padding-bottom: 8px; border-bottom: 1px solid rgba(55,43,11,0.12);
   }
-  .om-page .lofi-detail-row .l { width: 50px; height: 5px; border-radius: 3px; background: rgba(140,137,88,0.32); }
-  .om-page .lofi-detail-row .v { width: 80px; height: 6px; border-radius: 3px; background: rgba(140,137,88,0.55); }
+  .om-page .lofi-detail-row .l { width: 50px; height: 5px; border-radius: 3px; background: rgba(55,43,11,0.32); }
+  .om-page .lofi-detail-row .v { width: 80px; height: 6px; border-radius: 3px; background: rgba(55,43,11,0.55); }
 
   
   .om-page .lofi-footer {
-    background: #2c2820;
+    background: #2a1f08;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 18px;
   }
@@ -339,9 +355,9 @@
     animation: sendPulse 18s ease-in-out infinite;
   }
   @keyframes sendPulse {
-    0%, 78% { box-shadow: 0 0 0 0 rgba(179,134,107,0); }
-    82%, 88% { box-shadow: 0 0 0 6px rgba(179,134,107,0.35); }
-    92%, 100%{ box-shadow: 0 0 0 0 rgba(179,134,107,0); }
+    0%, 78% { box-shadow: 0 0 0 0 rgba(184,103,87,0); }
+    82%, 88% { box-shadow: 0 0 0 6px rgba(184,103,87,0.35); }
+    92%, 100%{ box-shadow: 0 0 0 0 rgba(184,103,87,0); }
   }
 
   
@@ -375,30 +391,30 @@
     82%, 94%{ transform: translateY(0) scale(1); }
     100%    { transform: translateY(10px) scale(0.96); }
   }
-  .om-page .lofi-modal-hd { background: #F3F1EE; display: flex; align-items: center; padding: 0 14px; border-bottom: 1px solid rgba(140,137,88,0.18); }
+  .om-page .lofi-modal-hd { background: #fbfaf4; display: flex; align-items: center; padding: 0 14px; border-bottom: 1px solid rgba(55,43,11,0.18); }
   .om-page .lofi-modal-title { width: 150px; height: 6px; border-radius: 3px; background: rgba(36,29,21,0.55); }
   .om-page .lofi-modal-body { display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 12px 14px; overflow: hidden; }
   .om-page .lofi-modal-tabs { display: flex; flex-direction: column; gap: 6px; }
   .om-page .lofi-modal-tab {
-    height: 28px; border-radius: 4px; background: rgba(140,137,88,0.10);
-    border: 1px solid rgba(140,137,88,0.20);
+    height: 28px; border-radius: 4px; background: rgba(55,43,11,0.10);
+    border: 1px solid rgba(55,43,11,0.20);
     padding: 6px 8px; display: flex; flex-direction: column; gap: 3px;
   }
-  .om-page .lofi-modal-tab.active { background: rgba(140,137,88,0.20); border-color: var(--accent); }
+  .om-page .lofi-modal-tab.active { background: rgba(55,43,11,0.20); border-color: var(--accent); }
   .om-page .lofi-modal-tab.warn { border-color: rgba(207,153,76,0.65); background: rgba(207,153,76,0.10); }
   .om-page .lofi-modal-tab.err { border-color: rgba(192,87,68,0.65);  background: rgba(192,87,68,0.10); }
   .om-page .lofi-modal-tab .l { width: 56px; height: 4px; border-radius: 2px; background: rgba(36,29,21,0.5); }
-  .om-page .lofi-modal-tab .s { width: 30px; height: 3px; border-radius: 2px; background: rgba(140,137,88,0.4); }
+  .om-page .lofi-modal-tab .s { width: 30px; height: 3px; border-radius: 2px; background: rgba(55,43,11,0.4); }
   .om-page .lofi-modal-rows { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .om-page .lofi-modal-row {
     display: grid; grid-template-columns: 30px 24px 1fr 36px; gap: 8px; align-items: center; padding: 4px 0;
   }
   .om-page .lofi-modal-row .sym { height: 5px; border-radius: 3px; background: rgba(36,29,21,0.55); }
   .om-page .lofi-modal-row .badge { height: 12px; border-radius: 6px; background: rgba(126,156,107,0.45); }
-  .om-page .lofi-modal-row .qty { height: 5px; border-radius: 3px; background: rgba(140,137,88,0.32); }
-  .om-page .lofi-modal-row .total { height: 5px; border-radius: 3px; background: rgba(140,137,88,0.4); }
-  .om-page .lofi-modal-ft { background: #F3F1EE; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 0 14px; border-top: 1px solid rgba(140,137,88,0.18); }
-  .om-page .lofi-modal-cancel { width: 50px; height: 16px; border-radius: 4px; background: rgba(140,137,88,0.18); }
+  .om-page .lofi-modal-row .qty { height: 5px; border-radius: 3px; background: rgba(55,43,11,0.32); }
+  .om-page .lofi-modal-row .total { height: 5px; border-radius: 3px; background: rgba(55,43,11,0.4); }
+  .om-page .lofi-modal-ft { background: #fbfaf4; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 0 14px; border-top: 1px solid rgba(55,43,11,0.18); }
+  .om-page .lofi-modal-cancel { width: 50px; height: 16px; border-radius: 4px; background: rgba(55,43,11,0.18); }
   .om-page .lofi-modal-confirm { width: 100px; height: 16px; border-radius: 4px; background: var(--peach); }
 
   
@@ -407,9 +423,9 @@
     display: flex; align-items: center; justify-content: space-between;
     z-index: 4; pointer-events: none;
     font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(247,245,240,0.75);
+    color: rgba(55,43,11,0.72);
   }
-  .om-page .hero-anim-caption .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--peach); display: inline-block; margin-right: 8px; vertical-align: middle; }
+  .om-page .hero-anim-caption .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); display: inline-block; margin-right: 8px; vertical-align: middle; }
 
   @media (prefers-reduced-motion: reduce) {
     .om-page .hero-anim-stage, .om-page .lofi-filter, .om-page .lofi-detail, .om-page .lofi-modal-overlay, .om-page .lofi-modal, .om-page .lofi-row.sel, .om-page .lofi-row.sel .lofi-check, .om-page .lofi-chip, .om-page .lofi-send {
@@ -418,3 +434,76 @@
     .om-page .lofi-detail { flex-basis: 0; opacity: 0; }
     .om-page .lofi-modal-overlay { display: none; }
   }
+
+  /* ===== Gold-glass break sections — reusable treatment =====
+     Mirrors the home page's AI × Design section. Used as rhythmic "breaks"
+     in the continuous cream wash — currently applied to the ecosystem map,
+     Design Principles (§4), and the Closing Reflection (§11). Dot grid +
+     ambient glow orbs + a shared eyebrow/title/card grammar. */
+  .om-page .om-gold {
+    background: linear-gradient(135deg, #DDB365 0%, #E6C07A 50%, #DDB365 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .om-page .om-gold-dots {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(55,43,11,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .om-page .om-gold-glow-a {
+    position: absolute; top: -80px; right: -100px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,103,87,0.3) 0%, transparent 70%);
+    filter: blur(80px); pointer-events: none;
+  }
+  .om-page .om-gold-glow-b {
+    position: absolute; bottom: -60px; left: -80px;
+    width: 350px; height: 350px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,207,223,0.25) 0%, transparent 70%);
+    filter: blur(80px); pointer-events: none;
+  }
+  .om-page .om-gold-eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: #B86757; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .om-page .om-gold-rule { flex: 1; height: 1px; background: rgba(184,103,87,0.3); }
+  .om-page .om-gold-title {
+    font-size: clamp(26px, 3.2vw, 38px); font-weight: 700; line-height: 1.2;
+    color: #372B0B; margin-bottom: 20px; letter-spacing: -0.01em;
+  }
+  .om-page .om-gold-lede {
+    font-size: 15px; line-height: 1.75; color: rgba(55,43,11,0.72);
+    max-width: 680px; margin-bottom: 40px;
+  }
+  .om-page .om-gold-card {
+    background: rgba(245,232,211,0.4);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(55,43,11,0.14);
+    border-radius: 14px; padding: clamp(24px, 3.5vw, 36px) clamp(24px, 3.5vw, 40px);
+    box-shadow: 0 4px 32px rgba(55,43,11,0.12), inset 0 1px 0 rgba(245,232,211,0.4);
+  }
+  .om-page .om-gold-body {
+    font-size: clamp(16px, 1.6vw, 19px); font-weight: 400; line-height: 1.75;
+    color: rgba(55,43,11,0.82); margin: 0;
+  }
+
+  /* Principle cards recolor when sitting on a gold-glass section — become
+     frosted cream cards instead of plain cream-on-cream. */
+  .om-page .om-gold .principle-card {
+    background: rgba(245,232,211,0.6);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(55,43,11,0.12);
+    box-shadow: 0 2px 14px rgba(55,43,11,0.06), inset 0 1px 0 rgba(245,232,211,0.5);
+  }
+  .om-page .om-gold .principle-card .num { color: #B86757; }
+  .om-page .om-gold .principle-card h4 { color: #372B0B; }
+  .om-page .om-gold .principle-card p { color: rgba(55,43,11,0.75); }
+
+  /* Workflow map image — sits edge-to-edge on the gold section, no card. */
+  .om-page .om-gold-map-frame {
+    position: relative; z-index: 1;
+    overflow: hidden; width: 100%;
+    border-radius: 14px;
+  }
+  .om-page .om-gold-map-frame img { width: 100%; display: block; }

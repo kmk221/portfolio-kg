@@ -4,7 +4,7 @@
 <!-- Title, subtitle, and tag pills are now rendered in OrderManagementCaseStudy.jsx
      as a home-page-style hero (eyebrow + title + fadeUp pills). This section
      keeps only the animated lo-fi preview underneath. -->
-<section data-reveal class="section" style="background: transparent; padding-top: 20px; padding-bottom: 0; overflow: hidden;">
+<section data-reveal class="section" style="background: transparent; padding-top: 20px; padding-bottom: 120px; overflow: hidden;">
   <div class="container">
     <div data-reveal class="hero-anim" role="img" aria-label="Lo-fi animated preview of the redesigned order management concept">
       <div class="hero-anim-stage">
@@ -98,7 +98,7 @@
 </section>
 
 <!-- ===== TL;DR ===== -->
-<section id="ch-tldr" data-reveal class="section" style="background: var(--page-bg);">
+<section id="ch-tldr" data-reveal class="section" style="background: var(--page-bg); padding-top: 160px; padding-bottom: 160px;">
   <div class="container">
     <h2 style="font-size: 72px; font-weight: 800; color: var(--espresso); line-height: 1; margin-bottom: 40px;">tl;dr</h2>
     <p style="font-size: 20px; font-weight: 500; line-height: 1.65; letter-spacing: -0.3px; color: var(--peach); max-width: 820px; margin-bottom: 48px;">
@@ -222,8 +222,11 @@
 </section>
 
 <!-- ===== 3 — HYPOTHESIS & RESEARCH ===== -->
-<section id="ch-research" data-reveal class="section" style="background: var(--page-bg);">
-  <div class="container">
+<section id="ch-research" data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+  <div class="om-gold-dots" aria-hidden="true"></div>
+  <div class="om-gold-glow-a" aria-hidden="true"></div>
+  <div class="om-gold-glow-b" aria-hidden="true"></div>
+  <div class="container" style="position: relative; z-index: 1;">
     <div class="step-label">Hypothesis &amp; Research</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 28px;">
       Where we started
@@ -779,20 +782,14 @@
   </div>
 </section>
 
-<!-- ===== 4 — DESIGN PRINCIPLES — gold-glass break ===== -->
-<section id="ch-principles" data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
-  <div class="om-gold-dots" aria-hidden="true"></div>
-  <div class="om-gold-glow-a" aria-hidden="true"></div>
-  <div class="om-gold-glow-b" aria-hidden="true"></div>
-  <div class="container" style="position: relative; z-index: 1;">
-    <p class="om-gold-eyebrow">
-      Design Principles
-      <span class="om-gold-rule" aria-hidden="true"></span>
-    </p>
-    <h2 class="om-gold-title">
-      Rules for every decision<span style="color: #B86757;">.</span>
+<!-- ===== 4 — DESIGN PRINCIPLES ===== -->
+<section id="ch-principles" data-reveal class="section" style="background: transparent; padding-top: 140px; padding-bottom: 140px;">
+  <div class="container">
+    <div class="step-label">Design Principles</div>
+    <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
+      Rules for every decision<span style="color: var(--accent);">.</span>
     </h2>
-    <p class="om-gold-lede" style="margin-bottom: 32px;">
+    <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 32px;">
       The research and concept feedback shaped a clear set of guiding principles for the redesign:
     </p>
 
@@ -848,10 +845,13 @@
   </div>
 </section>
 
-<!-- ===== 5 — DESIGN: Main Surface ===== -->
-<section id="ch-main-surface" data-reveal class="section" style="background: transparent;">
-  <div class="container">
-    <div class="step-label">Design — Main Surface</div>
+<!-- ===== 5 — NEW DESIGN (Main Surface + Send Flow merged into one section) ===== -->
+<section id="ch-design" data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+  <div class="om-gold-dots" aria-hidden="true"></div>
+  <div class="om-gold-glow-a" aria-hidden="true"></div>
+  <div class="om-gold-glow-b" aria-hidden="true"></div>
+  <div class="container" style="position: relative; z-index: 1;">
+    <div class="step-label">New Design</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 28px;">
       A surface built to protect the list
     </h2>
@@ -899,14 +899,8 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ===== 6 — DESIGN: Send Flow ===== -->
-<section id="ch-send-flow" data-reveal class="section" style="background: transparent; padding-top: 140px; padding-bottom: 140px;">
-  <div class="container">
-    <div class="step-label">Design — Send Flow</div>
-    <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 28px;">
+    <!-- Send Flow sub-section — same container, same surface, no eyebrow break. -->
+    <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin: 80px 0 28px;">
       Surfacing the right next step
     </h2>
 
@@ -993,8 +987,11 @@
 </section>
 
 <!-- ===== 9 — OUTCOME ===== -->
-<section id="ch-outcome" data-reveal class="section" style="background: transparent;">
-  <div class="container">
+<section id="ch-outcome" data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+  <div class="om-gold-dots" aria-hidden="true"></div>
+  <div class="om-gold-glow-a" aria-hidden="true"></div>
+  <div class="om-gold-glow-b" aria-hidden="true"></div>
+  <div class="container" style="position: relative; z-index: 1;">
     <div class="step-label">Outcome</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
       What shipped — and what it changed
@@ -1138,8 +1135,11 @@
 
 
 <!-- ===== 10 — WHAT'S NEXT ===== -->
-<section id="ch-next" data-reveal class="section" style="background: var(--page-bg);">
-  <div class="container">
+<section id="ch-next" data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+  <div class="om-gold-dots" aria-hidden="true"></div>
+  <div class="om-gold-glow-a" aria-hidden="true"></div>
+  <div class="om-gold-glow-b" aria-hidden="true"></div>
+  <div class="container" style="position: relative; z-index: 1;">
     <div class="step-label">Looking Ahead</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
       Remaining opportunities to tackle
@@ -1299,24 +1299,17 @@
 </section>
 
 <!-- ===== 11 — CLOSING REFLECTION ===== -->
-<!-- Gold glass treatment — matches the home page's AI × Design section so the
-     case study closes on the same warm, "beyond the work" note the home uses
-     for its standalone featured section. Dot grid + ambient glows + a glass
-     card hold the reflection copy. -->
-<section data-reveal class="section om-gold" style="padding-top: clamp(80px, 10vw, 120px); padding-bottom: clamp(80px, 10vw, 120px); position: relative; overflow: hidden;">
-  <div class="om-gold-dots" aria-hidden="true"></div>
-  <div class="om-gold-glow-a" aria-hidden="true"></div>
-  <div class="om-gold-glow-b" aria-hidden="true"></div>
-  <div class="container" style="position: relative; z-index: 1;">
-    <p class="om-gold-eyebrow">
-      Reflection
-      <span class="om-gold-rule" aria-hidden="true"></span>
-    </p>
-    <h2 class="om-gold-title">
-      What actually shipped<span style="color: #B86757;">.</span>
+<!-- Reflection — closing payoff on the cream surface so the case study ends
+     on the same canvas it started on. The closing paragraph carries its own
+     emphasis via larger type + a terracotta-accent left border. -->
+<section data-reveal class="section" style="background: transparent; padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+  <div class="container">
+    <div class="step-label">Reflection</div>
+    <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 32px;">
+      What actually shipped<span style="color: var(--accent);">.</span>
     </h2>
-    <div class="om-gold-card">
-      <p class="om-gold-body">
+    <div style="max-width: 820px; padding: 28px 32px; border-left: 4px solid var(--accent); background: rgba(184,103,87,0.04); border-radius: 0 12px 12px 0;">
+      <p style="font-size: clamp(16px, 1.6vw, 19px); font-weight: 400; line-height: 1.75; color: rgba(55,43,11,0.82); margin: 0;">
         There's a version of this case study where the punchline is a shiny new dashboard. Instead, what shipped was a better version of what users already trusted — modernized filtering, a layout that respects how people actually scan a list, order details you can reach without losing your place, and a send flow that builds confidence instead of anxiety. The irony is that we explored the bold direction specifically so we could come back to the simple one with conviction. The research didn't just tell us what to build — it gave us the evidence to push back on the flashier path and the discipline to ship only what mattered.
       </p>
     </div>

@@ -997,6 +997,72 @@
     }
   }
 
+  /* ====== Modern glass-morphism for content cards inside .om-gold sections ======
+     Real glass behavior: low-opacity gradient (top→bottom), heavier backdrop
+     blur, saturate filter that enhances the steel-blue showing through, and
+     an inset top highlight that reads as a light reflection on the glass
+     edge. The result feels like a translucent pane catching light, not a
+     flat tinted card. Uses !important to override inline styles on the
+     attribute-selected cards. */
+  .om-page .om-gold [style*="background: var(--accent-light)"],
+  .om-page .om-gold [style*="background: var(--peach-light)"] {
+    background: linear-gradient(140deg, rgba(252,246,235,0.32) 0%, rgba(252,246,235,0.12) 100%) !important;
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.42) !important;
+    box-shadow:
+      0 6px 28px rgba(55,43,11,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.55) !important;
+  }
+  /* Peach variant keeps a hint of warmth so the goal/problem two-tone rhythm
+     still reads, just faintly. */
+  .om-page .om-gold [style*="background: var(--peach-light)"] {
+    background: linear-gradient(140deg, rgba(255,232,218,0.34) 0%, rgba(255,232,218,0.13) 100%) !important;
+  }
+
+  /* Accordions inside the section-expand pick up the same glass treatment.
+     Open state is slightly more opaque so it visually anchors as the active
+     panel without losing the glass character. */
+  .om-page .om-gold .om-expand-card {
+    background: linear-gradient(140deg, rgba(252,246,235,0.24) 0%, rgba(252,246,235,0.09) 100%);
+    backdrop-filter: blur(20px) saturate(135%);
+    -webkit-backdrop-filter: blur(20px) saturate(135%);
+    border: 1px solid rgba(255,255,255,0.36);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+  }
+  .om-page .om-gold .om-expand-card[data-open="true"] {
+    background: linear-gradient(140deg, rgba(252,246,235,0.4) 0%, rgba(252,246,235,0.16) 100%);
+    border-color: rgba(255,255,255,0.5);
+    box-shadow:
+      0 8px 32px rgba(55,43,11,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.55);
+  }
+
+  /* Section-expand trigger ("Read the research story") — heaviest blur + the
+     strongest top highlight since it's the largest single glass surface. */
+  .om-page .om-gold .om-section-expand-trigger {
+    background: linear-gradient(140deg, rgba(252,246,235,0.36) 0%, rgba(252,246,235,0.16) 100%);
+    backdrop-filter: blur(26px) saturate(145%);
+    -webkit-backdrop-filter: blur(26px) saturate(145%);
+    border-color: rgba(255,255,255,0.5);
+    box-shadow:
+      0 6px 28px rgba(55,43,11,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .om-page .om-gold .om-section-expand[data-open="true"] .om-section-expand-trigger {
+    background: linear-gradient(140deg, rgba(252,246,235,0.46) 0%, rgba(252,246,235,0.2) 100%);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  /* Research summary callout — slightly warmer glass to keep its peach
+     character while joining the modern-glass family. */
+  .om-page .om-gold .om-research-summary {
+    background: linear-gradient(140deg, rgba(255,232,218,0.36) 0%, rgba(255,232,218,0.14) 100%);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+
   /* Principle cards recolor when sitting on a gold-glass section — become
      frosted cream cards instead of plain cream-on-cream. */
   .om-page .om-gold .principle-card {

@@ -98,7 +98,7 @@
 </section>
 
 <!-- ===== TL;DR ===== -->
-<section data-reveal class="section" style="background: var(--page-bg);">
+<section id="ch-tldr" data-reveal class="section" style="background: var(--page-bg);">
   <div class="container">
     <h2 style="font-size: 72px; font-weight: 800; color: var(--espresso); line-height: 1; margin-bottom: 40px;">tl;dr</h2>
     <p style="font-size: 20px; font-weight: 500; line-height: 1.65; letter-spacing: -0.3px; color: var(--peach); max-width: 820px; margin-bottom: 48px;">
@@ -129,9 +129,9 @@
 </section>
 
 <!-- ===== 1 — FRAMING ===== -->
-<section data-reveal class="section" style="background: transparent;">
+<section id="ch-framing" data-reveal class="section" style="background: transparent;">
   <div class="container">
-    <div class="step-label">Framing</div>
+    <div class="step-label">Context</div>
     <h2 style="font-size: 28px; font-weight: 900; color: var(--espresso); line-height: 1.3; margin-bottom: 28px; letter-spacing: -0.3px;">
       A forced migration that was also <span style="font-weight: 300;">a design opportunity</span>
     </h2>
@@ -142,20 +142,20 @@
 </section>
 
 <!-- Ecosystem map — gold-glass break -->
-<section data-reveal class="section om-gold" style="width: 100%; padding: clamp(80px, 10vw, 120px) 0;">
+<section data-reveal class="section om-gold" style="padding-top: clamp(80px, 10vw, 120px); padding-bottom: clamp(80px, 10vw, 120px);">
   <div class="om-gold-dots" aria-hidden="true"></div>
   <div class="om-gold-glow-a" aria-hidden="true"></div>
   <div class="om-gold-glow-b" aria-hidden="true"></div>
-  <div style="max-width: 1200px; width: 100%; margin: 0 auto; padding: 0 clamp(20px, 5vw, 80px); position: relative; z-index: 1;">
+  <div class="container" style="position: relative; z-index: 1;">
     <p class="om-gold-eyebrow">
       Where Order Management sits
       <span class="om-gold-rule" aria-hidden="true"></span>
     </p>
-    <h2 class="om-gold-title" style="max-width: 640px;">
-      A workflow with many entry points<span style="color: #B86757;">.</span>
+    <h2 class="om-gold-title" style="max-width: 720px;">
+      At the center of <span style="font-weight: 300;">every trade</span><span style="color: #B86757;">.</span>
     </h2>
     <p class="om-gold-lede">
-      Orders arrive from on-platform trade tickets and off-platform integrations, pass through a compliance rules engine, then land in Order Management as Sent or Unsent — each with their own set of downstream actions that loop back through the flow.
+      No matter where an order starts — an on-platform trade ticket, an off-platform integration, a model rebalance, a manual entry — it funnels into this single surface, passes through compliance, then lands as Sent or Unsent. From here it loops back out through monitoring, verification, and post-trade actions before the next order does the same. Every trading workflow eventually meets on this screen, which is why getting it right mattered: a misstep here ripples across every role and every system that touches a trade.
     </p>
     <div class="om-gold-map-frame">
       <img src="/om-assets/map-x2.png" alt="Order Management ecosystem map showing order entry sources, compliance layer, and downstream actions"/>
@@ -164,53 +164,65 @@
 </section>
 
 <!-- ===== 2 — LEGACY PROBLEMS ===== -->
-<section data-reveal class="section" style="background: transparent; padding-top: 140px; padding-bottom: 140px;">
+<section id="ch-legacy" data-reveal class="section" style="background: transparent; padding-top: 140px; padding-bottom: 140px;">
   <div class="container">
     <div class="step-label">The Legacy Experience</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
       The system users lived in
     </h2>
-    <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 56px;">
-      Here's what users were working with every day.
+    <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 40px;">
+      Here's what users were working with every day — three compounding pain points. Each is worth looking at on its own.
     </p>
 
-    <!-- 2A: Spatial problem -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">The Spatial Problem</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      Filters expanded vertically from the top, order details from the bottom — both crushed the orders table. Users had to choose: filter, view details, or see their list. Pick one.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/legacy-spatial-1.mov" type="video/mp4">
-      </video>
-    </div>
+    <!-- Tabbed progressive-disclosure: only one pain point at a time -->
+    <div class="om-tabs" data-om-tabs="legacy">
+      <div class="om-tablist" role="tablist" aria-label="Legacy problems">
+        <button class="om-tab" role="tab" data-om-tab="spatial"    aria-selected="true"  aria-controls="legacy-panel-spatial"    id="legacy-tab-spatial"    tabindex="0">The Spatial Problem</button>
+        <button class="om-tab" role="tab" data-om-tab="hidden"     aria-selected="false" aria-controls="legacy-panel-hidden"     id="legacy-tab-hidden"     tabindex="-1">Hidden Actions</button>
+        <button class="om-tab" role="tab" data-om-tab="blind-send" aria-selected="false" aria-controls="legacy-panel-blind-send" id="legacy-tab-blind-send" tabindex="-1">The Blind Send Flow</button>
+      </div>
 
-    <!-- 2B: Hidden actions -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Hidden Actions</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      No checkboxes, no visual affordance for selection. Bulk actions required shift-clicking and a right-click context menu. Buttons toggled enabled/disabled with no explanation.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/legacy-hidden-actions.mov" type="video/mp4">
-      </video>
-    </div>
+      <!-- 2A: Spatial problem -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="spatial" id="legacy-panel-spatial" aria-labelledby="legacy-tab-spatial">
+        <p class="om-tab-description">
+          Filters expanded vertically from the top, order details from the bottom — both crushed the orders table. Users had to choose: filter, view details, or see their list. Pick one.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/legacy-spatial-1.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
 
-    <!-- 2C: Blind send flow -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">The Blind Send Flow</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      Invisible selection → vague send options → useless verification screen (no individual orders visible, nothing fixable) → no confirmation after sending.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/legacy-blind-send.mov" type="video/mp4">
-      </video>
+      <!-- 2B: Hidden actions -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="hidden" id="legacy-panel-hidden" aria-labelledby="legacy-tab-hidden" hidden>
+        <p class="om-tab-description">
+          No checkboxes, no visual affordance for selection. Bulk actions required shift-clicking and a right-click context menu. Buttons toggled enabled/disabled with no explanation.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/legacy-hidden-actions.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- 2C: Blind send flow -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="blind-send" id="legacy-panel-blind-send" aria-labelledby="legacy-tab-blind-send" hidden>
+        <p class="om-tab-description">
+          Invisible selection → vague send options → useless verification screen (no individual orders visible, nothing fixable) → no confirmation after sending.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/legacy-blind-send.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===== 3 — HYPOTHESIS & RESEARCH ===== -->
-<section data-reveal class="section" style="background: var(--page-bg);">
+<section id="ch-research" data-reveal class="section" style="background: var(--page-bg);">
   <div class="container">
     <div class="step-label">Hypothesis &amp; Research</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 28px;">
@@ -245,7 +257,7 @@
         <!-- Inline dashboard illustration -->
         <div style="display: flex; justify-content: center;">
       <svg width="100%" viewBox="0 0 680 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
-        <rect width="680" height="200" rx="12" fill="#2a1f08"/>
+        <rect width="680" height="200" rx="12" fill="#4e6078"/>
         <!-- Top nav bar -->
         <rect x="20" y="16" width="640" height="24" rx="4" fill="rgba(255,255,255,0.06)"/>
         <rect x="30" y="24" width="60" height="8" rx="2" fill="rgba(255,255,255,0.15)"/>
@@ -267,7 +279,7 @@
         <rect x="134" y="80" width="28" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
         <rect x="183" y="80" width="20" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
         <rect x="222" y="80" width="38" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
-        <rect x="281" y="80" width="26" height="5" rx="1" fill="rgba(55,43,11,0.3)"/>
+        <rect x="281" y="80" width="26" height="5" rx="1" fill="rgba(196,207,223,0.4)"/>
         <line x1="30" y1="90" x2="330" y2="90" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <rect x="36" y="96" width="24" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
         <rect x="80" y="96" width="32" height="5" rx="1" fill="rgba(255,255,255,0.08)"/>
@@ -312,21 +324,47 @@
         <rect x="520" y="50" width="140" height="64" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <rect x="530" y="60" width="44" height="7" rx="2" fill="rgba(255,255,255,0.12)"/>
         <rect x="530" y="76" width="100" height="10" rx="3" fill="rgba(184,103,87,0.2)" stroke="rgba(184,103,87,0.3)" stroke-width="1"/>
-        <rect x="530" y="92" width="100" height="10" rx="3" fill="rgba(55,43,11,0.15)" stroke="rgba(55,43,11,0.25)" stroke-width="1"/>
+        <rect x="530" y="92" width="100" height="10" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
         <!-- Far right panel - quick links -->
         <rect x="520" y="120" width="140" height="64" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
         <rect x="530" y="130" width="40" height="7" rx="2" fill="rgba(255,255,255,0.12)"/>
-        <rect x="530" y="146" width="70" height="5" rx="1" fill="rgba(55,43,11,0.25)"/>
-        <rect x="530" y="156" width="55" height="5" rx="1" fill="rgba(55,43,11,0.25)"/>
-        <rect x="530" y="166" width="65" height="5" rx="1" fill="rgba(55,43,11,0.25)"/>
+        <rect x="530" y="146" width="70" height="5" rx="1" fill="rgba(196,207,223,0.3)"/>
+        <rect x="530" y="156" width="55" height="5" rx="1" fill="rgba(196,207,223,0.3)"/>
+        <rect x="530" y="166" width="65" height="5" rx="1" fill="rgba(196,207,223,0.3)"/>
       </svg>
         </div>
       </div>
     </div>
 
-    <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 40px;">
+    <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 24px;">
       Product leaders loved the dashboard direction — it felt sleek, modern, and on-trend for institutional finance. The next step was conducting research to pressure-test our assumptions and see whether this direction would actually hold up with the people using the tool every day.
     </p>
+
+    <!-- Research summary: the punchline up front -->
+    <div class="om-research-summary">
+      <p>The research told a different story. Users didn't want a dashboard — they wanted the list, made faster. Below is the full arc: how we tested the hypothesis, where it fell apart, and the work it took to align the team behind shipping the disciplined version.</p>
+    </div>
+
+    <!-- Section-level expand: the full research story, three accordions inside -->
+    <div class="om-section-expand" data-om-section-expand>
+      <button class="om-section-expand-trigger" type="button" aria-expanded="false">
+        <div>
+          <span class="om-section-expand-eyebrow">Want the full story?</span>
+          <span class="om-section-expand-text">Read how the dashboard hypothesis fell apart</span>
+        </div>
+        <span class="om-section-expand-chevron" aria-hidden="true"></span>
+      </button>
+      <div class="om-section-expand-content" hidden>
+
+        <!-- Accordion 1: How we tested it -->
+        <div class="om-expand-card" data-om-expand-card>
+          <button class="om-expand-trigger" type="button" aria-expanded="false">
+            <div class="om-expand-header">
+              <span class="om-expand-title">How we tested it — research approach &amp; findings</span>
+              <span class="om-expand-icon" aria-hidden="true"></span>
+            </div>
+          </button>
+          <div class="om-expand-content om-expand-content--rich" hidden>
 
     <!-- Research approach -->
     <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px;">Designing the research to test our direction</p>
@@ -464,6 +502,19 @@
       </div>
     </div>
 
+          </div>
+        </div>
+
+        <!-- Accordion 2: Where the hypothesis broke down -->
+        <div class="om-expand-card" data-om-expand-card>
+          <button class="om-expand-trigger" type="button" aria-expanded="false">
+            <div class="om-expand-header">
+              <span class="om-expand-title">Where the hypothesis broke down</span>
+              <span class="om-expand-icon" aria-hidden="true"></span>
+            </div>
+          </button>
+          <div class="om-expand-content om-expand-content--rich" hidden>
+
     <!-- Dashboard concept reaction -->
     <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; margin-top: 0;">Where the hypothesis broke down</p>
 
@@ -490,6 +541,19 @@
         </p>
       </div>
     </div>
+
+          </div>
+        </div>
+
+        <!-- Accordion 3: Aligning the team on the simpler path -->
+        <div class="om-expand-card" data-om-expand-card>
+          <button class="om-expand-trigger" type="button" aria-expanded="false">
+            <div class="om-expand-header">
+              <span class="om-expand-title">Aligning the team on the simpler path</span>
+              <span class="om-expand-icon" aria-hidden="true"></span>
+            </div>
+          </button>
+          <div class="om-expand-content om-expand-content--rich" hidden>
 
     <!-- Simplifying our approach -->
     <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px;">Simplifying our approach</p>
@@ -526,7 +590,7 @@
       <div>
         <p style="font-size: 11px; font-weight: 600; color: var(--deep-text); letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.75; margin-bottom: 12px;">Dashboard layout — chaotic eye path</p>
         <svg width="100%" viewBox="0 0 520 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; border-radius: 10px;">
-          <rect width="520" height="340" rx="10" fill="#2a1f08"/>
+          <rect width="520" height="340" rx="10" fill="#4e6078"/>
           <!-- Top nav -->
           <rect x="12" y="10" width="496" height="18" rx="3" fill="rgba(255,255,255,0.06)"/>
           <rect x="20" y="15" width="50" height="8" rx="2" fill="rgba(255,255,255,0.12)"/>
@@ -565,7 +629,7 @@
           <rect x="290" y="148" width="40" height="7" rx="2" fill="rgba(255,255,255,0.1)"/>
           <rect x="290" y="162" width="200" height="14" rx="3" fill="rgba(184,103,87,0.15)" stroke="rgba(184,103,87,0.25)" stroke-width="1"/>
           <rect x="290" y="182" width="200" height="14" rx="3" fill="rgba(184,103,87,0.15)" stroke="rgba(184,103,87,0.25)" stroke-width="1"/>
-          <rect x="290" y="202" width="200" height="14" rx="3" fill="rgba(55,43,11,0.12)" stroke="rgba(55,43,11,0.2)" stroke-width="1"/>
+          <rect x="290" y="202" width="200" height="14" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
           <!-- Bottom: Account / Quick trade -->
           <rect x="12" y="240" width="328" height="88" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
           <rect x="22" y="248" width="45" height="7" rx="2" fill="rgba(255,255,255,0.1)"/>
@@ -577,8 +641,8 @@
           <rect x="200" y="272" width="70" height="5" rx="1" fill="rgba(255,255,255,0.05)"/>
           <rect x="348" y="240" width="160" height="88" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
           <rect x="358" y="248" width="40" height="7" rx="2" fill="rgba(255,255,255,0.1)"/>
-          <rect x="358" y="262" width="100" height="5" rx="1" fill="rgba(55,43,11,0.2)"/>
-          <rect x="358" y="272" width="80" height="5" rx="1" fill="rgba(55,43,11,0.2)"/>
+          <rect x="358" y="262" width="100" height="5" rx="1" fill="rgba(196,207,223,0.3)"/>
+          <rect x="358" y="272" width="80" height="5" rx="1" fill="rgba(196,207,223,0.3)"/>
           <!-- Numbered hotspots + arrows -->
           <!-- Arrow marker -->
           <defs>
@@ -609,7 +673,7 @@
       <div>
         <p style="font-size: 11px; font-weight: 600; color: var(--deep-text); letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.75; margin-bottom: 12px;">Enhanced table — clean left-to-right scan</p>
         <svg width="100%" viewBox="0 0 520 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; border-radius: 10px;">
-          <rect width="520" height="340" rx="10" fill="#2a1f08"/>
+          <rect width="520" height="340" rx="10" fill="#4e6078"/>
           <!-- Top nav -->
           <rect x="12" y="10" width="496" height="18" rx="3" fill="rgba(255,255,255,0.06)"/>
           <rect x="20" y="15" width="50" height="8" rx="2" fill="rgba(255,255,255,0.12)"/>
@@ -619,7 +683,7 @@
           <!-- Table header -->
           <rect x="20" y="40" width="324" height="14" rx="2" fill="rgba(255,255,255,0.06)"/>
           <!-- Filter icon in upper-left of table header -->
-          <path d="M25 43 L35 43 L31.5 48 L31.5 52 L28.5 52 L28.5 48 Z" fill="rgba(55,43,11,0.6)" stroke="rgba(55,43,11,0.7)" stroke-width="0.5"/>
+          <path d="M25 43 L35 43 L31.5 48 L31.5 52 L28.5 52 L28.5 48 Z" fill="rgba(255,255,255,0.55)" stroke="rgba(255,255,255,0.7)" stroke-width="0.5"/>
           <!-- Column header labels -->
           <rect x="44" y="44" width="30" height="5" rx="1" fill="rgba(255,255,255,0.12)"/>
           <rect x="82" y="44" width="40" height="5" rx="1" fill="rgba(255,255,255,0.12)"/>
@@ -651,7 +715,7 @@
           <rect x="20" y="288" width="324" height="8" rx="1" fill="rgba(255,255,255,0.035)"/>
           <!-- Action bar at bottom of table -->
           <rect x="20" y="302" width="324" height="20" rx="3" fill="rgba(255,255,255,0.03)"/>
-          <rect x="282" y="306" width="50" height="12" rx="3" fill="rgba(55,43,11,0.4)"/>
+          <rect x="282" y="306" width="50" height="12" rx="3" fill="rgba(184,103,87,0.55)"/>
           <!-- Right: Order details panel -->
           <rect x="360" y="34" width="148" height="294" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
           <rect x="370" y="42" width="55" height="7" rx="2" fill="rgba(255,255,255,0.1)"/>
@@ -668,22 +732,22 @@
           <rect x="370" y="182" width="100" height="5" rx="1" fill="rgba(255,255,255,0.05)"/>
           <!-- Numbered hotspots + arrows — clean L→R flow -->
           <!-- 1: Filter icon in grid header -->
-          <circle cx="30" cy="62" r="12" fill="rgba(55,43,11,0.85)"/>
-          <text x="30" y="66" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Inter,sans-serif">1</text>
+          <circle cx="30" cy="62" r="12" fill="rgba(196,207,223,0.9)"/>
+          <text x="30" y="66" text-anchor="middle" fill="#372B0B" font-size="11" font-weight="700" font-family="Inter,sans-serif">1</text>
           <!-- Arrow 1→2 -->
-          <path d="M42 66 C80 76, 140 88, 188 96" stroke="rgba(55,43,11,0.45)" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowE)"/>
+          <path d="M42 66 C80 76, 140 88, 188 96" stroke="rgba(196,207,223,0.6)" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowE)"/>
           <!-- 2: Scan filtered list, spot highlighted row -->
-          <circle cx="200" cy="96" r="12" fill="rgba(55,43,11,0.85)"/>
-          <text x="200" y="100" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Inter,sans-serif">2</text>
+          <circle cx="200" cy="96" r="12" fill="rgba(196,207,223,0.9)"/>
+          <text x="200" y="100" text-anchor="middle" fill="#372B0B" font-size="11" font-weight="700" font-family="Inter,sans-serif">2</text>
           <!-- Arrow 2→3 -->
-          <path d="M212 96 C260 82, 340 62, 418 58" stroke="rgba(55,43,11,0.45)" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowE)"/>
+          <path d="M212 96 C260 82, 340 62, 418 58" stroke="rgba(196,207,223,0.6)" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowE)"/>
           <!-- 3: Check details in side panel -->
-          <circle cx="430" cy="78" r="12" fill="rgba(55,43,11,0.85)"/>
-          <text x="430" y="82" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Inter,sans-serif">3</text>
+          <circle cx="430" cy="78" r="12" fill="rgba(196,207,223,0.9)"/>
+          <text x="430" y="82" text-anchor="middle" fill="#372B0B" font-size="11" font-weight="700" font-family="Inter,sans-serif">3</text>
           <!-- Arrow marker -->
           <defs>
             <marker id="arrowE" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6" fill="rgba(55,43,11,0.45)"/>
+              <path d="M0,0 L6,3 L0,6" fill="rgba(196,207,223,0.6)"/>
             </marker>
           </defs>
           <!-- Label -->
@@ -706,11 +770,17 @@
       </div>
     </div>
 
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- ===== 4 — DESIGN PRINCIPLES — gold-glass break ===== -->
-<section data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+<section id="ch-principles" data-reveal class="section om-gold" style="padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
   <div class="om-gold-dots" aria-hidden="true"></div>
   <div class="om-gold-glow-a" aria-hidden="true"></div>
   <div class="om-gold-glow-b" aria-hidden="true"></div>
@@ -779,87 +849,109 @@
 </section>
 
 <!-- ===== 5 — DESIGN: Main Surface ===== -->
-<section data-reveal class="section" style="background: transparent;">
+<section id="ch-main-surface" data-reveal class="section" style="background: transparent;">
   <div class="container">
     <div class="step-label">Design — Main Surface</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 28px;">
       A surface built to protect the list
     </h2>
 
-    <!-- Filters -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Filters</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      Wanted a filter dropdown and pill-based pattern, but design system team lacked capacity for new components. Pivoted to composing a horizontal collapsible filter panel from existing atoms. Active filter pills above the table show exactly what's included/excluded.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/filters.mov" type="video/mp4">
-      </video>
-    </div>
+    <div class="om-tabs" data-om-tabs="main-surface">
+      <div class="om-tablist" role="tablist" aria-label="Main surface design">
+        <button class="om-tab" role="tab" data-om-tab="filters" aria-selected="true"  aria-controls="ms-panel-filters" id="ms-tab-filters" tabindex="0">Filters</button>
+        <button class="om-tab" role="tab" data-om-tab="table"   aria-selected="false" aria-controls="ms-panel-table"   id="ms-tab-table"   tabindex="-1">Table</button>
+        <button class="om-tab" role="tab" data-om-tab="details" aria-selected="false" aria-controls="ms-panel-details" id="ms-tab-details" tabindex="-1">Order Details</button>
+      </div>
 
-    <!-- Table -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Table</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      Visible checkboxes, color-coded Buy/Sell badges, row-level warning indicators, configurable columns.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/table.mov" type="video/mp4">
-      </video>
-    </div>
+      <!-- Filters -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="filters" id="ms-panel-filters" aria-labelledby="ms-tab-filters">
+        <p class="om-tab-description">
+          Wanted a filter dropdown and pill-based pattern, but design system team lacked capacity for new components. Pivoted to composing a horizontal collapsible filter panel from existing atoms. Active filter pills above the table show exactly what's included/excluded.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/filters.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
 
-    <!-- Order details -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Order Details</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      We initially wanted order details to appear in a persistent panel to the right of the grid — keeping the list and detail view side by side. But the design system didn't yet have a component that could house it this way, so for V1 we utilized an expandable drawer that gave users everything in one click while keeping the table visible behind it.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso);">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/order-details.mov" type="video/mp4">
-      </video>
+      <!-- Table -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="table" id="ms-panel-table" aria-labelledby="ms-tab-table" hidden>
+        <p class="om-tab-description">
+          Visible checkboxes, color-coded Buy/Sell badges, row-level warning indicators, configurable columns.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/table.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- Order details -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="details" id="ms-panel-details" aria-labelledby="ms-tab-details" hidden>
+        <p class="om-tab-description">
+          We initially wanted order details to appear in a persistent panel to the right of the grid — keeping the list and detail view side by side. But the design system didn't yet have a component that could house it this way, so for V1 we utilized an expandable drawer that gave users everything in one click while keeping the table visible behind it.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/order-details.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ===== 6 — DESIGN: Send Flow ===== -->
-<section data-reveal class="section" style="background: transparent; padding-top: 140px; padding-bottom: 140px;">
+<section id="ch-send-flow" data-reveal class="section" style="background: transparent; padding-top: 140px; padding-bottom: 140px;">
   <div class="container">
     <div class="step-label">Design — Send Flow</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 28px;">
       Surfacing the right next step
     </h2>
 
-    <!-- Smart selection -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Smart Selection</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      Checkboxes + "Select..." dropdown with counts (all on page, all matching filters, all buys, all sells, etc.) — intentional, informed choices before sending.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/smart-selection.mov" type="video/mp4">
-      </video>
-    </div>
+    <div class="om-tabs" data-om-tabs="send-flow">
+      <div class="om-tablist" role="tablist" aria-label="Send flow design">
+        <button class="om-tab" role="tab" data-om-tab="selection"    aria-selected="true"  aria-controls="sf-panel-selection"    id="sf-tab-selection"    tabindex="0">Smart Selection</button>
+        <button class="om-tab" role="tab" data-om-tab="verification" aria-selected="false" aria-controls="sf-panel-verification" id="sf-tab-verification" tabindex="-1">Verification Modal</button>
+        <button class="om-tab" role="tab" data-om-tab="cross-link"   aria-selected="false" aria-controls="sf-panel-cross-link"   id="sf-tab-cross-link"   tabindex="-1">Cross-Linking & Feedback</button>
+      </div>
 
-    <!-- Verification modal -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Verification Modal</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      Full transparency — summary stats, orders grouped by category with error/warning badges, individual orders visible with inline error messages, ability to remove problematic orders. Errors must be resolved before proceeding.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso); margin-bottom: 56px;">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/verification-modal.mov" type="video/mp4">
-      </video>
-    </div>
+      <!-- Smart selection -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="selection" id="sf-panel-selection" aria-labelledby="sf-tab-selection">
+        <p class="om-tab-description">
+          Checkboxes + "Select..." dropdown with counts (all on page, all matching filters, all buys, all sells, etc.) — intentional, informed choices before sending.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/smart-selection.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
 
-    <!-- Cross-linking & feedback -->
-    <h3 style="font-size: 16px; font-weight: 700; color: var(--espresso); margin-bottom: 12px;">Cross-Linking & Feedback</h3>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 24px;">
-      After sending, users are automatically taken to view their orders on the next surface — clear, crisp cross-linking that makes it easy to flow through the full order management process from entry to execution to post-execution monitoring, with feedback at every step so users always know where they are and what happened.
-    </p>
-    <div style="border-radius: 12px; overflow: hidden; background: var(--espresso);">
-      <video autoplay loop muted playsinline style="width: 100%; display: block;">
-        <source src="/om-assets/cross-linking-feedback.mov" type="video/mp4">
-      </video>
+      <!-- Verification modal -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="verification" id="sf-panel-verification" aria-labelledby="sf-tab-verification" hidden>
+        <p class="om-tab-description">
+          Full transparency — summary stats, orders grouped by category with error/warning badges, individual orders visible with inline error messages, ability to remove problematic orders. Errors must be resolved before proceeding.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/verification-modal.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- Cross-linking & feedback -->
+      <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="cross-link" id="sf-panel-cross-link" aria-labelledby="sf-tab-cross-link" hidden>
+        <p class="om-tab-description">
+          After sending, users are automatically taken to view their orders on the next surface — clear, crisp cross-linking that makes it easy to flow through the full order management process from entry to execution to post-execution monitoring, with feedback at every step so users always know where they are and what happened.
+        </p>
+        <div class="om-tab-media">
+          <video loop muted playsinline preload="metadata">
+            <source src="/om-assets/cross-linking-feedback.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -901,7 +993,7 @@
 </section>
 
 <!-- ===== 9 — OUTCOME ===== -->
-<section data-reveal class="section" style="background: transparent;">
+<section id="ch-outcome" data-reveal class="section" style="background: transparent;">
   <div class="container">
     <div class="step-label">Outcome</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
@@ -977,7 +1069,7 @@
 </section>
 
 <!-- ===== 8 — PILOT FEEDBACK ===== -->
-<section data-reveal class="section" style="background: var(--page-bg);">
+<section id="ch-pilot" data-reveal class="section" style="background: var(--page-bg);">
   <div class="container">
     <div class="step-label">Pilot Feedback</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
@@ -1046,7 +1138,7 @@
 
 
 <!-- ===== 10 — WHAT'S NEXT ===== -->
-<section data-reveal class="section" style="background: var(--page-bg);">
+<section id="ch-next" data-reveal class="section" style="background: var(--page-bg);">
   <div class="container">
     <div class="step-label">Looking Ahead</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
@@ -1056,103 +1148,135 @@
       Throughout the design process, we deliberately put a pin in features that didn't make the MVP cut — whether due to design system capacity, backend limitations, or the need to keep the initial release focused. These aren't abandoned ideas; they're the next layer of value, informed by everything we learned shipping V1 and observing the pilot.
     </p>
 
-    <!-- Punted from V1 — image + text pairs -->
-    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px;">Circling back post-MVP</p>
+    <!-- Punted from V1 — peek title + image, click to reveal context -->
+    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Circling back post-MVP</p>
+    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 28px;">
+      Tap any card to read why it was deferred and what it would unlock.
+    </p>
 
-    <div style="display: flex; flex-direction: column; gap: 32px; margin-bottom: 48px;">
+    <div class="om-expand-grid">
 
-      <!-- Row 1: Security logos + Saved views (side by side, wide images) -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-        <!-- Security logos -->
-        <div style="background: transparent; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden;">
-          <div style="padding: 0;">
-            <img src="/om-assets/postmvp-security-logos.png" alt="Security logos in the order grid" style="width: 100%; display: block; border-radius: 11px 11px 0 0;">
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <img src="/om-assets/postmvp-security-logos.png" alt="Security logos in the order grid" class="om-expand-image">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Security logos</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
           </div>
-          <div style="padding: 18px 22px;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 4px;">Security logos</p>
-            <p style="font-size: 13px; line-height: 1.6; color: var(--warm-gray); margin: 0;">Visual identifiers for each position in the grid — feasible for common stocks and ETFs, but sourcing was unreliable for more obscure mutual funds and fixed income instruments.</p>
-          </div>
-        </div>
-        <!-- Saved views -->
-        <div style="background: transparent; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden;">
-          <div style="padding: 0;">
-            <img src="/om-assets/postmvp-saved-views.png" alt="Saved views dropdown" style="width: 100%; display: block; border-radius: 11px 11px 0 0;">
-          </div>
-          <div style="padding: 18px 22px;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 4px;">Saved views</p>
-            <p style="font-size: 13px; line-height: 1.6; color: var(--warm-gray); margin: 0;">User-configurable presets for filters, columns, and sort order — required backend support for persistence that wasn't available for V1.</p>
-          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>Visual identifiers for each position in the grid — feasible for common stocks and ETFs, but sourcing was unreliable for more obscure mutual funds and fixed income instruments.</p>
         </div>
       </div>
 
-      <!-- Row 2: In-column filtering (full width split) -->
-      <div style="background: transparent; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
-        <div style="padding: 0; display: flex; align-items: center;">
-          <img src="/om-assets/postmvp-inline-filtering.png" alt="In-column dropdown filtering" style="width: 100%; display: block; border-radius: 11px 0 0 11px;">
-        </div>
-        <div style="padding: 32px 28px; display: flex; flex-direction: column; justify-content: center;">
-          <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 6px;">In-column filtering</p>
-          <p style="font-size: 13px; line-height: 1.6; color: var(--warm-gray); margin: 0;">AG Grid's native in-column filters didn't meet accessibility standards, and the design system couldn't support a new component. The persistent filter panel was the right V1 call, but a sleeker inline option remains on the table.</p>
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <img src="/om-assets/postmvp-saved-views.png" alt="Saved views dropdown" class="om-expand-image">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Saved views</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
+          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>User-configurable presets for filters, columns, and sort order — required backend support for persistence that wasn't available for V1.</p>
         </div>
       </div>
 
-      <!-- Row 3: Live quotes + Account context (detail panel images) -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-        <!-- Live quotes -->
-        <div style="background: transparent; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 0;">
-          <div style="padding: 12px 0 12px 12px; display: flex; align-items: center;">
-            <img src="/om-assets/postmvp-live-quotes.png" alt="Live quotes in the detail panel" style="height: 320px; width: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <img src="/om-assets/postmvp-inline-filtering.png" alt="In-column dropdown filtering" class="om-expand-image">
+          <div class="om-expand-header">
+            <span class="om-expand-title">In-column filtering</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
           </div>
-          <div style="padding: 24px 22px; display: flex; flex-direction: column; justify-content: center;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 4px;">Live quotes</p>
-            <p style="font-size: 13px; line-height: 1.6; color: var(--warm-gray); margin: 0;">Real-time price data inline with orders — punted due to the same data sourcing and performance constraints as security logos.</p>
-          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>AG Grid's native in-column filters didn't meet accessibility standards, and the design system couldn't support a new component. The persistent filter panel was the right V1 call, but a sleeker inline option remains on the table.</p>
         </div>
-        <!-- Account context -->
-        <div style="background: transparent; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; display: grid; grid-template-columns: auto 1fr; gap: 0;">
-          <div style="padding: 12px 0 12px 12px; display: flex; align-items: center;">
-            <img src="/om-assets/postmvp-progressive-disclosure.png" alt="Account snapshot in the detail panel" style="height: 320px; width: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+      </div>
+
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <img src="/om-assets/postmvp-live-quotes.png" alt="Live quotes in the detail panel" class="om-expand-image om-expand-image--contain">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Live quotes</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
           </div>
-          <div style="padding: 24px 22px; display: flex; flex-direction: column; justify-content: center;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 4px;">Account context</p>
-            <p style="font-size: 13px; line-height: 1.6; color: var(--warm-gray); margin: 0;">Contextual access to positions, balances, and other account-level utilities without leaving the order surface — blocked by backend service limitations on pulling account info at scale.</p>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>Real-time price data inline with orders — punted due to the same data sourcing and performance constraints as security logos.</p>
+        </div>
+      </div>
+
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <img src="/om-assets/postmvp-progressive-disclosure.png" alt="Account snapshot in the detail panel" class="om-expand-image om-expand-image--contain">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Account context</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
           </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>Contextual access to positions, balances, and other account-level utilities without leaving the order surface — blocked by backend service limitations on pulling account info at scale.</p>
         </div>
       </div>
 
     </div>
 
-    <!-- Directional thinking -->
-    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px;">Directional thinking</p>
+    <!-- Directional thinking — text-only expand cards -->
+    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Directional thinking</p>
+    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 28px;">
+      Where the design tension goes next. Tap any to read more.
+    </p>
 
-    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 720px; margin-bottom: 48px;">
+    <div class="om-expand-stack">
 
-      <div style="padding: 24px 28px; background: transparent; border: 1px solid var(--border-light); border-radius: 12px;">
-        <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px;">Inline intelligence</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          The post-pilot pivot partially solved for this with better row-level indicators, but there's more to explore — particularly around enabling users to customize their quick filters with saved views or next-best-action filters that surface what needs attention without requiring manual filtering every time.
-        </p>
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Inline intelligence</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
+          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>The post-pilot pivot partially solved for this with better row-level indicators, but there's more to explore — particularly around enabling users to customize their quick filters with saved views or next-best-action filters that surface what needs attention without requiring manual filtering every time.</p>
+        </div>
       </div>
 
-      <div style="padding: 24px 28px; background: transparent; border: 1px solid var(--border-light); border-radius: 12px;">
-        <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px;">Progressive disclosure for supporting data</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          Live quotes, account balances, and positions don't need to be on screen at all times — but they need to be one interaction away. A contextual flyout or expandable row that surfaces the right data for the selected order, then collapses back to keep the surface clean.
-        </p>
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Progressive disclosure for supporting data</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
+          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>Live quotes, account balances, and positions don't need to be on screen at all times — but they need to be one interaction away. A contextual flyout or expandable row that surfaces the right data for the selected order, then collapses back to keep the surface clean.</p>
+        </div>
       </div>
 
-      <div style="padding: 24px 28px; background: transparent; border: 1px solid var(--border-light); border-radius: 12px;">
-        <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px;">Smart defaults and saved workflows</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          The system could learn what each user cares about — which filters they apply first, which order types they monitor — and pre-load those views on arrival. "Tell me what I need to know" starts with remembering what I asked for last time.
-        </p>
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Smart defaults and saved workflows</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
+          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>The system could learn what each user cares about — which filters they apply first, which order types they monitor — and pre-load those views on arrival. "Tell me what I need to know" starts with remembering what I asked for last time.</p>
+        </div>
       </div>
 
-      <div style="padding: 24px 28px; background: transparent; border: 1px solid var(--border-light); border-radius: 12px;">
-        <p style="font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px;">Shared components across trading surfaces</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          Quote, positions, and balance data appear across multiple tools in the platform. Building these as shared, modular components means they can be dropped into Order Management contextually — without being rebuilt or taking up permanent real estate.
-        </p>
+      <div class="om-expand-card" data-om-expand-card>
+        <button class="om-expand-trigger" type="button" aria-expanded="false">
+          <div class="om-expand-header">
+            <span class="om-expand-title">Shared components across trading surfaces</span>
+            <span class="om-expand-icon" aria-hidden="true"></span>
+          </div>
+        </button>
+        <div class="om-expand-content" hidden>
+          <p>Quote, positions, and balance data appear across multiple tools in the platform. Building these as shared, modular components means they can be dropped into Order Management contextually — without being rebuilt or taking up permanent real estate.</p>
+        </div>
       </div>
 
     </div>

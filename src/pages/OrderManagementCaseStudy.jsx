@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 import bodyHtml from './OrderManagementCaseStudy.body.html?raw'
 import './OrderManagementCaseStudy.css'
@@ -21,6 +21,22 @@ import './OrderManagementCaseStudy.css'
  * attributes inside the imported HTML continue to work. They are cleaned
  * up on unmount.
  */
+
+// Chapter list for the sticky scrollspy rail. Each `id` matches the
+// corresponding section's id in OrderManagementCaseStudy.body.html, and
+// `label` is the rail label shown on desktop (≥1200px).
+const CHAPTERS = [
+  { id: 'ch-tldr',         label: 'tl;dr' },
+  { id: 'ch-framing',      label: 'Context' },
+  { id: 'ch-legacy',       label: 'Legacy' },
+  { id: 'ch-research',     label: 'Research' },
+  { id: 'ch-principles',   label: 'Principles' },
+  { id: 'ch-main-surface', label: 'Main surface' },
+  { id: 'ch-send-flow',    label: 'Send flow' },
+  { id: 'ch-outcome',      label: 'Outcome' },
+  { id: 'ch-pilot',        label: 'Pilot' },
+  { id: 'ch-next',         label: "What's next" },
+]
 
 // Same hook used on the home page — adds .revealed to [data-reveal] elements
 // once they cross 10% into the viewport.
@@ -50,6 +66,9 @@ function useScrollReveal() {
 
 export default function OrderManagementCaseStudy() {
   const pageRef = useScrollReveal()
+  const chapterBarRef = useRef(null)
+  const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
+  const [navVisible, setNavVisible] = useState(false)
 
   useEffect(() => {
     // Scroll to top whenever this page mounts.
@@ -175,6 +194,205 @@ export default function OrderManagementCaseStudy() {
     }
   }, [])
 
+  // --- Tabs: reusable progressive-disclosure pattern ---
+  // Finds every [data-om-tabs] group in the injected HTML, wires up click +
+  // arrow-key navigation, plays the active video and pauses hidden ones.
+  useEffect(() => {
+    const cleanups = []
+
+    const initTabGroup = (group) => {
+      const tabs = Array.from(group.querySelectorAll('[data-om-tab]'))
+      const panels = Array.from(group.querySelectorAll('[data-om-tabpanel]'))
+      if (!tabs.length || !panels.length) return
+
+      const setActive = (id) => {
+        tabs.forEach((t) => {
+          const on = t.dataset.omTab === id
+          t.setAttribute('aria-selected', on ? 'true' : 'false')
+          t.setAttribute('tabindex', on ? '0' : '-1')
+        })
+        panels.forEach((p) => {
+          const on = p.dataset.omTabpanel === id
+          if (on) {
+            p.removeAttribute('hidden')
+            const v = p.querySelector('video')
+            if (v) { try { v.currentTime = 0; v.play() } catch (_) { /* no-op */ } }
+          } else {
+            p.setAttribute('hidden', '')
+            const v = p.querySelector('video')
+            if (v) { try { v.pause() } catch (_) { /* no-op */ } }
+          }
+        })
+      }
+
+      // Ensure first panel's video starts playing on mount (autoplay removed
+      // from markup so we can control per-tab).
+      const initiallyActive = tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0]
+      setActive(initiallyActive.dataset.omTab)
+
+      const onClick = (e) => {
+        const btn = e.currentTarget
+        setActive(btn.dataset.omTab)
+        btn.focus()
+      }
+      const onKey = (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') return
+        e.preventDefault()
+        const idx = tabs.indexOf(e.currentTarget)
+        let next = idx
+        if (e.key === 'ArrowRight') next = (idx + 1) % tabs.length
+        if (e.key === 'ArrowLeft')  next = (idx - 1 + tabs.length) % tabs.length
+        if (e.key === 'Home')       next = 0
+        if (e.key === 'End')        next = tabs.length - 1
+        const target = tabs[next]
+        setActive(target.dataset.omTab)
+        target.focus()
+      }
+
+      tabs.forEach((t) => {
+        t.addEventListener('click', onClick)
+        t.addEventListener('keydown', onKey)
+      })
+
+      cleanups.push(() => {
+        tabs.forEach((t) => {
+          t.removeEventListener('click', onClick)
+          t.removeEventListener('keydown', onKey)
+        })
+      })
+    }
+
+    // Wait a frame so dangerouslySetInnerHTML content is in the DOM.
+    const rafId = requestAnimationFrame(() => {
+      document.querySelectorAll('[data-om-tabs]').forEach(initTabGroup)
+    })
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      cleanups.forEach((fn) => fn())
+    }
+  }, [])
+
+  // --- Expand cards: click peek to reveal more ---
+  // Markup: <div data-om-expand-card> with .om-expand-trigger button +
+  // .om-expand-content (initially [hidden]). Toggles aria-expanded, hidden,
+  // and a data-open attribute used by the CSS for the "+" → "×" rotation.
+  useEffect(() => {
+    const cleanups = []
+
+    const initExpandCard = (card) => {
+      // Find the trigger + content as DIRECT children of this card so nested
+      // expand-cards (a section-expand wrapping inner expand-cards) don't
+      // hijack each other's elements.
+      const trigger =
+        card.querySelector(':scope > .om-expand-trigger') ||
+        card.querySelector(':scope > .om-section-expand-trigger')
+      const content =
+        card.querySelector(':scope > .om-expand-content') ||
+        card.querySelector(':scope > .om-section-expand-content')
+      if (!trigger || !content) return
+
+      const setOpen = (open) => {
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false')
+        card.setAttribute('data-open', open ? 'true' : 'false')
+        if (open) content.removeAttribute('hidden')
+        else content.setAttribute('hidden', '')
+      }
+
+      const onClick = () => {
+        const open = trigger.getAttribute('aria-expanded') !== 'true'
+        setOpen(open)
+      }
+
+      trigger.addEventListener('click', onClick)
+      cleanups.push(() => trigger.removeEventListener('click', onClick))
+    }
+
+    const rafId = requestAnimationFrame(() => {
+      document
+        .querySelectorAll('[data-om-expand-card], [data-om-section-expand]')
+        .forEach(initExpandCard)
+    })
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      cleanups.forEach((fn) => fn())
+    }
+  }, [])
+
+  // --- Chapter nav: scrollspy + visibility ---
+  // Watches each chapter section. The "active" chapter is the topmost section
+  // whose top has crossed ~30% down the viewport — i.e. the one the reader is
+  // currently scrolling through. Nav fades in once the reader has scrolled
+  // past the hero, and out once they reach the closing reflection.
+  useEffect(() => {
+    const sections = CHAPTERS
+      .map((c) => document.getElementById(c.id))
+      .filter(Boolean)
+    if (!sections.length) return
+
+    // Track each section's top relative to viewport. Recompute on scroll +
+    // resize. We pick the last section whose top has crossed our threshold.
+    const threshold = () => Math.max(140, window.innerHeight * 0.28)
+
+    const update = () => {
+      const t = threshold()
+      let current = sections[0].id
+      for (const s of sections) {
+        const rect = s.getBoundingClientRect()
+        if (rect.top - t <= 0) current = s.id
+        else break
+      }
+      setActiveChapter((prev) => (prev === current ? prev : current))
+
+      // Show nav once we're past the hero (~520px into the page) and hide
+      // again once we're within ~600px of the bottom (the reflection coda).
+      const scrollY = window.scrollY || window.pageYOffset
+      const past = scrollY > 520
+      const docH = document.documentElement.scrollHeight
+      const viewH = window.innerHeight
+      const nearBottom = scrollY + viewH > docH - 600
+      setNavVisible(past && !nearBottom)
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  // When the active chapter changes, auto-center its label inside the
+  // bottom word bar (only relevant when the bar is the visible variant —
+  // overflow scrolling kicks in when the labels exceed viewport width).
+  useEffect(() => {
+    const bar = chapterBarRef.current
+    if (!bar) return
+    const active = bar.querySelector('.is-active')
+    if (!active) return
+    const barRect = bar.getBoundingClientRect()
+    const linkRect = active.getBoundingClientRect()
+    const offset = (linkRect.left - barRect.left) - (barRect.width - linkRect.width) / 2
+    bar.scrollTo({
+      left: bar.scrollLeft + offset,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+  }, [activeChapter])
+
+  // Smooth-scroll a chapter into view, accounting for the fixed top nav.
+  const scrollToChapter = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const navOffset = 88 // ≈ height of the top Nav so the section title isn't hidden
+    const top = el.getBoundingClientRect().top + window.scrollY - navOffset
+    window.scrollTo({
+      top,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+  }
+
   // Hero pill tags — mirror the home page's fadeUp stagger.
   const heroPills = [
     { label: 'Research',       variant: 'blue' },
@@ -187,6 +405,53 @@ export default function OrderManagementCaseStudy() {
   return (
     <div ref={pageRef} style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Nav />
+
+      {/* Sticky chapter nav — left rail at ≥1440px viewport.
+          .is-visible only adds the fade-in once the reader is past the hero. */}
+      <aside
+        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
+        aria-label="Case study chapters"
+      >
+        <ul className="om-chapter-nav-list">
+          {CHAPTERS.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                type="button"
+                className={`om-chapter-nav-link${activeChapter === id ? ' is-active' : ''}`}
+                aria-current={activeChapter === id ? 'true' : undefined}
+                onClick={() => scrollToChapter(id)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      {/* Floating word bar — mid-viewport fallback (768–1439px). Same
+          scrollspy state drives the active label; the bar scrolls
+          horizontally if it overflows, with auto-centering on active. */}
+      <aside
+        ref={chapterBarRef}
+        className={`om-chapter-bar${navVisible ? ' is-visible' : ''}`}
+        aria-label="Case study chapter shortcuts"
+      >
+        <ul>
+          {CHAPTERS.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                type="button"
+                className={`om-chapter-bar-link${activeChapter === id ? ' is-active' : ''}`}
+                aria-current={activeChapter === id ? 'true' : undefined}
+                onClick={() => scrollToChapter(id)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
 
       {/* Home-style ambient radial-gradient wrapper — same multi-color wash
           behind the hero + body content. The case study is ~4-5x taller than
@@ -248,7 +513,7 @@ export default function OrderManagementCaseStudy() {
                   maxWidth: 540,
                 }}
               >
-                We explored the bold direction, let research kill it, and shipped the disciplined one — sometimes the hardest design work is knowing what not to build.
+                We explored the bold direction, let research kill it, and shipped the disciplined one — sometimes the most impactful design work is knowing what not to build.
               </p>
             </div>
             <div className="hero-pills">

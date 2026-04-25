@@ -159,9 +159,11 @@
   }
 
   
-  /* Outer hero-anim frame — matches the home page's AI × Design gold gradient
-     with the same dark-brown dot grid (rgba(55,43,11,0.08)) so this animated
-     stage visually ties to the "Beyond the Work" section on home. */
+  /* Outer hero-anim frame — soft steel-blue wash with the same dark-brown
+     dot grid. Gold was too saturated as a section fill in this case study;
+     steel-blue creates a cool counterpoint to the warm cream main bg.
+     (Home palette --steel-blue is #7b8ea8; we go lighter here so dark text
+     and the lo-fi animated UI inside still read clearly.) */
   .om-page .hero-anim {
     position: relative;
     height: 460px;
@@ -169,8 +171,8 @@
     overflow: hidden;
     background:
       radial-gradient(circle at 1px 1px, rgba(55,43,11,0.1) 1px, transparent 0) 0 0 / 14px 14px,
-      linear-gradient(135deg, #DDB365 0%, #E6C07A 50%, #DDB365 100%);
-    box-shadow: inset 0 0 140px rgba(55,43,11,0.18);
+      linear-gradient(135deg, #b8c4d4 0%, #cdd7e3 50%, #b8c4d4 100%);
+    box-shadow: inset 0 0 140px rgba(55,43,11,0.14);
   }
   /* Soft ambient glows + subtle vignette — echoes the blurred glow orbs in the
      home's AI × Design section. */
@@ -217,7 +219,7 @@
     overflow: hidden;
   }
   .om-page .lofi-topbar {
-    background: #2a1f08;
+    background: var(--deep-blue);
     display: flex; align-items: center; gap: 6px; padding-left: 14px;
   }
   .om-page .lofi-topbar span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.18); }
@@ -238,8 +240,8 @@
   
   .om-page .lofi-filter {
     flex: 0 0 180px;
-    background: rgba(55,43,11,0.10);
-    border-right: 1px solid rgba(55,43,11,0.14);
+    background: rgba(196,207,223,0.55);
+    border-right: 1px solid rgba(95,122,154,0.3);
     padding: 14px 14px;
     display: flex; flex-direction: column; gap: 12px;
     overflow: hidden;
@@ -316,7 +318,7 @@
     height: 14px; border-radius: 8px; background: rgba(55,43,11,0.18);
     border: 1px solid rgba(55,43,11,0.32);
   }
-  .om-page .lofi-pill.buy { background: rgba(126,156,107,0.28); border-color: rgba(126,156,107,0.55); }
+  .om-page .lofi-pill.buy { background: rgba(196,207,223,0.5); border-color: rgba(95,122,154,0.5); }
   .om-page .lofi-pill.sell { background: rgba(184,103,87,0.28); border-color: rgba(184,103,87,0.55); }
 
   
@@ -345,7 +347,7 @@
 
   
   .om-page .lofi-footer {
-    background: #2a1f08;
+    background: var(--deep-blue);
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 18px;
   }
@@ -363,7 +365,7 @@
   
   .om-page .lofi-modal-overlay {
     position: absolute; inset: 22px 0 38px 0;
-    background: rgba(15,12,10,0.42);
+    background: rgba(78, 96, 120, 0.42);
     display: flex; align-items: flex-start; justify-content: center;
     padding-top: 22px;
     opacity: 0;
@@ -410,7 +412,7 @@
     display: grid; grid-template-columns: 30px 24px 1fr 36px; gap: 8px; align-items: center; padding: 4px 0;
   }
   .om-page .lofi-modal-row .sym { height: 5px; border-radius: 3px; background: rgba(36,29,21,0.55); }
-  .om-page .lofi-modal-row .badge { height: 12px; border-radius: 6px; background: rgba(126,156,107,0.45); }
+  .om-page .lofi-modal-row .badge { height: 12px; border-radius: 6px; background: rgba(196,207,223,0.75); }
   .om-page .lofi-modal-row .qty { height: 5px; border-radius: 3px; background: rgba(55,43,11,0.32); }
   .om-page .lofi-modal-row .total { height: 5px; border-radius: 3px; background: rgba(55,43,11,0.4); }
   .om-page .lofi-modal-ft { background: #fbfaf4; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 0 14px; border-top: 1px solid rgba(55,43,11,0.18); }
@@ -440,8 +442,12 @@
      in the continuous cream wash — currently applied to the ecosystem map,
      Design Principles (§4), and the Closing Reflection (§11). Dot grid +
      ambient glow orbs + a shared eyebrow/title/card grammar. */
+  /* The .om-gold class kept its name for stability across the body HTML, but
+     it's no longer mustard. It's now a soft steel-blue wash — same warm
+     terracotta accent glow, with the secondary glow shifted to a soft cream
+     to keep the section feeling warm-anchored. */
   .om-page .om-gold {
-    background: linear-gradient(135deg, #DDB365 0%, #E6C07A 50%, #DDB365 100%);
+    background: linear-gradient(135deg, #c4cfdc 0%, #d4dde7 50%, #c4cfdc 100%);
     position: relative;
     overflow: hidden;
   }
@@ -453,13 +459,13 @@
   .om-page .om-gold-glow-a {
     position: absolute; top: -80px; right: -100px;
     width: 400px; height: 400px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(184,103,87,0.3) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(184,103,87,0.32) 0%, transparent 70%);
     filter: blur(80px); pointer-events: none;
   }
   .om-page .om-gold-glow-b {
     position: absolute; bottom: -60px; left: -80px;
     width: 350px; height: 350px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(196,207,223,0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(245,232,211,0.45) 0%, transparent 70%);
     filter: blur(80px); pointer-events: none;
   }
   .om-page .om-gold-eyebrow {
@@ -486,6 +492,509 @@
   .om-page .om-gold-body {
     font-size: clamp(16px, 1.6vw, 19px); font-weight: 400; line-height: 1.75;
     color: rgba(55,43,11,0.82); margin: 0;
+  }
+
+  /* ====== Tabs: reusable progressive-disclosure pattern ======
+     Markup convention:
+       <div class="om-tabs" data-om-tabs="group-id">
+         <div class="om-tablist" role="tablist">
+           <button class="om-tab" role="tab" data-om-tab="a" aria-selected="true">Label</button>
+           ...
+         </div>
+         <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="a">...</div>
+         ...
+       </div>
+  */
+  .om-page .om-tabs { margin-bottom: 16px; }
+  .om-page .om-tablist {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 36px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(184,103,87,0.12);
+  }
+  .om-page .om-tab {
+    font-family: inherit;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+    color: rgba(55,43,11,0.52);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+  }
+  .om-page .om-tab:hover {
+    color: var(--accent-dark);
+    background: rgba(184,103,87,0.06);
+  }
+  .om-page .om-tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .om-page .om-tab[aria-selected="true"] {
+    color: var(--accent-dark);
+    background: var(--accent-light);
+    border-color: rgba(184,103,87,0.22);
+  }
+  .om-page .om-tabpanel {
+    animation: omTabFadeIn 260ms ease;
+  }
+  .om-page .om-tabpanel[hidden] { display: none; }
+  .om-page .om-tab-description {
+    font-size: 13px; line-height: 1.65; color: var(--warm-gray);
+    max-width: 640px; margin-bottom: 24px;
+  }
+  .om-page .om-tab-media {
+    border-radius: 12px; overflow: hidden;
+    background: var(--espresso);
+    margin-bottom: 40px;
+  }
+  .om-page .om-tab-media video { width: 100%; display: block; }
+
+  @keyframes omTabFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .om-page .om-tablist { gap: 6px; }
+    .om-page .om-tab { padding: 8px 14px; font-size: 12px; }
+  }
+
+  /* ====== Expand cards: click to reveal more =======
+     Markup convention:
+       <div class="om-expand-card" data-om-expand-card>
+         <button class="om-expand-trigger" aria-expanded="false">
+           [optional <img class="om-expand-image" />]
+           <div class="om-expand-header">
+             <span class="om-expand-title">...</span>
+             <span class="om-expand-icon" aria-hidden="true"></span>
+           </div>
+         </button>
+         <div class="om-expand-content" hidden><p>...</p></div>
+       </div>
+  */
+  .om-page .om-expand-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .om-page .om-expand-grid > :last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+  .om-page .om-expand-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 760px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 720px) {
+    .om-page .om-expand-grid { grid-template-columns: 1fr; }
+    .om-page .om-expand-grid > :last-child:nth-child(odd) { grid-column: auto; }
+  }
+
+  .om-page .om-expand-card {
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    background: transparent;
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  }
+  .om-page .om-expand-card:hover {
+    border-color: rgba(184,103,87,0.35);
+  }
+  .om-page .om-expand-card[data-open="true"] {
+    border-color: rgba(184,103,87,0.45);
+    box-shadow: 0 6px 24px rgba(89,80,74,0.07);
+  }
+  .om-page .om-expand-trigger {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .om-page .om-expand-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .om-page .om-expand-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: rgba(245,232,211,0.35);
+  }
+  .om-page .om-expand-image--contain {
+    object-fit: contain;
+    padding: 18px;
+  }
+  .om-page .om-expand-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 22px;
+  }
+  .om-page .om-expand-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-dark);
+  }
+  .om-page .om-expand-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(184,103,87,0.08);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 200ms ease;
+  }
+  .om-page .om-expand-icon::before,
+  .om-page .om-expand-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--accent-dark);
+    top: 50%;
+    left: 50%;
+    border-radius: 1px;
+  }
+  .om-page .om-expand-icon::before {
+    width: 10px; height: 1.5px;
+    transform: translate(-50%, -50%);
+  }
+  .om-page .om-expand-icon::after {
+    width: 1.5px; height: 10px;
+    transform: translate(-50%, -50%);
+    transition: transform 240ms ease;
+  }
+  .om-page .om-expand-card[data-open="true"] .om-expand-icon {
+    background: rgba(184,103,87,0.18);
+  }
+  .om-page .om-expand-card[data-open="true"] .om-expand-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .om-page .om-expand-content {
+    padding: 0 22px 22px;
+    animation: omExpandIn 280ms ease;
+  }
+  .om-page .om-expand-content[hidden] { display: none; }
+  .om-page .om-expand-content p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--warm-gray);
+    margin: 0;
+  }
+
+  @keyframes omExpandIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ====== Section-level expand: "read the research story" =======
+     A larger, more prominent toggle for hiding entire dense sections.
+     Markup:
+       <div class="om-section-expand" data-om-section-expand>
+         <button class="om-section-expand-trigger" aria-expanded="false">
+           <span class="om-section-expand-eyebrow">Eyebrow</span>
+           <span class="om-section-expand-text">Headline</span>
+           <span class="om-section-expand-chevron" aria-hidden="true"></span>
+         </button>
+         <div class="om-section-expand-content" hidden>...</div>
+       </div>
+  */
+  .om-page .om-section-expand {
+    margin: 12px 0 32px;
+    max-width: 720px;
+  }
+  .om-page .om-section-expand-trigger {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    padding: 22px 28px;
+    background: rgba(245,232,211,0.35);
+    border: 1px solid rgba(184,103,87,0.22);
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+  .om-page .om-section-expand-trigger:hover {
+    background: rgba(245,232,211,0.6);
+    border-color: rgba(184,103,87,0.4);
+  }
+  .om-page .om-section-expand-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .om-page .om-section-expand[data-open="true"] .om-section-expand-trigger {
+    background: rgba(245,232,211,0.55);
+    border-color: rgba(184,103,87,0.45);
+  }
+  .om-page .om-section-expand-eyebrow {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .om-page .om-section-expand-text {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-dark);
+    line-height: 1.4;
+  }
+  .om-page .om-section-expand-trigger > div {
+    flex: 1;
+  }
+  .om-page .om-section-expand-chevron {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(184,103,87,0.12);
+    flex-shrink: 0;
+    position: relative;
+    transition: background 200ms ease, transform 280ms ease;
+  }
+  .om-page .om-section-expand-chevron::before {
+    content: '';
+    position: absolute;
+    width: 8px; height: 8px;
+    border-right: 1.75px solid var(--accent-dark);
+    border-bottom: 1.75px solid var(--accent-dark);
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: transform 280ms ease;
+  }
+  .om-page .om-section-expand[data-open="true"] .om-section-expand-chevron {
+    background: rgba(184,103,87,0.22);
+  }
+  .om-page .om-section-expand[data-open="true"] .om-section-expand-chevron::before {
+    transform: translate(-50%, -50%) rotate(-135deg);
+    top: 55%;
+  }
+  .om-page .om-section-expand-content {
+    margin-top: 28px;
+    animation: omExpandIn 320ms ease;
+  }
+  .om-page .om-section-expand-content[hidden] { display: none; }
+
+  /* When inner expand-cards live inside the section-expand, stack them. */
+  .om-page .om-section-expand-content > .om-expand-card {
+    margin-bottom: 16px;
+  }
+  .om-page .om-section-expand-content > .om-expand-card:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Rich-content variant of expand-content: keeps horizontal padding so
+     content doesn't sit flush against the card border, but uses a slightly
+     reduced left/right value to leave room for nested grids and SVG diagrams
+     authored at the section's full content width. */
+  .om-page .om-expand-content--rich {
+    padding: 20px 22px 28px;
+  }
+  /* Inner sections inside the rich expand often have their own top margins;
+     suppress the first child's margin-top so it lines up with the divider. */
+  .om-page .om-expand-content--rich > *:first-child {
+    margin-top: 0;
+  }
+
+  /* Research-story summary that lives between the hypothesis and the expand */
+  .om-page .om-research-summary {
+    max-width: 720px;
+    padding: 24px 28px;
+    border-left: 3px solid var(--accent);
+    background: rgba(184,103,87,0.05);
+    border-radius: 0 12px 12px 0;
+    margin: 32px 0 8px;
+  }
+  .om-page .om-research-summary p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--warm-gray);
+    margin: 0 0 12px;
+  }
+  .om-page .om-research-summary p:last-child { margin-bottom: 0; }
+
+  /* ====== Sticky chapter nav (scrollspy left rail) ======
+     Tightened version: drops the "Chapters" header, uses 10px text and a
+     smaller indicator column so the rail fits in the section padding at
+     viewports as narrow as ~1440px without overlapping content.
+
+     Visibility tiers:
+       ≥ 1440px viewport — left rail (this component) is shown
+       768–1439px        — bottom-floating word bar (.om-chapter-bar) shows
+       < 768px           — both hidden, case study reads top-to-bottom
+  */
+  .om-chapter-nav {
+    position: fixed;
+    left: clamp(12px, 1.6vw, 24px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 320ms ease;
+  }
+  .om-chapter-nav.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .om-chapter-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .om-chapter-nav-link {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    column-gap: 8px;
+    align-items: center;
+    width: 100%;
+    padding: 4px 0;
+    color: rgba(55,43,11,0.42);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    font-family: inherit;
+    text-align: left;
+    white-space: nowrap;
+    transition: color 200ms ease;
+  }
+  .om-chapter-nav-link::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    justify-self: end;
+    transition: width 220ms ease, height 220ms ease, border-radius 220ms ease, background-color 220ms ease;
+  }
+  .om-chapter-nav-link:hover { color: rgba(55,43,11,0.75); }
+  .om-chapter-nav-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+  .om-chapter-nav-link.is-active {
+    color: var(--accent-dark);
+    font-weight: 700;
+  }
+  .om-chapter-nav-link.is-active::before {
+    width: 12px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--accent);
+  }
+  @media (max-width: 1439px) {
+    .om-chapter-nav { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .om-chapter-nav,
+    .om-chapter-nav-link::before {
+      transition: none;
+    }
+  }
+
+  /* ====== Floating word bar (mid-viewport fallback) ======
+     Shown when the left rail won't fit. Word labels in a horizontal pill
+     at the bottom; the bar scrolls horizontally if it overflows the
+     viewport (active link auto-centers via JS). Replaces the prior
+     dot-only pill since labels alone weren't enough context.
+  */
+  .om-chapter-bar {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    max-width: calc(100vw - 32px);
+    background: rgba(245,232,211,0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(184,103,87,0.20);
+    border-radius: 999px;
+    padding: 5px;
+    box-shadow: 0 6px 24px rgba(89,80,74,0.10);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 320ms ease;
+    display: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .om-chapter-bar::-webkit-scrollbar { display: none; }
+  .om-chapter-bar.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .om-chapter-bar ul {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+  }
+  .om-chapter-bar-link {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: rgba(55,43,11,0.55);
+    white-space: nowrap;
+    transition: color 200ms ease, background-color 200ms ease;
+  }
+  .om-chapter-bar-link:hover {
+    color: var(--accent-dark);
+    background: rgba(184,103,87,0.08);
+  }
+  .om-chapter-bar-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .om-chapter-bar-link.is-active {
+    color: var(--accent-dark);
+    background: rgba(184,103,87,0.18);
+    font-weight: 700;
+  }
+  @media (min-width: 768px) and (max-width: 1439px) {
+    .om-chapter-bar { display: block; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .om-chapter-bar,
+    .om-chapter-bar-link {
+      transition: none;
+    }
   }
 
   /* Principle cards recolor when sitting on a gold-glass section — become

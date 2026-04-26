@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 import bodyHtml from './OrderManagementCaseStudy.body.html?raw'
+import './case-study-shared.css'
 import './OrderManagementCaseStudy.css'
 
 /**
@@ -75,16 +76,23 @@ export default function OrderManagementCaseStudy() {
 
     // --- Compare lightbox wiring (ported from the HTML's <script>) ---
     const pairs = {
-      pilot:   { type: 'video', pre: '/om-assets/pre.mov',               post: '/om-assets/post.mov',              labels: ['Before', 'After']  },
+      pilot:   { type: 'video', pre: '/om-assets/pre.mov',               post: '/om-assets/post.mov',              labels: ['Piloted', 'Post-Pilot']  },
       surface: { type: 'image', pre: '/om-assets/legacy-still.png',      post: '/om-assets/shipped-still.png',     labels: ['Legacy', 'Shipped'] },
       send:    { type: 'image', pre: '/om-assets/legacy-send-still.png', post: '/om-assets/shipped-send-still.png',labels: ['Legacy', 'Shipped'] },
     }
+    // Tours: navigable sequences of pairs shown together in the lightbox
+    const tours = {
+      outcome: { pairs: ['surface', 'send'], titles: ['Order management surface', 'Send flow'] },
+    }
     let current = null
+    let currentTour = null
+    let currentTourIndex = 0
 
     const getEls = () => ({
       lb: document.getElementById('compareLightbox'),
       stage: document.getElementById('compareLightboxStage'),
       toggle: document.getElementById('compareLightboxToggle'),
+      sectionToggle: document.getElementById('compareLightboxSectionToggle'),
     })
 
     const setActive = (mode) => {
@@ -103,6 +111,32 @@ export default function OrderManagementCaseStudy() {
       const btns = toggle.querySelectorAll('button')
       if (btns[0]) btns[0].textContent = labels[0]
       if (btns[1]) btns[1].textContent = labels[1]
+    }
+
+    const setTourActive = () => {
+      const { sectionToggle } = getEls()
+      if (!sectionToggle) return
+      sectionToggle.querySelectorAll('button').forEach((b, i) => {
+        const on = i === currentTourIndex
+        b.style.background = on ? 'rgba(255,255,255,0.18)' : 'transparent'
+        b.style.color = on ? '#fff' : 'rgba(255,255,255,0.65)'
+      })
+    }
+
+    const renderTourSections = () => {
+      const { sectionToggle } = getEls()
+      if (!sectionToggle) return
+      if (!currentTour || !tours[currentTour]) {
+        sectionToggle.style.display = 'none'
+        sectionToggle.innerHTML = ''
+        return
+      }
+      const tour = tours[currentTour]
+      sectionToggle.innerHTML = tour.titles.map((title, i) =>
+        `<button type="button" data-tour-index="${i}" onclick="switchTour(${i})" style="border:0;background:transparent;color:rgba(255,255,255,0.65);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:7px 16px;border-radius:999px;cursor:pointer;font-family:inherit;">${title}</button>`
+      ).join('')
+      sectionToggle.style.display = 'inline-flex'
+      setTourActive()
     }
 
     const render = (mode) => {
@@ -139,13 +173,42 @@ export default function OrderManagementCaseStudy() {
 
     window.openCompare = (id, mode) => {
       if (!pairs[id]) return
+      currentTour = null
+      currentTourIndex = 0
       current = id
+      renderTourSections()
       setLabels(pairs[id].labels)
       render(mode || 'pre')
       const { lb } = getEls()
       if (!lb) return
       lb.style.display = 'flex'
       document.body.style.overflow = 'hidden'
+    }
+
+    window.openCompareTour = (tourId, mode) => {
+      const tour = tours[tourId]
+      if (!tour) return
+      currentTour = tourId
+      currentTourIndex = 0
+      current = tour.pairs[0]
+      renderTourSections()
+      setLabels(pairs[current].labels)
+      render(mode || 'pre')
+      const { lb } = getEls()
+      if (!lb) return
+      lb.style.display = 'flex'
+      document.body.style.overflow = 'hidden'
+    }
+
+    window.switchTour = (index) => {
+      if (!currentTour) return
+      const tour = tours[currentTour]
+      if (!tour || index < 0 || index >= tour.pairs.length) return
+      currentTourIndex = index
+      current = tour.pairs[index]
+      setTourActive()
+      setLabels(pairs[current].labels)
+      render('pre')
     }
 
     window.switchCompare = (mode) => render(mode)
@@ -155,6 +218,9 @@ export default function OrderManagementCaseStudy() {
       if (lb) lb.style.display = 'none'
       if (stage) stage.innerHTML = ''
       current = null
+      currentTour = null
+      currentTourIndex = 0
+      renderTourSections()
       document.body.style.overflow = ''
     }
 
@@ -164,7 +230,7 @@ export default function OrderManagementCaseStudy() {
       if (lb && e.target === lb) window.closeCompare()
     }
 
-    // Keyboard: Esc closes, arrows switch.
+    // Keyboard: Esc closes, arrows switch (pre/post within a section).
     const onKey = (e) => {
       const { lb } = getEls()
       if (!lb || lb.style.display !== 'flex') return
@@ -188,6 +254,8 @@ export default function OrderManagementCaseStudy() {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
       delete window.openCompare
+      delete window.openCompareTour
+      delete window.switchTour
       delete window.switchCompare
       delete window.closeCompare
     }
@@ -402,7 +470,7 @@ export default function OrderManagementCaseStudy() {
   ]
 
   return (
-    <div ref={pageRef} style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+    <div ref={pageRef} className="cs-page" style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Nav />
 
       {/* Sticky chapter nav — left rail at ≥1440px viewport.

@@ -1,10 +1,28 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Nav from '../components/Nav.jsx'
+import './case-study-shared.css'
 
 const accent='#5F7A9A',accentDark='#2C3B55',accentMid='rgba(196,207,223,0.5)',accentLight='rgba(196,207,223,0.28)',accentPale='#E6ECF2',textLight='#edeef0',warmGray='#372B0B',deepBlue='#2C3B55',cream='#F6F6F1',pageBg='#FFFFFC',borderLight='rgba(196,207,223,0.3)',terracotta='#B86757'
 const sideP='clamp(20px, 5vw, 80px)',contentW='1200px'
 const sec=(bg)=>({width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`,background:bg})
 const ct={maxWidth:contentW,width:'100%',margin:'0 auto'}
+
+// Chapter list for the sticky scrollspy rail. Each `id` matches a section's
+// id below; matching the OM pattern this case study has 11 chapters mapped
+// to the 7-step process plus tl;dr / framing / outcomes / reflection.
+const CHAPTERS = [
+  { id: 'ch-tldr',           label: 'tl;dr' },
+  { id: 'ch-framing',        label: 'Framing' },
+  { id: 'ch-discovery',      label: 'Discovery' },
+  { id: 'ch-design-sprint',  label: 'Design Sprint' },
+  { id: 'ch-prioritization', label: 'Prioritization' },
+  { id: 'ch-lofi',           label: 'Lofi' },
+  { id: 'ch-closer-look',    label: 'A Closer Look' },
+  { id: 'ch-design',         label: 'Design' },
+  { id: 'ch-validate',       label: 'Validate' },
+  { id: 'ch-outcomes',       label: 'Outcomes' },
+  { id: 'ch-reflection',     label: 'Reflection' },
+]
 
 function StepLabel({children,light}){
   return <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.18em',textTransform:'uppercase',color:light?'rgba(232,240,238,0.7)':accent,display:'flex',alignItems:'center',gap:10,marginBottom:40}}>{children}<span style={{flex:1,height:1,background:light?'rgba(255,255,255,0.15)':'rgba(125,145,165,0.2)'}}/></div>
@@ -1153,8 +1171,115 @@ function IterationCards(){
 }
 
 export default function RulesCaseStudy(){
-  return(<div className="rules-cs-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:warmGray,background:cream,overflowX:'hidden'}}>
+  const chapterBarRef = useRef(null)
+  const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
+  const [navVisible, setNavVisible] = useState(false)
+
+  // --- Chapter nav: scrollspy + visibility (mirrors OM's pattern) ---
+  useEffect(() => {
+    const sections = CHAPTERS
+      .map((c) => document.getElementById(c.id))
+      .filter(Boolean)
+    if (!sections.length) return
+
+    const threshold = () => Math.max(140, window.innerHeight * 0.28)
+
+    const update = () => {
+      const t = threshold()
+      let current = sections[0].id
+      for (const s of sections) {
+        const rect = s.getBoundingClientRect()
+        if (rect.top - t <= 0) current = s.id
+        else break
+      }
+      setActiveChapter((prev) => (prev === current ? prev : current))
+
+      const scrollY = window.scrollY || window.pageYOffset
+      const past = scrollY > 520
+      const docH = document.documentElement.scrollHeight
+      const viewH = window.innerHeight
+      const nearBottom = scrollY + viewH > docH - 600
+      setNavVisible(past && !nearBottom)
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  // Auto-center the active label inside the bottom word bar.
+  useEffect(() => {
+    const bar = chapterBarRef.current
+    if (!bar) return
+    const active = bar.querySelector('.is-active')
+    if (!active) return
+    const barRect = bar.getBoundingClientRect()
+    const linkRect = active.getBoundingClientRect()
+    const offset = (linkRect.left - barRect.left) - (barRect.width - linkRect.width) / 2
+    bar.scrollTo({
+      left: bar.scrollLeft + offset,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+  }, [activeChapter])
+
+  const scrollToChapter = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const navOffset = 88
+    const top = el.getBoundingClientRect().top + window.scrollY - navOffset
+    window.scrollTo({
+      top,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+  }
+
+  return(<div className="rules-cs-page cs-page rules-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:warmGray,background:cream,overflowX:'hidden'}}>
     <Nav/>
+    {/* Sticky chapter nav — left rail at ≥1440px viewport */}
+    <aside
+      className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
+      aria-label="Case study chapters"
+    >
+      <ul className="om-chapter-nav-list">
+        {CHAPTERS.map(({ id, label }) => (
+          <li key={id}>
+            <button
+              type="button"
+              className={`om-chapter-nav-link${activeChapter === id ? ' is-active' : ''}`}
+              aria-current={activeChapter === id ? 'true' : undefined}
+              onClick={() => scrollToChapter(id)}
+            >
+              {label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </aside>
+    {/* Floating word bar — mid-viewport fallback (768–1439px) */}
+    <aside
+      ref={chapterBarRef}
+      className={`om-chapter-bar${navVisible ? ' is-visible' : ''}`}
+      aria-label="Case study chapter shortcuts"
+    >
+      <ul>
+        {CHAPTERS.map(({ id, label }) => (
+          <li key={id}>
+            <button
+              type="button"
+              className={`om-chapter-bar-link${activeChapter === id ? ' is-active' : ''}`}
+              aria-current={activeChapter === id ? 'true' : undefined}
+              onClick={() => scrollToChapter(id)}
+            >
+              {label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </aside>
 
     {/* Home-style ambient radial-gradient wrapper — same 11-orb wash used on
         home and OM, cycling steel-blue → gold → terracotta down the full page. */}
@@ -1245,7 +1370,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* TL;DR */}
-    <section style={sec('transparent')}>
+    <section id="ch-tldr" style={sec('transparent')}>
       <div style={ct}>
         <h2 style={{fontSize:72,fontWeight:800,color:accentDark,lineHeight:1,marginBottom:40}}>tl;dr</h2>
         <p style={{fontSize:20,fontWeight:500,lineHeight:1.65,letterSpacing:'-0.3px',color:'#7a4f35',maxWidth:820,marginBottom:72}}>Across a suite of compliance tools on an enterprise investing platform, we identified where to focus design effort — then redesigned the rule management and creation experience from the ground up. The result: a shipped, user-tested redesign that replaced tribal knowledge with guided workflows and shadow spreadsheets with built-in documentation.</p>
@@ -1256,7 +1381,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* FRAMING */}
-    <section style={sec('transparent')}>
+    <section id="ch-framing" style={sec('transparent')}>
       <div style={ct}>
         <h2 style={{fontSize:28,fontWeight:900,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.3px'}}>finding the right problem <span style={{fontWeight:300}}>before designing the right solution</span></h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>This wasn't a project that started with a design brief. It started with two questions: across a complex, sprawling ecosystem of aging compliance tools — where do we even begin? How do we make an impact?</p>
@@ -1265,7 +1390,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* DISCOVERY */}
-    <section style={{...sec('transparent'),paddingTop:160,paddingBottom:160}}>
+    <section id="ch-discovery" style={{...sec('transparent'),paddingTop:160,paddingBottom:160}}>
       <div style={ct}>
         <StepLabel>Step 01 — Discovery</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
@@ -1538,8 +1663,11 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* DESIGN SPRINT */}
-    <section style={sec('transparent')}>
-      <div style={ct}>
+    <section id="ch-design-sprint" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+      <div className="om-gold-dots" aria-hidden="true"></div>
+      <div className="om-gold-glow-a" aria-hidden="true"></div>
+      <div className="om-gold-glow-b" aria-hidden="true"></div>
+      <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 02 — Design Sprint</StepLabel>
         <h2 style={{fontSize:28,fontWeight:900,color:accentDark,marginBottom:8}}>Insights → How Might We → Concept Sketches</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:16}}>With five problem areas defined, I convinced key players from our product team to join me in a design thinking sprint. The goal was shared ownership of the direction, not just the deliverable.</p>
@@ -1560,7 +1688,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* PRIORITIZATION */}
-    <section style={sec('transparent')}>
+    <section id="ch-prioritization" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 03 — Prioritization</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>Deciding Where to Start</h2>
@@ -1672,8 +1800,11 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* LOFI EXPLORATION */}
-    <section style={sec('transparent')}>
-      <div style={ct}>
+    <section id="ch-lofi" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+      <div className="om-gold-dots" aria-hidden="true"></div>
+      <div className="om-gold-glow-a" aria-hidden="true"></div>
+      <div className="om-gold-glow-b" aria-hidden="true"></div>
+      <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 04 — Lofi Exploration</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:12}}>Mapping the End-to-End Workflow</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>With our priorities set, I started in low fidelity to map the full workflow end to end — how screens connect, where users enter and exit, and what the overall shape of the experience looks like before sweating any details. These wireframes became the centerpiece of a cross-functional review with engineering and product, where we stress-tested feasibility, flagged edge cases, and aligned on the bigger puzzle pieces before zooming in.</p>
@@ -1682,7 +1813,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* ASIDE — List Manager / Tech Constraint */}
-    <section style={{...sec('transparent'),paddingTop:72,paddingBottom:80}}>
+    <section id="ch-closer-look" style={{...sec('transparent'),paddingTop:72,paddingBottom:80}}>
       <div style={ct}>
         <StepLabel>Step 05 — A Closer Look</StepLabel>
         {/* Aside header */}
@@ -1932,8 +2063,11 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <section style={sec('transparent')}>
-      <div style={ct}>
+    <section id="ch-design" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+      <div className="om-gold-dots" aria-hidden="true"></div>
+      <div className="om-gold-glow-a" aria-hidden="true"></div>
+      <div className="om-gold-glow-b" aria-hidden="true"></div>
+      <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 06 — Design</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>The Redesign</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:20}}>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype — two interconnected workflows designed as a coherent system:</p>
@@ -2004,7 +2138,7 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <section style={sec('transparent')}>
+    <section id="ch-validate" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 07 — Validate</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>What Changed After Testing</h2>
@@ -2024,8 +2158,11 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* OUTCOMES */}
-    <section style={sec('transparent')}>
-      <div style={ct}>
+    <section id="ch-outcomes" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+      <div className="om-gold-dots" aria-hidden="true"></div>
+      <div className="om-gold-glow-a" aria-hidden="true"></div>
+      <div className="om-gold-glow-b" aria-hidden="true"></div>
+      <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Outcomes</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:accentDark,marginBottom:40}}>From shipped to what's next</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase — edit rule, change history, and eventually the full List Manager.</p>
@@ -2042,7 +2179,7 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* REFLECTION */}
-    <section style={sec('transparent')}>
+    <section id="ch-reflection" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Reflection</StepLabel>
         <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>What I carried forward</h2>

@@ -947,6 +947,12 @@
         </div>
       </div>
     </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+      <a href="/order-management-prototype.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: var(--accent-dark); color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
+        Open the clickable prototype <span aria-hidden="true" style="font-size: 14px;">↗</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1024,17 +1030,15 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
         <figure style="margin: 0;">
           <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px;">Legacy</figcaption>
-          <button type="button" onclick="openCompare('surface','pre')" aria-label="Expand legacy order management surface" style="all: unset; cursor: zoom-in; display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; position: relative;">
-            <img src="/om-assets/legacy-still.png" alt="Legacy Order Management interface — cluttered, dense, hard to scan" style="width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;" />
-            <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
-          </button>
+          <div style="display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+            <img src="/om-assets/legacy-still.png" alt="Legacy Order Management interface — cluttered, dense, hard to scan" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
+          </div>
         </figure>
         <figure style="margin: 0;">
           <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 10px;">Shipped</figcaption>
-          <button type="button" onclick="openCompare('surface','post')" aria-label="Expand shipped order management surface" style="all: unset; cursor: zoom-in; display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; position: relative;">
-            <img src="/om-assets/shipped-still.png" alt="Shipped Order Management interface — modernized, clear hierarchy, scannable" style="width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;" />
-            <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
-          </button>
+          <div style="display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+            <img src="/om-assets/shipped-still.png" alt="Shipped Order Management interface — modernized, clear hierarchy, scannable" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
+          </div>
         </figure>
       </div>
 
@@ -1042,24 +1046,22 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
         <figure style="margin: 0;">
           <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px;">Legacy</figcaption>
-          <button type="button" onclick="openCompare('send','pre')" aria-label="Expand legacy send flow" style="all: unset; cursor: zoom-in; display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; position: relative;">
-            <img src="/om-assets/legacy-send-still.png" alt="Legacy send dropdown with vague blanket-send options and no verification" style="width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;" />
-            <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
-          </button>
+          <div style="display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+            <img src="/om-assets/legacy-send-still.png" alt="Legacy send dropdown with vague blanket-send options and no verification" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
+          </div>
         </figure>
         <figure style="margin: 0;">
           <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 10px;">Shipped</figcaption>
-          <button type="button" onclick="openCompare('send','post')" aria-label="Expand shipped send flow" style="all: unset; cursor: zoom-in; display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; position: relative;">
-            <img src="/om-assets/shipped-send-still.png" alt="Shipped Order Verification modal — orders grouped by category with totals and per-order detail before send" style="width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;" />
-            <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
-          </button>
+          <div style="display: block; width: 100%; aspect-ratio: 16 / 10; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+            <img src="/om-assets/shipped-send-still.png" alt="Shipped Order Verification modal — orders grouped by category with totals and per-order detail before send" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
+          </div>
         </figure>
       </div>
 
-      <div style="margin-top: 32px; text-align: center;">
-        <a href="order-management-prototype.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: var(--accent-dark); color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
-          Open the clickable prototype <span aria-hidden="true" style="font-size: 14px;">↗</span>
-        </a>
+      <div style="display: flex; justify-content: center; margin-top: 32px;">
+        <button type="button" onclick="openCompareTour('outcome','pre')" aria-label="Compare both showcased changes in full screen" style="display: inline-flex; align-items: center; gap: 8px; cursor: zoom-in; background: var(--accent-dark); color: #fff; border: 0; border-radius: 999px; padding: 11px 22px; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 2px 10px rgba(0,0,0,0.12); transition: transform 200ms ease, box-shadow 200ms ease;">
+          <span aria-hidden="true">⤢</span> Compare in full screen
+        </button>
       </div>
     </div>
   </div>
@@ -1102,23 +1104,26 @@
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px;">
       <figure style="margin: 0;">
-        <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px;">Before pilot feedback</figcaption>
-        <button type="button" onclick="openCompare('pilot','pre')" style="all: unset; cursor: zoom-in; display: block; width: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); background: #000; position: relative;" aria-label="Expand before video">
-          <video autoplay loop muted playsinline style="width: 100%; display: block; pointer-events: none;">
+        <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px;">Piloted</figcaption>
+        <div style="display: block; width: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); background: #000;">
+          <video autoplay loop muted playsinline style="width: 100%; display: block;">
             <source src="/om-assets/pre.mov" type="video/mp4">
           </video>
-          <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
-        </button>
+        </div>
       </figure>
       <figure style="margin: 0;">
-        <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 10px;">After pilot feedback</figcaption>
-        <button type="button" onclick="openCompare('pilot','post')" style="all: unset; cursor: zoom-in; display: block; width: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); background: #000; position: relative;" aria-label="Expand after video">
-          <video autoplay loop muted playsinline style="width: 100%; display: block; pointer-events: none;">
+        <figcaption style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 10px;">Post-Pilot</figcaption>
+        <div style="display: block; width: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); background: #000;">
+          <video autoplay loop muted playsinline style="width: 100%; display: block;">
             <source src="/om-assets/post.mov" type="video/mp4">
           </video>
-          <span style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
-        </button>
+        </div>
       </figure>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+      <button type="button" onclick="openCompare('pilot','pre')" aria-label="Compare piloted and post-pilot videos in full screen" style="display: inline-flex; align-items: center; gap: 8px; cursor: zoom-in; background: var(--accent-dark); color: #fff; border: 0; border-radius: 999px; padding: 11px 22px; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 2px 10px rgba(0,0,0,0.12); transition: transform 200ms ease, box-shadow 200ms ease;">
+        <span aria-hidden="true">⤢</span> Compare in full screen
+      </button>
     </div>
   </div>
 </section>
@@ -1126,11 +1131,14 @@
 <!-- ===== UNIFIED COMPARE LIGHTBOX ===== -->
 <div id="compareLightbox" role="dialog" aria-modal="true" aria-label="Comparison viewer" style="display: none; position: fixed; inset: 0; background: rgba(15,12,10,0.92); z-index: 9999;">
   <button type="button" onclick="closeCompare()" aria-label="Close" style="position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2;">×</button>
-  <div id="compareLightboxToggle" style="position: absolute; top: 28px; left: 50%; transform: translateX(-50%); display: inline-flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 4px; z-index: 2;">
-    <button type="button" data-mode="pre" onclick="switchCompare('pre')" style="border: 0; background: transparent; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 999px; cursor: pointer;">Before</button>
-    <button type="button" data-mode="post" onclick="switchCompare('post')" style="border: 0; background: transparent; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 999px; cursor: pointer;">After</button>
+  <div id="compareLightboxControls" style="position: absolute; top: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2;">
+    <div id="compareLightboxSectionToggle" style="display: none; align-items: center; gap: 4px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 4px;"></div>
+    <div id="compareLightboxToggle" style="display: inline-flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 4px;">
+      <button type="button" data-mode="pre" onclick="switchCompare('pre')" style="border: 0; background: transparent; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 999px; cursor: pointer;">Piloted</button>
+      <button type="button" data-mode="post" onclick="switchCompare('post')" style="border: 0; background: transparent; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 999px; cursor: pointer;">Post-Pilot</button>
+    </div>
   </div>
-  <div id="compareLightboxStage" style="position: absolute; top: 96px; left: 0; right: 0; bottom: 32px; display: flex; align-items: flex-start; justify-content: center; padding: 0 40px;"></div>
+  <div id="compareLightboxStage" style="position: absolute; top: 140px; left: 0; right: 0; bottom: 32px; display: flex; align-items: flex-start; justify-content: center; padding: 0 40px;"></div>
 </div>
 
 
@@ -1154,7 +1162,7 @@
       Tap any card to read why it was deferred and what it would unlock.
     </p>
 
-    <div class="om-expand-grid">
+    <div class="om-expand-grid om-expand-grid--feature">
 
       <div class="om-expand-card" data-om-expand-card>
         <button class="om-expand-trigger" type="button" aria-expanded="false">
@@ -1197,7 +1205,7 @@
 
       <div class="om-expand-card" data-om-expand-card>
         <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-live-quotes.png" alt="Live quotes in the detail panel" class="om-expand-image om-expand-image--contain">
+          <img src="/om-assets/postmvp-live-quotes.png" alt="Live quotes in the detail panel" class="om-expand-image" style="object-position: top;">
           <div class="om-expand-header">
             <span class="om-expand-title">Live quotes</span>
             <span class="om-expand-icon" aria-hidden="true"></span>
@@ -1208,9 +1216,9 @@
         </div>
       </div>
 
-      <div class="om-expand-card" data-om-expand-card>
+      <div class="om-expand-card om-expand-card--tall" data-om-expand-card>
         <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-progressive-disclosure.png" alt="Account snapshot in the detail panel" class="om-expand-image om-expand-image--contain">
+          <img src="/om-assets/postmvp-progressive-disclosure.png" alt="Account snapshot in the detail panel" class="om-expand-image om-expand-image--tall">
           <div class="om-expand-header">
             <span class="om-expand-title">Account context</span>
             <span class="om-expand-icon" aria-hidden="true"></span>

@@ -158,7 +158,10 @@
       No matter where an order starts — an on-platform trade ticket, an off-platform integration, a model rebalance, a manual entry — it funnels into this single surface, passes through compliance, then lands as Sent or Unsent. From here it loops back out through monitoring, verification, and post-trade actions before the next order does the same. Every trading workflow eventually meets on this screen, which is why getting it right mattered: a misstep here ripples across every role and every system that touches a trade.
     </p>
     <div class="om-gold-map-frame">
-      <img src="/om-assets/map-x2.png" alt="Order Management ecosystem map showing order entry sources, compliance layer, and downstream actions"/>
+      <button type="button" onclick="openImage('/om-assets/map-x2.png','Order Management ecosystem map')" aria-label="Open ecosystem map in full screen" style="all: unset; cursor: zoom-in; display: block; width: 100%; position: relative;">
+        <img src="/om-assets/map-x2.png" alt="Order Management ecosystem map showing order entry sources, compliance layer, and downstream actions"/>
+        <span aria-hidden="true" style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; font-weight: 600; padding: 6px 11px; border-radius: 999px; letter-spacing: 0.04em;">⤢ Expand</span>
+      </button>
     </div>
   </div>
 </section>
@@ -497,12 +500,14 @@
     <!-- Concept images -->
     <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; margin-top: 56px;">Pulse checking the dashboard concept</p>
     <div class="two-col" style="margin-top: 0; margin-bottom: 56px;">
-      <div style="aspect-ratio: 16 / 9; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+      <button type="button" onclick="openImage('/om-assets/concept-1.png','Dashboard concept A')" aria-label="Open dashboard concept A in full screen" style="all: unset; cursor: zoom-in; aspect-ratio: 16 / 9; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; display: block; position: relative;">
         <img src="/om-assets/concept-1.png" alt="Lo-fi dashboard concept A shown to users" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
-      </div>
-      <div style="aspect-ratio: 16 / 9; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;">
+        <span aria-hidden="true" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
+      </button>
+      <button type="button" onclick="openImage('/om-assets/concept-2.png','Dashboard concept B')" aria-label="Open dashboard concept B in full screen" style="all: unset; cursor: zoom-in; aspect-ratio: 16 / 9; background: transparent; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; display: block; position: relative;">
         <img src="/om-assets/concept-2.png" alt="Lo-fi dashboard concept B shown to users" style="width: 100%; height: 100%; object-fit: contain; display: block;" />
-      </div>
+        <span aria-hidden="true" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.55); color: #fff; font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 4px; letter-spacing: 0.04em;">⤢ Expand</span>
+      </button>
     </div>
 
           </div>
@@ -821,7 +826,7 @@
       </div>
     </div>
 
-    <div style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px;">
+    <div class="om-roadmap-grid" style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px;">
       <div class="om-gold-card" style="padding: 24px 28px; border-radius: 12px;">
         <p style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #B86757; margin-bottom: 12px;">Shipped in V1</p>
         <ul style="font-size: 14px; line-height: 1.75; color: rgba(55,43,11,0.85); padding-left: 18px; margin: 0;">
@@ -1130,7 +1135,7 @@
 
 <!-- ===== UNIFIED COMPARE LIGHTBOX ===== -->
 <div id="compareLightbox" role="dialog" aria-modal="true" aria-label="Comparison viewer" style="display: none; position: fixed; inset: 0; background: rgba(15,12,10,0.92); z-index: 9999;">
-  <button type="button" onclick="closeCompare()" aria-label="Close" style="position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2;">×</button>
+  <button type="button" onclick="closeCompare()" aria-label="Close full screen viewer" class="compare-close-btn" style="position: absolute; top: 16px; right: 16px; background: #fff; color: #1a1a1a; border: 0; height: 44px; min-width: 44px; padding: 0 18px 0 14px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; z-index: 3; box-shadow: 0 4px 14px rgba(0,0,0,0.35); font-family: inherit;"><span aria-hidden="true" style="font-size: 18px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;">×</span><span class="compare-close-label">Close</span></button>
   <div id="compareLightboxControls" style="position: absolute; top: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2;">
     <div id="compareLightboxSectionToggle" style="display: none; align-items: center; gap: 4px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 4px;"></div>
     <div id="compareLightboxToggle" style="display: inline-flex; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 4px;">

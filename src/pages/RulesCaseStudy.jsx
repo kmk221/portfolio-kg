@@ -40,6 +40,25 @@ function Placeholder({h=200,label,warm}){
   return <div style={{background:warm?'linear-gradient(135deg,#f5f0eb,#ede8e3)':'linear-gradient(135deg,#ededee,#dde1e5)',border:`1px solid ${warm?'rgba(177,124,93,0.2)':'rgba(125,145,165,0.2)'}`,borderRadius:10,height:h,display:'flex',alignItems:'center',justifyContent:'center',color:warm?terracotta:accent,fontSize:12,fontWeight:600,letterSpacing:'0.05em',textTransform:'uppercase',textAlign:'center',padding:'0 20px'}}>{label}</div>
 }
 
+/* Shared close button used inside every fullscreen view in this case study.
+   Big, high-contrast pill with a "× Close" label so it's unmistakable, and
+   the .compare-close-btn class hooks into hover/focus + mobile rules in
+   case-study-shared.css. */
+function FullscreenCloseBtn({onClose, label='Close'}){
+  return (
+    <button
+      type="button"
+      onClick={onClose}
+      aria-label={`${label} full screen view`}
+      className="compare-close-btn"
+      style={{display:'inline-flex',alignItems:'center',gap:8,background:'#fff',color:'#1a1a1a',border:0,height:44,minWidth:44,padding:'0 18px 0 14px',borderRadius:999,fontSize:13,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',cursor:'pointer',boxShadow:'0 4px 14px rgba(0,0,0,0.35)',fontFamily:'inherit',flexShrink:0}}
+    >
+      <span aria-hidden="true" style={{fontSize:18,lineHeight:1,display:'inline-flex',alignItems:'center',justifyContent:'center',width:20,height:20}}>×</span>
+      <span className="compare-close-label">{label}</span>
+    </button>
+  )
+}
+
 /* ── Lofi wireframe flow ── */
 function LofiFlow(){
   const [open,setOpen]=useState(false)
@@ -68,7 +87,7 @@ function LofiFlow(){
         `}</style>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 28px',flexShrink:0}}>
           <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(255,255,255,0.35)'}}>Lofi Wireframe Flow</span>
-          <button onClick={()=>setOpen(false)} style={{width:32,height:32,borderRadius:8,background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.15)',color:'rgba(255,255,255,0.6)',fontSize:16,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1}}>×</button>
+          <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
         <div id="lofi-lightbox-scroll" onClick={e=>e.stopPropagation()} style={{overflowX:'auto',padding:'0 48px 16px',flex:1,display:'flex',alignItems:'center'}}>
           <div style={{transform:'scale(3.2)',transformOrigin:'center left',padding:'0 0 0 40px',minWidth:'max-content'}}>
@@ -308,7 +327,7 @@ function PrototypeEmbed(){
             <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(66,125,219,0.8)'}}>Interactive Prototype — Rule Management Redesign</div>
             <div style={{fontSize:10,color:'rgba(246,251,222,0.3)',fontStyle:'italic',marginTop:2}}>Press Esc or click × to close</div>
           </div>
-          <button onClick={()=>setOpen(false)} style={{width:32,height:32,borderRadius:8,background:'rgba(125,145,165,0.1)',border:'1px solid rgba(125,145,165,0.2)',color:'rgba(220,232,245,0.75)',fontSize:18,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1}}>×</button>
+          <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
         <iframe src="/rule-management-prototype-v1.html" style={{flex:1,width:'100%',border:'none'}} title="Rule Management Prototype — V1"/>
       </div>
@@ -342,7 +361,7 @@ function AffinityMap(){
             <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(125,145,165,0.9)'}}>Synthesis Board — FigJam</div>
             <div style={{fontSize:10,color:'rgba(220,232,245,0.35)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio — representative stickies shown, not all verbatims included</div>
           </div>
-          <button onClick={()=>setOpen(false)} style={{width:32,height:32,borderRadius:8,background:'rgba(125,145,165,0.1)',border:'1px solid rgba(125,145,165,0.2)',color:'rgba(220,232,245,0.75)',fontSize:18,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>×</button>
+          <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
         <div style={{flex:1,overflowX:'auto',overflowY:'hidden',padding:'32px 40px 24px'}}>
           <div style={{display:'flex',flexDirection:'row',gap:16,alignItems:'flex-start',minWidth:'max-content'}}>
@@ -789,9 +808,11 @@ function ImageLightbox({src, onClose}) {
   }, [])
   return (
     <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(0,0,0,0.82)',display:'flex',alignItems:'center',justifyContent:'center',padding:40}}>
+      <div style={{position:'absolute',top:16,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
+        <FullscreenCloseBtn onClose={onClose}/>
+      </div>
       <div onClick={e=>e.stopPropagation()} style={{position:'relative',maxWidth:'90vw',maxHeight:'90vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
         <img src={src} style={{maxWidth:'100%',maxHeight:'90vh',borderRadius:10,boxShadow:'0 8px 60px rgba(0,0,0,0.5)',display:'block'}}/>
-        <button onClick={onClose} style={{position:'absolute',top:-14,right:-14,width:32,height:32,borderRadius:'50%',background:'rgba(255,255,255,0.15)',border:'1px solid rgba(255,255,255,0.25)',color:'white',fontSize:18,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1}}>×</button>
       </div>
       <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(255,255,255,0.35)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
     </div>
@@ -1002,13 +1023,15 @@ function BeforeAfterWipe() {
 
       {expanded && (
         <div onClick={() => setExpanded(false)} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(0,0,0,0.82)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:40}}>
+          <div style={{position:'absolute',top:16,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
+            <FullscreenCloseBtn onClose={() => setExpanded(false)}/>
+          </div>
           <div onClick={e => e.stopPropagation()} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16,maxWidth:'90vw'}}>
             <div style={{display:'flex',alignItems:'center',gap:16}}>
               <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(255,255,255,0.6)'}}>
                 {showBefore ? 'Before — Legacy Rules List' : 'After — Redesigned Rule Management'}
               </div>
               {toggleBtn}
-              <button onClick={() => setExpanded(false)} style={{width:32,height:32,borderRadius:8,background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.15)',color:'rgba(255,255,255,0.6)',fontSize:18,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1,marginLeft:8}}>×</button>
             </div>
             {imageBlock(true)}
           </div>
@@ -1095,7 +1118,7 @@ function IterationOverlay({cards,openIdx,onClose}){
             ))}
           </div>
         </div>
-        <button onClick={onClose} style={{width:32,height:32,borderRadius:8,background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.15)',color:'rgba(255,255,255,0.6)',fontSize:18,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1}}>×</button>
+        <FullscreenCloseBtn onClose={onClose}/>
       </div>
       {/* Body */}
       <div onClick={e=>e.stopPropagation()} style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:24,padding:'0 32px',overflow:'hidden'}}>

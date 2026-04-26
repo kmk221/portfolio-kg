@@ -172,8 +172,27 @@
 }
 
 @media (max-width: 640px) {
-  .cs-page .om-tablist { gap: 6px; }
-  .cs-page .om-tab { padding: 8px 14px; font-size: 12px; }
+  .cs-page .om-tablist {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+  }
+  .cs-page .om-tab {
+    width: 100%;
+    text-align: center;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+/* Compare lightbox close button — hover and mobile responsiveness */
+.compare-close-btn:hover { background: #fff !important; box-shadow: 0 6px 18px rgba(0,0,0,0.45) !important; transform: translateY(-1px); }
+.compare-close-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (max-width: 480px) {
+  .compare-close-btn .compare-close-label { display: none; }
+  .compare-close-btn { padding: 0 !important; min-width: 48px !important; width: 48px; justify-content: center !important; }
 }
 
 

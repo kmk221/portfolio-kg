@@ -93,7 +93,15 @@ export default function OrderManagementCaseStudy() {
       stage: document.getElementById('compareLightboxStage'),
       toggle: document.getElementById('compareLightboxToggle'),
       sectionToggle: document.getElementById('compareLightboxSectionToggle'),
+      controls: document.getElementById('compareLightboxControls'),
     })
+
+    const setControlsVisible = (visible) => {
+      const { controls, stage } = getEls()
+      if (controls) controls.style.display = visible ? 'flex' : 'none'
+      // When controls hide, the stage gets the full vertical space
+      if (stage) stage.style.top = visible ? '140px' : '24px'
+    }
 
     const setActive = (mode) => {
       const { toggle } = getEls()
@@ -176,11 +184,30 @@ export default function OrderManagementCaseStudy() {
       currentTour = null
       currentTourIndex = 0
       current = id
+      setControlsVisible(true)
       renderTourSections()
       setLabels(pairs[id].labels)
       render(mode || 'pre')
       const { lb } = getEls()
       if (!lb) return
+      lb.style.display = 'flex'
+      document.body.style.overflow = 'hidden'
+    }
+
+    window.openImage = (src, alt) => {
+      currentTour = null
+      currentTourIndex = 0
+      current = null
+      const { stage, lb } = getEls()
+      if (!stage || !lb) return
+      setControlsVisible(false)
+      stage.innerHTML = ''
+      const el = document.createElement('img')
+      el.src = src
+      if (alt) el.alt = alt
+      el.style.cssText =
+        'max-width:100%;max-height:100%;display:block;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.6);background:#fff;object-fit:contain;'
+      stage.appendChild(el)
       lb.style.display = 'flex'
       document.body.style.overflow = 'hidden'
     }
@@ -191,6 +218,7 @@ export default function OrderManagementCaseStudy() {
       currentTour = tourId
       currentTourIndex = 0
       current = tour.pairs[0]
+      setControlsVisible(true)
       renderTourSections()
       setLabels(pairs[current].labels)
       render(mode || 'pre')
@@ -221,6 +249,7 @@ export default function OrderManagementCaseStudy() {
       currentTour = null
       currentTourIndex = 0
       renderTourSections()
+      setControlsVisible(true)
       document.body.style.overflow = ''
     }
 
@@ -255,6 +284,7 @@ export default function OrderManagementCaseStudy() {
       document.body.style.overflow = ''
       delete window.openCompare
       delete window.openCompareTour
+      delete window.openImage
       delete window.switchTour
       delete window.switchCompare
       delete window.closeCompare
@@ -548,7 +578,7 @@ export default function OrderManagementCaseStudy() {
           className="home-hero"
           style={{
             minHeight: 'auto',
-            padding: '140px 80px 40px',
+            padding: 'clamp(100px, 12vw, 140px) clamp(20px, 6vw, 80px) 40px',
           }}
         >
           <div className="hero-content" style={{ alignItems: 'flex-start' }}>

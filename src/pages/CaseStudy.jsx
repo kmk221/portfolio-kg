@@ -1091,7 +1091,8 @@ export default function CaseStudy() {
           radial-gradient(rgba(245,232,211,0.14) 1px, transparent 1px) 0 0 / 28px 28px,
           linear-gradient(135deg, #C27A6E 0%, #B86757 100%)
         `,
-        paddingTop: 'var(--section-padding)', paddingLeft: 'var(--side-padding)', paddingRight: 'var(--side-padding)', overflow: 'hidden', position: 'relative'
+        minHeight: '100vh',
+        paddingTop: 'var(--section-padding)', paddingLeft: 'var(--side-padding)', paddingRight: 'var(--side-padding)', overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column'
       }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>

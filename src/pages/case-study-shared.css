@@ -276,19 +276,28 @@
   }
 }
 
+/* Drawer cards — minimal line + plus pattern.
+   - No card border, no rounded corners, transparent bg
+   - Thin top divider line on each card
+   - Title + plus icon on right
+   - Plus rotates 45° to × on open
+   The previous bordered/rounded "card" treatment was replaced 2026-04 to
+   reduce container density across the case studies. */
 .cs-page .om-expand-card {
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border: 0;
+  border-top: 1px solid rgba(184, 103, 87, 0.22);
+  border-radius: 0;
   overflow: hidden;
   background: transparent;
-  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  box-shadow: none;
+  transition: border-color 200ms ease;
 }
 .cs-page .om-expand-card:hover {
-  border-color: rgba(184,103,87,0.35);
+  border-top-color: rgba(184, 103, 87, 0.45);
 }
 .cs-page .om-expand-card[data-open="true"] {
-  border-color: rgba(184,103,87,0.45);
-  box-shadow: 0 6px 24px rgba(89,80,74,0.07);
+  border-top-color: rgba(184, 103, 87, 0.5);
+  box-shadow: none;
 }
 .cs-page .om-expand-trigger {
   width: 100%;
@@ -305,64 +314,72 @@
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+/* Image cards still show their preview, just without the rounded card frame.
+   The image now sits directly above the title row, edge to edge. */
 .cs-page .om-expand-image {
   width: 100%;
   height: 220px;
   object-fit: cover;
   display: block;
-  background: rgba(245,232,211,0.35);
+  background: transparent;
+  margin-top: 18px;
+  border-radius: 6px;
 }
 .cs-page .om-expand-image--contain {
   object-fit: contain;
-  padding: 18px;
+  padding: 0;
 }
 .cs-page .om-expand-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 22px;
+  padding: 18px 4px 18px 4px;
 }
 .cs-page .om-expand-title {
   font-size: 14px;
   font-weight: 700;
   color: var(--accent-dark);
 }
+/* Plus icon — simple cross, no circle bg. The whole icon rotates 45° on
+   open so the + becomes an ×. */
 .cs-page .om-expand-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(184,103,87,0.08);
+  width: 22px;
+  height: 22px;
+  border-radius: 0;
+  background: transparent;
   position: relative;
   flex-shrink: 0;
-  transition: background 200ms ease;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), color 200ms ease;
+  color: var(--accent-dark);
 }
 .cs-page .om-expand-icon::before,
 .cs-page .om-expand-icon::after {
   content: '';
   position: absolute;
-  background: var(--accent-dark);
+  background: currentColor;
   top: 50%;
   left: 50%;
   border-radius: 1px;
 }
 .cs-page .om-expand-icon::before {
-  width: 10px; height: 1.5px;
+  width: 14px; height: 1.5px;
   transform: translate(-50%, -50%);
 }
 .cs-page .om-expand-icon::after {
-  width: 1.5px; height: 10px;
+  width: 1.5px; height: 14px;
   transform: translate(-50%, -50%);
-  transition: transform 240ms ease;
 }
 .cs-page .om-expand-card[data-open="true"] .om-expand-icon {
-  background: rgba(184,103,87,0.18);
+  transform: rotate(45deg);
+  background: transparent;
 }
+/* Override the old ::after rotate(90deg) — parent handles rotation now */
 .cs-page .om-expand-card[data-open="true"] .om-expand-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
+  transform: translate(-50%, -50%);
 }
 .cs-page .om-expand-content {
-  padding: 0 22px 22px;
+  padding: 4px 4px 24px;
   animation: omExpandIn 280ms ease;
 }
 .cs-page .om-expand-content[hidden] { display: none; }
@@ -397,32 +414,38 @@
 .cs-page .om-section-expand {
   margin: 12px 0 32px;
   max-width: 720px;
+  border-top: 1px solid rgba(184, 103, 87, 0.22);
+  transition: border-color 200ms ease;
+}
+.cs-page .om-section-expand:hover {
+  border-top-color: rgba(184, 103, 87, 0.45);
+}
+.cs-page .om-section-expand[data-open="true"] {
+  border-top-color: rgba(184, 103, 87, 0.5);
 }
 .cs-page .om-section-expand-trigger {
   display: flex;
   align-items: center;
   gap: 18px;
   width: 100%;
-  padding: 22px 28px;
-  background: rgba(245,232,211,0.35);
-  border: 1px solid rgba(184,103,87,0.22);
-  border-radius: 14px;
+  padding: 18px 4px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   cursor: pointer;
   text-align: left;
   font-family: inherit;
-  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  transition: none;
 }
 .cs-page .om-section-expand-trigger:hover {
-  background: rgba(245,232,211,0.6);
-  border-color: rgba(184,103,87,0.4);
+  background: transparent;
 }
 .cs-page .om-section-expand-trigger:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 .cs-page .om-section-expand[data-open="true"] .om-section-expand-trigger {
-  background: rgba(245,232,211,0.55);
-  border-color: rgba(184,103,87,0.45);
+  background: transparent;
 }
 .cs-page .om-section-expand-eyebrow {
   display: block;
@@ -443,44 +466,58 @@
 .cs-page .om-section-expand-trigger > div {
   flex: 1;
 }
+/* Section-level chevron also becomes the same simple plus → × cross to
+   match the inner drawers. */
 .cs-page .om-section-expand-chevron {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(184,103,87,0.12);
+  width: 22px;
+  height: 22px;
+  border-radius: 0;
+  background: transparent;
   flex-shrink: 0;
   position: relative;
-  transition: background 200ms ease, transform 280ms ease;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--accent-dark);
 }
-.cs-page .om-section-expand-chevron::before {
+.cs-page .om-section-expand-chevron::before,
+.cs-page .om-section-expand-chevron::after {
   content: '';
   position: absolute;
-  width: 8px; height: 8px;
-  border-right: 1.75px solid var(--accent-dark);
-  border-bottom: 1.75px solid var(--accent-dark);
-  top: 38%;
+  background: currentColor;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  transition: transform 280ms ease;
+  border-radius: 1px;
+}
+.cs-page .om-section-expand-chevron::before {
+  width: 14px; height: 1.5px;
+  transform: translate(-50%, -50%);
+  border: 0;
+}
+.cs-page .om-section-expand-chevron::after {
+  width: 1.5px; height: 14px;
+  transform: translate(-50%, -50%);
 }
 .cs-page .om-section-expand[data-open="true"] .om-section-expand-chevron {
-  background: rgba(184,103,87,0.22);
+  transform: rotate(45deg);
+  background: transparent;
 }
 .cs-page .om-section-expand[data-open="true"] .om-section-expand-chevron::before {
-  transform: translate(-50%, -50%) rotate(-135deg);
-  top: 55%;
+  transform: translate(-50%, -50%);
+  border: 0;
+}
+.cs-page .om-section-expand[data-open="true"] .om-section-expand-chevron::after {
+  transform: translate(-50%, -50%);
+  top: 50%;
 }
 .cs-page .om-section-expand-content {
-  margin-top: 28px;
+  margin-top: 0;
+  /* Inner drawers indented so they read as nested children of the section */
+  padding-left: 32px;
   animation: omExpandIn 320ms ease;
 }
 .cs-page .om-section-expand-content[hidden] { display: none; }
 
 /* When inner expand-cards live inside the section-expand, stack them. */
 .cs-page .om-section-expand-content > .om-expand-card {
-  margin-bottom: 16px;
-}
-.cs-page .om-section-expand-content > .om-expand-card:last-child {
   margin-bottom: 0;
 }
 

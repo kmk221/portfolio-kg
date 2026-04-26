@@ -77,7 +77,7 @@ function LofiFlow(){
     </div>
     {/* Fullscreen lightbox — dark bg, floating cards */}
     {open&&(
-      <div onClick={()=>setOpen(false)} id="lofi-lightbox" style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(12,12,10,0.94)',display:'flex',flexDirection:'column',justifyContent:'center',padding:'0 0 40px'}}>
+      <div onClick={()=>setOpen(false)} id="lofi-lightbox" style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',justifyContent:'center',padding:'88px 0 40px'}}>
         <style>{`
           #lofi-lightbox-scroll::-webkit-scrollbar{height:6px}
           #lofi-lightbox-scroll::-webkit-scrollbar-track{background:transparent}
@@ -86,7 +86,7 @@ function LofiFlow(){
           #lofi-lightbox-scroll{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent}
         `}</style>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 28px',flexShrink:0}}>
-          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(255,255,255,0.35)'}}>Lofi Wireframe Flow</span>
+          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)'}}>Lofi Wireframe Flow</span>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
         <div id="lofi-lightbox-scroll" onClick={e=>e.stopPropagation()} style={{overflowX:'auto',padding:'0 48px 16px',flex:1,display:'flex',alignItems:'center'}}>
@@ -94,7 +94,7 @@ function LofiFlow(){
             <LofiFlowStrip/>
           </div>
         </div>
-        <div style={{textAlign:'center',fontSize:11,color:'rgba(255,255,255,0.2)',letterSpacing:'0.06em',flexShrink:0}}>Scroll to explore · Press Esc to close</div>
+        <div style={{textAlign:'center',fontSize:11,color:'rgba(44, 59, 85, 0.4)',letterSpacing:'0.06em',flexShrink:0}}>Scroll to explore · Press Esc to close</div>
       </div>
     )}
   </>)
@@ -321,11 +321,11 @@ function PrototypeEmbed(){
       Meet the redesign
     </button>
     {open&&(
-      <div style={{position:'fixed',inset:0,zIndex:9000,background:'#1a0e08',display:'flex',flexDirection:'column'}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 24px',background:'rgba(26,42,58,0.98)',borderBottom:'1px solid rgba(125,145,165,0.2)',flexShrink:0}}>
+      <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 24px',background:'rgba(255,255,255,0.6)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
           <div>
-            <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(66,125,219,0.8)'}}>Interactive Prototype — Rule Management Redesign</div>
-            <div style={{fontSize:10,color:'rgba(246,251,222,0.3)',fontStyle:'italic',marginTop:2}}>Press Esc or click × to close</div>
+            <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accentDark}}>Interactive Prototype — Rule Management Redesign</div>
+            <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.5)',fontStyle:'italic',marginTop:2}}>Press Esc or click × to close</div>
           </div>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
@@ -355,11 +355,11 @@ function AffinityMap(){
       </div>
     </div>
     {open&&(
-      <div style={{position:'fixed',inset:0,zIndex:9000,background:'#2c2c2c',display:'flex',flexDirection:'column'}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 28px',background:'rgba(125,145,165,0.06)',borderBottom:'1px solid rgba(125,145,165,0.12)',flexShrink:0}}>
+      <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 28px',background:'rgba(255,255,255,0.5)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
           <div>
-            <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(125,145,165,0.9)'}}>Synthesis Board — FigJam</div>
-            <div style={{fontSize:10,color:'rgba(220,232,245,0.35)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio — representative stickies shown, not all verbatims included</div>
+            <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark}}>Synthesis Board — FigJam</div>
+            <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.55)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio — representative stickies shown, not all verbatims included</div>
           </div>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
@@ -807,14 +807,14 @@ function ImageLightbox({src, onClose}) {
     return () => { window.removeEventListener('keydown', h); document.body.style.overflow = '' }
   }, [])
   return (
-    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(0,0,0,0.82)',display:'flex',alignItems:'center',justifyContent:'center',padding:40}}>
-      <div style={{position:'absolute',top:16,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
+    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px'}}>
+      <div style={{position:'absolute',top:80,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
         <FullscreenCloseBtn onClose={onClose}/>
       </div>
-      <div onClick={e=>e.stopPropagation()} style={{position:'relative',maxWidth:'90vw',maxHeight:'90vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <img src={src} style={{maxWidth:'100%',maxHeight:'90vh',borderRadius:10,boxShadow:'0 8px 60px rgba(0,0,0,0.5)',display:'block'}}/>
+      <div onClick={e=>e.stopPropagation()} style={{position:'relative',maxWidth:'90vw',maxHeight:'85vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <img src={src} style={{maxWidth:'100%',maxHeight:'85vh',borderRadius:10,boxShadow:'0 8px 60px rgba(44,59,85,0.18)',display:'block'}}/>
       </div>
-      <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(255,255,255,0.35)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
+      <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(44, 59, 85, 0.5)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
     </div>
   )
 }
@@ -928,7 +928,7 @@ function CardWithToggle({num, title, body, afterContent, beforeContent}) {
     <div style={{background:'white',borderRadius:12,border:`1px solid ${borderLight}`,overflow:'hidden'}}>
       <div style={{display:'grid',gridTemplateColumns:'2fr 3fr',alignItems:'stretch'}}>
         <div style={{padding:'32px 36px',borderRight:`1px solid ${borderLight}`,display:'flex',flexDirection:'column',justifyContent:'flex-start'}}>
-          <div style={{fontSize:32,fontWeight:800,color:accentMid,lineHeight:1,marginBottom:16}}>{num}</div>
+          <div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,marginBottom:16}}>{num}</div>
           <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:10,lineHeight:1.35}}>{title}</div>
           <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:0}}>{body}</p>
         </div>
@@ -1022,20 +1022,20 @@ function BeforeAfterWipe() {
       </div>
 
       {expanded && (
-        <div onClick={() => setExpanded(false)} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(0,0,0,0.82)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:40}}>
-          <div style={{position:'absolute',top:16,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
+        <div onClick={() => setExpanded(false)} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px'}}>
+          <div style={{position:'absolute',top:80,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
             <FullscreenCloseBtn onClose={() => setExpanded(false)}/>
           </div>
           <div onClick={e => e.stopPropagation()} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16,maxWidth:'90vw'}}>
             <div style={{display:'flex',alignItems:'center',gap:16}}>
-              <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(255,255,255,0.6)'}}>
+              <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accentDark}}>
                 {showBefore ? 'Before — Legacy Rules List' : 'After — Redesigned Rule Management'}
               </div>
               {toggleBtn}
             </div>
             {imageBlock(true)}
           </div>
-          <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(255,255,255,0.35)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
+          <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(44, 59, 85, 0.5)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
         </div>
       )}
     </div>
@@ -1097,7 +1097,7 @@ function IterationOverlay({cards,openIdx,onClose}){
   const navBtn=(dir)=>{
     const isLeft=dir==='left'
     const disabled=isLeft?idx===0:idx===cards.length-1
-    return(<button onClick={(e)=>{e.stopPropagation();setIdx(i=>isLeft?i-1:i+1)}} disabled={disabled} style={{width:44,height:44,borderRadius:'50%',background:disabled?'rgba(255,255,255,0.04)':'rgba(255,255,255,0.1)',border:`1px solid ${disabled?'rgba(255,255,255,0.06)':'rgba(255,255,255,0.2)'}`,color:disabled?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.7)',fontSize:20,cursor:disabled?'default':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all 0.2s'}}>{isLeft?'‹':'›'}</button>)
+    return(<button onClick={(e)=>{e.stopPropagation();setIdx(i=>isLeft?i-1:i+1)}} disabled={disabled} style={{width:44,height:44,borderRadius:'50%',background:disabled?'rgba(255,255,255,0.35)':'rgba(255,255,255,0.65)',border:`1px solid ${disabled?'rgba(125,145,165,0.18)':'rgba(125,145,165,0.35)'}`,color:disabled?'rgba(44,59,85,0.25)':accentDark,fontSize:20,cursor:disabled?'default':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all 0.2s'}}>{isLeft?'‹':'›'}</button>)
   }
   const renderMedia=(item,abs)=>{
     const s={width:'100%',display:'block',borderRadius:8,...(abs?{maxHeight:'65vh',objectFit:'contain'}:{})}
@@ -1106,15 +1106,15 @@ function IterationOverlay({cards,openIdx,onClose}){
       :<img src={item.src} alt="" style={s}/>
   }
   return(
-    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(12,12,10,0.94)',display:'flex',flexDirection:'column'}}>
+    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
       {/* Header */}
       <div onClick={e=>e.stopPropagation()} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 32px',flexShrink:0}}>
         <div style={{display:'flex',alignItems:'center',gap:16}}>
-          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(255,255,255,0.35)'}}>Iteration {idx+1} of {cards.length}</span>
+          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)'}}>Iteration {idx+1} of {cards.length}</span>
           {/* v1/v2/both toggle */}
-          <div style={{display:'flex',gap:4,background:'rgba(255,255,255,0.06)',borderRadius:20,padding:3}}>
+          <div style={{display:'flex',gap:4,background:'rgba(255,255,255,0.5)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:20,padding:3}}>
             {['v1','both','v2'].map(v=>(
-              <button key={v} onClick={()=>setVersion(v)} style={{fontSize:10,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',padding:'4px 12px',borderRadius:16,border:'none',cursor:'pointer',transition:'all 0.2s',background:version===v?'rgba(255,255,255,0.15)':'transparent',color:version===v?'#fff':'rgba(255,255,255,0.4)'}}>{v==='both'?'Side by side':v.toUpperCase()}</button>
+              <button key={v} onClick={()=>setVersion(v)} style={{fontSize:10,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',padding:'4px 12px',borderRadius:16,border:'none',cursor:'pointer',transition:'all 0.2s',background:version===v?accentDark:'transparent',color:version===v?'#fff':'rgba(44, 59, 85, 0.6)'}}>{v==='both'?'Side by side':v.toUpperCase()}</button>
             ))}
           </div>
         </div>
@@ -1125,23 +1125,23 @@ function IterationOverlay({cards,openIdx,onClose}){
         {navBtn('left')}
         <div style={{flex:1,maxWidth:1100,display:'flex',flexDirection:'column',gap:20,alignItems:'center'}}>
           {/* Feedback text */}
-          <div style={{background:'rgba(255,255,255,0.06)',borderRadius:10,padding:'16px 24px',maxWidth:800,width:'100%'}}>
-            <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(177,124,93,0.7)',marginBottom:6}}>Feedback</div>
-            <p style={{fontSize:13,lineHeight:1.7,color:'rgba(255,255,255,0.75)',margin:0}}>{c.feedback}</p>
-            {c.changed&&<><div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(125,145,165,0.6)',marginTop:10,marginBottom:4}}>What changed</div><p style={{fontSize:12,lineHeight:1.6,color:'rgba(255,255,255,0.6)',margin:0}}>{c.changed}</p></>}
+          <div style={{background:'rgba(255,255,255,0.55)',border:'1px solid rgba(125,145,165,0.2)',borderRadius:10,padding:'16px 24px',maxWidth:800,width:'100%'}}>
+            <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:terracotta,marginBottom:6}}>Feedback</div>
+            <p style={{fontSize:13,lineHeight:1.7,color:warmGray,margin:0}}>{c.feedback}</p>
+            {c.changed&&<><div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)',marginTop:10,marginBottom:4}}>What changed</div><p style={{fontSize:12,lineHeight:1.6,color:deepBlue,margin:0}}>{c.changed}</p></>}
           </div>
           {/* Visuals */}
           <div style={{display:'grid',gridTemplateColumns:version==='both'?'1fr 1fr':'1fr',gap:16,width:'100%'}}>
             {(version==='v1'||version==='both')&&(
               <div>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(255,255,255,0.35)',marginBottom:8}}>{c.v1Label}</div>
-                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(255,255,255,0.1)'}}>{renderMedia(c.v1,true)}</div>
+                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.6)',marginBottom:8}}>{c.v1Label}</div>
+                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(125,145,165,0.25)'}}>{renderMedia(c.v1,true)}</div>
               </div>
             )}
             {(version==='v2'||version==='both')&&(
               <div>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(255,255,255,0.35)',marginBottom:8}}>{c.v2Label}</div>
-                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(255,255,255,0.1)'}}>{renderMedia(c.v2,true)}</div>
+                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.6)',marginBottom:8}}>{c.v2Label}</div>
+                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(125,145,165,0.25)'}}>{renderMedia(c.v2,true)}</div>
               </div>
             )}
           </div>
@@ -1331,7 +1331,8 @@ export default function RulesCaseStudy(){
       `,
       backdropFilter:'blur(10px)',
       WebkitBackdropFilter:'blur(10px)',
-      paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden',position:'relative'
+      minHeight:'100vh',
+      paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden',position:'relative',display:'flex',flexDirection:'column'
     }}>
       <div style={ct}>
         <div style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap',marginBottom:20,opacity:0,animation:'fadeUp 0.7s ease 0.1s forwards'}}>
@@ -2117,7 +2118,7 @@ export default function RulesCaseStudy(){
           <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>The legacy rules list had one job — display all rules — and did so, but without any ability to navigate, filter, or understand. The redesign turned a static table into a usable decision-making surface — with filtering, persistent rule detail, and plain-language logic all accessible from one view.</p>
           <BeforeAfterWipe/>
           <div style={{display:'flex',flexDirection:'column',gap:16}}>
-            {[{num:'01',title:'Two-panel layout with plain-language rule logic',body:'A rules list alongside a persistent right detail panel — showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.'},{num:'02',title:'Find the right rule fast — filtering and inline preview',body:'Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel — no navigation required, no losing your place in the list.'},{num:'03',title:'Rule details and quick actions, without leaving the list',body:"The detail panel surfaces everything you'd otherwise have to dig for — rule logic, applies-to scope, and modification history — alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction."}].map(d=>(<div key={d.num} style={{display:'flex',gap:28,padding:'28px 0',borderTop:`1px solid ${borderLight}`}}><div style={{fontSize:32,fontWeight:800,color:accentMid,lineHeight:1,flexShrink:0,width:40}}>{d.num}</div><div><div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8}}>{d.title}</div><p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{d.body}</p></div></div>))}
+            {[{num:'01',title:'Two-panel layout with plain-language rule logic',body:'A rules list alongside a persistent right detail panel — showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.'},{num:'02',title:'Find the right rule fast — filtering and inline preview',body:'Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel — no navigation required, no losing your place in the list.'},{num:'03',title:'Rule details and quick actions, without leaving the list',body:"The detail panel surfaces everything you'd otherwise have to dig for — rule logic, applies-to scope, and modification history — alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction."}].map(d=>(<div key={d.num} style={{display:'flex',gap:28,padding:'28px 0',borderTop:`1px solid ${borderLight}`}}><div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,flexShrink:0,width:40}}>{d.num}</div><div><div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8}}>{d.title}</div><p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{d.body}</p></div></div>))}
           </div>
         </div>
 

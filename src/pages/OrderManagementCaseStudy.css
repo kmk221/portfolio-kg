@@ -169,6 +169,58 @@
     .om-page .meta-bar { grid-template-columns: 1fr; gap: 16px; }
   }
 
+  /* OM-specific override: the shared .om-gold class normally paints a steel-
+     blue wash (Rules case study uses that). For Order Management we want the
+     alternating sections to echo the same lighter mustard wash as the hero so
+     the case study reads as a single warm palette. The .om-gold-dots child
+     div keeps the dark dot grid on top, so the subtle grid texture carries
+     through these sections too. */
+  .om-page .om-gold {
+    background: linear-gradient(135deg, rgba(230, 192, 122, 0.55) 0%, rgba(221, 179, 101, 0.65) 100%);
+  }
+
+  /* Cards inside om-gold sections — strip the heavier glass border + shadow
+     from the shared case-study-shared.css treatment so cards in OM read as
+     simple translucent cream tiles that sit cleanly on the mustard wash.
+     Specificity matches the shared rule and OM's stylesheet loads after it,
+     so this wins on equal-specificity tiebreak. */
+  .om-page .om-gold [style*="background: var(--accent-light)"],
+  .om-page .om-gold [style*="background: var(--peach-light)"] {
+    background: rgba(252, 246, 235, 0.42) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Strip the glass treatment from drawers inside om-gold sections — the
+     shared case-study-shared.css applies a frosted card look to
+     .om-gold .om-expand-card and .om-gold .om-section-expand-trigger.
+     For OM we want the minimal line + plus pattern, so we explicitly
+     transparent these out and let the new shared drawer styles paint just
+     the top line and the rotating cross icon. */
+  .om-page .om-gold .om-expand-card,
+  .om-page .om-gold .om-expand-card[data-open="true"] {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+    border-top: 1px solid rgba(184, 103, 87, 0.22);
+    box-shadow: none;
+  }
+  .om-page .om-gold .om-expand-card:hover,
+  .om-page .om-gold .om-expand-card[data-open="true"] {
+    border-top-color: rgba(184, 103, 87, 0.5);
+  }
+  .om-page .om-gold .om-section-expand-trigger,
+  .om-page .om-gold .om-section-expand[data-open="true"] .om-section-expand-trigger {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0;
+    box-shadow: none;
+  }
+
   
   /* Outer hero-anim frame — soft steel-blue wash with the same dark-brown
      dot grid. Gold was too saturated as a section fill in this case study;

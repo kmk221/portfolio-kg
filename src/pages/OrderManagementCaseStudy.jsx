@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 import bodyHtml from './OrderManagementCaseStudy.body.html?raw'
+
+// Split the lo-fi hero-animation (the first <section> in body.html) off so
+// it can render *inside* the same mustard-wash wrapper as the React hero.
+// Otherwise each section paints its own 135° gradient and a visible seam
+// appears where the two backgrounds meet.
+const HERO_ANIM_END = bodyHtml.indexOf('</section>') + '</section>'.length
+const HERO_ANIM_HTML = bodyHtml.slice(0, HERO_ANIM_END)
+const REST_BODY_HTML = bodyHtml.slice(HERO_ANIM_END)
 import './case-study-shared.css'
 import './OrderManagementCaseStudy.css'
 
@@ -97,10 +105,28 @@ export default function OrderManagementCaseStudy() {
     })
 
     const setControlsVisible = (visible) => {
-      const { controls, stage } = getEls()
+      const { controls, stage, lb } = getEls()
       if (controls) controls.style.display = visible ? 'flex' : 'none'
-      // When controls hide, the stage gets the full vertical space
-      if (stage) stage.style.top = visible ? '140px' : '24px'
+      if (!stage) return
+      // Stage top sits below the close button + controls, which were pushed
+      // down to clear the page nav (close button at top:80, controls at 88).
+      stage.style.top = visible ? '200px' : '88px'
+      // Reset any single-image overrides when re-entering compare mode.
+      // Important: explicitly set the dark backdrop here — relying on '' to
+      // fall back to the HTML inline style doesn't work because the inline
+      // attribute is mutated by openImage. Set it directly so the backdrop
+      // fully obscures page content.
+      if (visible) {
+        if (lb) {
+          lb.style.background = 'rgba(15, 12, 10, 0.92)'
+          lb.style.backdropFilter = 'blur(24px)'
+          lb.style.webkitBackdropFilter = 'blur(24px)'
+        }
+        stage.style.padding = '0 40px'
+        stage.style.alignItems = 'flex-start'
+        stage.style.overflow = ''
+        stage.style.touchAction = ''
+      }
     }
 
     const setActive = (mode) => {
@@ -201,12 +227,23 @@ export default function OrderManagementCaseStudy() {
       const { stage, lb } = getEls()
       if (!stage || !lb) return
       setControlsVisible(false)
+      // Single-image mode: lives on the same steel-blue surface as the
+      // sections behind these diagrams (no jarring dark-mode flip), fills the
+      // viewport, and allows pinch-zoom + scroll to explore detail. Solid
+      // steel-blue + blur ensures the page doesn't peek through.
+      lb.style.background = 'rgba(212, 221, 231, 0.96)'
+      lb.style.backdropFilter = 'blur(24px)'
+      lb.style.webkitBackdropFilter = 'blur(24px)'
+      stage.style.padding = '0'
+      stage.style.alignItems = 'center'
+      stage.style.overflow = 'auto'
+      stage.style.touchAction = 'pinch-zoom'
       stage.innerHTML = ''
       const el = document.createElement('img')
       el.src = src
       if (alt) el.alt = alt
       el.style.cssText =
-        'max-width:100%;max-height:100%;display:block;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.6);background:#fff;object-fit:contain;'
+        'max-width:100%;max-height:100%;display:block;background:transparent;object-fit:contain;margin:auto;touch-action:pinch-zoom;'
       stage.appendChild(el)
       lb.style.display = 'flex'
       document.body.style.overflow = 'hidden'
@@ -574,11 +611,18 @@ export default function OrderManagementCaseStudy() {
       }}>
         {/* Home-style hero — eyebrow, big title with terracotta period, italic
             subtitle, and staggered fadeUp pills on the right. */}
+        <div style={{
+          background: `
+            radial-gradient(rgba(55, 43, 11, 0.08) 1px, transparent 1px) 0 0 / 28px 28px,
+            linear-gradient(135deg, rgba(230, 192, 122, 0.55) 0%, rgba(221, 179, 101, 0.65) 100%)
+          `,
+        }}>
         <section
           className="home-hero"
           style={{
+            background: 'transparent',
             minHeight: 'auto',
-            padding: 'clamp(100px, 12vw, 140px) clamp(20px, 6vw, 80px) 40px',
+            padding: 'clamp(100px, 12vw, 140px) clamp(20px, 6vw, 80px) clamp(60px, 7vw, 100px)',
           }}
         >
           <div className="hero-content" style={{ alignItems: 'flex-start' }}>
@@ -627,9 +671,14 @@ export default function OrderManagementCaseStudy() {
           </div>
         </section>
 
+        {/* Lo-fi animation lives inside the mustard wrapper so the title
+            block + animation share one continuous gradient (no seam). */}
+        <div className="om-page" dangerouslySetInnerHTML={{ __html: HERO_ANIM_HTML }} />
+        </div>
+
         {/* The original case study body — inline styles and animations
             preserved, retinted to the home palette via .om-page scoped vars. */}
-        <div className="om-page" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+        <div className="om-page" dangerouslySetInnerHTML={{ __html: REST_BODY_HTML }} />
       </div>
     </div>
   )

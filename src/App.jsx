@@ -54,8 +54,8 @@ export default function App() {
             <p className="hero-eyebrow">UX Designer · Product Thinker</p>
             <h1 className="hero-name">Kristin Garza<span>.</span></h1>
             <p className="hero-title">
-              I design for clarity in complex systems — turning data-dense workflows into intuitive,
-              high-impact experiences for enterprise users.
+              I design for clarity wherever the problem is complex — turning data-dense workflows
+              into intuitive, high-impact products.
             </p>
             <div className="hero-actions">
               <a href="#work" className="btn-primary">
@@ -672,14 +672,14 @@ export default function App() {
             <p className="about-label">About</p>
             <h2 className="about-heading">Designing for complexity, without adding to it</h2>
             <p className="about-body">
-              I'm a UX designer specializing in complex, enterprise B2B applications — where the stakes
-              are high, the data is dense, and the users are experts. I believe good design for
-              professionals respects their expertise and gets out of their way.
+              I'm a UX designer drawn to complex, data-dense problems — where the stakes are high
+              and the users are experts. I believe good design respects users' expertise and gets
+              out of their way.
             </p>
             <p className="about-body">
               Most recently, I led UX for trading platforms at a leading financial services firm — unifying 15+ applications
               under a cohesive design system and streamlining high-stakes workflows for institutional investors.
-              I'm now exploring my next opportunity to bring systems thinking and enterprise design leadership
+              I'm now exploring my next opportunity to bring systems thinking and design leadership
               to complex product challenges.
             </p>
           </div>

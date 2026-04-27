@@ -102,15 +102,29 @@ export default function OrderManagementCaseStudy() {
       toggle: document.getElementById('compareLightboxToggle'),
       sectionToggle: document.getElementById('compareLightboxSectionToggle'),
       controls: document.getElementById('compareLightboxControls'),
+      zoomControls: document.getElementById('compareZoomControls'),
+      zoomDisplay: document.getElementById('compareZoomDisplay'),
     })
 
+    // Tracks the current openImage zoom level (1 = fit, > 1 = zoomed in).
+    let zoomLevel = 1
+    // Captures the image's rendered size at zoom=1 so zoom steps scale
+    // relative to the FIT size (not the stage width). Without this, going
+    // from 100% to 110% would compute against the stage container width and
+    // make a height-limited image explode in size on the first click.
+    let fitWidth = 0
+    let fitHeight = 0
+
     const setControlsVisible = (visible) => {
-      const { controls, stage, lb } = getEls()
+      const { controls, stage, lb, zoomControls } = getEls()
       if (controls) controls.style.display = visible ? 'flex' : 'none'
+      if (zoomControls) zoomControls.style.display = visible ? 'none' : 'inline-flex'
       if (!stage) return
-      // Stage top sits below the close button + controls, which were pushed
-      // down to clear the page nav (close button at top:80, controls at 88).
-      stage.style.top = visible ? '200px' : '88px'
+      // Compare mode: stage starts below the centered toggle controls.
+      // Single-image mode: stage spans the full viewport — close + zoom
+      // controls float on top so the image can fill the entire height.
+      stage.style.top = visible ? '170px' : '0'
+      stage.style.bottom = visible ? '32px' : '0'
       // Reset any single-image overrides when re-entering compare mode.
       // Important: explicitly set the dark backdrop here — relying on '' to
       // fall back to the HTML inline style doesn't work because the inline
@@ -224,14 +238,14 @@ export default function OrderManagementCaseStudy() {
       currentTour = null
       currentTourIndex = 0
       current = null
-      const { stage, lb } = getEls()
+      zoomLevel = 1
+      const { stage, lb, zoomDisplay } = getEls()
       if (!stage || !lb) return
       setControlsVisible(false)
-      // Single-image mode: lives on the same steel-blue surface as the
-      // sections behind these diagrams (no jarring dark-mode flip), fills the
-      // viewport, and allows pinch-zoom + scroll to explore detail. Solid
-      // steel-blue + blur ensures the page doesn't peek through.
-      lb.style.background = 'rgba(212, 221, 231, 0.96)'
+      // Single-image mode: backdrop is the EXACT same composition as the OM
+      // page hero — mustard gradient at 0.55/0.65 alpha layered over cream.
+      // Cream base keeps it fully opaque so the page can't bleed through.
+      lb.style.background = 'linear-gradient(135deg, rgba(230, 192, 122, 0.55) 0%, rgba(221, 179, 101, 0.65) 100%), #F6F6F1'
       lb.style.backdropFilter = 'blur(24px)'
       lb.style.webkitBackdropFilter = 'blur(24px)'
       stage.style.padding = '0'
@@ -239,14 +253,56 @@ export default function OrderManagementCaseStudy() {
       stage.style.overflow = 'auto'
       stage.style.touchAction = 'pinch-zoom'
       stage.innerHTML = ''
+      fitWidth = 0
+      fitHeight = 0
       const el = document.createElement('img')
       el.src = src
       if (alt) el.alt = alt
+      // At zoom=1 the image fits the stage. After load, capture the rendered
+      // fit size — zoomImage multiplies that captured size by zoomLevel so
+      // each click is a true 10% increase relative to fit, not a jump from
+      // height-limited to width-100% of the stage.
       el.style.cssText =
-        'max-width:100%;max-height:100%;display:block;background:transparent;object-fit:contain;margin:auto;touch-action:pinch-zoom;'
+        'max-width:100%;max-height:100%;display:block;background:transparent;object-fit:contain;margin:auto;touch-action:pinch-zoom;transition:width 200ms ease, height 200ms ease;'
+      el.addEventListener('load', () => {
+        if (!fitWidth) {
+          fitWidth = el.clientWidth
+          fitHeight = el.clientHeight
+        }
+      })
       stage.appendChild(el)
+      if (zoomDisplay) zoomDisplay.textContent = '100%'
       lb.style.display = 'flex'
       document.body.style.overflow = 'hidden'
+    }
+
+    // Zoom controls for openImage mode. delta is the change (e.g. +0.10).
+    // Pass reset=true to snap back to fit (zoomLevel=1).
+    window.zoomImage = (delta, reset = false) => {
+      const { stage, zoomDisplay } = getEls()
+      const img = stage?.querySelector('img')
+      if (!img) return
+      // Lazily capture fit size if the load handler hasn't fired yet.
+      if (!fitWidth && img.clientWidth) {
+        fitWidth = img.clientWidth
+        fitHeight = img.clientHeight
+      }
+      zoomLevel = reset ? 1 : Math.max(0.5, Math.min(3, zoomLevel + delta))
+      if (zoomLevel === 1 || !fitWidth) {
+        // Fit-to-stage: respect natural aspect, no overflow
+        img.style.maxWidth = '100%'
+        img.style.maxHeight = '100%'
+        img.style.width = ''
+        img.style.height = ''
+      } else {
+        // Zoomed: scale the image's CSS pixel size relative to the FIT
+        // dimensions, so 110% really is 10% bigger than 100%.
+        img.style.maxWidth = 'none'
+        img.style.maxHeight = 'none'
+        img.style.width = `${Math.round(fitWidth * zoomLevel)}px`
+        img.style.height = `${Math.round(fitHeight * zoomLevel)}px`
+      }
+      if (zoomDisplay) zoomDisplay.textContent = `${Math.round(zoomLevel * 100)}%`
     }
 
     window.openCompareTour = (tourId, mode) => {
@@ -322,6 +378,7 @@ export default function OrderManagementCaseStudy() {
       delete window.openCompare
       delete window.openCompareTour
       delete window.openImage
+      delete window.zoomImage
       delete window.switchTour
       delete window.switchCompare
       delete window.closeCompare
@@ -555,7 +612,7 @@ export default function OrderManagementCaseStudy() {
                 aria-current={activeChapter === id ? 'true' : undefined}
                 onClick={() => scrollToChapter(id)}
               >
-                {label}
+                <span className="om-chapter-nav-label">{label}</span>
               </button>
             </li>
           ))}

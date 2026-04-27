@@ -1059,12 +1059,88 @@ function ConceptCarousel() {
   )
 }
 
+// Chapter list for the side-rail scrollspy. Each id matches a section's id
+// below; collapsed-on-hover dot strip at ≥1440px.
+const CHAPTERS = [
+  { id: 'ch-tldr',       label: 'tl;dr' },
+  { id: 'ch-context',    label: 'Context' },
+  { id: 'ch-hypothesis', label: 'Hypothesis' },
+  { id: 'ch-research',   label: 'Research' },
+  { id: 'ch-problem',    label: 'Problem' },
+  { id: 'ch-solution',   label: 'Solution' },
+  { id: 'ch-outcomes',   label: 'Outcomes' },
+  { id: 'ch-reflection', label: 'Reflection' },
+]
+
 export default function CaseStudy() {
+  const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
+  const [navVisible, setNavVisible] = useState(false)
+
   useEffect(() => { window.scrollTo(0, 0) }, [])
+
+  // Scrollspy: track active chapter + show/hide rail past hero, hide near
+  // bottom. Mirrors the OM/Rules implementation.
+  useEffect(() => {
+    const sections = CHAPTERS.map((c) => document.getElementById(c.id)).filter(Boolean)
+    if (!sections.length) return
+    const threshold = () => Math.max(140, window.innerHeight * 0.28)
+    const update = () => {
+      const t = threshold()
+      let current = sections[0].id
+      for (const s of sections) {
+        const rect = s.getBoundingClientRect()
+        if (rect.top - t <= 0) current = s.id
+        else break
+      }
+      setActiveChapter((prev) => (prev === current ? prev : current))
+      const scrollY = window.scrollY || window.pageYOffset
+      const past = scrollY > 520
+      const docH = document.documentElement.scrollHeight
+      const viewH = window.innerHeight
+      const nearBottom = scrollY + viewH > docH - 600
+      setNavVisible(past && !nearBottom)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  const scrollToChapter = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const top = el.getBoundingClientRect().top + window.scrollY - 24
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
 
   return (
     <div className="cs-page positions-page">
       <Nav />
+
+      {/* Sticky chapter side rail — collapses to a dot strip and expands
+          on hover. Hidden via CSS at < 1440px viewports. */}
+      <aside
+        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
+        aria-label="Case study chapters"
+      >
+        <ul className="om-chapter-nav-list">
+          {CHAPTERS.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                type="button"
+                className={`om-chapter-nav-link${activeChapter === id ? ' is-active' : ''}`}
+                aria-current={activeChapter === id ? 'true' : undefined}
+                onClick={() => scrollToChapter(id)}
+              >
+                <span className="om-chapter-nav-label">{label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
       {/* Home-style ambient radial-gradient wrapper — same 11-orb wash used on
           home and OM, cycling steel-blue → gold → terracotta down the full page. */}
@@ -1088,8 +1164,9 @@ export default function CaseStudy() {
       {/* 1. HERO */}
       <section style={{
         background: `
-          radial-gradient(rgba(245,232,211,0.14) 1px, transparent 1px) 0 0 / 28px 28px,
-          linear-gradient(135deg, #C27A6E 0%, #B86757 100%)
+          radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px,
+          linear-gradient(135deg, rgba(194, 122, 110, 0.7) 0%, rgba(184, 103, 87, 0.78) 100%),
+          var(--cream)
         `,
         minHeight: '100vh',
         paddingTop: 'var(--section-padding)', paddingLeft: 'var(--side-padding)', paddingRight: 'var(--side-padding)', overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column'
@@ -1212,7 +1289,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 2. TL;DR */}
-      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-tldr" style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 56 }}>
           <div>
             <h2 style={{ fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 700, color: 'var(--deep-blue)', lineHeight: 1.2, marginBottom: 20 }}>tl;dr</h2>
@@ -1220,17 +1297,10 @@ export default function CaseStudy() {
               Across the enterprise investing platform, we re-architected how portfolio positions data appeared within trading workflows. We then scaled this order ticket enhancement into a reusable design system component and layout pattern, unlocking compounding efficiency gains across the platform's many data-dense applications.
             </p>
           </div>
-          <div style={{ background: 'rgba(202,213,226,0.15)', border: '1px solid rgba(202,213,226,0.25)', borderRadius: 15, padding: 'clamp(24px, 4vw, 50px)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 24 }}>
-            {[
-              { label: 'Role', value: 'Lead UX Designer — Trading' },
-              { label: 'Timeline', value: '8 weeks (Q4 2025)' },
-              { label: 'Team', value: 'Product Design, Engineering, Product Management' },
-            ].map(item => (
-              <div key={item.label}>
-                <p className="meta-label" style={{ marginBottom: 6 }}>{item.label}</p>
-                <p className="meta-value">{item.value}</p>
-              </div>
-            ))}
+          <div className="meta-pills">
+            <span className="hero-pill hero-pill--blue">Lead UX Designer — Trading</span>
+            <span className="hero-pill hero-pill--gold">8 weeks (Q4 2025)</span>
+            <span className="hero-pill hero-pill--warm">Product Design · Engineering · Product Management</span>
           </div>
         </div>
       </section>
@@ -1252,7 +1322,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 4. PROJECT DETAILS */}
-      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-context" style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Project Details</h2>
           <div className="details-grid">
@@ -1304,7 +1374,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 5. PROBLEM HYPOTHESIS */}
-      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-hypothesis" style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Initial Problem Hypothesis &amp; Key Questions</h2>
           <p className="cs-body">Our trading platform serves professional traders managing complex institutional portfolios. <strong>The initial hypothesis was clear: positions data is critical to every trade decision, yet it remained hidden, secondary, or spatially competitive with the primary task.</strong> We set out to understand the full scope of this problem before proposing any solution.</p>
@@ -1331,7 +1401,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 7. PLATFORM AUDIT */}
-      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-research" style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Platform Audit</h2>
           <p className="cs-body">I conducted a comprehensive audit of all trading platform applications to document how positions data was currently surfaced across the ecosystem.</p>
@@ -1495,7 +1565,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 12. PROBLEM DEFINED */}
-      <section style={{ background: '#B86757', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-problem" style={{ background: '#B86757', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2" style={{ color: '#F5E8D3' }}>Problem: Validated &amp; Defined</h2>
           <p style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.5, color: '#f6fbde', marginBottom: 20, marginTop: 32 }}>
@@ -1520,7 +1590,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 13. SOLUTION PARAMETERS */}
-      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-solution" style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Defining Solution Parameters</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 40 }}>
@@ -1761,7 +1831,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 18. RESULTS — steel blue */}
-      <section style={{ background: 'var(--steel-blue)', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-outcomes" style={{ background: 'var(--steel-blue)', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 style={{ fontSize: 36, fontWeight: 700, color: 'var(--text-light)', marginBottom: 48 }}>Results &amp; Impact</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 56 }}>
@@ -1808,7 +1878,7 @@ export default function CaseStudy() {
       </section>
 
       {/* 19. REFLECTIONS */}
-      <section style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
+      <section id="ch-reflection" style={{ background: 'transparent', padding: 'var(--section-padding) var(--side-padding)' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto' }}>
           <h2 className="cs-h2">Reflections &amp; Learnings</h2>
           <div style={{ padding: '32px 40px', background: 'rgba(251,250,244,0.5)', border: '1px solid rgba(177,124,93,0.15)', borderRadius: 12, marginBottom: 40 }}>

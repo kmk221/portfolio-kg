@@ -29,7 +29,7 @@ function StepLabel({children,light}){
 }
 
 function Callout({icon,title,body,style:s}){
-  return <div style={{marginTop:64,padding:'28px 36px',background:accentLight,border:'1px solid rgba(125,145,165,0.2)',borderRadius:12,display:'flex',gap:16,alignItems:'flex-start',...s}}><span style={{fontSize:20,flexShrink:0,marginTop:2}}>{icon}</span><div><p style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark,marginBottom:6}}>{title}</p><p style={{fontSize:14,lineHeight:1.65,color:warmGray}}>{body}</p></div></div>
+  return <div style={{marginTop:64,padding:'28px 36px',background:accentLight,border:'1px solid rgba(125,145,165,0.2)',borderRadius:12,display:'flex',gap:16,alignItems:'flex-start',...s}}><span style={{fontSize:20,flexShrink:0,marginTop:2}}>{icon}</span><div><p style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark,marginBottom:6}}>{title}</p><p style={{fontSize:14,lineHeight:1.65,color:accentDark}}>{body}</p></div></div>
 }
 
 function ImgFrame({label,children,stretch}){
@@ -51,7 +51,7 @@ function FullscreenCloseBtn({onClose, label='Close'}){
       onClick={onClose}
       aria-label={`${label} full screen view`}
       className="compare-close-btn"
-      style={{display:'inline-flex',alignItems:'center',gap:8,background:'#fff',color:'#1a1a1a',border:0,height:44,minWidth:44,padding:'0 18px 0 14px',borderRadius:999,fontSize:13,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',cursor:'pointer',boxShadow:'0 4px 14px rgba(0,0,0,0.35)',fontFamily:'inherit',flexShrink:0}}
+      style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(255,255,255,0.8)',color:'#1a1a1a',border:'1px solid rgba(255,255,255,0.55)',height:44,minWidth:44,padding:'0 18px 0 14px',borderRadius:999,fontSize:13,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',cursor:'pointer',boxShadow:'0 6px 24px rgba(55,43,11,0.18), inset 0 1px 0 rgba(255,255,255,0.6)',backdropFilter:'blur(20px)',WebkitBackdropFilter:'blur(20px)',fontFamily:'inherit',flexShrink:0}}
     >
       <span aria-hidden="true" style={{fontSize:18,lineHeight:1,display:'inline-flex',alignItems:'center',justifyContent:'center',width:20,height:20}}>×</span>
       <span className="compare-close-label">{label}</span>
@@ -340,22 +340,22 @@ function AffinityMap(){
   useEffect(()=>{const h=(e)=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h)},[])
   useEffect(()=>{document.body.style.overflow=open?'hidden':'';return()=>{document.body.style.overflow=''}},[open])
   return(<>
-    <div onClick={()=>setOpen(true)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setOpen(true)} style={{background:'#2c2c2c',borderRadius:20,padding:'28px 28px 22px',cursor:'pointer',boxShadow:'0 8px 40px rgba(0,0,0,0.22)',border:'1px solid rgba(255,255,255,0.07)'}}>
+    <div onClick={()=>setOpen(true)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setOpen(true)} style={{background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',borderRadius:20,padding:'28px 28px 22px',cursor:'pointer',boxShadow:'0 4px 24px rgba(44,59,85,0.08)',border:'1px solid rgba(125,145,165,0.22)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:18}}>
-        <span style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(200,200,200,0.7)'}}>FigJam — Synthesis Board</span>
-        <span style={{fontSize:11,fontWeight:600,color:'rgba(220,220,220,0.65)',background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:20,padding:'5px 14px'}}>⛶ Explore board</span>
+        <span style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accentDark}}>FigJam — Synthesis Board</span>
+        <span style={{fontSize:11,fontWeight:600,color:accentDark,background:'rgba(255,255,255,0.55)',border:'1px solid rgba(125,145,165,0.3)',borderRadius:20,padding:'5px 14px'}}>⛶ Explore board</span>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10}}>
         {thumbClusters.map(cl=>(
-          <div key={cl.id} style={{gridColumn:cl.span2?'span 2':undefined,background:'rgba(177,124,93,0.1)',border:'1px solid rgba(177,124,93,0.18)',borderRadius:10,padding:12}}>
-            <div style={{fontSize:8.5,fontWeight:700,color:'rgba(240,220,208,0.9)',marginBottom:8,lineHeight:1.3}}>{cl.title}</div>
-            <div style={{display:'flex',flexWrap:'wrap',gap:4}}>{cl.blobs.map(([c,w],i)=><div key={i} style={{height:18,width:w,borderRadius:3,background:blobColors[c],opacity:0.75}}/>)}</div>
+          <div key={cl.id} style={{gridColumn:cl.span2?'span 2':undefined,background:'rgba(255,255,255,0.5)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:10,padding:12}}>
+            <div style={{fontSize:8.5,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.3}}>{cl.title}</div>
+            <div style={{display:'flex',flexWrap:'wrap',gap:4}}>{cl.blobs.map(([c,w],i)=><div key={i} style={{height:18,width:w,borderRadius:3,background:blobColors[c],opacity:0.85}}/>)}</div>
           </div>
         ))}
       </div>
     </div>
     {open&&(
-      <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
+      <div style={{position:'fixed',inset:0,zIndex:9000,background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px, rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:24}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 28px',background:'rgba(255,255,255,0.5)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
           <div>
             <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark}}>Synthesis Board — FigJam</div>
@@ -366,10 +366,10 @@ function AffinityMap(){
         <div style={{flex:1,overflowX:'auto',overflowY:'hidden',padding:'32px 40px 24px'}}>
           <div style={{display:'flex',flexDirection:'row',gap:16,alignItems:'flex-start',minWidth:'max-content'}}>
             {fullClusters.map(cl=>(
-              <div key={cl.id} style={{width:cl.span2?520:320,flexShrink:0,background:'rgba(125,145,165,0.08)',border:'1px solid rgba(125,145,165,0.18)',borderRadius:14,padding:'18px 16px 16px'}}>
-                <div style={{paddingBottom:12,borderBottom:'1px solid rgba(125,145,165,0.15)',marginBottom:10}}>
-                  <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(125,145,165,0.9)',marginBottom:4}}>{cl.label}</div>
-                  <div style={{fontSize:12,fontWeight:700,color:'rgba(220,232,245,0.92)',lineHeight:1.3}}>{cl.title}</div>
+              <div key={cl.id} style={{width:cl.span2?520:320,flexShrink:0,background:'rgba(255,255,255,0.45)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:14,padding:'18px 16px 16px'}}>
+                <div style={{paddingBottom:12,borderBottom:'1px solid rgba(125,145,165,0.2)',marginBottom:10}}>
+                  <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:4}}>{cl.label}</div>
+                  <div style={{fontSize:12,fontWeight:700,color:accentDark,lineHeight:1.3}}>{cl.title}</div>
                 </div>
                 <div style={{display:'grid',gridTemplateColumns:cl.span2?'1fr 1fr 1fr 1fr':'1fr 1fr',gap:8}}>
                   {cl.stickies.map((s,i)=>{const sc=stickyColor(s.c);return <div key={i} style={{borderRadius:6,padding:'10px 11px',fontSize:13,lineHeight:1.5,fontWeight:500,background:sc.bg,color:sc.text,boxShadow:'0 2px 8px rgba(0,0,0,0.2)',gridRow:s.tall?'span 2':undefined}}>{s.t}</div>})}
@@ -479,7 +479,7 @@ function CarouselShell({tabs, tab, setTab, children}){
     <div>
       <div style={{display:'flex',gap:6,marginBottom:14}}>
         {tabs.map((label,i)=>(
-          <button key={i} onClick={()=>setTab(i)} style={{padding:'5px 14px',fontSize:10,fontWeight:600,cursor:'pointer',borderRadius:6,background:i===tab?accentLight:'white',border:`1px solid ${i===tab?accentMid:'rgba(125,145,165,0.35)'}`,color:i===tab?accent:'rgba(89,80,74,0.55)',transition:'all 0.15s',fontFamily:'Inter,sans-serif'}}>
+          <button key={i} onClick={()=>setTab(i)} style={{padding:'6px 14px',fontSize:10,fontWeight:i===tab?700:600,cursor:'pointer',borderRadius:6,background:i===tab?accentDark:'transparent',border:`1px solid ${i===tab?accentDark:'rgba(125,145,165,0.35)'}`,color:i===tab?'#fff':'rgba(89,80,74,0.6)',transition:'all 0.15s',fontFamily:'Inter,sans-serif',boxShadow:i===tab?'0 2px 6px rgba(44,59,85,0.15)':'none'}}>
             {label}
           </button>
         ))}
@@ -545,8 +545,16 @@ function HMW02Visual(){
             </>)}
           </div>
         </div>
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
-          {stickies[tab].map((s,i)=><div key={i} style={{background:sBg4[s.c],color:sTx4[s.c],borderRadius:6,padding:'10px 12px',fontSize:11,fontWeight:500,lineHeight:1.55,boxShadow:'2px 3px 8px rgba(0,0,0,0.25)'}}>{s.t}</div>)}
+        <div>
+          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accent,marginBottom:12}}>Sketch ideas</div>
+          <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:10}}>
+            {stickies[tab].map((s,i)=>(
+              <li key={i} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'10px 0',borderTop:i===0?'none':'1px solid rgba(125,145,165,0.18)'}}>
+                <span aria-hidden="true" style={{flexShrink:0,marginTop:6,width:6,height:6,borderRadius:'50%',background:accent}}/>
+                <span style={{fontSize:13,lineHeight:1.55,color:deepBlue,fontWeight:500}}>{s.t}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </CarouselShell>
@@ -613,8 +621,16 @@ function HMW03Visual(){
             </>)}
           </div>
         </div>
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
-          {stickies[tab].map((s,i)=><div key={i} style={{background:sBg4[s.c],color:sTx4[s.c],borderRadius:6,padding:'10px 12px',fontSize:11,fontWeight:500,lineHeight:1.55,boxShadow:'2px 3px 8px rgba(0,0,0,0.25)'}}>{s.t}</div>)}
+        <div>
+          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accent,marginBottom:12}}>Sketch ideas</div>
+          <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:10}}>
+            {stickies[tab].map((s,i)=>(
+              <li key={i} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'10px 0',borderTop:i===0?'none':'1px solid rgba(125,145,165,0.18)'}}>
+                <span aria-hidden="true" style={{flexShrink:0,marginTop:6,width:6,height:6,borderRadius:'50%',background:accent}}/>
+                <span style={{fontSize:13,lineHeight:1.55,color:deepBlue,fontWeight:500}}>{s.t}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </CarouselShell>
@@ -700,8 +716,16 @@ function HMW04Visual(){
             </>)}
           </div>
         </div>
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
-          {stickies[tab].map((s,i)=><div key={i} style={{background:sBg4[s.c],color:sTx4[s.c],borderRadius:6,padding:'10px 12px',fontSize:11,fontWeight:500,lineHeight:1.55,boxShadow:'2px 3px 8px rgba(0,0,0,0.25)'}}>{s.t}</div>)}
+        <div>
+          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accent,marginBottom:12}}>Sketch ideas</div>
+          <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:10}}>
+            {stickies[tab].map((s,i)=>(
+              <li key={i} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'10px 0',borderTop:i===0?'none':'1px solid rgba(125,145,165,0.18)'}}>
+                <span aria-hidden="true" style={{flexShrink:0,marginTop:6,width:6,height:6,borderRadius:'50%',background:accent}}/>
+                <span style={{fontSize:13,lineHeight:1.55,color:deepBlue,fontWeight:500}}>{s.t}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </CarouselShell>
@@ -759,8 +783,16 @@ function HMW05Visual(){
             </>)}
           </div>
         </div>
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
-          {stickies[tab].map((s,i)=><div key={i} style={{background:sBg4[s.c],color:sTx4[s.c],borderRadius:6,padding:'10px 12px',fontSize:11,fontWeight:500,lineHeight:1.55,boxShadow:'2px 3px 8px rgba(0,0,0,0.25)'}}>{s.t}</div>)}
+        <div>
+          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accent,marginBottom:12}}>Sketch ideas</div>
+          <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:10}}>
+            {stickies[tab].map((s,i)=>(
+              <li key={i} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'10px 0',borderTop:i===0?'none':'1px solid rgba(125,145,165,0.18)'}}>
+                <span aria-hidden="true" style={{flexShrink:0,marginTop:6,width:6,height:6,borderRadius:'50%',background:accent}}/>
+                <span style={{fontSize:13,lineHeight:1.55,color:deepBlue,fontWeight:500}}>{s.t}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </CarouselShell>
@@ -770,16 +802,14 @@ function HMW05Visual(){
 function HMWExplorer(){
   const [active,setActive]=useState(1)
   const item=hmwItems.find(h=>h.id===active)
-  const sBg={g:'#8a9aaa',y:'#f5c842',b:'#5bb8e8',o:'#f07a5a',p:'#e87dc8'}
-  const sTx={g:'#051a0a',y:'#1a1200',b:'#001828',o:'#2a0800',p:'#2a0028'}
   return(
     <div style={{display:'grid',gridTemplateColumns:'220px 1fr',gap:0,alignItems:'stretch'}}>
       {/* Left sidebar */}
       <div style={{borderRight:'1px solid rgba(125,145,165,0.2)',paddingRight:24}}>
         {hmwItems.map((h,i)=>(
           <button key={h.id} onClick={()=>setActive(h.id)} style={{display:'flex',flexDirection:'column',gap:4,width:'100%',background:'transparent',border:'none',padding:'14px 16px',cursor:'pointer',fontFamily:'Inter,sans-serif',textAlign:'left',borderRadius:10,marginBottom:4,transition:'all 0.2s',background:active===h.id?'rgba(125,145,165,0.2)':'transparent',borderLeft:active===h.id?`2px solid ${accent}`:'2px solid transparent'}}>
-            <span style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:active===h.id?accent:'rgba(89,80,74,0.35)'}}>{h.pill}</span>
-            <span style={{fontSize:12,fontWeight:600,color:active===h.id?warmGray:'rgba(89,80,74,0.45)',lineHeight:1.35}}>{h.pillText}</span>
+            <span style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:active===h.id?accent:'rgba(44, 59, 85, 0.6)'}}>{h.pill}</span>
+            <span style={{fontSize:12,fontWeight:active===h.id?700:500,color:active===h.id?warmGray:'rgba(44, 59, 85, 0.7)',lineHeight:1.35}}>{h.pillText}</span>
           </button>
         ))}
       </div>
@@ -788,9 +818,19 @@ function HMWExplorer(){
         <div style={{paddingLeft:32}}>
           <div style={{display:'grid',gridTemplateColumns:item.stickies.length===0?'1fr':'2fr 1fr',gap:24,alignItems:'start'}}>
             <div>{item.visual}</div>
-            {item.stickies.length>0&&<div style={{display:'flex',flexDirection:'column',gap:8}}>
-              {item.stickies.map((s,i)=>(<div key={i} style={{background:sBg[s.c],color:sTx[s.c],borderRadius:6,padding:'10px 12px',fontSize:11,fontWeight:500,lineHeight:1.55,boxShadow:'2px 3px 8px rgba(0,0,0,0.25)'}}>{s.t}</div>))}
-            </div>}
+            {item.stickies.length>0&&(
+              <div>
+                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accent,marginBottom:12}}>Sketch ideas</div>
+                <ul style={{listStyle:'none',padding:0,margin:0,display:'flex',flexDirection:'column',gap:10}}>
+                  {item.stickies.map((s,i)=>(
+                    <li key={i} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'10px 0',borderTop:i===0?'none':'1px solid rgba(125,145,165,0.18)'}}>
+                      <span aria-hidden="true" style={{flexShrink:0,marginTop:6,width:6,height:6,borderRadius:'50%',background:accent}}/>
+                      <span style={{fontSize:13,lineHeight:1.55,color:deepBlue,fontWeight:500}}>{s.t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -929,7 +969,7 @@ function CardWithToggle({num, title, body, afterContent, beforeContent}) {
       <div style={{display:'grid',gridTemplateColumns:'2fr 3fr',alignItems:'stretch'}}>
         <div style={{padding:'32px 36px',borderRight:`1px solid ${borderLight}`,display:'flex',flexDirection:'column',justifyContent:'flex-start'}}>
           <div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,marginBottom:16}}>{num}</div>
-          <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:10,lineHeight:1.35}}>{title}</div>
+          <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:10,lineHeight:1.35}}>{title}</div>
           <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:0}}>{body}</p>
         </div>
         <div style={{background:'#f7f8fa',display:'flex',alignItems:'center',justifyContent:'center',padding:24,position:'relative',minHeight:240}}>
@@ -1127,7 +1167,7 @@ function IterationOverlay({cards,openIdx,onClose}){
           {/* Feedback text */}
           <div style={{background:'rgba(255,255,255,0.55)',border:'1px solid rgba(125,145,165,0.2)',borderRadius:10,padding:'16px 24px',maxWidth:800,width:'100%'}}>
             <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:terracotta,marginBottom:6}}>Feedback</div>
-            <p style={{fontSize:13,lineHeight:1.7,color:warmGray,margin:0}}>{c.feedback}</p>
+            <p style={{fontSize:13,lineHeight:1.7,color:accentDark,margin:0}}>{c.feedback}</p>
             {c.changed&&<><div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)',marginTop:10,marginBottom:4}}>What changed</div><p style={{fontSize:12,lineHeight:1.6,color:deepBlue,margin:0}}>{c.changed}</p></>}
           </div>
           {/* Visuals */}
@@ -1260,7 +1300,7 @@ export default function RulesCaseStudy(){
     })
   }
 
-  return(<div className="rules-cs-page cs-page rules-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:warmGray,background:cream,overflowX:'hidden'}}>
+  return(<div className="rules-cs-page cs-page rules-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'hidden'}}>
     <Nav/>
     {/* Sticky chapter nav — left rail at ≥1440px viewport */}
     <aside
@@ -1276,7 +1316,7 @@ export default function RulesCaseStudy(){
               aria-current={activeChapter === id ? 'true' : undefined}
               onClick={() => scrollToChapter(id)}
             >
-              {label}
+              <span className="om-chapter-nav-label">{label}</span>
             </button>
           </li>
         ))}
@@ -1326,8 +1366,8 @@ export default function RulesCaseStudy(){
     {/* HERO */}
     <section style={{
       background:`
-        radial-gradient(rgba(55,43,11,0.12) 1px, transparent 1px) 0 0 / 28px 28px,
-        linear-gradient(135deg, rgba(196, 207, 223, 0.55), rgba(196, 207, 223, 0.72))
+        radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px,
+        rgba(212, 221, 231, 0.55)
       `,
       backdropFilter:'blur(10px)',
       WebkitBackdropFilter:'blur(10px)',
@@ -1398,8 +1438,11 @@ export default function RulesCaseStudy(){
       <div style={ct}>
         <h2 style={{fontSize:72,fontWeight:800,color:accentDark,lineHeight:1,marginBottom:40}}>tl;dr</h2>
         <p style={{fontSize:20,fontWeight:500,lineHeight:1.65,letterSpacing:'-0.3px',color:'#7a4f35',maxWidth:820,marginBottom:72}}>Across a suite of compliance tools on an enterprise investing platform, we identified where to focus design effort — then redesigned the rule management and creation experience from the ground up. The result: a shipped, user-tested redesign that replaced tribal knowledge with guided workflows and shadow spreadsheets with built-in documentation.</p>
-        <div style={{background:accentLight,border:'1px solid rgba(66,125,219,0.18)',borderRadius:14,padding:'28px 40px',display:'flex',justifyContent:'space-between',alignItems:'center',gap:24}}>
-          {[{l:'Role',v:'Lead UX Designer — Trading'},{l:'Timeline',v:'Q1–Q4 2025'},{l:'Team',v:'Design · Product · Engineering · Business'},{l:'Status',v:'Shipped ✓'}].map((item,i,arr)=>(<div key={item.l} style={{display:'flex',alignItems:'center',gap:24}}><div style={{whiteSpace:'nowrap'}}><p style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accent,marginBottom:6}}>{item.l}</p><p style={{fontSize:15,fontWeight:600,color:warmGray}}>{item.v}</p></div>{i<arr.length-1&&<div style={{width:1,height:36,background:'rgba(125,145,165,0.2)',flexShrink:0}}/>}</div>))}
+        <div className="meta-pills">
+          <span className="hero-pill hero-pill--blue">Lead UX Designer — Trading</span>
+          <span className="hero-pill hero-pill--gold">Q1–Q4 2025</span>
+          <span className="hero-pill hero-pill--warm">Design · Product · Engineering · Business</span>
+          <span className="hero-pill hero-pill--gold">Shipped ✓</span>
         </div>
       </div>
     </section>
@@ -1417,12 +1460,12 @@ export default function RulesCaseStudy(){
     <section id="ch-discovery" style={{...sec('transparent'),paddingTop:160,paddingBottom:160}}>
       <div style={ct}>
         <StepLabel>Step 01 — Discovery</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
         <p style={{fontSize:16,lineHeight:1.8,color:deepBlue,maxWidth:640,marginBottom:100}}>We surfaced existing user interviews that had never been acted on — bringing product, engineering, and business together to synthesize themes and align on the problem space.</p>
 
         <div style={{marginBottom:56}}>
           <StepLabel>The existing experience</StepLabel>
-          <h3 style={{fontSize:19,fontWeight:700,color:warmGray,marginBottom:10}}>What users were working with</h3>
+          <h3 style={{fontSize:19,fontWeight:700,color:accentDark,marginBottom:10}}>What users were working with</h3>
           <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:620,marginBottom:32}}>Before anything else, it helps to see the starting point. The legacy rules management experience was functional — but barely. See what we mean below.</p>
           <div>
               {/* Rules table preview — matches actual legacy UI */}
@@ -1479,18 +1522,18 @@ export default function RulesCaseStudy(){
 
         <div style={{marginTop:72,marginBottom:24}}>
           <StepLabel>Synthesis</StepLabel>
-          <h3 style={{fontSize:17,fontWeight:700,color:warmGray,marginBottom:8}}>Five problem areas emerged</h3>
+          <h3 style={{fontSize:17,fontWeight:700,color:accentDark,marginBottom:8}}>Five problem areas emerged</h3>
           <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:32}}>Synthesized user feedback surfaced five distinct problem areas our users faced.</p>
 
           <AffinityMap/>
         </div>
 
         <div style={{marginTop:56}}>
-          <div className="rules-problem-cards" style={{display:'flex',flexDirection:'column',gap:20}}>
+          <div className="rules-problem-cards" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(460px, 1fr))',gap:20}}>
 
             {/* 01 — Findability */}
-            <div style={{display:'flex',flexDirection:'row',alignItems:'stretch',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)',minHeight:340}}>
-              <div style={{padding:52,display:'flex',alignItems:'center',justifyContent:'center',width:'65%',flexShrink:0,position:'relative',background:'#e8e8e8'}}>
+            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
+              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',position:'relative',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',overflow:'hidden',minHeight:220}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:300,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontSize:9,boxShadow:'2px 2px 6px rgba(0,0,0,0.1)',opacity:0.9}}>
                   <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:10,color:'#1a1a1a'}}>Rules</div>
                   <div style={{display:'grid',gridTemplateColumns:'28px 82px 22px 1fr',background:'#e8e8e8',borderBottom:'1px solid #ccc'}}>
@@ -1522,16 +1565,16 @@ export default function RulesCaseStudy(){
                 </div>
                 <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Only searchable with Ctrl+F which cannot locate data in truncated portion</div>
               </div>
-              <div style={{padding:'32px 36px',flex:1}}>
+              <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>01</div>
-                <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8,lineHeight:1.35}}>Users can't manage what they can't find</div>
+                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Users can't manage what they can't find</div>
                 <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Have to use ctrl+F to find rules and some cutoff logic is unsearchable so I have to keep a separate spreadsheet to simply track down a rule"</p>
               </div>
             </div>
 
             {/* 02 — Keywords opaque */}
-            <div style={{display:'flex',flexDirection:'row',alignItems:'stretch',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)',minHeight:340}}>
-              <div style={{padding:52,display:'flex',alignItems:'center',justifyContent:'center',width:'65%',flexShrink:0,position:'relative',background:'#e8e8e8'}}>
+            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
+              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',position:'relative',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',overflow:'hidden',minHeight:220}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:240,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 6px rgba(0,0,0,0.1)'}}>
                   <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:9.5,color:'#1a1a1a'}}>Rule Keywords — Select 1 to 4:</div>
                   <div style={{fontSize:7.5,fontWeight:700,color:'#555',padding:'3px 8px',background:'#f5f5f5',borderBottom:'1px solid #e8e8e8',letterSpacing:'0.04em',textTransform:'uppercase'}}>Account Related</div>
@@ -1548,16 +1591,16 @@ export default function RulesCaseStudy(){
                 </div>
                 <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>100+ keywords — no descriptions or context provided</div>
               </div>
-              <div style={{padding:'32px 36px',flex:1}}>
+              <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>02</div>
-                <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8,lineHeight:1.35}}>Guesswork shouldn't be part of building a compliance rule</div>
+                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Guesswork shouldn't be part of building a compliance rule</div>
                 <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Only know what a keyword means by trial and error — select it and click next, then go back and search again for another keyword"</p>
               </div>
             </div>
 
             {/* 03 — Rule creation */}
-            <div style={{display:'flex',flexDirection:'row',alignItems:'stretch',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)',minHeight:340}}>
-              <div style={{padding:52,display:'flex',alignItems:'center',justifyContent:'center',width:'65%',flexShrink:0,background:'#e8e8e8',position:'relative'}}>
+            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
+              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:280,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
                   <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:10,color:'#1a1a1a'}}>Rule Details</div>
                   <div style={{padding:'6px 8px',borderBottom:'1px solid #eee'}}>
@@ -1581,16 +1624,16 @@ export default function RulesCaseStudy(){
                 </div>
                 <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Free text — up to 20,000 comma-separated values</div>
               </div>
-              <div style={{padding:'32px 36px',flex:1}}>
+              <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>03</div>
-                <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8,lineHeight:1.35}}>The system expects expertise it never provides</div>
+                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>The system expects expertise it never provides</div>
                 <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"One-line box for 600 ticker symbols — impossible to jump to the end of that list"</p>
               </div>
             </div>
 
             {/* 04 — Shadow systems */}
-            <div style={{display:'flex',flexDirection:'row',alignItems:'stretch',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)',minHeight:340}}>
-              <div style={{padding:52,display:'flex',alignItems:'center',justifyContent:'center',width:'65%',flexShrink:0,background:'#e8e8e8',position:'relative'}}>
+            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
+              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
                 <div style={{transform:'scale(1.55)',transformOrigin:'center center'}}>
                 <div style={{display:'flex',alignItems:'center',gap:10}}>
 
@@ -1647,16 +1690,16 @@ export default function RulesCaseStudy(){
                 </div>
                 <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Manual copy &amp; paste between systems</div>
               </div>
-              <div style={{padding:'32px 36px',flex:1}}>
+              <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>04</div>
-                <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8,lineHeight:1.35}}>Users forced outside the platform for context</div>
+                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Users forced outside the platform for context</div>
                 <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Jumping back and forth loses my place — and if I forget to update the spreadsheet, it's hard to know the single source of truth. In compliance, that gap can mean a costly trading error."</p>
               </div>
             </div>
 
             {/* 05 — Help buried */}
-            <div style={{display:'flex',flexDirection:'row',alignItems:'stretch',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)',minHeight:340}}>
-              <div style={{padding:52,display:'flex',alignItems:'center',justifyContent:'center',width:'65%',flexShrink:0,background:'#e8e8e8',position:'relative'}}>
+            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
+              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
                 <div style={{width:240,transform:'scale(1.55)',transformOrigin:'center center'}}>
                   <div style={{border:'1px solid #b8b8b8',borderRadius:3,overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
                     <div style={{background:'#3a4553',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
@@ -1674,9 +1717,9 @@ export default function RulesCaseStudy(){
                 </div>
                 <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Help buried in top-right nav — rarely discovered</div>
               </div>
-              <div style={{padding:'32px 36px',flex:1}}>
+              <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>05</div>
-                <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8,lineHeight:1.35}}>Help exists — users just never find it</div>
+                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Help exists — users just never find it</div>
                 <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Didn't know that was here, that's cool"</p>
               </div>
             </div>
@@ -1693,7 +1736,17 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 02 — Design Sprint</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:900,color:accentDark,marginBottom:8}}>Insights → How Might We → Concept Sketches</h2>
+        <h2 style={{fontSize:28,fontWeight:900,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14}}>
+          <span>Insights</span>
+          <svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style={{flexShrink:0,color:accent}}>
+            <path d="M1 7 H25 M19 1 L25 7 L19 13" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>How Might We</span>
+          <svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style={{flexShrink:0,color:accent}}>
+            <path d="M1 7 H25 M19 1 L25 7 L19 13" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>Concept Sketches</span>
+        </h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:16}}>With five problem areas defined, I convinced key players from our product team to join me in a design thinking sprint. The goal was shared ownership of the direction, not just the deliverable.</p>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>And it worked. This isn't like redesigning a weather app — one misconfigured rule can instantaneously affect thousands of trades firm-wide. Having engineering constraints and business logic in the room while sketching made the ideas sharper and compressed weeks of back-and-forth into a single sprint.</p>
         <div style={{width:40,height:3,background:accentMid,borderRadius:2,marginBottom:32}}/>
@@ -1715,11 +1768,11 @@ export default function RulesCaseStudy(){
     <section id="ch-prioritization" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 03 — Prioritization</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>Deciding Where to Start</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>Deciding Where to Start</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>With 6 HMW areas and related concepts generated, the team assessed impact vs. effort — keeping in mind business, tech, and other environmental constraints.</p>
 
         {/* Effort vs Impact Matrix */}
-        <div style={{background:'#d8d8d8',border:'1px solid rgba(125,145,165,0.15)',borderRadius:14,padding:'24px 32px 16px 44px',marginBottom:4,position:'relative'}}>
+        <div style={{background:`radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px, rgba(212, 221, 231, 0.55)`,border:'1px solid rgba(125,145,165,0.22)',borderRadius:14,padding:'24px 32px 16px 44px',marginBottom:4,position:'relative'}}>
           {/* Y axis label — rotated, pinned to left inside box */}
           <div style={{position:'absolute',left:0,top:0,bottom:0,width:28,display:'flex',alignItems:'center',justifyContent:'center'}}>
             <div style={{transform:'rotate(-90deg)',fontSize:8,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(66,125,219,0.5)',whiteSpace:'nowrap'}}>↓ LOWER IMPACT · HIGHER IMPACT ↑</div>
@@ -1731,15 +1784,15 @@ export default function RulesCaseStudy(){
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(66,125,219,0.6)'}}>HIGH IMPACT · LOW EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 04',title:'More intuitive form controls',phase:'Phase 2',color:'#dce8f5'},
-                {hmw:'HMW 03',title:'Surface help where it\'s needed — contextual guidance',phase:'Phase 2',color:'#dce8f5'},
-                {hmw:'HMW 01',title:'Find & manage rules — search and filter on metadata + plain language rule preview',phase:'Phase 1',color:'#d4edda'},
-                {hmw:'HMW 05',title:'Intuitive rule builder — split panel, plain language preview builds as details are added',phase:'Phase 2',color:'#dce8f5'},
+                {hmw:'HMW 04',title:'More intuitive form controls',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 03',title:'Surface help where it\'s needed — contextual guidance',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 01',title:'Find & manage rules — search and filter on metadata + plain language rule preview',phase:'Phase 1',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
+                {hmw:'HMW 05',title:'Intuitive rule builder — split panel, plain language preview builds as details are added',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
               ].map((c,i)=>(
-                <div key={i} style={{background:c.color,borderRadius:6,padding:'8px 10px',width:c.hmw==='HMW 01'?'calc(40% - 5px)':'calc(30% - 8px)',minWidth:110,flexShrink:0}}>
-                  <div style={{fontSize:8,fontWeight:700,color:'rgba(66,125,219,0.7)',letterSpacing:'0.08em',marginBottom:4}}>{c.hmw}</div>
+                <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:c.hmw==='HMW 01'?'calc(40% - 5px)':'calc(30% - 8px)',minWidth:110,flexShrink:0}}>
+                  <div style={{fontSize:8,fontWeight:700,color:c.pillColor,letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
                   <div style={{fontSize:10,color:'#3A4C5E',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
-                  <div style={{fontSize:9,fontWeight:700,color:c.phase==='Phase 1'?'#2d5c3a':c.phase==='Phase 2'?'#4a5f72':'#8a6a3a'}}>→ {c.phase}</div>
+                  <div style={{display:'inline-flex',padding:'2px 8px',borderRadius:20,fontSize:8,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',background:c.pillBg,color:c.pillColor}}>{c.phase==='Phase 1'?'✓ ':'→ '}{c.phase}</div>
                 </div>
               ))}
               </div>
@@ -1797,7 +1850,7 @@ export default function RulesCaseStudy(){
           <div style={{textAlign:'center',paddingTop:12,fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(144,161,185,0.6)'}}>← LOWER EFFORT · HIGHER EFFORT →</div>
         </div>
 
-        <h3 style={{fontSize:16,fontWeight:700,color:warmGray,letterSpacing:'-0.2px',marginTop:56,marginBottom:28}}>The resulting phased approach</h3>
+        <h3 style={{fontSize:16,fontWeight:700,color:accentDark,letterSpacing:'-0.2px',marginTop:56,marginBottom:28}}>The resulting phased approach</h3>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
           {[
             {pill:'✓ Phase 1',title:'Rules List',body:'Users need to find and understand existing rules before anything else. Real search, filtering, and a plain language rule preview accomplish this. The layout of this page — and getting users familiar with the plain language format — made it easier to build rules in Phase 2, which reused the same pattern.',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
@@ -1807,7 +1860,7 @@ export default function RulesCaseStudy(){
           ].map(card=>(
             <div key={card.title} style={{borderRadius:12,padding:'28px 32px',background:card.bg,border:`1px solid ${card.border}`}}>
               <div style={{display:'inline-flex',padding:'4px 12px',borderRadius:20,fontSize:11,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:14,background:card.pillBg,color:card.pillColor}}>{card.pill}</div>
-              <div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8}}>{card.title}</div>
+              <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div>
               {card.body && <p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{card.body}</p>}
               {card.title === 'List Manager' && (
                 <>
@@ -1830,7 +1883,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 04 — Lofi Exploration</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:12}}>Mapping the End-to-End Workflow</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:12}}>Mapping the End-to-End Workflow</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>With our priorities set, I started in low fidelity to map the full workflow end to end — how screens connect, where users enter and exit, and what the overall shape of the experience looks like before sweating any details. These wireframes became the centerpiece of a cross-functional review with engineering and product, where we stress-tested feasibility, flagged edge cases, and aligned on the bigger puzzle pieces before zooming in.</p>
         <LofiFlow/>
       </div>
@@ -1845,7 +1898,7 @@ export default function RulesCaseStudy(){
           <div style={{width:3,height:36,background:'#b07a30',borderRadius:2,flexShrink:0}}/>
           <div>
             <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.16em',textTransform:'uppercase',color:'#b07a30',marginBottom:3}}>Zooming in on the details</div>
-            <div style={{fontSize:18,fontWeight:800,color:warmGray,letterSpacing:'-0.2px'}}>Small Decisions, Big Impact</div>
+            <div style={{fontSize:18,fontWeight:800,color:accentDark,letterSpacing:'-0.2px'}}>Small Decisions, Big Impact</div>
           </div>
         </div>
 
@@ -1861,7 +1914,7 @@ export default function RulesCaseStudy(){
               <div style={{width:22,height:22,borderRadius:'50%',background:'#b07a30',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                 <span style={{fontSize:10,fontWeight:800,color:'white'}}>1</span>
               </div>
-              <div style={{fontSize:12,fontWeight:700,color:warmGray,letterSpacing:'0.01em'}}>Leave rule creation — navigate to a separate import page via main nav</div>
+              <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Leave rule creation — navigate to a separate import page via main nav</div>
             </div>
             <div style={{display:'flex',gap:20,alignItems:'flex-start'}}>
               <div style={{flex:1}}>
@@ -1936,7 +1989,7 @@ export default function RulesCaseStudy(){
               <div style={{width:22,height:22,borderRadius:'50%',background:'#b07a30',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                 <span style={{fontSize:10,fontWeight:800,color:'white'}}>2</span>
               </div>
-              <div style={{fontSize:12,fontWeight:700,color:warmGray,letterSpacing:'0.01em'}}>Back in rule creation — set keyword to "Securities Upload," then match rule name exactly to the CSV filename</div>
+              <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Back in rule creation — set keyword to "Securities Upload," then match rule name exactly to the CSV filename</div>
             </div>
             <div style={{display:'flex',gap:20,alignItems:'flex-start'}}>
               <div style={{flex:1}}>
@@ -2093,7 +2146,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 06 — Design</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>The Redesign</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>The Redesign</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:20}}>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype — two interconnected workflows designed as a coherent system:</p>
         <ul style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:640,marginBottom:32,paddingLeft:20,display:'flex',flexDirection:'column',gap:6}}>
           <li><strong>Rules list</strong> — find, scan, and understand rules with real search and plain-language previews</li>
@@ -2113,12 +2166,12 @@ export default function RulesCaseStudy(){
         <div style={{marginBottom:64}}>
           <div style={{display:'flex',flexDirection:'column',gap:4,marginBottom:8}}>
             <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.16em',textTransform:'uppercase',color:accent}}>Part A</span>
-            <h3 style={{fontSize:22,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',margin:0}}>Rules List</h3>
+            <h3 style={{fontSize:22,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',margin:0}}>Rules List</h3>
           </div>
           <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>The legacy rules list had one job — display all rules — and did so, but without any ability to navigate, filter, or understand. The redesign turned a static table into a usable decision-making surface — with filtering, persistent rule detail, and plain-language logic all accessible from one view.</p>
           <BeforeAfterWipe/>
           <div style={{display:'flex',flexDirection:'column',gap:16}}>
-            {[{num:'01',title:'Two-panel layout with plain-language rule logic',body:'A rules list alongside a persistent right detail panel — showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.'},{num:'02',title:'Find the right rule fast — filtering and inline preview',body:'Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel — no navigation required, no losing your place in the list.'},{num:'03',title:'Rule details and quick actions, without leaving the list',body:"The detail panel surfaces everything you'd otherwise have to dig for — rule logic, applies-to scope, and modification history — alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction."}].map(d=>(<div key={d.num} style={{display:'flex',gap:28,padding:'28px 0',borderTop:`1px solid ${borderLight}`}}><div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,flexShrink:0,width:40}}>{d.num}</div><div><div style={{fontSize:15,fontWeight:700,color:warmGray,marginBottom:8}}>{d.title}</div><p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{d.body}</p></div></div>))}
+            {[{num:'01',title:'Two-panel layout with plain-language rule logic',body:'A rules list alongside a persistent right detail panel — showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.'},{num:'02',title:'Find the right rule fast — filtering and inline preview',body:'Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel — no navigation required, no losing your place in the list.'},{num:'03',title:'Rule details and quick actions, without leaving the list',body:"The detail panel surfaces everything you'd otherwise have to dig for — rule logic, applies-to scope, and modification history — alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction."}].map(d=>(<div key={d.num} style={{display:'flex',gap:28,padding:'28px 0',borderTop:`1px solid ${borderLight}`}}><div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,flexShrink:0,width:40}}>{d.num}</div><div><div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8}}>{d.title}</div><p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{d.body}</p></div></div>))}
           </div>
         </div>
 
@@ -2129,7 +2182,7 @@ export default function RulesCaseStudy(){
         <div>
           <div style={{display:'flex',flexDirection:'column',gap:4,marginBottom:8}}>
             <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.16em',textTransform:'uppercase',color:accent}}>Part B</span>
-            <h3 style={{fontSize:22,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',margin:0}}>Rule Creation</h3>
+            <h3 style={{fontSize:22,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',margin:0}}>Rule Creation</h3>
           </div>
           <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:40}}>The legacy creation experience assumed expert knowledge. The redesign built that knowledge into the flow — replacing a blank form with a guided workflow. Core structural shift: from a single overwhelming page to a stepped flow.</p>
           <PartBFeatureTabs
@@ -2165,7 +2218,7 @@ export default function RulesCaseStudy(){
     <section id="ch-validate" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 07 — Validate</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>What Changed After Testing</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>What Changed After Testing</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:40}}>With the mid-high fidelity prototype in hand, I brought it to user testing sessions with compliance officers. Each workflow step was mapped to a specific research question, with areas of highest uncertainty — clause selection, value input, and the add list flow — as the focus. Here's what we heard, and what changed as a result. You can also <a href="/rule-management-prototype-v2-updated.html" target="_blank" rel="noreferrer" style={{color:terracotta,fontWeight:600,textDecoration:'underline',textUnderlineOffset:3}}>explore the updated v2 prototype</a> with all post-testing changes applied.</p>
         {/* What worked well — compact */}
         <div style={{marginBottom:48}}>
@@ -2191,7 +2244,7 @@ export default function RulesCaseStudy(){
         <h2 style={{fontSize:28,fontWeight:800,color:accentDark,marginBottom:40}}>From shipped to what's next</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase — edit rule, change history, and eventually the full List Manager.</p>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:32}}>
-          {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page — reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:warmGray,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
+          {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page — reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
         </div>
         <div style={{padding:32,background:accentLight,border:`1px solid ${accentMid}`,borderRadius:12}}>
           <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:16}}>What's next — Phase 2</p>
@@ -2206,7 +2259,7 @@ export default function RulesCaseStudy(){
     <section id="ch-reflection" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Reflection</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:warmGray,letterSpacing:'-0.3px',marginBottom:40}}>What I carried forward</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>What I carried forward</h2>
         <div style={{display:'flex',flexDirection:'column',gap:0}}>
           {[
             {
@@ -2232,9 +2285,9 @@ export default function RulesCaseStudy(){
     </section>
 
     <footer style={{padding:`40px ${sideP}`,display:'flex',justifyContent:'space-between',alignItems:'center',borderTop:`1px solid ${borderLight}`,background:'transparent'}}>
-      <div style={{fontSize:13,fontWeight:700,color:warmGray}}>kristin<span style={{color:accent}}>.garza</span> · UX Designer</div>
+      <div style={{fontSize:13,fontWeight:700,color:accentDark}}>kristin<span style={{color:accent}}>.garza</span> · UX Designer</div>
       <div style={{display:'flex',gap:28}}>
-        {[['LinkedIn','https://www.linkedin.com/in/kristin-garza'],['Email','mailto:kmkerney221@gmail.com'],['Resume','/resume.pdf']].map(([label,href])=>(<a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" style={{fontSize:13,fontWeight:500,color:warmGray,opacity:0.75,textDecoration:'none'}}>{label}</a>))}
+        {[['LinkedIn','https://www.linkedin.com/in/kristin-garza'],['Email','mailto:kmkerney221@gmail.com'],['Resume','/resume.pdf']].map(([label,href])=>(<a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" style={{fontSize:13,fontWeight:500,color:accentDark,opacity:0.75,textDecoration:'none'}}>{label}</a>))}
       </div>
     </footer>
 

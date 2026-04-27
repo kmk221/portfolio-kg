@@ -301,16 +301,20 @@ a.nav-cta {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.2px;
-  color: var(--terracotta);
-  border: 1.5px solid var(--terracotta);
+  color: var(--deep-blue);
+  background: rgba(196, 207, 223, 0.35);
+  border: 1.5px solid rgba(95, 122, 154, 0.45);
   padding: 8px 20px;
   border-radius: 6px;
   transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 a.nav-cta:hover {
-  background: var(--terracotta);
-  color: white;
+  background: rgba(196, 207, 223, 0.55);
+  border-color: var(--deep-blue);
+  color: var(--deep-blue);
 }
 
 /* Dark-mode variant — gold pill with deep-brown text. */
@@ -383,6 +387,21 @@ a.nav-cta:hover {
   white-space: nowrap;
 }
 
+/* Pill row used in case study tl;dr sections — replaces the older
+   meta-bar pattern (Role/Timeline/Team/Status with vertical dividers).
+   Pills wrap horizontally so long values like the team list flow
+   gracefully on narrower viewports. */
+.meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+}
+.meta-pills .hero-pill {
+  white-space: normal;
+}
+
 .hero-pill--blue {
   background: rgba(196, 207, 223, 0.35);
   border: 1px solid rgba(95, 122, 154, 0.35);
@@ -453,7 +472,7 @@ a.nav-cta:hover {
   align-items: center;
   gap: 8px;
   padding: 14px 28px;
-  background: var(--warm-gray);
+  background: var(--terracotta);
   color: var(--cream);
   font-size: 14px;
   font-weight: 600;
@@ -465,7 +484,11 @@ a.nav-cta:hover {
 }
 
 .btn-primary:hover {
-  background: var(--terracotta);
+  background: rgba(184, 103, 87, 0.7);
+  color: var(--cream);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 18px rgba(184, 103, 87, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
 }
 

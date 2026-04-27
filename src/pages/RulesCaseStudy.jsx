@@ -316,7 +316,7 @@ function PrototypeEmbed(){
   useEffect(()=>{const h=(e)=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h)},[])
   useEffect(()=>{document.body.style.overflow=open?'hidden':'';return()=>{document.body.style.overflow=''}},[open])
   return(<>
-    <button onClick={()=>setOpen(true)} style={{display:'inline-flex',alignItems:'center',gap:10,background:terracotta,color:'white',fontSize:13,fontWeight:700,padding:'13px 24px',borderRadius:28,border:'none',cursor:'pointer',letterSpacing:'0.03em',boxShadow:'0 4px 20px rgba(177,124,93,0.35)'}}>
+    <button onClick={()=>setOpen(true)} style={{display:'inline-flex',alignItems:'center',gap:10,background:warmGray,color:cream,fontSize:13,fontWeight:600,padding:'10px 22px',borderRadius:8,letterSpacing:'0.2px',border:'none',cursor:'pointer'}}>
       <span style={{width:18,height:18,borderRadius:'50%',background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9}}>▶</span>
       Meet the redesign
     </button>
@@ -1513,7 +1513,7 @@ export default function RulesCaseStudy(){
                   </table>
                 </div>
               </div>
-              <a href="/legacy-rules-annotated.html" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',gap:10,background:terracotta,color:'white',fontSize:13,fontWeight:700,padding:'13px 24px',borderRadius:28,textDecoration:'none',letterSpacing:'0.03em',boxShadow:'0 4px 20px rgba(177,124,93,0.35)'}}>
+              <a href="/legacy-rules-annotated.html" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',gap:10,background:warmGray,color:cream,fontSize:13,fontWeight:600,padding:'10px 22px',borderRadius:8,letterSpacing:'0.2px',textDecoration:'none'}}>
                 <span style={{width:18,height:18,borderRadius:'50%',background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9}}>▶</span>
                 Meet the legacy system
               </a>

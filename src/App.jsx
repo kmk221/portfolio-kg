@@ -477,15 +477,7 @@ export default function App() {
                 }}>{tag}</span>
               ))}
             </div>
-            <Link to="/ai-design" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 10,
-              padding: '13px 28px', borderRadius: 28,
-              background: '#B86757', color: '#F5E8D3',
-              fontSize: 14, fontWeight: 700, letterSpacing: '0.02em',
-              textDecoration: 'none',
-              boxShadow: '0 4px 24px rgba(184,103,87,0.3)',
-              transition: 'all 0.25s ease',
-            }}>
+            <Link to="/ai-design" className="ai-explore-cta">
               Explore Collection <span style={{ fontSize: 16 }}>→</span>
             </Link>
           </div>

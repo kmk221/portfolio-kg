@@ -535,6 +535,42 @@ a.nav-cta:hover {
   color: white;
 }
 
+/* AI × Design "Explore Collection" CTA — inverse of .btn-primary:
+   rests on terracotta and falls back to warm-gray on hover. Same 1px
+   lift as the case-study primary CTAs so all accent buttons share one
+   motion language. */
+.ai-explore-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border-radius: 28px;
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(184, 103, 87, 0.30);
+  transition: background-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+}
+.ai-explore-cta:hover,
+.ai-explore-cta:focus-visible {
+  background: var(--warm-gray);
+  color: var(--cream);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(55, 43, 11, 0.32);
+}
+.ai-explore-cta:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-explore-cta { transition: background-color 200ms ease; }
+  .ai-explore-cta:hover,
+  .ai-explore-cta:focus-visible { transform: none; }
+}
+
 /* Work section */
 .work-section {
   padding: 80px 80px 120px;
@@ -1162,12 +1198,14 @@ a.nav-cta:hover {
 }
 
 .cs-h2 {
-  font-size: 48px;
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
+  /* Standardized to match OM section headers (28px / 800 / -0.3px / mb-28).
+     Pair with .step-label (in case-study-shared.css) for the eyebrow. */
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
   color: var(--warm-gray);
-  margin-bottom: 48px;
+  margin-bottom: 28px;
 }
 
 .cs-h3 {
@@ -2125,7 +2163,7 @@ a.nav-cta:hover {
   .cs-tldr-text { font-size: 20px; }
   .cs-framing { padding: var(--section-padding) var(--side-padding); }
   .cs-content { padding: var(--section-padding) var(--side-padding); }
-  .cs-h2 { font-size: 36px; }
+  /* .cs-h2 stays 28px across breakpoints — see standardized desktop rule. */
   .cs-h3 { font-size: 24px; }
   .cs-meta-bar { padding: 32px; flex-wrap: wrap; gap: 24px; }
   .stat-number { font-size: 36px; }
@@ -2208,7 +2246,7 @@ a.nav-cta:hover {
   .cs-hero-image { height: 260px; }
   .cs-tldr-heading { font-size: 40px; }
   .cs-tldr-text { font-size: 17px; }
-  .cs-h2 { font-size: 28px; margin-bottom: 32px; }
+  /* .cs-h2 stays 28px / mb-28 on mobile — see standardized desktop rule. */
   .cs-h3 { font-size: 20px; }
   .cs-body { font-size: 16px; }
   .cs-section-heading { font-size: 22px; }

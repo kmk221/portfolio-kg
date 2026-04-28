@@ -96,6 +96,38 @@
   font-size: 15px; line-height: 1.75; color: rgba(55,43,11,0.72);
   max-width: 680px; margin-bottom: 40px;
 }
+
+/* --------------------------------------------------------------------------
+   Section header — eyebrow + title pair used to open every section across
+   the case studies. Lifted from OM's old per-page `.om-page .step-label`
+   rule so OM, Rules, and Positions all pull from one definition.
+
+   Spacing: eyebrow is 11px uppercase with a trailing horizontal rule,
+   sits 40px above the title. Title is 28px / 800 / warm-gray, sits 28px
+   above whatever body content follows. These two values (40 / 28) are
+   the consistent vertical rhythm across all three case studies.
+
+   Color: locked to terracotta (not var(--accent)) so the eyebrow reads
+   the same on Rules (which has a steel-blue --accent) as it does on OM.
+   The trailing rule uses a terracotta-tinted line for the same reason.
+   Pair with the .cs-h2 rule in styles.css for the title. The title's
+   own style is kept inline / on .cs-h2 rather than in here so that
+   per-case adjustments stay loose.
+   -------------------------------------------------------------------------- */
+.cs-page .step-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--terracotta, #B86757);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 40px;
+}
+.cs-page .step-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(184, 103, 87, 0.28);
+}
+/* Light variant for steel-blue / dark sections — keeps eyebrow legible
+   without flipping the warm accent. */
+.cs-page .step-label.light { color: rgba(247,245,240,0.7); }
+.cs-page .step-label.light::after { background: rgba(255,255,255,0.18); }
 .cs-page .om-gold-card {
   background: rgba(245,232,211,0.4);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -800,4 +832,47 @@
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+
+/* --------------------------------------------------------------------------
+   Primary CTA — rounded-rectangle accent button used for in-page calls to
+   action (open prototype, meet the legacy system, compare in full screen,
+   etc.). Mirrors the home page .btn-primary shape (border-radius 8px) so
+   portfolio-wide CTAs read as the same family. Case study pads slightly
+   shorter than the home hero (~10–11px vs 14px vertical) since they sit
+   inline with body content rather than anchoring a hero.
+
+   Resting color is locked to terracotta on every case study (not the
+   per-case --accent token) so primary CTAs feel like a single portfolio
+   signal rather than picking up each case study's secondary palette.
+   Hover runs the inverse of the home hero button: home rests warm-gray
+   and lights up terracotta; case studies rest terracotta and fall back
+   to warm-gray. Same 1px lift either way.
+   -------------------------------------------------------------------------- */
+.cs-page .cs-cta-primary {
+  background: var(--terracotta, #B86757);
+  color: var(--cream, #fbfaf4);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(184, 103, 87, 0.30);
+  transition: background-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+}
+.cs-page .cs-cta-primary:hover,
+.cs-page .cs-cta-primary:focus-visible {
+  background: var(--warm-gray, #372B0B);
+  color: var(--cream, #fbfaf4);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(55, 43, 11, 0.32);
+}
+.cs-page .cs-cta-primary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-page .cs-cta-primary { transition: background-color 200ms ease; }
+  .cs-page .cs-cta-primary:hover,
+  .cs-page .cs-cta-primary:focus-visible { transform: none; }
 }

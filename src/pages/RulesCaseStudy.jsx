@@ -25,7 +25,10 @@ const CHAPTERS = [
 ]
 
 function StepLabel({children,light}){
-  return <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.18em',textTransform:'uppercase',color:light?'rgba(232,240,238,0.7)':accent,display:'flex',alignItems:'center',gap:10,marginBottom:40}}>{children}<span style={{flex:1,height:1,background:light?'rgba(255,255,255,0.15)':'rgba(125,145,165,0.2)'}}/></div>
+  // Reads styling from .cs-page .step-label in case-study-shared.css so OM,
+  // Rules, and Positions all share one rule. The trailing rule line is
+  // produced by the CSS ::after, not a span here.
+  return <div className={light ? 'step-label light' : 'step-label'}>{children}</div>
 }
 
 function Callout({icon,title,body,style:s}){
@@ -316,7 +319,7 @@ function PrototypeEmbed(){
   useEffect(()=>{const h=(e)=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h)},[])
   useEffect(()=>{document.body.style.overflow=open?'hidden':'';return()=>{document.body.style.overflow=''}},[open])
   return(<>
-    <button onClick={()=>setOpen(true)} style={{display:'inline-flex',alignItems:'center',gap:10,background:warmGray,color:cream,fontSize:13,fontWeight:600,padding:'10px 22px',borderRadius:8,letterSpacing:'0.2px',border:'none',cursor:'pointer'}}>
+    <button onClick={()=>setOpen(true)} className="cs-cta-primary" style={{display:'inline-flex',alignItems:'center',gap:10,fontSize:13,fontWeight:600,padding:'10px 22px',letterSpacing:'0.2px'}}>
       <span style={{width:18,height:18,borderRadius:'50%',background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9}}>▶</span>
       Meet the redesign
     </button>
@@ -1513,7 +1516,7 @@ export default function RulesCaseStudy(){
                   </table>
                 </div>
               </div>
-              <a href="/legacy-rules-annotated.html" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',gap:10,background:warmGray,color:cream,fontSize:13,fontWeight:600,padding:'10px 22px',borderRadius:8,letterSpacing:'0.2px',textDecoration:'none'}}>
+              <a href="/legacy-rules-annotated.html" target="_blank" rel="noreferrer" className="cs-cta-primary" style={{display:'inline-flex',alignItems:'center',gap:10,fontSize:13,fontWeight:600,padding:'10px 22px',letterSpacing:'0.2px'}}>
                 <span style={{width:18,height:18,borderRadius:'50%',background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9}}>▶</span>
                 Meet the legacy system
               </a>
@@ -1736,7 +1739,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 02 — Design Sprint</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:900,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14}}>
+        <h2 style={{fontSize:28,fontWeight:600,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14}}>
           <span>Insights</span>
           <svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style={{flexShrink:0,color:accent}}>
             <path d="M1 7 H25 M19 1 L25 7 L19 13" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1768,20 +1771,20 @@ export default function RulesCaseStudy(){
     <section id="ch-prioritization" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 03 — Prioritization</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>Deciding Where to Start</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>Deciding Where to Start</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>With 6 HMW areas and related concepts generated, the team assessed impact vs. effort — keeping in mind business, tech, and other environmental constraints.</p>
 
         {/* Effort vs Impact Matrix */}
-        <div style={{background:`radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px, rgba(212, 221, 231, 0.55)`,border:'1px solid rgba(125,145,165,0.22)',borderRadius:14,padding:'24px 32px 16px 44px',marginBottom:4,position:'relative'}}>
+        <div style={{background:`radial-gradient(rgba(55,43,11,0.06) 1px, transparent 1px) 0 0 / 28px 28px, rgba(244,239,227,0.8)`,border:'1px solid rgba(55,43,11,0.12)',borderRadius:14,padding:'24px 32px 16px 44px',marginBottom:4,position:'relative'}}>
           {/* Y axis label — rotated, pinned to left inside box */}
           <div style={{position:'absolute',left:0,top:0,bottom:0,width:28,display:'flex',alignItems:'center',justifyContent:'center'}}>
-            <div style={{transform:'rotate(-90deg)',fontSize:8,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(66,125,219,0.5)',whiteSpace:'nowrap'}}>↓ LOWER IMPACT · HIGHER IMPACT ↑</div>
+            <div style={{transform:'rotate(-90deg)',fontSize:8,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'#3d3530',whiteSpace:'nowrap'}}>↓ LOWER IMPACT · HIGHER IMPACT ↑</div>
           </div>
           {/* Matrix grid */}
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:0,position:'relative',marginBottom:0}}>
             {/* Quadrant TL */}
             <div style={{borderRight:'1px solid rgba(125,145,165,0.15)',borderBottom:'1px solid rgba(125,145,165,0.15)',padding:'14px 16px 20px 20px',minHeight:200,display:'flex',flexDirection:'column',gap:10}}>
-              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(66,125,219,0.6)'}}>HIGH IMPACT · LOW EFFORT</div>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>HIGH IMPACT · LOW EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
                 {hmw:'HMW 04',title:'More intuitive form controls',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
@@ -1790,64 +1793,64 @@ export default function RulesCaseStudy(){
                 {hmw:'HMW 05',title:'Intuitive rule builder — split panel, plain language preview builds as details are added',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:c.hmw==='HMW 01'?'calc(40% - 5px)':'calc(30% - 8px)',minWidth:110,flexShrink:0}}>
-                  <div style={{fontSize:8,fontWeight:700,color:c.pillColor,letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
-                  <div style={{fontSize:10,color:'#3A4C5E',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
-                  <div style={{display:'inline-flex',padding:'2px 8px',borderRadius:20,fontSize:8,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',background:c.pillBg,color:c.pillColor}}>{c.phase==='Phase 1'?'✓ ':'→ '}{c.phase}</div>
+                  <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
+                  <div style={{fontSize:10,color:'#3d3530',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
+                  <div style={{display:'inline-flex',padding:'2px 8px',borderRadius:20,fontSize:8,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',background:c.pillBg,color:'#3d3530'}}>{c.phase==='Phase 1'?'✓ ':'→ '}{c.phase}</div>
                 </div>
               ))}
               </div>
             </div>
             {/* Quadrant TR */}
             <div style={{borderBottom:'1px solid rgba(125,145,165,0.15)',padding:'14px 16px 20px 16px',minHeight:200,display:'flex',flexDirection:'column',gap:10}}>
-              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(144,161,185,0.7)'}}>HIGH IMPACT · HIGH EFFORT</div>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>HIGH IMPACT · HIGH EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 02',title:'Keyword assistant — view keyword descriptions on selection surface',phase:'Phase 2',color:'#dce8f5',phaseColor:'#4a5f72'},
-                {hmw:'HMW 06',title:'Documentation & audit trail — change history',phase:'Phase 3',color:'#ede8f5',phaseColor:'#6b4f9e'},
-                {hmw:'HMW 04',title:'List Manager — bulk editing, inheritance, validation',phase:'Deferred',color:'#fdf0dc',phaseColor:'#b07a30'},
+                {hmw:'HMW 02',title:'Keyword assistant — view keyword descriptions on selection surface',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 06',title:'Documentation & audit trail — change history',phase:'Phase 3',bg:'#ede8f5',border:'rgba(120,90,160,0.2)',pillBg:'rgba(120,90,160,0.12)',pillColor:'#6b4f9e'},
+                {hmw:'HMW 04',title:'List Manager — bulk editing, inheritance, validation',phase:'Deferred',bg:'#fdf0dc',border:'rgba(176,122,48,0.2)',pillBg:'rgba(176,122,48,0.12)',pillColor:'#b07a30'},
               ].map((c,i)=>(
-                <div key={i} style={{background:c.color,borderRadius:6,padding:'8px 10px',width:'calc(50% - 5px)',minWidth:120}}>
-                  <div style={{fontSize:8,fontWeight:700,color:'rgba(66,125,219,0.7)',letterSpacing:'0.08em',marginBottom:4}}>{c.hmw}</div>
-                  <div style={{fontSize:10,color:'#3A4C5E',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
-                  <div style={{fontSize:9,fontWeight:700,color:c.phaseColor}}>→ {c.phase}</div>
+                <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(50% - 5px)',minWidth:120}}>
+                  <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
+                  <div style={{fontSize:10,color:'#3d3530',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
+                  <div style={{display:'inline-flex',padding:'2px 8px',borderRadius:20,fontSize:8,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',background:c.pillBg,color:'#3d3530'}}>{c.phase==='Phase 1'?'✓ ':'→ '}{c.phase}</div>
                 </div>
               ))}
               </div>
             </div>
             {/* Quadrant BL */}
             <div style={{borderRight:'1px solid rgba(125,145,165,0.15)',padding:'14px 16px 20px 20px',minHeight:160,display:'flex',flexDirection:'column',gap:10}}>
-              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(144,161,185,0.6)'}}>LOW IMPACT · LOW EFFORT</div>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>LOW IMPACT · LOW EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 01',title:'Bulk actions',phase:'Deprioritized',color:'#fde8e8'},
-                {hmw:'HMW 01',title:'Custom rule description',phase:'Deprioritized',color:'#fde8e8'},
+                {hmw:'HMW 01',title:'Bulk actions',phase:'Deprioritized',bg:'#fde8e8',border:'rgba(180,60,60,0.22)',pillBg:'rgba(180,60,60,0.12)',pillColor:'#b04040'},
+                {hmw:'HMW 01',title:'Custom rule description',phase:'Deprioritized',bg:'#fde8e8',border:'rgba(180,60,60,0.22)',pillBg:'rgba(180,60,60,0.12)',pillColor:'#b04040'},
               ].map((c,i)=>(
-                <div key={i} style={{background:c.color,borderRadius:6,padding:'8px 10px',width:'calc(40% - 5px)',minWidth:110}}>
-                  <div style={{fontSize:8,fontWeight:700,color:'rgba(180,60,60,0.6)',letterSpacing:'0.08em',marginBottom:4}}>{c.hmw}</div>
-                  <div style={{fontSize:10,color:'#6b2f2f',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
-                  <div style={{fontSize:9,fontWeight:700,color:'#b04040'}}>→ {c.phase}</div>
+                <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(40% - 5px)',minWidth:110}}>
+                  <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
+                  <div style={{fontSize:10,color:'#3d3530',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
+                  <div style={{display:'inline-flex',padding:'2px 8px',borderRadius:20,fontSize:8,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',background:c.pillBg,color:'#3d3530'}}>{c.phase==='Phase 1'?'✓ ':'→ '}{c.phase}</div>
                 </div>
               ))}
               </div>
             </div>
             {/* Quadrant BR */}
             <div style={{padding:'14px 16px 20px 16px',minHeight:160,display:'flex',flexDirection:'column',gap:10}}>
-              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(144,161,185,0.6)'}}>LOW IMPACT · HIGH EFFORT</div>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>LOW IMPACT · HIGH EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 04',title:'Rule Wizard',phase:'Deprioritized',color:'#fde8e8'},
+                {hmw:'HMW 04',title:'Rule Wizard',phase:'Deprioritized',bg:'#fde8e8',border:'rgba(180,60,60,0.22)',pillBg:'rgba(180,60,60,0.12)',pillColor:'#b04040'},
               ].map((c,i)=>(
-                <div key={i} style={{background:c.color,borderRadius:6,padding:'8px 10px',width:'calc(45% - 5px)',minWidth:120}}>
-                  <div style={{fontSize:8,fontWeight:700,color:'rgba(180,60,60,0.6)',letterSpacing:'0.08em',marginBottom:4}}>{c.hmw}</div>
-                  <div style={{fontSize:10,color:'#6b2f2f',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
-                  <div style={{fontSize:9,fontWeight:700,color:'#b04040'}}>→ {c.phase}</div>
+                <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(45% - 5px)',minWidth:120}}>
+                  <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
+                  <div style={{fontSize:10,color:'#3d3530',lineHeight:1.4,marginBottom:6}}>{c.title}</div>
+                  <div style={{display:'inline-flex',padding:'2px 8px',borderRadius:20,fontSize:8,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',background:c.pillBg,color:'#3d3530'}}>{c.phase==='Phase 1'?'✓ ':'→ '}{c.phase}</div>
                 </div>
               ))}
               </div>
             </div>
           </div>
           {/* X axis label — inside, bottom center */}
-          <div style={{textAlign:'center',paddingTop:12,fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(144,161,185,0.6)'}}>← LOWER EFFORT · HIGHER EFFORT →</div>
+          <div style={{textAlign:'center',paddingTop:12,fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>← LOWER EFFORT · HIGHER EFFORT →</div>
         </div>
 
         <h3 style={{fontSize:16,fontWeight:700,color:accentDark,letterSpacing:'-0.2px',marginTop:56,marginBottom:28}}>The resulting phased approach</h3>
@@ -1883,7 +1886,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 04 — Lofi Exploration</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:12}}>Mapping the End-to-End Workflow</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>Mapping the End-to-End Workflow</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>With our priorities set, I started in low fidelity to map the full workflow end to end — how screens connect, where users enter and exit, and what the overall shape of the experience looks like before sweating any details. These wireframes became the centerpiece of a cross-functional review with engineering and product, where we stress-tested feasibility, flagged edge cases, and aligned on the bigger puzzle pieces before zooming in.</p>
         <LofiFlow/>
       </div>
@@ -2146,7 +2149,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 06 — Design</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>The Redesign</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>The Redesign</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:20}}>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype — two interconnected workflows designed as a coherent system:</p>
         <ul style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:640,marginBottom:32,paddingLeft:20,display:'flex',flexDirection:'column',gap:6}}>
           <li><strong>Rules list</strong> — find, scan, and understand rules with real search and plain-language previews</li>
@@ -2218,7 +2221,7 @@ export default function RulesCaseStudy(){
     <section id="ch-validate" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 07 — Validate</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>What Changed After Testing</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>What Changed After Testing</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:40}}>With the mid-high fidelity prototype in hand, I brought it to user testing sessions with compliance officers. Each workflow step was mapped to a specific research question, with areas of highest uncertainty — clause selection, value input, and the add list flow — as the focus. Here's what we heard, and what changed as a result. You can also <a href="/rule-management-prototype-v2-updated.html" target="_blank" rel="noreferrer" style={{color:terracotta,fontWeight:600,textDecoration:'underline',textUnderlineOffset:3}}>explore the updated v2 prototype</a> with all post-testing changes applied.</p>
         {/* What worked well — compact */}
         <div style={{marginBottom:48}}>
@@ -2241,7 +2244,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Outcomes</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,marginBottom:40}}>From shipped to what's next</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>From shipped to what's next</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase — edit rule, change history, and eventually the full List Manager.</p>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:32}}>
           {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page — reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
@@ -2259,7 +2262,7 @@ export default function RulesCaseStudy(){
     <section id="ch-reflection" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Reflection</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:40}}>What I carried forward</h2>
+        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>What I carried forward</h2>
         <div style={{display:'flex',flexDirection:'column',gap:0}}>
           {[
             {

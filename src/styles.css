@@ -540,16 +540,19 @@ a.nav-cta:hover {
    lift as the case-study primary CTAs so all accent buttons share one
    motion language. */
 .ai-explore-cta {
+  /* Sized to match the case-study primary CTAs (.cs-cta-primary) so the
+     Explore Collection button reads as the same family across the home
+     page and the case studies — same shape, padding, and type scale. */
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 13px 28px;
-  border-radius: 28px;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 8px;
   background: var(--terracotta);
   color: var(--cream);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-decoration: none;
   box-shadow: 0 4px 24px rgba(184, 103, 87, 0.30);
   transition: background-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;

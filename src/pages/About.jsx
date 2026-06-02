@@ -12,22 +12,24 @@ export default function About() {
             <span className="eyebrow">About</span>
             <span className="rule" />
           </div>
-          <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.7, maxWidth: '64ch', margin: '0 0 8px' }}>
-            Product Designer with 10+ years of experience across enterprise financial services, project management, and leadership. Specialized in deconstructing complex institutional workflows into highly efficient and simple user experiences. Proven track record of leveraging user insights to drive operational efficiency and deliver data-driven solutions in high-stakes environments.
-          </p>
-          <div style={{ display: 'flex', gap: 24, marginTop: 20, flexWrap: 'wrap' }}>
-            <a href="mailto:kmkerney221@gmail.com" style={{ fontSize: 13, color: 'var(--ink-3)', fontFamily: 'var(--f-mono)', letterSpacing: '0.04em' }}>kmkerney221@gmail.com</a>
-            <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'var(--ink-3)', fontFamily: 'var(--f-mono)', letterSpacing: '0.04em' }}>linkedin.com/in/kristin-garza</a>
-            <span style={{ fontSize: 13, color: 'var(--ink-3)', fontFamily: 'var(--f-mono)', letterSpacing: '0.04em' }}>Austin, TX</span>
+          <div className="about-header-layout">
+            <p className="about-header-bio">
+              Product Designer with 10+ years of experience across enterprise financial services, project management, and leadership. Specialized in deconstructing complex institutional workflows into highly efficient and simple user experiences. Proven track record of leveraging user insights to drive operational efficiency and deliver data-driven solutions in high-stakes environments.
+            </p>
+            <div className="about-contact-pills">
+              <a href="mailto:kmkerney221@gmail.com">kmkerney221@gmail.com</a>
+              <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">linkedin.com/in/kristin-garza</a>
+              <span>Austin, TX</span>
+            </div>
           </div>
         </section>
 
         {/* ── MAIN CONTENT ── */}
         <section className="page-section" style={{ paddingTop: 64 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '80px', alignItems: 'start' }}>
+          <div className="about-body-grid">
 
             {/* ── LEFT: Skills + Education ── */}
-            <div>
+            <div className="about-sidebar">
 
               {/* Skills */}
               <div style={{ marginBottom: 48 }}>
@@ -73,10 +75,10 @@ export default function About() {
               <span className="eyebrow" style={{ display: 'block', marginBottom: 32 }}>Experience</span>
 
               {/* Vertical timeline */}
-              <div style={{ position: 'relative', paddingLeft: 28 }}>
+              <div className="about-timeline" style={{ position: 'relative', paddingLeft: 28 }}>
 
                 {/* Continuous vertical line */}
-                <div style={{
+                <div className="about-timeline-line" style={{
                   position: 'absolute',
                   left: 5,
                   top: 8,

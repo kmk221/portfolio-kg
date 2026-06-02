@@ -654,7 +654,7 @@ export default function OrderManagementCaseStudy() {
         <section style={{ padding: 'clamp(80px, 10vw, 120px) 0 clamp(48px, 6vw, 80px)' }}>
           <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 64px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32 }}>
-              <span className="eyebrow">Case Study · Order Management · 2024</span>
+              <span className="eyebrow">Case Study · Order Management · 2025</span>
             </div>
             <h1 style={{
               fontFamily: 'var(--f-slab)',

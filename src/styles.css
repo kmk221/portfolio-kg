@@ -46,7 +46,6 @@
   width: 100%;
   max-width: 225px;
   display: block;
-  opacity: 0.9;
 }
 @media (max-width: 860px) {
   .page-hero { grid-template-columns: 1fr; gap: 24px; padding-top: 48px; padding-bottom: 32px; }
@@ -159,6 +158,43 @@
   background: var(--hairline);
 }
 
+/* ───────── ABOUT PAGE ───────── */
+.about-header-layout {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 48px;
+  align-items: start;
+}
+.about-header-bio {
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0;
+}
+.about-contact-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+.about-contact-pills a,
+.about-contact-pills span {
+  font-size: 12px;
+  color: var(--ink-3);
+  font-family: var(--f-mono);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  line-height: 1.4;
+}
+.about-contact-pills a:hover { color: var(--clay); }
+
+.about-body-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
 /* ───────── BITS GRID ───────── */
 .bits-grid {
   display: grid;
@@ -210,4 +246,64 @@
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+/* ───────── MOBILE OVERRIDES ───────── */
+@media (max-width: 600px) {
+
+  /* Hero eyebrow: stack name above subtitle */
+  .eyebrow--hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .eyebrow--hero::after { display: none; } /* hide the rule line */
+  .eyebrow-title::before { content: none; } /* remove the · separator */
+  .eyebrow-title { letter-spacing: 0.08em; }
+
+  /* About page: single column, sidebar moves below experience */
+  .about-body-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .about-sidebar {
+    order: 2; /* push skills/education below experience */
+    opacity: 0.85;
+  }
+  .about-sidebar .eyebrow {
+    font-size: 9px;
+  }
+
+  /* Hide timeline line + dots on mobile */
+  .about-timeline-line { display: none; }
+  .about-timeline {
+    padding-left: 0;
+  }
+
+  /* Contact pills: smaller so 3 fit per row */
+  .about-contact-pills {
+    gap: 8px;
+  }
+  .about-contact-pills a,
+  .about-contact-pills span {
+    font-size: 11px !important;
+    letter-spacing: 0.02em !important;
+  }
+}
+
+/* hide the · separator between name and subtitle on mobile */
+@media (max-width: 600px) {
+  .eyebrow-sep { display: none; }
+}
+
+@media (max-width: 600px) {
+  .about-header-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .about-contact-pills {
+    flex-direction: column;
+    gap: 8px;
+  }
 }

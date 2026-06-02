@@ -203,10 +203,85 @@ strong { font-weight: 600; color: var(--ink); }
 @media (max-width: 720px) {
   .nav-inner { padding: 12px 24px; }
 }
-@media (max-width: 540px) {
-  .nav ul { gap: 16px; }
-  .nav a:not(.wordmark):not(.btn) { font-size: 13px; }
-  .nav .btn { display: none; } /* hide "Get in touch" CTA on very small screens */
+
+/* ── Hamburger button ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--r-2);
+  transition: background 120ms ease;
+}
+.nav-hamburger:hover { background: var(--surface-2); }
+.nav-hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 200ms ease, opacity 200ms ease;
+  transform-origin: center;
+}
+/* Animate into X when open */
+.nav-hamburger-bar.open:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger-bar.open:nth-child(2) { opacity: 0; }
+.nav-hamburger-bar.open:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Desktop links — hidden on mobile ── */
+.nav-links-desktop { display: flex; }
+
+/* ── Mobile drawer ── */
+.nav-mobile-drawer {
+  display: none;
+  position: fixed;
+  inset: 56px 0 0 0;
+  background: var(--bg);
+  z-index: 49;
+  padding: 32px 24px;
+  border-top: 1px solid var(--hairline);
+  animation: drawerFadeIn 180ms ease;
+}
+.nav-mobile-drawer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nav-mobile-drawer ul li {
+  border-bottom: 1px solid var(--hairline);
+}
+.nav-mobile-drawer ul li a {
+  display: block;
+  padding: 18px 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+.nav-mobile-drawer ul li a:hover { color: var(--clay); }
+.nav-mobile-drawer ul li:last-child {
+  border-bottom: none;
+  padding-top: 24px;
+}
+@keyframes drawerFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .nav-links-desktop { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-mobile-drawer { display: block; }
 }
 .nav .wordmark {
   font-family: var(--f-mono);

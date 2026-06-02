@@ -266,22 +266,23 @@
     flex-direction: row;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 0;
+    gap: 6px; /* equidistant spacing between all items */
   }
   .eyebrow--hero::after { display: none; }
   .eyebrow-name { font-size: 12px !important; }
-  .eyebrow-sep { display: inline; }
+  .eyebrow-sep { display: inline; margin: 0; } /* dots use gap for spacing */
   .eyebrow-title { display: inline; }
 
-  /* Illustration below buttons on mobile */
+  /* Illustration — larger, pinned to bottom of hero */
   .illus-mobile {
     display: flex;
     justify-content: flex-start;
-    margin-top: 32px;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 32px;
   }
   .illus-mobile img {
-    width: 100px;
-    opacity: 1;
+    width: 250px;
   }
 
   /* About page: single column, sidebar moves below experience */

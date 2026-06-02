@@ -75,11 +75,7 @@ export default function Nav() {
             )}
             <li><Link to="/bits">Bits &amp; Pieces</Link></li>
             <li><Link to="/about">About</Link></li>
-            <li>
-              <a href="mailto:kmkerney221@gmail.com" className="btn" style={{ width: '100%', justifyContent: 'center' }}>
-                Get in touch
-              </a>
-            </li>
+            <li><a href="mailto:kmkerney221@gmail.com">Get in touch</a></li>
           </ul>
         </div>
       )}

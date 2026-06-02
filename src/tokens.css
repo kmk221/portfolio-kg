@@ -242,8 +242,8 @@ strong { font-weight: 600; color: var(--ink); }
   display: block;
   position: fixed;
   inset: 56px 0 0 0;
-  background: var(--bg);
-  z-index: 49;
+  background: #FAF7F0;
+  z-index: 200;
   padding: 32px 24px;
   border-top: 1px solid var(--hairline);
   animation: drawerFadeIn 180ms ease;
@@ -261,8 +261,8 @@ strong { font-weight: 600; color: var(--ink); }
 }
 .nav-mobile-drawer ul li a {
   display: block;
-  padding: 18px 0;
-  font-size: 18px;
+  padding: 20px 0;
+  font-size: 20px;
   font-weight: 500;
   color: var(--ink);
   text-decoration: none;
@@ -271,7 +271,6 @@ strong { font-weight: 600; color: var(--ink); }
 .nav-mobile-drawer ul li a:hover { color: var(--clay); }
 .nav-mobile-drawer ul li:last-child {
   border-bottom: none;
-  padding-top: 24px;
 }
 @keyframes drawerFadeIn {
   from { opacity: 0; transform: translateY(-8px); }

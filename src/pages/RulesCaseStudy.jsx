@@ -3,9 +3,9 @@ import Nav from '../components/Nav.jsx'
 import './case-study-shared.css'
 
 const accent='#5F7A9A',accentDark='#2C3B55',accentMid='rgba(196,207,223,0.5)',accentLight='rgba(196,207,223,0.28)',accentPale='#E6ECF2',textLight='#edeef0',warmGray='#372B0B',deepBlue='#2C3B55',cream='#F6F6F1',pageBg='#FFFFFC',borderLight='rgba(196,207,223,0.3)',terracotta='#B86757'
-const sideP='clamp(20px, 5vw, 80px)',contentW='1200px'
-const sec=(bg)=>({width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`,background:bg})
-const ct={maxWidth:contentW,width:'100%',margin:'0 auto'}
+const sideP='clamp(20px, 5vw, 64px)',contentW='1240px'
+const sec=(bg)=>({width:'100%',padding:`clamp(60px, 10vw, 140px) 0`,background:bg})
+const ct={maxWidth:contentW,width:'100%',margin:'0 auto',padding:`0 ${sideP}`}
 
 // Chapter list for the sticky scrollspy rail. Each `id` matches a section's
 // id below; matching the OM pattern this case study has 11 chapters mapped
@@ -319,9 +319,8 @@ function PrototypeEmbed(){
   useEffect(()=>{const h=(e)=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h)},[])
   useEffect(()=>{document.body.style.overflow=open?'hidden':'';return()=>{document.body.style.overflow=''}},[open])
   return(<>
-    <button onClick={()=>setOpen(true)} className="cs-cta-primary" style={{display:'inline-flex',alignItems:'center',gap:10,fontSize:13,fontWeight:600,padding:'10px 22px',letterSpacing:'0.2px'}}>
-      <span style={{width:18,height:18,borderRadius:'50%',background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9}}>▶</span>
-      Meet the redesign
+    <button onClick={()=>setOpen(true)} className="btn">
+      ▶ Meet the redesign
     </button>
     {open&&(
       <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
@@ -482,7 +481,7 @@ function CarouselShell({tabs, tab, setTab, children}){
     <div>
       <div style={{display:'flex',gap:6,marginBottom:14}}>
         {tabs.map((label,i)=>(
-          <button key={i} onClick={()=>setTab(i)} style={{padding:'6px 14px',fontSize:10,fontWeight:i===tab?700:600,cursor:'pointer',borderRadius:6,background:i===tab?accentDark:'transparent',border:`1px solid ${i===tab?accentDark:'rgba(125,145,165,0.35)'}`,color:i===tab?'#fff':'rgba(89,80,74,0.6)',transition:'all 0.15s',fontFamily:'Inter,sans-serif',boxShadow:i===tab?'0 2px 6px rgba(44,59,85,0.15)':'none'}}>
+          <button key={i} onClick={()=>setTab(i)} style={{padding:'6px 14px',fontSize:10,fontWeight:i===tab?700:600,cursor:'pointer',borderRadius:6,background:i===tab?accentDark:'transparent',border:`1px solid ${i===tab?accentDark:'rgba(125,145,165,0.35)'}`,color:i===tab?'#fff':'rgba(89,80,74,0.6)',transition:'all 0.15s',fontFamily:'inherit',boxShadow:i===tab?'0 2px 6px rgba(44,59,85,0.15)':'none'}}>
             {label}
           </button>
         ))}
@@ -810,7 +809,7 @@ function HMWExplorer(){
       {/* Left sidebar */}
       <div style={{borderRight:'1px solid rgba(125,145,165,0.2)',paddingRight:24}}>
         {hmwItems.map((h,i)=>(
-          <button key={h.id} onClick={()=>setActive(h.id)} style={{display:'flex',flexDirection:'column',gap:4,width:'100%',background:'transparent',border:'none',padding:'14px 16px',cursor:'pointer',fontFamily:'Inter,sans-serif',textAlign:'left',borderRadius:10,marginBottom:4,transition:'all 0.2s',background:active===h.id?'rgba(125,145,165,0.2)':'transparent',borderLeft:active===h.id?`2px solid ${accent}`:'2px solid transparent'}}>
+          <button key={h.id} onClick={()=>setActive(h.id)} style={{display:'flex',flexDirection:'column',gap:4,width:'100%',background:'transparent',border:'none',padding:'14px 16px',cursor:'pointer',fontFamily:'inherit',textAlign:'left',borderRadius:10,marginBottom:4,transition:'all 0.2s',background:active===h.id?'rgba(125,145,165,0.2)':'transparent',borderLeft:active===h.id?`2px solid ${accent}`:'2px solid transparent'}}>
             <span style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:active===h.id?accent:'rgba(44, 59, 85, 0.6)'}}>{h.pill}</span>
             <span style={{fontSize:12,fontWeight:active===h.id?700:500,color:active===h.id?warmGray:'rgba(44, 59, 85, 0.7)',lineHeight:1.35}}>{h.pillText}</span>
           </button>
@@ -897,7 +896,7 @@ function PartBFeatureTabs({tabs}) {
           <button key={i} onClick={()=>handleTabChange(i)} style={{
             display:'flex',alignItems:'center',gap:8,
             background:'transparent',border:'none',
-            padding:'14px 24px',cursor:'pointer',fontFamily:'Inter,sans-serif',
+            padding:'14px 24px',cursor:'pointer',fontFamily:'inherit',
             textAlign:'left',transition:'all 0.15s',
             borderBottom:`2px solid ${active===i?accent:'transparent'}`,
             marginBottom:-1,
@@ -1303,7 +1302,7 @@ export default function RulesCaseStudy(){
     })
   }
 
-  return(<div className="rules-cs-page cs-page rules-page" style={{fontFamily:'Inter,sans-serif',fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'hidden'}}>
+  return(<div className="rules-cs-page cs-page rules-page" style={{fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'hidden'}}>
     <Nav/>
     {/* Sticky chapter nav — left rail at ≥1440px viewport */}
     <aside
@@ -1368,14 +1367,9 @@ export default function RulesCaseStudy(){
 
     {/* HERO */}
     <section style={{
-      background:`
-        radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px,
-        rgba(212, 221, 231, 0.55)
-      `,
-      backdropFilter:'blur(10px)',
-      WebkitBackdropFilter:'blur(10px)',
+      background:'transparent',
       minHeight:'100vh',
-      paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,paddingLeft:sideP,paddingRight:sideP,overflow:'hidden',position:'relative',display:'flex',flexDirection:'column'
+      paddingTop:'clamp(60px, 10vw, 140px)',paddingBottom:0,overflow:'hidden',position:'relative',display:'flex',flexDirection:'column'
     }}>
       <div style={ct}>
         <div style={{display:'flex',alignItems:'center',gap:8,flexWrap:'wrap',marginBottom:20,opacity:0,animation:'fadeUp 0.7s ease 0.1s forwards'}}>
@@ -1384,7 +1378,7 @@ export default function RulesCaseStudy(){
           {['Research','Strategy','Product Design','Testing'].map(tag=>(<span key={tag} style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(245,232,211,0.4)',color:accentDark}}>{tag}</span>))}
           <span style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(245,232,211,0.55)',color:accentDark,border:'1px solid rgba(55,43,11,0.18)'}}>Shipped ✓</span>
         </div>
-        <h1 style={{fontSize:42,fontWeight:700,lineHeight:1.25,letterSpacing:'-0.5px',color:'#372B0B',maxWidth:780,marginBottom:16,opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine — Compliance, Redesigned for Enterprise Trading</h1>
+        <h1 style={{fontFamily:'var(--f-slab)',fontSize:42,fontWeight:600,lineHeight:1.25,letterSpacing:'-0.5px',color:'#372B0B',maxWidth:780,marginBottom:16,opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine — Compliance, Redesigned for Enterprise Trading</h1>
         <p style={{fontSize:18,fontWeight:400,fontStyle:'italic',color:'rgba(55,43,11,0.7)',marginBottom:60,opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product — navigating complexity, prioritizing impact</p>
       </div>
       <div style={{...ct,marginTop:48,overflow:'hidden',paddingBottom:0,opacity:0,animation:'fadeUp 0.7s ease 0.55s forwards'}}>
@@ -1439,13 +1433,13 @@ export default function RulesCaseStudy(){
     {/* TL;DR */}
     <section id="ch-tldr" style={sec('transparent')}>
       <div style={ct}>
-        <h2 style={{fontSize:72,fontWeight:800,color:accentDark,lineHeight:1,marginBottom:40}}>tl;dr</h2>
+        <h2 style={{fontFamily:'var(--f-slab)',fontSize:72,fontWeight:600,color:accentDark,lineHeight:1,marginBottom:40}}>tl;dr</h2>
         <p style={{fontSize:20,fontWeight:500,lineHeight:1.65,letterSpacing:'-0.3px',color:'#7a4f35',maxWidth:820,marginBottom:72}}>Across a suite of compliance tools on an enterprise investing platform, we identified where to focus design effort — then redesigned the rule management and creation experience from the ground up. The result: a shipped, user-tested redesign that replaced tribal knowledge with guided workflows and shadow spreadsheets with built-in documentation.</p>
         <div className="meta-pills">
-          <span className="hero-pill hero-pill--blue">Lead UX Designer — Trading</span>
-          <span className="hero-pill hero-pill--gold">Q1–Q4 2025</span>
-          <span className="hero-pill hero-pill--warm">Design · Product · Engineering · Business</span>
-          <span className="hero-pill hero-pill--gold">Shipped ✓</span>
+          <span className="chip chip--neutral">Lead UX Designer — Trading</span>
+          <span className="chip chip--neutral">Q1–Q4 2025</span>
+          <span className="chip chip--neutral">Design · Product · Engineering · Business</span>
+          <span className="chip chip--neutral">Shipped ✓</span>
         </div>
       </div>
     </section>
@@ -1453,7 +1447,7 @@ export default function RulesCaseStudy(){
     {/* FRAMING */}
     <section id="ch-framing" style={sec('transparent')}>
       <div style={ct}>
-        <h2 style={{fontSize:28,fontWeight:900,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.3px'}}>finding the right problem <span style={{fontWeight:300}}>before designing the right solution</span></h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.018em'}}>finding the right problem <span style={{fontWeight:300,fontStyle:'italic'}}>before designing the right solution</span></h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>This wasn't a project that started with a design brief. It started with two questions: across a complex, sprawling ecosystem of aging compliance tools — where do we even begin? How do we make an impact?</p>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760}}>I led the team through a structured discovery and sprint process — analyzing user interviews, synthesizing research, and facilitating design thinking workshops — before a single pixel was touched. The decision about <em>what</em> to design was as deliberate as the design itself.</p>
       </div>
@@ -1463,7 +1457,7 @@ export default function RulesCaseStudy(){
     <section id="ch-discovery" style={{...sec('transparent'),paddingTop:160,paddingBottom:160}}>
       <div style={ct}>
         <StepLabel>Step 01 — Discovery</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
         <p style={{fontSize:16,lineHeight:1.8,color:deepBlue,maxWidth:640,marginBottom:100}}>We surfaced existing user interviews that had never been acted on — bringing product, engineering, and business together to synthesize themes and align on the problem space.</p>
 
         <div style={{marginBottom:56}}>
@@ -1516,9 +1510,8 @@ export default function RulesCaseStudy(){
                   </table>
                 </div>
               </div>
-              <a href="/legacy-rules-annotated.html" target="_blank" rel="noreferrer" className="cs-cta-primary" style={{display:'inline-flex',alignItems:'center',gap:10,fontSize:13,fontWeight:600,padding:'10px 22px',letterSpacing:'0.2px'}}>
-                <span style={{width:18,height:18,borderRadius:'50%',background:'rgba(255,255,255,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9}}>▶</span>
-                Meet the legacy system
+              <a href="/legacy-rules-annotated.html" target="_blank" rel="noreferrer" className="btn">
+                ▶ Meet the legacy system
               </a>
           </div>
         </div>
@@ -1733,13 +1726,13 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* DESIGN SPRINT */}
-    <section id="ch-design-sprint" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+    <section id="ch-design-sprint" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) 0`}}>
       <div className="om-gold-dots" aria-hidden="true"></div>
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 02 — Design Sprint</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:600,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14}}>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14,letterSpacing:'-0.018em'}}>
           <span>Insights</span>
           <svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style={{flexShrink:0,color:accent}}>
             <path d="M1 7 H25 M19 1 L25 7 L19 13" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1758,9 +1751,8 @@ export default function RulesCaseStudy(){
         </div>
         <p style={{fontSize:12,color:deepBlue,opacity:0.7,marginBottom:16,fontStyle:'italic'}}>Select a prompt to see the concept sketches and ideas it generated.</p>
         <div style={{marginBottom:24}}>
-          <a href="https://www.figma.com/board/fOKBJ0Tc2lHQtjQiUKUugr/HMW-and-Concepts?node-id=0-1&t=xeVKVgdQRSJCUicq-1" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',gap:8,background:accentLight,border:`1px solid ${accentMid}`,borderRadius:8,padding:'8px 16px',fontSize:12,fontWeight:600,color:accentDark,textDecoration:'none',letterSpacing:'0.02em',transition:'all 0.2s'}}>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 1H3a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V3a2 2 0 00-2-2z" stroke="currentColor" strokeWidth="1.25"/><path d="M5 9l4-4M9 9V5H5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            View Original Sketches in FigJam
+          <a href="https://www.figma.com/board/fOKBJ0Tc2lHQtjQiUKUugr/HMW-and-Concepts?node-id=0-1&t=xeVKVgdQRSJCUicq-1" target="_blank" rel="noreferrer" className="btn btn--secondary">
+            View Original Sketches in FigJam ↗
           </a>
         </div>
         <HMWExplorer/>
@@ -1771,7 +1763,7 @@ export default function RulesCaseStudy(){
     <section id="ch-prioritization" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 03 — Prioritization</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>Deciding Where to Start</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>Deciding Where to Start</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>With 6 HMW areas and related concepts generated, the team assessed impact vs. effort — keeping in mind business, tech, and other environmental constraints.</p>
 
         {/* Effort vs Impact Matrix */}
@@ -1880,13 +1872,13 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* LOFI EXPLORATION */}
-    <section id="ch-lofi" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+    <section id="ch-lofi" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) 0`}}>
       <div className="om-gold-dots" aria-hidden="true"></div>
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 04 — Lofi Exploration</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>Mapping the End-to-End Workflow</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>Mapping the End-to-End Workflow</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>With our priorities set, I started in low fidelity to map the full workflow end to end — how screens connect, where users enter and exit, and what the overall shape of the experience looks like before sweating any details. These wireframes became the centerpiece of a cross-functional review with engineering and product, where we stress-tested feasibility, flagged edge cases, and aligned on the bigger puzzle pieces before zooming in.</p>
         <LofiFlow/>
       </div>
@@ -2143,13 +2135,13 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <section id="ch-design" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+    <section id="ch-design" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) 0`}}>
       <div className="om-gold-dots" aria-hidden="true"></div>
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Step 06 — Design</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>The Redesign</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>The Redesign</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:20}}>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype — two interconnected workflows designed as a coherent system:</p>
         <ul style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:640,marginBottom:32,paddingLeft:20,display:'flex',flexDirection:'column',gap:6}}>
           <li><strong>Rules list</strong> — find, scan, and understand rules with real search and plain-language previews</li>
@@ -2221,7 +2213,7 @@ export default function RulesCaseStudy(){
     <section id="ch-validate" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Step 07 — Validate</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>What Changed After Testing</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>What Changed After Testing</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:40}}>With the mid-high fidelity prototype in hand, I brought it to user testing sessions with compliance officers. Each workflow step was mapped to a specific research question, with areas of highest uncertainty — clause selection, value input, and the add list flow — as the focus. Here's what we heard, and what changed as a result. You can also <a href="/rule-management-prototype-v2-updated.html" target="_blank" rel="noreferrer" style={{color:terracotta,fontWeight:600,textDecoration:'underline',textUnderlineOffset:3}}>explore the updated v2 prototype</a> with all post-testing changes applied.</p>
         {/* What worked well — compact */}
         <div style={{marginBottom:48}}>
@@ -2238,13 +2230,13 @@ export default function RulesCaseStudy(){
     </section>
 
     {/* OUTCOMES */}
-    <section id="ch-outcomes" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) ${sideP}`}}>
+    <section id="ch-outcomes" className="om-gold" style={{width:'100%',padding:`clamp(60px, 10vw, 140px) 0`}}>
       <div className="om-gold-dots" aria-hidden="true"></div>
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Outcomes</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>From shipped to what's next</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>From shipped to what's next</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase — edit rule, change history, and eventually the full List Manager.</p>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:32}}>
           {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page — reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
@@ -2262,7 +2254,7 @@ export default function RulesCaseStudy(){
     <section id="ch-reflection" style={sec('transparent')}>
       <div style={ct}>
         <StepLabel>Reflection</StepLabel>
-        <h2 style={{fontSize:28,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>What I carried forward</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>What I carried forward</h2>
         <div style={{display:'flex',flexDirection:'column',gap:0}}>
           {[
             {
@@ -2287,7 +2279,19 @@ export default function RulesCaseStudy(){
       </div>
     </section>
 
-    <footer style={{padding:`40px ${sideP}`,display:'flex',justifyContent:'space-between',alignItems:'center',borderTop:`1px solid ${borderLight}`,background:'transparent'}}>
+    {/* Case study navigation */}
+    <nav className="cs-case-nav" aria-label="Case study navigation">
+      <a href="/case-study/order-management" className="cs-case-nav-item cs-case-nav-item--prev">
+        <span className="cs-case-nav-dir">← Previous</span>
+        <span className="cs-case-nav-title">Redesigning Order Management</span>
+      </a>
+      <a href="/case-study/positions" className="cs-case-nav-item cs-case-nav-item--next">
+        <span className="cs-case-nav-dir">Next →</span>
+        <span className="cs-case-nav-title">Simplifying Positions Info</span>
+      </a>
+    </nav>
+
+    <footer style={{padding:`40px 0`,display:'flex',justifyContent:'space-between',alignItems:'center',borderTop:`1px solid ${borderLight}`,background:'transparent',maxWidth:contentW,margin:'0 auto',paddingLeft:sideP,paddingRight:sideP}}>
       <div style={{fontSize:13,fontWeight:700,color:accentDark}}>kristin<span style={{color:accent}}>.garza</span> · UX Designer</div>
       <div style={{display:'flex',gap:28}}>
         {[['LinkedIn','https://www.linkedin.com/in/kristin-garza'],['Email','mailto:kmkerney221@gmail.com'],['Resume','/resume.pdf']].map(([label,href])=>(<a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" style={{fontSize:13,fontWeight:500,color:accentDark,opacity:0.75,textDecoration:'none'}}>{label}</a>))}

@@ -1,0 +1,623 @@
+/* =========================================================
+   CaseStudy.css — Positions case study typography & layout
+   Uses tokens from tokens.css + case-study-shared.css
+   ========================================================= */
+
+/* ── Variable aliases: map old global.css vars → tokens ──
+   global.css is not imported; alias here so all inline
+   var(--steel-blue/cream/terracotta) resolve correctly.   */
+.positions-page {
+  --steel-blue:  #3d4f63;          /* dark navy-slate — matches Key Design Decisions section bg */
+  --cream:       var(--bg);        /* warm off-white page surface */
+  --terracotta:  var(--clay);      /* clay is the tokens.css terracotta equivalent */
+}
+
+/* ── Hero ── */
+.positions-page .cs-hero-title {
+  font-family: var(--f-slab);
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+.positions-page .cs-hero-subtitle {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: clamp(17px, 2.2vw, 22px);
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ── Section headings ── */
+.positions-page .cs-h2 {
+  font-family: var(--f-slab);
+  font-size: clamp(24px, 3.2vw, 34px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 28px;
+}
+.positions-page .cs-h3 {
+  font-family: var(--f-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+.positions-page .cs-h4 {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 8px;
+}
+
+/* ── Body text ── */
+.positions-page .cs-body {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-width: 72ch;
+  margin: 0 0 20px;
+}
+
+/* ── TL;DR section ── */
+.meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hero-pill {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.01em;
+}
+.hero-pill--blue {
+  background: rgba(106,129,178,0.12);
+  color: #3d5080;
+  border: 1px solid rgba(106,129,178,0.25);
+}
+.hero-pill--gold {
+  background: var(--ochre-tint);
+  color: var(--ochre-deep);
+  border: 1px solid var(--ochre-edge);
+}
+.hero-pill--warm {
+  background: var(--clay-tint);
+  color: var(--clay-ink);
+  border: 1px solid var(--clay-edge);
+}
+
+/* ── Project details grid ── */
+.positions-page .details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+@media (max-width: 860px) {
+  .positions-page .details-grid { grid-template-columns: 1fr; }
+}
+.positions-page .details-col-heading {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 12px;
+  letter-spacing: 0.01em;
+}
+.positions-page .details-list {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.positions-page .details-list li {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  padding-left: 16px;
+  position: relative;
+}
+.positions-page .details-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+}
+
+/* ── Stats row ── */
+.positions-page .stats-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.positions-page .stat-item {
+  flex: 1;
+  min-width: 120px;
+  padding: 24px 28px;
+  border-radius: var(--r-3);
+  border: 1px solid var(--hairline);
+  text-align: center;
+}
+.positions-page .stat-number {
+  font-family: var(--f-slab);
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--clay);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.positions-page .stat-label {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+  letter-spacing: 0.01em;
+}
+
+/* ── Audit grid ── */
+.positions-page .audit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 720px) {
+  .positions-page .audit-grid { grid-template-columns: 1fr; }
+}
+.positions-page .audit-card {
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-3);
+  overflow: hidden;
+  background: var(--surface);
+}
+.positions-page .audit-card-header {
+  padding: 16px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
+}
+.positions-page .audit-card-title {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 4px;
+}
+.positions-page .audit-card-pattern {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  margin: 0;
+}
+.positions-page .audit-card-body {
+  padding: 16px 24px;
+}
+.positions-page .audit-issues {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.positions-page .audit-issues li {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  padding-left: 14px;
+  position: relative;
+}
+.positions-page .audit-issues li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+  font-weight: 700;
+}
+.positions-page .featured-badge {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay-ink);
+  background: var(--clay-tint);
+  border: 1px solid var(--clay-edge);
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+}
+
+/* ── Finding callout ── */
+.positions-page .finding-callout {
+  padding: 28px 36px;
+  background: var(--surface-2);
+  border-left: 3px solid var(--clay);
+  border-radius: 0 var(--r-3) var(--r-3) 0;
+}
+.positions-page .finding-callout-label {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin: 0 0 10px;
+}
+.positions-page .finding-callout-text {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* ── Issue severity badge ── */
+.positions-page .issue-severity {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.04em;
+}
+.positions-page .issue-severity--critical {
+  background: rgba(194,80,80,0.12);
+  color: #9e3535;
+  border: 1px solid rgba(194,80,80,0.25);
+}
+.positions-page .issue-severity--high {
+  background: var(--clay-tint);
+  color: var(--clay-ink);
+  border: 1px solid var(--clay-edge);
+}
+.positions-page .issue-severity--medium {
+  background: var(--ochre-tint);
+  color: var(--ochre-deep);
+  border: 1px solid var(--ochre-edge);
+}
+
+/* ── SME quotes ── */
+.positions-page .sme-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.positions-page .quote-block {
+  padding: 24px 32px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--slate);
+  border-radius: 0 var(--r-3) var(--r-3) 0;
+}
+.positions-page .quote-text {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 10px;
+}
+.positions-page .quote-attribution {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Insight grid ── */
+.positions-page .insight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 40px 0 40px;
+}
+@media (max-width: 860px) {
+  .positions-page .insight-grid { grid-template-columns: 1fr; }
+}
+.positions-page .insight-card {
+  padding: 28px 24px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-3);
+  display: flex;
+  flex-direction: column;
+}
+.positions-page .insight-card-title {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+.positions-page .insight-list {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.positions-page .insight-list li {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  padding-left: 14px;
+  position: relative;
+}
+.positions-page .insight-list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+  font-weight: 700;
+}
+
+/* ── Solution principles ── */
+.positions-page .principle-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
+  max-width: 680px;
+}
+.positions-page .principle-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.positions-page .principle-arrow {
+  font-family: var(--f-mono);
+  font-size: 14px;
+  color: var(--clay);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.positions-page .principle-text {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+}
+.positions-page .principle-text strong { color: var(--ink); }
+
+/* ── Selected direction badge ── */
+.positions-page .selected-badge {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay-ink);
+  background: var(--clay-tint);
+  border: 1.5px solid var(--clay);
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+}
+
+/* ── Key design decision list ── */
+.positions-page .decision-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 40px;
+}
+.positions-page .decision-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.positions-page .decision-check {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(246,251,222,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Design system contribution ── */
+.positions-page .ds-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+@media (max-width: 860px) {
+  .positions-page .ds-grid { grid-template-columns: 1fr; }
+}
+.positions-page .ds-card {
+  padding: 28px 24px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-3);
+}
+.positions-page .ds-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--clay-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.positions-page .ds-card-title {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 14px;
+}
+
+/* ── Impact stats ── */
+.positions-page .impact-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+.positions-page .impact-stat {
+  flex: 1;
+  min-width: 120px;
+  padding: 24px 28px;
+  border-radius: var(--r-3);
+  border: 1px solid var(--hairline);
+  text-align: center;
+}
+.positions-page .impact-number {
+  font-family: var(--f-slab);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--clay);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.positions-page .impact-label {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+/* ── Rollout app grid ── */
+.positions-page .app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (max-width: 720px) {
+  .positions-page .app-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Reflections ── */
+.positions-page .reflection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 720px) {
+  .positions-page .reflection-grid { grid-template-columns: 1fr; }
+}
+.positions-page .reflection-col-heading {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.positions-page .reflection-list {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.positions-page .reflection-list li {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-3);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.positions-page .reflection-list li img {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.positions-page .reflection-list li span {
+  flex: 1;
+}
+.positions-page .reflection-list.good li { color: var(--ink-2); }
+
+/* ── Next steps ── */
+.positions-page .next-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+}
+@media (max-width: 720px) {
+  .positions-page .next-steps-grid { grid-template-columns: 1fr; }
+}
+.positions-page .next-steps-heading {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-2);
+  margin: 0 0 16px;
+}
+.positions-page .next-steps-list {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.positions-page .next-steps-list li {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  padding-left: 16px;
+  position: relative;
+}
+.positions-page .next-steps-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+}
+
+/* ── Footer (case study internal) ── */
+.positions-page .footer {
+  background: var(--clay-ink);
+  color: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 64px;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: var(--f-sans);
+  font-size: 13px;
+}
+.positions-page .footer span { opacity: 0.6; }
+.positions-page .footer-left { letter-spacing: 0.02em; }
+.positions-page .footer-links {
+  display: flex;
+  gap: 28px;
+}
+.positions-page .footer a {
+  color: var(--bg);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 120ms;
+}
+.positions-page .footer a:hover { opacity: 1; text-decoration: underline; }
+
+/* ── concept card grid responsive ── */
+@media (max-width: 720px) {
+  .concept-card-grid { grid-template-columns: 1fr !important; }
+}

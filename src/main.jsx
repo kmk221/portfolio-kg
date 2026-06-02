@@ -2,11 +2,15 @@ import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import App from './App.jsx'
+import Bits from './pages/Bits.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
 import RulesCaseStudy from './pages/RulesCaseStudy.jsx'
 import OrderManagementCaseStudy from './pages/OrderManagementCaseStudy.jsx'
+import CaseStudyOM from './pages/CaseStudyOM.jsx'
 import ColorPreview from './pages/ColorPreview.jsx'
+import About from './pages/About.jsx'
 import AIDesign from './pages/AIDesign.jsx'
+import './tokens.css'
 import './styles.css'
 
 // Disable the browser's automatic scroll restoration so back/forward also
@@ -31,9 +35,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/bits" element={<Bits />} />
         <Route path="/case-study/positions" element={<CaseStudy />} />
         <Route path="/case-study/rules" element={<RulesCaseStudy />} />
         <Route path="/case-study/order-management" element={<OrderManagementCaseStudy />} />
+        <Route path="/about" element={<About />} />
         <Route path="/ai-design" element={<AIDesign />} />
         <Route path="/preview/color" element={<ColorPreview />} />
       </Routes>

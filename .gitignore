@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+.env
+generate-resume.cjs
+public/KristinGarzaResume_v2.pdf

@@ -1,37 +1,6 @@
 import { useEffect } from 'react'
 import Nav from '../components/Nav.jsx'
-
-const pageBg = '#C4CFDF'
-const cream = 'rgba(245,232,211,1)'
-const creamGlass = 'rgba(245,232,211,0.55)'
-const creamGlassHover = 'rgba(245,232,211,0.72)'
-const creamBorder = 'rgba(55,43,11,0.14)'
-const creamBorderHover = 'rgba(55,43,11,0.24)'
-const textPrimary = '#372B0B'
-const textSecondary = 'rgba(55,43,11,0.72)'
-const textMuted = 'rgba(55,43,11,0.55)'
-const terracotta = '#B86757'
-const gold = '#DDB365'
-const softBlue = '#C4CFDF'
-const blueLabel = '#5F7A9A'
-const sideP = 'clamp(24px, 5vw, 48px)'
-const contentW = '1100px'
-
-const sec = (extra) => ({
-  maxWidth: contentW, margin: '0 auto', padding: `0 ${sideP}`,
-  position: 'relative', zIndex: 1, ...extra
-})
-
-const divider = { borderBottom: '1px solid rgba(55,43,11,0.08)' }
-
-const glassCard = {
-  background: creamGlass,
-  backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-  border: `1px solid ${creamBorder}`,
-  borderRadius: 14,
-  boxShadow: '0 4px 24px rgba(55,43,11,0.08), inset 0 1px 0 rgba(245,232,211,0.4)',
-  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease',
-}
+import styles from './AIDesign.module.css'
 
 const quotes = [
   {
@@ -39,13 +8,13 @@ const quotes = [
       '"This design process… we treat it as gospel. That\'s basically dead."',
       'Designers should focus more on "supporting implementation and execution."',
     ],
-    source: 'Jenny Wen · Lenny\'s Podcast, "The Design Process Is Dead"',
+    source: 'Jenny Wen · Lenny\'s Podcast',
     url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead',
   },
   {
     lines: [
       'Teams risk defaulting to pattern selection instead of problem definition — choosing components instead of questioning intent.',
-      "The opportunity isn't just to design faster — it's to design with clarity. Making decisions explicit, systems understandable, and experiences coherent across the product.",
+      "The opportunity isn't just to design faster — it's to design with clarity.",
     ],
     source: 'Addy Osmani · "Comprehension Debt"',
     url: 'https://addyosmani.com/blog/comprehension-debt/',
@@ -59,6 +28,7 @@ const quotes = [
     url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat',
   },
 ]
+
 const wideQuote = {
   label: 'Hypothesis',
   text: '"In a world where anyone can make anything — what matters is your ability to choose and curate what you make."',
@@ -67,14 +37,14 @@ const wideQuote = {
 }
 
 const contentPieces = [
-  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast — why the traditional linear design process doesn't hold up in the AI era, and what's replacing it. The episode that inspired this whole page.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
-  { type: 'Article', color: '#5F7A9A', colorEnd: '#8FA5BF', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code — the growing gap between what we produce and what we actually understand.", cta: 'Read Article →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
-  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners on the Future of UX podcast — five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
-  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on Lenny's Podcast — why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
-  { type: 'Article', color: '#5F7A9A', colorEnd: '#8FA5BF', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale — and why human judgment still matters.', cta: 'Read Article →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
-  { type: 'Podcast', color: '#B86757', colorEnd: '#C27A6E', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries — grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
-  { type: 'Talk', color: '#DDB365', colorEnd: '#E6C07A', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch / Listen →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
-  { type: 'Substack', color: '#DDB365', colorEnd: '#E6C07A', title: "Don't Trust the Process", tldr: "Jenny Wen's Substack post on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Read on Substack →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast — why the traditional linear design process doesn't hold up in the AI era, and what's replacing it.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
+  { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code — the growing gap between what we produce and what we actually understand.", cta: 'Read →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners — five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
+  { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale.', cta: 'Read →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries — grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
+  { type: 'Talk', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
+  { type: 'Substack', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: "Don't Trust the Process", tldr: "Jenny Wen on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Read →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
 ]
 
 const voices = [
@@ -91,107 +61,49 @@ const voices = [
   { name: 'Design Observer', url: 'https://designobserver.com/' },
 ]
 
-function QuoteCard({ text, lines, source, url, wide, label }) {
-  const base = wide
-    ? { ...glassCard, gridColumn: '1 / -1', background: 'rgba(184,103,87,0.06)', borderColor: 'rgba(184,103,87,0.12)' }
-    : { ...glassCard }
-  const quoteLines = lines || (text ? [text] : [])
+function QuoteIcon() {
   return (
-    <div
-      style={{ ...base, padding: 32, cursor: 'default', display: 'flex', flexDirection: 'column' }}
-      onMouseEnter={e => {
-        e.currentTarget.style.transform = 'translateY(-3px)'
-        e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,0,0,0.15)'
-        e.currentTarget.style.borderColor = wide ? 'rgba(184,103,87,0.2)' : creamBorderHover
-        e.currentTarget.style.background = wide ? 'rgba(184,103,87,0.09)' : creamGlassHover
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = base.boxShadow
-        e.currentTarget.style.borderColor = wide ? 'rgba(184,103,87,0.12)' : creamBorder
-        e.currentTarget.style.background = wide ? 'rgba(184,103,87,0.06)' : creamGlass
-      }}
+    <svg
+      viewBox="0 0 24 24" width="22" height="22" fill="none"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      className={styles.quoteCardIcon}
+      aria-hidden="true"
     >
-      <svg
-        viewBox="0 0 24 24" width="28" height="28" fill="none"
-        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
-        style={{ color: terracotta, opacity: 0.55, marginBottom: 14, display: 'block' }}
-        aria-hidden="true"
-      >
-        <path d="M9 18h6" />
-        <path d="M10 21h4" />
-        <path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1.5 1.4 1.5 2.5v2h5v-2c0-1.1.7-1.8 1.5-2.5A6 6 0 0 0 12 3Z" />
-      </svg>
-      {label && (
-        <p style={{
-          fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase',
-          color: terracotta, marginBottom: 14,
-        }}>
-          {label}
-        </p>
-      )}
-      {quoteLines.map((line, i) => (
-        <p
-          key={i}
-          style={{
-            fontSize: 17, fontWeight: 500, lineHeight: 1.6, color: textPrimary,
-            marginBottom: 16,
-            paddingBottom: i < quoteLines.length - 1 ? 16 : 0,
-            borderBottom: i < quoteLines.length - 1 ? '1px solid rgba(55,43,11,0.1)' : 'none',
-          }}
-        >
-          {line}
-        </p>
+      <path d="M9 18h6" />
+      <path d="M10 21h4" />
+      <path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1.5 1.4 1.5 2.5v2h5v-2c0-1.1.7-1.8 1.5-2.5A6 6 0 0 0 12 3Z" />
+    </svg>
+  )
+}
+
+function QuoteCard({ lines, source, url, wide, label }) {
+  return (
+    <div className={`${styles.quoteCard} ${wide ? styles.wide : ''}`}>
+      <QuoteIcon />
+      {label && <p className={styles.quoteCardLabel}>{label}</p>}
+      {lines.map((line, i) => (
+        <p key={i} className={styles.quoteCardText}>{line}</p>
       ))}
       {url ? (
-        <a
-          href={url} target="_blank" rel="noreferrer"
-          style={{
-            fontSize: 13, color: blueLabel, fontWeight: 600, marginTop: 'auto',
-            textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6,
-            transition: 'color 0.2s ease',
-            alignSelf: 'flex-start',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.color = terracotta }}
-          onMouseLeave={e => { e.currentTarget.style.color = blueLabel }}
-        >
-          {source} <span style={{ fontSize: 11, opacity: 0.7 }}>↗</span>
+        <a href={url} target="_blank" rel="noreferrer" className={styles.quoteCardSource}>
+          {source} <span>↗</span>
         </a>
       ) : (
-        <p style={{ fontSize: 13, color: blueLabel, fontWeight: 600, marginTop: 'auto' }}>{source}</p>
+        <span className={styles.quoteCardSource}>{source}</span>
       )}
     </div>
   )
 }
 
-function ContentCard({ type, color, colorEnd, title, tldr, cta, url }) {
+function ContentCard({ type, typeColor, barColor, title, tldr, cta, url }) {
   return (
-    <a
-      href={url} target="_blank" rel="noreferrer"
-      style={{
-        ...glassCard, minWidth: 300, maxWidth: 300, scrollSnapAlign: 'start',
-        overflow: 'hidden', textDecoration: 'none', color: 'inherit',
-        display: 'flex', flexDirection: 'column',
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.transform = 'translateY(-4px)'
-        e.currentTarget.style.boxShadow = '0 20px 56px rgba(0,0,0,0.18)'
-        e.currentTarget.style.borderColor = creamBorderHover
-        e.currentTarget.style.background = creamGlassHover
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = 'translateY(0)'
-        e.currentTarget.style.boxShadow = glassCard.boxShadow
-        e.currentTarget.style.borderColor = creamBorder
-        e.currentTarget.style.background = creamGlass
-      }}
-    >
-      <div style={{ height: 4, width: '100%', background: `linear-gradient(90deg, ${color}, ${colorEnd})` }} />
-      <div style={{ padding: 28, flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: colorEnd, marginBottom: 12, opacity: 0.85 }}>{type}</p>
-        <p style={{ fontSize: 17, fontWeight: 700, color: textPrimary, marginBottom: 12, lineHeight: 1.4 }}>{title}</p>
-        <p style={{ fontSize: 13, color: textMuted, lineHeight: 1.65, flex: 1 }}>{tldr}</p>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: terracotta, marginTop: 20 }}>{cta}</span>
+    <a href={url} target="_blank" rel="noreferrer" className={styles.contentCard}>
+      <div className={styles.contentCardBar} style={{ background: barColor }} />
+      <div className={styles.contentCardBody}>
+        <p className={styles.contentCardType} style={{ color: typeColor }}>{type}</p>
+        <p className={styles.contentCardTitle}>{title}</p>
+        <p className={styles.contentCardTldr}>{tldr}</p>
+        <span className={styles.contentCardCta}>{cta}</span>
       </div>
     </a>
   )
@@ -201,169 +113,134 @@ export default function AIDesign() {
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
   return (
-    <div style={{ background: pageBg, minHeight: '100vh', color: textSecondary, fontFamily: "'Inter', sans-serif", lineHeight: 1.6, position: 'relative' }}>
-      {/* Ambient multi-color wash — same 11-orb pattern as home/case studies,
-          tuned for the light soft-blue bg. Gold + coral pop against the cool
-          base; subtle white highlights soften the cycle. */}
-      <div style={{
-        position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0,
-        background: `
-          radial-gradient(1200px circle at 15% 2%, rgba(245, 232, 211, 0.45) 0%, transparent 35%),
-          radial-gradient(1100px circle at 92% 8%, rgba(221, 179, 101, 0.35) 0%, transparent 32%),
-          radial-gradient(1000px circle at 6% 18%, rgba(184, 103, 87, 0.28) 0%, transparent 30%),
-          radial-gradient(1200px circle at 88% 26%, rgba(245, 232, 211, 0.35) 0%, transparent 32%),
-          radial-gradient(950px circle at 18% 36%, rgba(221, 179, 101, 0.32) 0%, transparent 30%),
-          radial-gradient(1100px circle at 82% 46%, rgba(184, 103, 87, 0.26) 0%, transparent 32%),
-          radial-gradient(1000px circle at 8% 56%, rgba(245, 232, 211, 0.4) 0%, transparent 30%),
-          radial-gradient(1150px circle at 92% 66%, rgba(221, 179, 101, 0.3) 0%, transparent 32%),
-          radial-gradient(1050px circle at 12% 76%, rgba(184, 103, 87, 0.24) 0%, transparent 30%),
-          radial-gradient(1100px circle at 88% 86%, rgba(245, 232, 211, 0.32) 0%, transparent 32%),
-          radial-gradient(980px circle at 30% 96%, rgba(221, 179, 101, 0.26) 0%, transparent 28%)
-        `,
-      }} />
-
+    <div className={styles.page}>
       <Nav />
 
-      {/* Hero */}
-      <div style={{ ...sec({ paddingTop: 120, paddingBottom: 80 }), ...divider }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: terracotta, marginBottom: 16 }}>AI × Design</p>
-        <h1 style={{ fontSize: 'clamp(32px, 4.5vw, 42px)', fontWeight: 700, lineHeight: 1.15, color: textPrimary, maxWidth: 700, marginBottom: 20 }}>
-          The design process isn't dead<span style={{ color: terracotta }}>.</span><br />
-          It just got a remix<span style={{ color: terracotta }}>.</span>
-        </h1>
-        <p style={{ fontSize: 18, color: textSecondary, maxWidth: 620, lineHeight: 1.7 }}>
-          A running collection of the ideas, talks, and articles shaping how I think about
-          design in the age of AI — plus my own take on what's changing, what's not, and
-          where the real value lives.
-        </p>
-      </div>
+      {/* ── HERO ── */}
+      <section className={styles.hero}>
+        <div className={styles.heroInner}>
+          <h1 className={styles.heroTitle}>AI × Design.</h1>
+          <p className={styles.heroSub}>
+            A running collection of the ideas, talks, and articles shaping how I think about
+            design in the age of AI — plus my own take on what's changing, what's not, and
+            where the real value lives.
+          </p>
+        </div>
+      </section>
 
-      {/* My Take */}
-      <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 24 }}>My Take</p>
-        <div style={{
-          ...glassCard, padding: 44, borderRadius: 16,
-        }}>
-          <blockquote style={{
-            fontSize: 'clamp(18px, 2.2vw, 22px)', fontWeight: 500, lineHeight: 1.7,
-            color: textPrimary, maxWidth: 800,
-            borderLeft: `3px solid ${terracotta}`, paddingLeft: 28,
-            margin: 0,
-          }}>
-            AI compresses the design process — but it also introduces a new risk: we can
-            generate solutions faster than we can understand them. That's why my focus
-            isn't just on speed — it's on clarity. Ensuring that what we design is not
-            only usable, but explainable, scalable, and grounded in a shared understanding
-            across teams.
+      {/* ── MY TAKE ── */}
+      <section className={styles.myTake}>
+        <div className={styles.myTakeInner}>
+          <div className={`${styles.sectionLabelWrap} ${styles.light}`}>
+            <p className={styles.myTakeLabel}>My Take</p>
+          </div>
+          <blockquote className={styles.myTakeQuote}>
+            Used well, AI is a genuine multiplier — compressing the distance between an
+            idea and a testable solution, and freeing up space for deeper thinking. But
+            used carelessly, it's just a faster way to produce the wrong thing. The real
+            risk isn't slow execution — it's shipping AI slop: outputs that look finished
+            but have lost the thread of why we were going in that direction in the first
+            place. My job is to keep that thread intact — staying anchored to user needs
+            and intent even as the tools accelerate everything around them.
           </blockquote>
         </div>
-      </div>
+      </section>
 
-      {/* Quotes */}
-      <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 40 }}>Ideas I Keep Coming Back To</p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-          {quotes.map((q, i) => <QuoteCard key={i} lines={q.lines} source={q.source} url={q.url} />)}
-          <QuoteCard text={wideQuote.text} source={wideQuote.source} label={wideQuote.label} url={wideQuote.url} wide />
+      {/* ── WHERE I FOCUS ── */}
+      <section className={styles.section}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionLabelWrap}>
+            <p className={styles.sectionLabel}>Where I Focus</p>
+          </div>
+          <div>
+            <h2 className={styles.sectionTitle}>
+              The biggest risk in the AI era isn't slow execution.<br />
+              It's <span className="accent" style={{ color: 'var(--clay)', fontStyle: 'italic' }}>comprehension debt</span>.
+            </h2>
+            <p className={styles.sectionBody}>
+              AI has made it easy to generate interfaces — but much harder to maintain
+              shared understanding. In complex systems, the biggest risk isn't slow execution —
+              it's comprehension debt: shipping solutions that work, but that no one can fully
+              explain or evolve.
+            </p>
+            <p className={styles.sectionBody}>
+              My role as a designer is to reduce that risk — by designing not just screens, but
+              clarity: aligning teams around intent, making decisions explicit, and ensuring
+              the system holds together as it scales.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Where I Focus — deeper insight */}
-      <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 24 }}>Where I Focus</p>
-        <div style={{
-          ...glassCard, padding: 44, borderRadius: 16,
-          background: 'rgba(184,103,87,0.05)', borderColor: 'rgba(184,103,87,0.1)',
-        }}>
-          <h2 style={{
-            fontSize: 'clamp(22px, 2.6vw, 28px)', fontWeight: 700, lineHeight: 1.3,
-            color: textPrimary, marginBottom: 24, maxWidth: 760,
-          }}>
-            The biggest risk in the AI era isn't slow execution<span style={{ color: terracotta }}>.</span><br />
-            It's <span style={{ color: terracotta }}>comprehension debt</span>.
-          </h2>
-          <p style={{
-            fontSize: 17, lineHeight: 1.75, color: textPrimary, maxWidth: 780, marginBottom: 18,
-          }}>
-            AI has made it easy to generate interfaces — but much harder to maintain
-            shared understanding. In complex systems, the biggest risk isn't slow execution —
-            it's comprehension debt: shipping solutions that work, but that no one can fully
-            explain or evolve.
-          </p>
-          <p style={{
-            fontSize: 17, lineHeight: 1.75, color: textPrimary, maxWidth: 780, margin: 0,
-          }}>
-            My role as a designer is to reduce that risk — by designing not just screens, but
-            clarity: aligning teams around intent, making decisions explicit, and ensuring
-            the system holds together as it scales.
-          </p>
+      {/* ── IDEAS I KEEP COMING BACK TO ── */}
+      <section className={styles.section}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionLabelWrap}>
+            <p className={styles.sectionLabel}>Ideas I Keep Coming Back To</p>
+          </div>
+          <div className={styles.quoteGrid}>
+            {quotes.map((q, i) => (
+              <QuoteCard key={i} lines={q.lines} source={q.source} url={q.url} />
+            ))}
+            <QuoteCard
+              lines={[wideQuote.text]}
+              source={wideQuote.source}
+              label={wideQuote.label}
+              url={wideQuote.url}
+              wide
+            />
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Content Carousel */}
-      <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }), ...divider }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 12 }}>How AI is reshaping design</p>
-        <p style={{ fontSize: 15, color: textMuted, marginBottom: 36 }}>The talks, articles, and research shaping how I think about design in the age of AI — swipe through for the pieces I keep coming back to.</p>
-        <div style={{
-          display: 'flex', gap: 20, overflowX: 'auto',
-          paddingBottom: 12, scrollSnapType: 'x mandatory',
-        }}>
-          {contentPieces.map((p, i) => <ContentCard key={i} {...p} />)}
+      {/* ── CONTENT CAROUSEL ── */}
+      <section className={styles.section}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionLabelWrap}>
+            <p className={styles.sectionLabel}>How AI Is Reshaping Design</p>
+          </div>
+          <div>
+            <p className={styles.carouselHint}>Scroll → for the pieces I keep coming back to</p>
+            <div className={styles.carousel}>
+              {contentPieces.map((p, i) => (
+                <ContentCard key={i} {...p} />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Voices I Follow */}
-      <div style={{ ...sec({ paddingTop: 80, paddingBottom: 80 }) }}>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: blueLabel, marginBottom: 12 }}>Voices I Follow</p>
-        <p style={{ fontSize: 15, color: textMuted, marginBottom: 36 }}>
-          If you're thinking about AI × design too, here are the people and publications keeping me sharp.
-        </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-          {voices.map(v => (
-            <a
-              key={v.name} href={v.url} target="_blank" rel="noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '10px 22px', borderRadius: 100,
-                background: creamGlass,
-                backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-                border: `1px solid ${creamBorder}`,
-                fontSize: 14, fontWeight: 500, color: 'rgba(55,43,11,0.78)',
-                textDecoration: 'none',
-                boxShadow: 'inset 0 1px 0 rgba(245,232,211,0.4)',
-                transition: 'all 0.25s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = creamGlassHover
-                e.currentTarget.style.borderColor = creamBorderHover
-                e.currentTarget.style.transform = 'translateY(-1px)'
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(55,43,11,0.1), inset 0 1px 0 rgba(245,232,211,0.5)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = creamGlass
-                e.currentTarget.style.borderColor = creamBorder
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(245,232,211,0.4)'
-              }}
-            >
-              {v.name} <span style={{ color: 'rgba(55,43,11,0.4)', fontSize: 12 }}>↗</span>
-            </a>
-          ))}
+      {/* ── VOICES I FOLLOW ── */}
+      <section className={styles.section} style={{ borderBottom: 'none' }}>
+        <div className={styles.sectionInner}>
+          <div className={styles.sectionLabelWrap}>
+            <p className={styles.sectionLabel}>Voices I Follow</p>
+          </div>
+          <div>
+            <p className={styles.sectionBody} style={{ marginBottom: 28 }}>
+              If you're thinking about AI × design too, here are the people and publications keeping me sharp.
+            </p>
+            <div className={styles.voicesPills}>
+              {voices.map(v => (
+                <a key={v.name} href={v.url} target="_blank" rel="noreferrer" className={styles.voicePill}>
+                  {v.name}
+                  <span className={styles.voicePillArrow}>↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Footer */}
-      <footer style={{
-        padding: '48px', textAlign: 'center', position: 'relative', zIndex: 1,
-        borderTop: '1px solid rgba(55,43,11,0.1)',
-      }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(55,43,11,0.6)', marginBottom: 16 }}>
-          kristin<span style={{ color: terracotta }}>.</span>garza · UX Designer
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 24 }}>
-          <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'rgba(55,43,11,0.55)', textDecoration: 'none' }}>LinkedIn</a>
-          <a href="mailto:kmkerney221@gmail.com" style={{ fontSize: 13, color: 'rgba(55,43,11,0.55)', textDecoration: 'none' }}>Email</a>
-          <a href="/resume.pdf" target="_blank" rel="noreferrer" style={{ fontSize: 13, color: 'rgba(55,43,11,0.55)', textDecoration: 'none' }}>Resume</a>
+      {/* ── FOOTER ── */}
+      <footer className="site-foot">
+        <div className="inner">
+          <p className="left">kristin.garza · UX Designer</p>
+          <div className="right">
+            <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="mailto:kmkerney221@gmail.com">Email</a>
+            <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          </div>
         </div>
       </footer>
     </div>

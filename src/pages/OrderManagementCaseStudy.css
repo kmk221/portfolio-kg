@@ -6,17 +6,17 @@
     --accent: var(--terracotta);                 /* was #8C8958 olive */
     --accent-dark: #8F4638;                      /* deeper terracotta */
     --accent-mid: rgba(184, 103, 87, 0.35);
-    --accent-light: rgba(184, 103, 87, 0.08);
+    --accent-light: rgba(144, 161, 185, 0.08);
     --peach: var(--terracotta);                  /* was #B3866B */
-    --peach-light: rgba(184, 103, 87, 0.12);
+    --peach-light: rgba(144, 161, 185, 0.10);
     --espresso: var(--deep-brown);               /* was #241D15 — uses home --deep-brown */
     --deep-text: rgba(55, 43, 11, 0.72);
     --page-bg: transparent;                      /* let the JSX radial gradient show through */
     --section-alt: rgba(196, 207, 223, 0.28);    /* soft steel-blue wash — echoes home's cool sections */
-    --side-p: clamp(20px, 5vw, 80px);
-    --content-w: 1200px;
+    --side-p: 64px;
+    --content-w: 1240px;
 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--f-sans);
     background: var(--page-bg);
     color: var(--warm-gray);
     -webkit-font-smoothing: antialiased;
@@ -24,8 +24,8 @@
 
   .om-page * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .om-page .section { width: 100%; padding: 120px var(--side-p); }
-  .om-page .container { max-width: var(--content-w); width: 100%; margin: 0 auto; }
+  .om-page .section { width: 100%; padding: 120px 0; }
+  .om-page .container { max-width: var(--content-w); width: 100%; margin: 0 auto; padding: 0 var(--side-p); }
 
   
   .om-page .step-label {
@@ -159,6 +159,9 @@
   .om-page .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
   .om-page .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 40px; }
 
+  @media (max-width: 720px) {
+    .om-page { --side-p: 24px; }
+  }
   @media (max-width: 768px) {
     .om-page .meta-bar {
       display: grid;
@@ -185,7 +188,7 @@
      div keeps the dark dot grid on top, so the subtle grid texture carries
      through these sections too. */
   .om-page .om-gold {
-    background: linear-gradient(135deg, rgba(230, 192, 122, 0.55) 0%, rgba(221, 179, 101, 0.65) 100%);
+    background: transparent;
   }
 
   /* Cards inside om-gold sections — strip the heavier glass border + shadow
@@ -241,25 +244,10 @@
     height: 460px;
     border-radius: 12px 12px 0 0;
     overflow: hidden;
-    background:
-      radial-gradient(circle at 1px 1px, rgba(55,43,11,0.1) 1px, transparent 0) 0 0 / 14px 14px,
-      linear-gradient(135deg, #b8c4d4 0%, #cdd7e3 50%, #b8c4d4 100%);
-    box-shadow: inset 0 0 140px rgba(55,43,11,0.14);
+    background: #e8edf2;
   }
-  /* Soft ambient glows + subtle vignette — echoes the blurred glow orbs in the
-     home's AI × Design section. */
-  .om-page .hero-anim::before {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(420px circle at 12% 10%, rgba(184,103,87,0.28) 0%, transparent 60%),
-      radial-gradient(380px circle at 88% 85%, rgba(196,207,223,0.22) 0%, transparent 60%);
-    filter: blur(20px);
-  }
-  .om-page .hero-anim::after {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 55%, rgba(55,43,11,0.22) 100%);
-    pointer-events: none;
-  }
+  .om-page .hero-anim::before { display: none; }
+  .om-page .hero-anim::after { display: none; }
   .om-page .hero-anim-stage {
     position: absolute;
     top: 50%; left: 50%;

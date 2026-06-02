@@ -245,7 +245,7 @@ export default function OrderManagementCaseStudy() {
       // Single-image mode: backdrop is the EXACT same composition as the OM
       // page hero — mustard gradient at 0.55/0.65 alpha layered over cream.
       // Cream base keeps it fully opaque so the page can't bleed through.
-      lb.style.background = 'linear-gradient(135deg, rgba(230, 192, 122, 0.55) 0%, rgba(221, 179, 101, 0.65) 100%), #F6F6F1'
+      lb.style.background = '#F6F6F1'
       lb.style.backdropFilter = 'blur(24px)'
       lb.style.webkitBackdropFilter = 'blur(24px)'
       stage.style.padding = '0'
@@ -650,92 +650,54 @@ export default function OrderManagementCaseStudy() {
           cream gaps between bursts. Scaled up to 11 larger, softer orbs that
           cycle steel-blue → gold → terracotta down the full page length —
           keeps the wash continuous and the individual pops subtle. */}
-      <div style={{
-        background: `
-          radial-gradient(1200px circle at 15% 2%, rgba(196, 207, 223, 0.42) 0%, transparent 35%),
-          radial-gradient(1100px circle at 92% 8%, rgba(221, 179, 101, 0.34) 0%, transparent 32%),
-          radial-gradient(1000px circle at 6% 18%, rgba(184, 103, 87, 0.26) 0%, transparent 30%),
-          radial-gradient(1200px circle at 88% 26%, rgba(196, 207, 223, 0.30) 0%, transparent 32%),
-          radial-gradient(950px circle at 18% 36%, rgba(221, 179, 101, 0.28) 0%, transparent 30%),
-          radial-gradient(1100px circle at 82% 46%, rgba(184, 103, 87, 0.22) 0%, transparent 32%),
-          radial-gradient(1000px circle at 8% 56%, rgba(196, 207, 223, 0.32) 0%, transparent 30%),
-          radial-gradient(1150px circle at 92% 66%, rgba(221, 179, 101, 0.28) 0%, transparent 32%),
-          radial-gradient(1050px circle at 12% 76%, rgba(184, 103, 87, 0.22) 0%, transparent 30%),
-          radial-gradient(1100px circle at 88% 86%, rgba(196, 207, 223, 0.26) 0%, transparent 32%),
-          radial-gradient(980px circle at 30% 96%, rgba(221, 179, 101, 0.24) 0%, transparent 28%),
-          var(--cream)
-        `,
-      }}>
-        {/* Home-style hero — eyebrow, big title with terracotta period, italic
-            subtitle, and staggered fadeUp pills on the right. */}
-        <div style={{
-          background: `
-            radial-gradient(rgba(55, 43, 11, 0.08) 1px, transparent 1px) 0 0 / 28px 28px,
-            linear-gradient(135deg, rgba(230, 192, 122, 0.55) 0%, rgba(221, 179, 101, 0.65) 100%)
-          `,
-        }}>
-        <section
-          className="home-hero"
-          style={{
-            background: 'transparent',
-            minHeight: 'auto',
-            padding: 'clamp(100px, 12vw, 140px) clamp(20px, 6vw, 80px) clamp(60px, 7vw, 100px)',
-          }}
-        >
-          <div className="hero-content" style={{ alignItems: 'flex-start' }}>
-            <div className="hero-text">
-              <p className="hero-eyebrow">Case Study · Order Management</p>
-              <h1
-                className="hero-name"
-                style={{
-                  fontSize: 'clamp(36px, 5vw, 64px)',
-                  letterSpacing: '-1px',
-                  lineHeight: 1.08,
-                  textTransform: 'none',
-                  marginBottom: 18,
-                  fontWeight: 300,
-                }}
-              >
-                Killing the Big Idea<span>.</span>
-              </h1>
-              <p
-                className="hero-title"
-                style={{
-                  fontSize: 'clamp(15px, 1.15vw, 17px)',
-                  fontStyle: 'italic',
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                  letterSpacing: '0.01em',
-                  color: 'rgba(55, 43, 11, 0.62)',
-                  marginBottom: 0,
-                  maxWidth: 540,
-                }}
-              >
-                We explored the bold direction, let research kill it, and shipped the disciplined one — sometimes the most impactful design work is knowing what not to build.
-              </p>
+      <div>
+        <section style={{ padding: 'clamp(80px, 10vw, 120px) 0 clamp(48px, 6vw, 80px)' }}>
+          <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 64px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32 }}>
+              <span className="eyebrow">Case Study · Order Management · 2024</span>
             </div>
-            <div className="hero-pills">
-              {heroPills.map(({ label, variant }, i) => (
-                <span
-                  key={label}
-                  className={`hero-pill hero-pill--${variant}`}
-                  style={{ animation: `fadeUp 0.5s ease ${0.8 + i * 0.1}s both` }}
-                >
-                  {label}
-                </span>
+            <h1 style={{
+              fontFamily: 'var(--f-slab)',
+              fontWeight: 400,
+              fontSize: 'clamp(36px, 5vw, 64px)',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.05,
+              color: 'var(--ink)',
+              margin: '0 0 20px',
+            }}>
+              Killing the Big Idea<span style={{ color: 'var(--clay)' }}>.</span>
+            </h1>
+            <p style={{
+              fontFamily: 'var(--f-serif)',
+              fontStyle: 'italic',
+              fontWeight: 300,
+              fontSize: 'clamp(17px, 1.5vw, 21px)',
+              lineHeight: 1.55,
+              color: 'var(--ink-2)',
+              maxWidth: 560,
+              margin: '0 0 36px',
+            }}>
+              We explored the bold direction, let research kill it, and shipped the disciplined one — sometimes the most impactful design work is knowing what not to build.
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {heroPills.map(({ label }) => (
+                <span key={label} className="chip chip--neutral">{label}</span>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Lo-fi animation lives inside the mustard wrapper so the title
-            block + animation share one continuous gradient (no seam). */}
         <div className="om-page" dangerouslySetInnerHTML={{ __html: HERO_ANIM_HTML }} />
-        </div>
 
-        {/* The original case study body — inline styles and animations
-            preserved, retinted to the home palette via .om-page scoped vars. */}
         <div className="om-page" dangerouslySetInnerHTML={{ __html: REST_BODY_HTML }} />
+
+        {/* Case study navigation */}
+        <nav className="cs-case-nav" aria-label="Case study navigation">
+          <a href="/case-study/rules" className="cs-case-nav-item cs-case-nav-item--next" style={{ marginLeft: 'auto' }}>
+            <span className="cs-case-nav-dir">Next →</span>
+            <span className="cs-case-nav-title">Inside the Rule Engine</span>
+          </a>
+        </nav>
       </div>
     </div>
   )

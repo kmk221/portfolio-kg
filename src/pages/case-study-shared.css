@@ -923,3 +923,17 @@
   .cs-case-nav-item { padding: 24px 28px; }
   .cs-case-nav-item--next { align-items: flex-start; text-align: left; }
 }
+
+/* ── Mobile: reduce side padding across all case studies ── */
+@media (max-width: 640px) {
+  .cs-page {
+    --side-padding: 20px;
+    --section-padding: clamp(40px, 8vw, 80px);
+  }
+}
+
+/* ── Mobile: scale down large headings ── */
+@media (max-width: 640px) {
+  .cs-h2 { font-size: clamp(22px, 5vw, 32px) !important; }
+  .cs-page h1 { font-size: clamp(28px, 7vw, 48px) !important; line-height: 1.2 !important; }
+}

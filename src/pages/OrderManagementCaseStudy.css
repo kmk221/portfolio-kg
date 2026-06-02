@@ -522,3 +522,15 @@
     border-radius: 14px;
   }
   .om-page .om-gold-map-frame img { width: 100%; display: block; }
+
+/* ── Mobile fixes ── */
+@media (max-width: 640px) {
+  .om-page { --side-p: 20px; }
+  .om-page .section { padding: 60px 0; }
+  /* Scale down the hero animation to fit mobile without horizontal scroll */
+  .om-page .hero-anim { height: 260px; }
+  .om-page .hero-anim-stage {
+    width: 100vw;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}

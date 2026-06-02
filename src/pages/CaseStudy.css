@@ -621,3 +621,12 @@
 @media (max-width: 720px) {
   .concept-card-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ── Mobile fixes ── */
+@media (max-width: 640px) {
+  /* Reduce stat item padding so they don't overflow */
+  .positions-page .stat-item { padding: 16px 12px; min-width: 80px; }
+  .positions-page .stat-number { font-size: 28px; }
+  /* Footer padding */
+  .positions-page .footer { padding: 20px 20px !important; }
+}

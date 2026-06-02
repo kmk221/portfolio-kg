@@ -279,10 +279,10 @@
     justify-content: flex-start;
     align-items: flex-end;
     margin-top: auto;
-    padding-top: 32px;
+    padding-top: 132px;
   }
   .illus-mobile img {
-    width: 250px;
+    width: 188px;
   }
 
   /* About page: single column, sidebar moves below experience */

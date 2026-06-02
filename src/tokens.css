@@ -279,9 +279,8 @@ strong { font-weight: 600; color: var(--ink); }
 }
 
 @media (max-width: 760px) {
-  .nav-links-desktop { display: none; }
+  .nav .nav-links-desktop { display: none !important; }
   .nav-hamburger { display: flex; }
-  .nav-mobile-drawer { display: block; }
 }
 .nav .wordmark {
   font-family: var(--f-mono);

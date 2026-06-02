@@ -48,14 +48,20 @@
   display: block;
 }
 @media (max-width: 860px) {
-  .page-hero { grid-template-columns: 1fr; gap: 24px; padding-top: 48px; padding-bottom: 32px; }
+  .page-hero {
+    grid-template-columns: 1fr;
+    min-height: unset;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    gap: 0;
+  }
   .page-hero .illus { display: none; }
-  .hero-headline { font-size: 38px; line-height: 46px; margin-top: 20px; }
-  .page-hero .ctas { margin-top: 32px; }
+  .hero-headline { font-size: 38px; line-height: 46px; margin-top: 16px; }
+  .page-hero .ctas { margin-top: 28px; }
+  .eyebrow--hero { margin-bottom: 0; }
 }
 @media (max-width: 540px) {
-  .page-hero { padding-top: 36px; min-height: unset; }
-  .hero-headline { font-size: 30px; line-height: 38px; }
+  .hero-headline { font-size: 32px; line-height: 40px; }
   .page-section { padding: 48px 0; }
   .page-section--secondary { padding: 56px 0; }
   .section-lede { font-size: 16px; }

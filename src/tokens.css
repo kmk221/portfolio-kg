@@ -239,7 +239,7 @@ strong { font-weight: 600; color: var(--ink); }
 
 /* ── Mobile drawer ── */
 .nav-mobile-drawer {
-  display: none;
+  display: block;
   position: fixed;
   inset: 56px 0 0 0;
   background: var(--bg);

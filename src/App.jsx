@@ -12,12 +12,9 @@ export default function Home() {
         <section className="page-hero">
           <div className="lockup">
             <span className="eyebrow with-rule eyebrow--hero">
-              <span className="eyebrow-name" style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', fontSize: 16 }}>Kristin Garza</span>
+              <span className="eyebrow-name" style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', fontSize: 13 }}>Kristin Garza</span>
               <span className="eyebrow-sep"> · </span>
               <span className="eyebrow-title">UX Designer · Product Thinker</span>
-              {/* Mobile: two separate lines, no dot */}
-              <span className="eyebrow-title-mobile-1">UX Designer</span>
-              <span className="eyebrow-title-mobile-2">Product Thinker</span>
             </span>
             <h1 className="hero-headline">
               Taming complexity and making<br />

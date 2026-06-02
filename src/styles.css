@@ -50,15 +50,15 @@
 @media (max-width: 860px) {
   .page-hero {
     grid-template-columns: 1fr;
-    min-height: unset;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    min-height: calc(100vh - 56px);
+    padding-top: 60px;
+    padding-bottom: 60px;
     gap: 0;
+    align-items: center;
   }
   .page-hero .illus { display: none; }
-  .hero-headline { font-size: 38px; line-height: 46px; margin-top: 16px; }
-  .page-hero .ctas { margin-top: 28px; }
-  .eyebrow--hero { margin-bottom: 0; }
+  .hero-headline { font-size: 38px; line-height: 46px; margin-top: 24px; }
+  .page-hero .ctas { margin-top: 36px; }
 }
 @media (max-width: 540px) {
   .hero-headline { font-size: 32px; line-height: 40px; }
@@ -258,35 +258,20 @@
 /* Mobile illustration — hidden on desktop */
 .illus-mobile { display: none; }
 
-/* Desktop eyebrow mobile lines — hidden on desktop */
-.eyebrow-title-mobile-1,
-.eyebrow-title-mobile-2 { display: none; }
-
 @media (max-width: 760px) {
 
-  /* Hero eyebrow: stack name above subtitle with breathing room */
+  /* Hero eyebrow: single line on mobile */
   .eyebrow--hero {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
     gap: 0;
   }
   .eyebrow--hero::after { display: none; }
-  .eyebrow-name { margin-bottom: 10px; } /* space between name and titles */
-
-  /* Hide desktop inline version, show separate mobile lines */
-  .eyebrow-sep,
-  .eyebrow-title { display: none; }
-  .eyebrow-title-mobile-1,
-  .eyebrow-title-mobile-2 {
-    display: block;
-    font-family: var(--f-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    line-height: 1.8;
-  }
+  .eyebrow-name { font-size: 12px !important; }
+  .eyebrow-sep { display: inline; }
+  .eyebrow-title { display: inline; }
 
   /* Illustration below buttons on mobile */
   .illus-mobile {
@@ -352,8 +337,12 @@
 .home-about-chips {
   display: flex;
   flex-direction: column;
+  align-items: flex-end; /* right-align chips on desktop */
   gap: 8px;
   padding-top: 2px;
+}
+.home-about-chips .chip {
+  width: fit-content; /* hug content, no stretching */
 }
 @media (max-width: 760px) {
   .home-about-layout {
@@ -361,7 +350,9 @@
     gap: 20px;
   }
   .home-about-chips {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start; /* left-align on mobile */
     gap: 8px;
   }
 }

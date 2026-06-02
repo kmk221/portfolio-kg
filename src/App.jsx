@@ -29,7 +29,7 @@ export default function Home() {
           </div>
 
           <div className="illus">
-            <img src="/kristin illustration.svg" alt="Kristin Garza illustration" />
+            <img src="/kristin-illustration.svg" alt="Kristin Garza illustration" />
           </div>
 
         </section>

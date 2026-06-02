@@ -203,6 +203,11 @@ strong { font-weight: 600; color: var(--ink); }
 @media (max-width: 720px) {
   .nav-inner { padding: 12px 24px; }
 }
+@media (max-width: 540px) {
+  .nav ul { gap: 16px; }
+  .nav a:not(.wordmark):not(.btn) { font-size: 13px; }
+  .nav .btn { display: none; } /* hide "Get in touch" CTA on very small screens */
+}
 .nav .wordmark {
   font-family: var(--f-mono);
   font-weight: 500;

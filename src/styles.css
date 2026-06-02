@@ -49,8 +49,18 @@
   opacity: 0.9;
 }
 @media (max-width: 860px) {
-  .page-hero { grid-template-columns: 1fr; gap: 32px; padding-top: 60px; }
+  .page-hero { grid-template-columns: 1fr; gap: 24px; padding-top: 48px; padding-bottom: 32px; }
   .page-hero .illus { display: none; }
+  .hero-headline { font-size: 38px; line-height: 46px; margin-top: 20px; }
+  .page-hero .ctas { margin-top: 32px; }
+}
+@media (max-width: 540px) {
+  .page-hero { padding-top: 36px; min-height: unset; }
+  .hero-headline { font-size: 30px; line-height: 38px; }
+  .page-section { padding: 48px 0; }
+  .page-section--secondary { padding: 56px 0; }
+  .section-lede { font-size: 16px; }
+  .work-grid { gap: 16px; }
 }
 
 /* ── Skills chip row ── */

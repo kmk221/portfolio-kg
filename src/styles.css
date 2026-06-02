@@ -249,18 +249,49 @@
 }
 
 /* ───────── MOBILE OVERRIDES ───────── */
-@media (max-width: 600px) {
+/* Mobile illustration — hidden on desktop */
+.illus-mobile { display: none; }
 
-  /* Hero eyebrow: stack name above subtitle */
+/* Desktop eyebrow mobile lines — hidden on desktop */
+.eyebrow-title-mobile-1,
+.eyebrow-title-mobile-2 { display: none; }
+
+@media (max-width: 760px) {
+
+  /* Hero eyebrow: stack name above subtitle with breathing room */
   .eyebrow--hero {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2px;
+    gap: 0;
   }
-  .eyebrow--hero::after { display: none; } /* hide the rule line */
-  .eyebrow-title::before { content: none; } /* remove the · separator */
-  .eyebrow-title { letter-spacing: 0.08em; }
+  .eyebrow--hero::after { display: none; }
+  .eyebrow-name { margin-bottom: 10px; } /* space between name and titles */
+
+  /* Hide desktop inline version, show separate mobile lines */
+  .eyebrow-sep,
+  .eyebrow-title { display: none; }
+  .eyebrow-title-mobile-1,
+  .eyebrow-title-mobile-2 {
+    display: block;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    line-height: 1.8;
+  }
+
+  /* Illustration below buttons on mobile */
+  .illus-mobile {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 32px;
+  }
+  .illus-mobile img {
+    width: 100px;
+    opacity: 1;
+  }
 
   /* About page: single column, sidebar moves below experience */
   .about-body-grid {
@@ -292,10 +323,7 @@
   }
 }
 
-/* hide the · separator between name and subtitle on mobile */
-@media (max-width: 600px) {
-  .eyebrow-sep { display: none; }
-}
+/* eyebrow-sep hidden via the 760px block above */
 
 @media (max-width: 600px) {
   .about-header-layout {
@@ -306,4 +334,45 @@
     flex-direction: column;
     gap: 8px;
   }
+}
+
+/* ───────── HOME ABOUT LAYOUT ───────── */
+.home-about-layout {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 48px;
+  align-items: start;
+}
+.home-about-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 2px;
+}
+@media (max-width: 760px) {
+  .home-about-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .home-about-chips {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* ───────── ABOUT EXPERIENCE COL ───────── */
+.about-experience-col {
+  display: flex;
+  flex-direction: column;
+}
+.about-experience-col .about-resume-cta {
+  margin-top: auto;
+  padding-top: 32px;
+  border-top: 1px solid var(--hairline);
+}
+
+@media (max-width: 760px) {
+  /* Restore timeline line on mobile */
+  .about-timeline-line { display: block !important; }
+  .about-timeline { padding-left: 28px !important; }
 }

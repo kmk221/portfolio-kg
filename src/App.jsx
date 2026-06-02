@@ -15,6 +15,9 @@ export default function Home() {
               <span className="eyebrow-name" style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', fontSize: 16 }}>Kristin Garza</span>
               <span className="eyebrow-sep"> · </span>
               <span className="eyebrow-title">UX Designer · Product Thinker</span>
+              {/* Mobile: two separate lines, no dot */}
+              <span className="eyebrow-title-mobile-1">UX Designer</span>
+              <span className="eyebrow-title-mobile-2">Product Thinker</span>
             </span>
             <h1 className="hero-headline">
               Taming complexity and making<br />
@@ -27,6 +30,10 @@ export default function Home() {
                 Get in touch
               </a>
             </div>
+            {/* Illustration shown below buttons on mobile only */}
+            <div className="illus-mobile">
+              <img src="/kristin-illustration.svg" alt="Kristin Garza illustration" />
+            </div>
           </div>
 
           <div className="illus">
@@ -38,24 +45,28 @@ export default function Home() {
         {/* ── ABOUT ── */}
         <section id="about" className="page-section page-section--secondary">
           <div style={{ paddingTop: 32 }}>
-            <div className="section-spread" style={{ marginBottom: 16 }}>
+            <div className="section-spread" style={{ marginBottom: 24 }}>
               <span className="eyebrow">About</span>
               <span className="rule" />
             </div>
-            <div className="skills-row" style={{ margin: '24px 0 28px' }}>
-              <span className="chip chip--neutral">Product Strategy</span>
-              <span className="chip chip--neutral">Platform Ecosystems</span>
-              <span className="chip chip--neutral">Systems Thinking</span>
-              <span className="chip chip--neutral">Enterprise UX</span>
-              <span className="chip chip--neutral">AI-Augmented Design</span>
-              <span className="chip chip--neutral">Design Systems</span>
+            <div className="home-about-layout">
+              <div className="home-about-text">
+                <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, margin: '0 0 24px' }}>
+                  I'm a Lead UX Designer who thrives at the intersection of product strategy, systems thinking, and technical constraints — unwinding tangled workflows into experiences that feel effortless. I like to go deep on the complexity beneath the surface, understanding every constraint and dependency. Then I untangle it in a way the user never knows it existed. I bring stakeholder alignment and a deep commitment to user needs to every problem I take on, most recently unifying 15+ trading applications under a cohesive design system at a leading B2B financial services firm.
+                </p>
+                <Link to="/about" className="btn btn--secondary">
+                  More + resume →
+                </Link>
+              </div>
+              <div className="home-about-chips">
+                <span className="chip chip--neutral">Product Strategy</span>
+                <span className="chip chip--neutral">Platform Ecosystems</span>
+                <span className="chip chip--neutral">Systems Thinking</span>
+                <span className="chip chip--neutral">Enterprise UX</span>
+                <span className="chip chip--neutral">AI-Augmented Design</span>
+                <span className="chip chip--neutral">Design Systems</span>
+              </div>
             </div>
-            <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, maxWidth: '60ch', margin: '0 0 24px' }}>
-              I'm a Lead UX Designer who thrives at the intersection of product strategy, systems thinking, and technical constraints — unwinding tangled workflows into experiences that feel effortless. I like to go deep on the complexity beneath the surface, understanding every constraint and dependency. Then I untangle it in a way the user never knows it existed. I bring stakeholder alignment and a deep commitment to user needs to every problem I take on, most recently unifying 15+ trading applications under a cohesive design system at a leading B2B financial services firm.
-            </p>
-            <Link to="/about" className="btn btn--secondary">
-              More + resume →
-            </Link>
           </div>
         </section>
 

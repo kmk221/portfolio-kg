@@ -71,7 +71,7 @@ export default function About() {
             </div>
 
             {/* ── RIGHT: Experience ── */}
-            <div>
+            <div className="about-experience-col">
               <span className="eyebrow" style={{ display: 'block', marginBottom: 32 }}>Experience</span>
 
               {/* Vertical timeline */}
@@ -165,7 +165,7 @@ export default function About() {
               </div>
 
               {/* Download CTA */}
-              <div style={{ marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--hairline)' }}>
+              <div className="about-resume-cta" style={{ marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--hairline)' }}>
                 <a href="/KristinGarzaResume.pdf" target="_blank" rel="noreferrer" className="btn btn--secondary">
                   Download resume →
                 </a>

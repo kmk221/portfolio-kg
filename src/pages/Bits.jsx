@@ -101,7 +101,8 @@ export default function Bits() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 80 }}>
 
             {/* Line Illustration Work */}
-            <div
+            <Link
+              to="/illustrations"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -113,6 +114,8 @@ export default function Bits() {
                 position: 'relative',
                 overflow: 'hidden',
                 transition: 'transform 180ms ease, box-shadow 180ms ease',
+                textDecoration: 'none',
+                color: 'inherit',
               }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.12)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
@@ -129,11 +132,11 @@ export default function Bits() {
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay-ink)', margin: '0 0 14px', opacity: 0.7 }}>Illustration</p>
-                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'var(--ink)', margin: '0 0 14px' }}>Line Illustration Work.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations — my go-to creative outlet. Minimal strokes, playful compositions.</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--clay-ink)', opacity: 0.6 }}>Coming soon</span>
+                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'var(--ink)', margin: '0 0 14px' }}>Line Art & Characters.</h3>
+                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics — my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--clay-ink)', opacity: 0.6 }}>Explore →</span>
               </div>
-            </div>
+            </Link>
 
             {/* Vibe-Coded Experiments */}
             <div

@@ -12,7 +12,7 @@ export default function Home() {
         <section className="page-hero">
           <div className="lockup">
             <span className="eyebrow with-rule eyebrow--hero">
-              <span className="eyebrow-name" style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', fontSize: 13 }}>Kristin Garza</span>
+              <span className="eyebrow-name" style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', fontSize: 15 }}>Kristin Garza</span>
               <span className="eyebrow-sep"> · </span>
               <span className="eyebrow-title">UX Designer · Product Thinker</span>
             </span>

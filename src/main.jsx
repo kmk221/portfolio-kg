@@ -10,6 +10,7 @@ import CaseStudyOM from './pages/CaseStudyOM.jsx'
 import ColorPreview from './pages/ColorPreview.jsx'
 import About from './pages/About.jsx'
 import AIDesign from './pages/AIDesign.jsx'
+import Illustrations from './pages/Illustrations.jsx'
 import './tokens.css'
 import './styles.css'
 
@@ -41,6 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/case-study/order-management" element={<OrderManagementCaseStudy />} />
         <Route path="/about" element={<About />} />
         <Route path="/ai-design" element={<AIDesign />} />
+        <Route path="/illustrations" element={<Illustrations />} />
         <Route path="/preview/color" element={<ColorPreview />} />
       </Routes>
     </BrowserRouter>

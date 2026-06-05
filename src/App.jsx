@@ -49,7 +49,7 @@ export default function Home() {
             <div className="home-about-layout">
               <div className="home-about-text">
                 <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, margin: '0 0 24px' }}>
-                  I'm a Lead UX Designer who thrives at the intersection of product strategy, systems thinking, and technical constraints — unwinding tangled workflows into experiences that feel effortless. I like to go deep on the complexity beneath the surface, understanding every constraint and dependency. Then I untangle it in a way the user never knows it existed. I bring stakeholder alignment and a deep commitment to user needs to every problem I take on, most recently unifying 15+ trading applications under a cohesive design system at a leading B2B financial services firm.
+                  I'm a Lead UX Designer who thrives at the intersection of product strategy, systems thinking, and technical constraints  -  unwinding tangled workflows into experiences that feel effortless. I like to go deep on the complexity beneath the surface, understanding every constraint and dependency. Then I untangle it in a way the user never knows it existed. I bring stakeholder alignment and a deep commitment to user needs to every problem I take on, most recently unifying 15+ trading applications under a cohesive design system at a leading B2B financial services firm.
                 </p>
                 <Link to="/about" className="btn btn--secondary">
                   More + resume →
@@ -74,12 +74,12 @@ export default function Home() {
             <span className="rule" />
           </div>
           <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, maxWidth: '60ch', margin: '0 0 40px' }}>
-            Three case studies designing high-stakes workflows for institutional investing professionals — where clarity, reliability, and precision aren't nice-to-haves.
+            Three case studies designing high-stakes workflows for institutional investing professionals  -  where clarity, reliability, and precision aren't nice-to-haves.
           </p>
 
           <div className="work-grid">
 
-            {/* Order Management — clay */}
+            {/* Order Management  -  clay */}
             <Link to="/case-study/order-management" className="work-card clay">
               <div className="shot">
                 <div className="preview-stub">
@@ -106,12 +106,12 @@ export default function Home() {
               </div>
               <div className="body">
                 <h3>Redesigning Order Management</h3>
-                <p>The surface every trade at an advisory firm flows through — redesigned to enhance visibility, reduce errors, and remove the steps traders had quietly learned to skip.</p>
+                <p>The surface every trade at an advisory firm flows through  -  redesigned to enhance visibility, reduce errors, and remove the steps traders had quietly learned to skip.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--clay-deep)' }}>→</span></div>
               </div>
             </Link>
 
-            {/* Rule Engine — ochre */}
+            {/* Rule Engine  -  ochre */}
             <Link to="/case-study/rules" className="work-card ochre">
               <div className="shot">
                 <div className="preview-stub">
@@ -135,12 +135,12 @@ export default function Home() {
               </div>
               <div className="body">
                 <h3>Inside the Rule Engine</h3>
-                <p>A conditional logic engine that automates which trades reach the market — redesigned to replace tribal knowledge with approachable, intuitive workflows compliance teams can move through confidently.</p>
+                <p>A conditional logic engine that automates which trades reach the market  -  redesigned to replace tribal knowledge with approachable, intuitive workflows compliance teams can move through confidently.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--ochre-deep)' }}>→</span></div>
               </div>
             </Link>
 
-            {/* Positions — slate/agave */}
+            {/* Positions  -  slate/agave */}
             <Link to="/case-study/positions" className="work-card slate">
               <div className="shot">
                 <div className="preview-stub">
@@ -167,7 +167,7 @@ export default function Home() {
               </div>
               <div className="body">
                 <h3>Simplifying Positions Info</h3>
-                <p>Surfacing critical portfolio data next to trading workflows — eliminating context switching, reducing reliance on memorization, and scaling as a reusable platform-wide component.</p>
+                <p>Surfacing critical portfolio data next to trading workflows  -  eliminating context switching, reducing reliance on memorization, and scaling as a reusable platform-wide component.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--slate-deep)' }}>→</span></div>
               </div>
             </Link>
@@ -183,7 +183,7 @@ export default function Home() {
               <span className="rule" />
             </div>
             <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, maxWidth: '56ch', margin: '0 0 24px' }}>
-              AI × Design ideas, smaller wins, design system contributions, strategic pushback, and for-fun projects — work that didn't need a full case study but still shaped how I think.
+              AI × Design ideas, smaller wins, design system contributions, strategic pushback, and for-fun projects  -  work that didn't need a full case study but still shaped how I think.
             </p>
             <Link to="/bits" className="btn btn--secondary">
               View Bits &amp; Pieces →

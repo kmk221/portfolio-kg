@@ -13,15 +13,15 @@ const quotes = [
   },
   {
     lines: [
-      'Teams risk defaulting to pattern selection instead of problem definition — choosing components instead of questioning intent.',
-      "The opportunity isn't just to design faster — it's to design with clarity.",
+      'Teams risk defaulting to pattern selection instead of problem definition  -  choosing components instead of questioning intent.',
+      "The opportunity isn't just to design faster  -  it's to design with clarity.",
     ],
     source: 'Addy Osmani · "Comprehension Debt"',
     url: 'https://addyosmani.com/blog/comprehension-debt/',
   },
   {
     lines: [
-      "The first thing AI gives you is generic by definition — it's the average of everything it's seen.",
+      "The first thing AI gives you is generic by definition  -  it's the average of everything it's seen.",
       "Taste is knowing what's good and being able to articulate why.",
     ],
     source: 'Dylan Field · Figma',
@@ -31,20 +31,20 @@ const quotes = [
 
 const wideQuote = {
   label: 'Hypothesis',
-  text: '"In a world where anyone can make anything — what matters is your ability to choose and curate what you make."',
+  text: '"In a world where anyone can make anything  -  what matters is your ability to choose and curate what you make."',
   source: 'Jenny Wen · Hatch Conference 2025',
   url: 'https://www.youtube.com/watch?v=4u94juYwLLM',
 }
 
 const contentPieces = [
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast — why the traditional linear design process doesn't hold up in the AI era, and what's replacing it.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
-  { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code — the growing gap between what we produce and what we actually understand.", cta: 'Read →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners — five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast  -  why the traditional linear design process doesn't hold up in the AI era, and what's replacing it.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
+  { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code  -  the growing gap between what we produce and what we actually understand.", cta: 'Read →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners  -  five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
   { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
   { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale.', cta: 'Read →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries — grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
-  { type: 'Talk', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight — and why "make people smile" is a valid design goal.', cta: 'Watch →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
-  { type: 'Substack', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: "Don't Trust the Process", tldr: "Jenny Wen on why rigid design process is holding teams back in the AI era — and why starting with a solution isn't heresy anymore.", cta: 'Read →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
+  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries  -  grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
+  { type: 'Talk', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight  -  and why "make people smile" is a valid design goal.', cta: 'Watch →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
+  { type: 'Substack', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: "Don't Trust the Process", tldr: "Jenny Wen on why rigid design process is holding teams back in the AI era  -  and why starting with a solution isn't heresy anymore.", cta: 'Read →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
 ]
 
 const voices = [
@@ -122,7 +122,7 @@ export default function AIDesign() {
           <h1 className={styles.heroTitle}>AI × Design.</h1>
           <p className={styles.heroSub}>
             A running collection of the ideas, talks, and articles shaping how I think about
-            design in the age of AI — plus my own take on what's changing, what's not, and
+            design in the age of AI  -  plus my own take on what's changing, what's not, and
             where the real value lives.
           </p>
         </div>
@@ -135,12 +135,12 @@ export default function AIDesign() {
             <p className={styles.myTakeLabel}>My Take</p>
           </div>
           <blockquote className={styles.myTakeQuote}>
-            Used well, AI is a genuine multiplier — compressing the distance between an
+            Used well, AI is a genuine multiplier  -  compressing the distance between an
             idea and a testable solution, and freeing up space for deeper thinking. But
             used carelessly, it's just a faster way to produce the wrong thing. The real
-            risk isn't slow execution — it's shipping AI slop: outputs that look finished
+            risk isn't slow execution  -  it's shipping AI slop: outputs that look finished
             but have lost the thread of why we were going in that direction in the first
-            place. My job is to keep that thread intact — staying anchored to user needs
+            place. My job is to keep that thread intact  -  staying anchored to user needs
             and intent even as the tools accelerate everything around them.
           </blockquote>
         </div>
@@ -158,13 +158,13 @@ export default function AIDesign() {
               It's <span className="accent" style={{ color: 'var(--clay)', fontStyle: 'italic' }}>comprehension debt</span>.
             </h2>
             <p className={styles.sectionBody}>
-              AI has made it easy to generate interfaces — but much harder to maintain
-              shared understanding. In complex systems, the biggest risk isn't slow execution —
+              AI has made it easy to generate interfaces  -  but much harder to maintain
+              shared understanding. In complex systems, the biggest risk isn't slow execution  - 
               it's comprehension debt: shipping solutions that work, but that no one can fully
               explain or evolve.
             </p>
             <p className={styles.sectionBody}>
-              My role as a designer is to reduce that risk — by designing not just screens, but
+              My role as a designer is to reduce that risk  -  by designing not just screens, but
               clarity: aligning teams around intent, making decisions explicit, and ensuring
               the system holds together as it scales.
             </p>

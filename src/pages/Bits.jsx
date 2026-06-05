@@ -29,7 +29,7 @@ export default function Bits() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 80 }}>
 
-            {/* AI × Design — large feature tile */}
+            {/* AI × Design  -  large feature tile */}
             <Link
               to="/ai-design"
               style={{
@@ -69,7 +69,7 @@ export default function Bits() {
                   maxWidth: '46ch',
                   margin: '0 0 24px',
                 }}>
-                  A running collection of ideas, talks, and articles shaping how I think about design in the age of AI — plus my own take on what's changing and where the real value lives.
+                  A running collection of ideas, talks, and articles shaping how I think about design in the age of AI  -  plus my own take on what's changing and where the real value lives.
                 </p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {['AI & Craft', 'Design Process', 'Tools & Workflow'].map(tag => (
@@ -95,7 +95,7 @@ export default function Bits() {
             <span className="rule" />
           </div>
           <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.65, maxWidth: '56ch', margin: '0 0 32px' }}>
-            Passion projects, creative experiments, and things I build when I'm not solving enterprise problems — because design should be fun too.
+            Passion projects, creative experiments, and things I build when I'm not solving enterprise problems  -  because design should be fun too.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 80 }}>
@@ -120,7 +120,7 @@ export default function Bits() {
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.12)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
             >
-              {/* Decorative SVG — upper area */}
+              {/* Decorative SVG  -  upper area */}
               <div aria-hidden="true" style={{ position: 'absolute', top: 32, left: 36, right: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.55 }}>
                 <svg viewBox="0 0 400 120" width="100%" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M20 90 Q80 20 160 60 Q240 100 320 30 Q370 5 395 40" stroke="var(--clay)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
@@ -133,7 +133,7 @@ export default function Bits() {
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay-ink)', margin: '0 0 14px', opacity: 0.7 }}>Illustration</p>
                 <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'var(--ink)', margin: '0 0 14px' }}>Line Art & Characters.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics — my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
+                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics  -  my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--clay-ink)', opacity: 0.6 }}>Explore →</span>
               </div>
             </Link>
@@ -155,14 +155,14 @@ export default function Bits() {
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.18)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
             >
-              {/* Decorative code symbol — upper area */}
+              {/* Decorative code symbol  -  upper area */}
               <div aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -70%)', fontFamily: 'var(--f-mono)', fontSize: 'clamp(64px, 8vw, 100px)', fontWeight: 300, color: 'rgba(245,232,211,0.12)', lineHeight: 1, whiteSpace: 'nowrap', userSelect: 'none' }}>
                 &lt;/&gt;
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Passion Project · Code</p>
                 <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Vibe-Coded Experiments.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>Side projects built by feel — quick creative builds where the goal is to learn something new or just make something that sparks joy.</p>
+                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>Side projects built by feel  -  quick creative builds where the goal is to learn something new or just make something that sparks joy.</p>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Coming soon</span>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function Bits() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 80 }}>
 
-            {/* Tile 1 — Quote Component */}
+            {/* Tile 1  -  Quote Component */}
             <div style={{
               background: 'var(--surface)',
               border: '1px solid var(--hairline)',
@@ -256,7 +256,7 @@ export default function Bits() {
                   fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.6,
                   color: 'var(--ink-3)', margin: 0,
                 }}>
-                  Designed and documented a unified market quote component adopted across 4 trading surfaces — replacing fragmented one-offs with a consistent, scalable pattern.
+                  Designed and documented a unified market quote component adopted across 4 trading surfaces  -  replacing fragmented one-offs with a consistent, scalable pattern.
                 </p>
                 <span style={{
                   display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -267,7 +267,7 @@ export default function Bits() {
               </div>
             </div>
 
-            {/* Tile 2 — Kill a Feature */}
+            {/* Tile 2  -  Kill a Feature */}
             <div style={{
               background: 'var(--surface)',
               border: '1px solid var(--hairline)',
@@ -335,7 +335,7 @@ export default function Bits() {
                   fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.6,
                   color: 'var(--ink-3)', margin: 0,
                 }}>
-                  Used research and strategic vision work to push back on a PM-driven feature that would have added friction to critical trading workflows — and redirected effort toward what traders actually needed.
+                  Used research and strategic vision work to push back on a PM-driven feature that would have added friction to critical trading workflows  -  and redirected effort toward what traders actually needed.
                 </p>
                 <span style={{
                   display: 'inline-flex', alignItems: 'center', gap: 6,

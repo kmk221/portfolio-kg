@@ -12,7 +12,7 @@ const PAIN_POINTS = [
   {
     num: '01',
     title: 'The Spatial Problem',
-    body: 'Filters expanded vertically from the top, order details from the bottom — both crushed the orders table. Users had to choose: filter, view details, or see their list. Pick one.',
+    body: 'Filters expanded vertically from the top, order details from the bottom  -  both crushed the orders table. Users had to choose: filter, view details, or see their list. Pick one.',
   },
   {
     num: '02',
@@ -30,12 +30,12 @@ const PRINCIPLES = [
   { num: '01', title: 'Protect the table',         body: 'Nothing shrinks or obscures the order list. The list is the primary job.' },
   { num: '02', title: 'Go horizontal',              body: 'Stop competing for limited vertical space. Filters, details, and actions live side-by-side.' },
   { num: '03', title: 'Make configuration effortless', body: 'Setup feels practically automatic. Saved views and column config are first-class.' },
-  { num: '04', title: 'Surface relevant actions',  body: 'The right next step should feel obvious — no hunting for what to do.' },
-  { num: '05', title: 'One surface, one job',       body: 'Monitoring and acting — not deep account analysis. Stay focused.' },
+  { num: '04', title: 'Surface relevant actions',  body: 'The right next step should feel obvious  -  no hunting for what to do.' },
+  { num: '05', title: 'One surface, one job',       body: 'Monitoring and acting  -  not deep account analysis. Stay focused.' },
 ]
 
 const SHIPPED = [
-  'Horizontal layout — no more vertical space competition',
+  'Horizontal layout  -  no more vertical space competition',
   'Configurable views and column management',
   'Visible checkboxes and bulk-action selection with counts',
   'Redesigned send flow with full error transparency',
@@ -59,7 +59,7 @@ const IMPACT = [
 ]
 
 const PILOT = [
-  { finding: 'Tab visibility', detail: 'Sent vs. Draft tabs weren\'t distinct enough — users missed the state change. Led to stronger visual differentiation in the follow-up.' },
+  { finding: 'Tab visibility', detail: 'Sent vs. Draft tabs weren\'t distinct enough  -  users missed the state change. Led to stronger visual differentiation in the follow-up.' },
   { finding: 'Details friction', detail: 'The overlay panel blocked grid scrolling. Opened the door to the split-panel concept that\'s now on the roadmap.' },
   { finding: 'Error scanning', detail: 'Finding issues across large order sets wasn\'t fast enough. Refined the row-level indicator system post-launch.' },
 ]
@@ -76,7 +76,7 @@ export default function CaseStudyOM() {
           <Link to="/" style={{ fontFamily: 'var(--f-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-mute)', textDecoration: 'none' }}>← All work</Link>
         </div>
 
-        {/* Key takeaway as the lead — content before headline */}
+        {/* Key takeaway as the lead  -  content before headline */}
         <div style={{ borderTop: '1px solid var(--hairline)', paddingTop: 48, marginBottom: 0 }}>
           <div className="mono" style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--clay)', marginBottom: 24 }}>The Takeaway</div>
           <p style={{
@@ -90,7 +90,7 @@ export default function CaseStudyOM() {
             maxWidth: '64ch',
             margin: '0 0 48px',
           }}>
-            We explored a flashy dashboard concept, let research kill it, and shipped the disciplined version. The order ticket had grown into three modals stacked on top of each other — we pulled "build" and "submit" apart, simplified the visual hierarchy, and removed the steps traders had quietly learned to skip.
+            We explored a flashy dashboard concept, let research kill it, and shipped the disciplined version. The order ticket had grown into three modals stacked on top of each other  -  we pulled "build" and "submit" apart, simplified the visual hierarchy, and removed the steps traders had quietly learned to skip.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export default function CaseStudyOM() {
           </div>
           <h2 className="section-title">Three compounding pain points</h2>
           <p className="section-lede">
-            Order Management is the central hub for all trades — every order from
+            Order Management is the central hub for all trades  -  every order from
             entry to execution passes through this surface. The legacy system had
             three problems that made daily work harder than it needed to be.
           </p>
@@ -165,15 +165,15 @@ export default function CaseStudyOM() {
             <div className="mono" style={{ fontSize: 11, color: 'var(--slate-deep)', letterSpacing: '0.14em', marginBottom: 16 }}>Research · ~20 participants</div>
             <h3 className="h-2" style={{ marginBottom: 16 }}>The research told a different story.</h3>
             <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '68ch', marginBottom: 24 }}>
-              Users didn't want a dashboard. The concept felt overwhelming — too many
+              Users didn't want a dashboard. The concept felt overwhelming  -  too many
               panels competing for attention with no clear hierarchy. What they actually
               wanted was simpler: the list they already had, made faster and more reliable.
             </p>
             <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
               {[
                 { label: 'Too busy', note: 'Panels competed for attention before users even started working' },
-                { label: 'Wrong groupings', note: 'Account search next to alerts next to order details — no clear hierarchy' },
-                { label: 'The list is the thing', note: 'Users needed to work through the list — not reorganize around it' },
+                { label: 'Wrong groupings', note: 'Account search next to alerts next to order details  -  no clear hierarchy' },
+                { label: 'The list is the thing', note: 'Users needed to work through the list  -  not reorganize around it' },
               ].map(({ label, note }) => (
                 <div key={label} style={{
                   background: 'rgba(255,255,255,0.6)',
@@ -200,11 +200,11 @@ export default function CaseStudyOM() {
               "It works like a Honda Accord. Not flashy, but reliable."
             </p>
             <span className="mono" style={{ fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.1em' }}>
-              — Senior Adviser, Custody Firm
+               -  Senior Adviser, Custody Firm
             </span>
           </div>
           <p style={{ fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.6, maxWidth: '60ch', marginTop: 12 }}>
-            Reliability isn't a preference — it's a hard requirement. Downtime isn't
+            Reliability isn't a preference  -  it's a hard requirement. Downtime isn't
             inconvenience; it's a missed execution window.
           </p>
         </section>
@@ -319,7 +319,7 @@ export default function CaseStudyOM() {
             borderRadius: 'var(--r-3)',
             padding: 36,
           }}>
-            <div className="mono" style={{ fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.14em', marginBottom: 20 }}>Pilot feedback — what we learned after launch</div>
+            <div className="mono" style={{ fontSize: 11, color: 'var(--ink-mute)', letterSpacing: '0.14em', marginBottom: 20 }}>Pilot feedback  -  what we learned after launch</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {PILOT.map(({ finding, detail }) => (
                 <div key={finding} style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 20, alignItems: 'start' }}>

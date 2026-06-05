@@ -42,10 +42,10 @@ export default function ColorPreview() {
             <span style={{ fontSize: 11, fontWeight: 600, padding: '4px 12px', borderRadius: 20, background: 'rgba(214,161,128,0.15)', border: '1px solid rgba(214,161,128,0.35)', color: '#8B5E3C' }}>Shipped ✓</span>
           </div>
           <h1 style={{ fontSize: 42, fontWeight: 700, lineHeight: 1.25, letterSpacing: '-0.5px', color: espresso, maxWidth: 780, marginBottom: 16 }}>
-            Redesigning Order Management — How Enterprise Trading Gets Monitored, Reviewed, and Acted On
+            Redesigning Order Management  -  How Enterprise Trading Gets Monitored, Reviewed, and Acted On
           </h1>
           <p style={{ fontSize: 18, fontWeight: 400, fontStyle: 'italic', color: 'rgba(89,87,59,0.6)', marginBottom: 60 }}>
-            From a fragile legacy system to a modern, reliable experience — navigating constraints, protecting what matters
+            From a fragile legacy system to a modern, reliable experience  -  navigating constraints, protecting what matters
           </p>
 
           {/* Mini hero mockup */}
@@ -90,11 +90,11 @@ export default function ColorPreview() {
         <div style={ct}>
           <h2 style={{ fontSize: 72, fontWeight: 800, color: espresso, lineHeight: 1, marginBottom: 40 }}>tl;dr</h2>
           <p style={{ fontSize: 20, fontWeight: 500, lineHeight: 1.65, letterSpacing: '-0.3px', color: peach, maxWidth: 820, marginBottom: 48 }}>
-            A platform-wide modernization effort gave us the opportunity to redesign Order Management — the surface where compliance and operations teams at major broker-dealers, banks, and advisory firms monitor and act on thousands of trades daily.
+            A platform-wide modernization effort gave us the opportunity to redesign Order Management  -  the surface where compliance and operations teams at major broker-dealers, banks, and advisory firms monitor and act on thousands of trades daily.
           </p>
           <div style={{ background: accentLight, border: `1px solid ${accentMid}`, borderRadius: 14, padding: '28px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24 }}>
             {[
-              { l: 'Role', v: 'Lead UX Designer — Trading' },
+              { l: 'Role', v: 'Lead UX Designer  -  Trading' },
               { l: 'Timeline', v: 'Q1 2024–Q1 2025' },
               { l: 'Team', v: 'Design · Product · Engineering · UXR' },
               { l: 'Status', v: 'Shipped ✓' },
@@ -119,7 +119,7 @@ export default function ColorPreview() {
             A modernization that was also <span style={{ fontWeight: 300 }}>a design opportunity</span>
           </h2>
           <p style={{ fontSize: 15, lineHeight: 1.75, color: deepText, maxWidth: 760, marginBottom: 28 }}>
-            The legacy Order Management system was built on an aging tech stack — fragile enough that it needed to be rebuilt entirely. But a forced rebuild is also a rare design opportunity. We weren't just porting the old UI forward; we had the chance to fundamentally rethink how tens of thousands of orders are monitored, reviewed, and acted on every day.
+            The legacy Order Management system was built on an aging tech stack  -  fragile enough that it needed to be rebuilt entirely. But a forced rebuild is also a rare design opportunity. We weren't just porting the old UI forward; we had the chance to fundamentally rethink how tens of thousands of orders are monitored, reviewed, and acted on every day.
           </p>
         </div>
       </section>
@@ -127,10 +127,10 @@ export default function ColorPreview() {
       {/* DISCOVERY */}
       <section style={{ ...sec('#E8E6DF'), paddingTop: 160, paddingBottom: 160 }}>
         <div style={ct}>
-          <StepLabel>Step 01 — Discovery</StepLabel>
+          <StepLabel>Step 01  -  Discovery</StepLabel>
           <h2 style={{ fontSize: 28, fontWeight: 800, color: warmGray, letterSpacing: '-0.3px', marginBottom: 28 }}>The Legacy Experience</h2>
           <p style={{ fontSize: 16, lineHeight: 1.8, color: deepText, maxWidth: 640, marginBottom: 48 }}>
-            Before designing anything new, we needed to understand what users were working with — and why it wasn't working.
+            Before designing anything new, we needed to understand what users were working with  -  and why it wasn't working.
           </p>
 
           {/* Callout */}
@@ -147,7 +147,7 @@ export default function ColorPreview() {
       {/* RESEARCH */}
       <section style={sec(pageBg)}>
         <div style={ct}>
-          <StepLabel>Step 02 — Research</StepLabel>
+          <StepLabel>Step 02  -  Research</StepLabel>
           <h2 style={{ fontSize: 28, fontWeight: 800, color: warmGray, letterSpacing: '-0.3px', marginBottom: 28 }}>What Users Told Us</h2>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: deepText, maxWidth: 680, marginBottom: 40 }}>
             Partnered with UXR to run exploratory interviews and concept tests across ~20 participants on both the clearing and custody sides of the business.
@@ -156,7 +156,7 @@ export default function ColorPreview() {
           {/* Research cards */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 48 }}>
             {[
-              { title: 'Addresses the Full Journey', desc: 'Order management is a continuous workflow. Entry through execution — not siloed tasks.' },
+              { title: 'Addresses the Full Journey', desc: 'Order management is a continuous workflow. Entry through execution  -  not siloed tasks.' },
               { title: 'Efficient, Reliable, Intuitive', desc: 'The Honda Accord principle: not flashy, but reliable. Predictable every time.' },
               { title: 'Tailored to the Individual', desc: 'Different roles, different needs. Configurability and noise reduction matter.' },
               { title: 'Supports a Range of Experiences', desc: 'Firms vary wildly. 50 orders a day or 50,000. The system works at any scale.' },
@@ -173,7 +173,7 @@ export default function ColorPreview() {
             <p style={{ fontSize: 18, fontStyle: 'italic', color: warmGray, margin: 0, lineHeight: 1.7 }}>
               "It works like a Honda Accord today. It's not the flashiest, but it's reliable."
             </p>
-            <p style={{ fontSize: 12, fontWeight: 600, color: '#8B5E3C', marginTop: 12, margin: '12px 0 0 0' }}>— Operations Manager, Custody firm</p>
+            <p style={{ fontSize: 12, fontWeight: 600, color: '#8B5E3C', marginTop: 12, margin: '12px 0 0 0' }}> -  Operations Manager, Custody firm</p>
           </div>
 
           {/* Key insights */}
@@ -181,7 +181,7 @@ export default function ColorPreview() {
             <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: accent, marginBottom: 20 }}>Key Insights</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
               {[
-                { title: 'Zoom In / Zoom Out', desc: 'See hundreds of orders, then dive deep into one — without losing place.' },
+                { title: 'Zoom In / Zoom Out', desc: 'See hundreds of orders, then dive deep into one  -  without losing place.' },
                 { title: 'Confidence in Filtering', desc: 'Users need to know what they filtered out, not just what remains.' },
                 { title: 'Reduce Manual Labor', desc: 'Visible selection and bulk actions. Right-click menus weren\'t enough.' },
               ].map(card => (

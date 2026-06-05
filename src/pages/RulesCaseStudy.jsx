@@ -78,7 +78,7 @@ function LofiFlow(){
       <LofiFlowStrip/>
       <div onClick={()=>setOpen(true)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setOpen(true)} style={{position:'absolute',top:8,right:0,cursor:'zoom-in',background:'rgba(0,0,0,0.55)',color:'#fff',fontSize:10,fontWeight:600,padding:'5px 9px',borderRadius:5,letterSpacing:'0.04em',backdropFilter:'blur(4px)'}}>⤢ Expand</div>
     </div>
-    {/* Fullscreen lightbox — dark bg, floating cards */}
+    {/* Fullscreen lightbox  -  dark bg, floating cards */}
     {open&&(
       <div onClick={()=>setOpen(false)} id="lofi-lightbox" style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',justifyContent:'center',padding:'88px 0 40px'}}>
         <style>{`
@@ -120,7 +120,7 @@ function LofiFlowStrip(){
     <div>
       <div style={{display:'inline-flex',alignItems:'flex-start',gap:0}}>
 
-        {/* 1 — Rule Management */}
+        {/* 1  -  Rule Management */}
         <div>
           <div style={card}>
             <div style={hdr}>
@@ -149,7 +149,7 @@ function LofiFlowStrip(){
 
         {arrow}
 
-        {/* 2 — Keywords */}
+        {/* 2  -  Keywords */}
         <div>
           <div style={card}>
             <div style={{...hdr,borderBottom:'none'}}><span style={{fontSize:5,fontWeight:700,color:'rgba(0,0,0,0.55)'}}>Create New Rule</span></div>
@@ -174,7 +174,7 @@ function LofiFlowStrip(){
 
         {arrow}
 
-        {/* 3 — Rule Logic */}
+        {/* 3  -  Rule Logic */}
         <div>
           <div style={card}>
             <div style={{...hdr,borderBottom:'none'}}><span style={{fontSize:5,fontWeight:700,color:'rgba(0,0,0,0.55)'}}>Create New Rule</span></div>
@@ -205,7 +205,7 @@ function LofiFlowStrip(){
 
         {arrow}
 
-        {/* 4 — Order Placed By */}
+        {/* 4  -  Order Placed By */}
         <div>
           <div style={card}>
             <div style={{...hdr,borderBottom:'none'}}><span style={{fontSize:5,fontWeight:700,color:'rgba(0,0,0,0.55)'}}>Create New Rule</span></div>
@@ -229,7 +229,7 @@ function LofiFlowStrip(){
 
         {arrow}
 
-        {/* 5 — Rule Outcome */}
+        {/* 5  -  Rule Outcome */}
         <div>
           <div style={card}>
             <div style={{...hdr,borderBottom:'none'}}><span style={{fontSize:5,fontWeight:700,color:'rgba(0,0,0,0.55)'}}>Create New Rule</span></div>
@@ -255,7 +255,7 @@ function LofiFlowStrip(){
 
         {arrow}
 
-        {/* 6 — Review & Confirm */}
+        {/* 6  -  Review & Confirm */}
         <div>
           <div style={card}>
             <div style={{...hdr,borderBottom:'none'}}><span style={{fontSize:5,fontWeight:700,color:'rgba(0,0,0,0.55)'}}>Create New Rule</span></div>
@@ -306,12 +306,12 @@ const thumbClusters=[
 ]
 
 const fullClusters=[
-  {id:1,label:'Cluster 01',title:'Rules list lacks searchability',stickies:[{c:'g',t:"inactive rules take up space — nice to filter off ones you don't need"},{c:'o',t:'finding rule use ctrl + F — use separate Excel to track changes'},{c:'p',t:'search on rules list could be better — do ctrl+F for rules with a criteria'},{c:'y',t:'smart search for keywords — on metadata like a book catalog'}]},
-  {id:2,label:'Cluster 02',title:'Keyword selection is opaque and error-prone',stickies:[{c:'g',t:'would be helpful to have keyword definition info where you are selecting it'},{c:'y',t:'only know what keyword means by trial and error — select and click next'},{c:'b',t:'cumbersome to figure out what keywords apply — call NFS, trial and error'},{c:'y',t:'today email CSM to ask what a keyword does if not familiar with it'}]},
-  {id:3,label:'Cluster 03',title:'Difficult to build a rule without tribal knowledge',stickies:[{c:'g',t:'linear box for long entries — not easy to enter or jump to end of 60 entries'},{c:'b',t:'hard to know where to find help — not intuitive to click the question mark'},{c:'y',t:'formatting long list of symbols to put in the system'},{c:'y',t:'took a couple years to really understand who this would impact'}]},
-  {id:4,label:'Cluster 04',title:'Insufficient documentation and audit tracking',span2:true,stickies:[{c:'o',t:'rule creation free form — put the list into Excel and concatenate'},{c:'y',t:'list of rules — have to go into each rule, copy to Excel to search'},{c:'o',t:'track in SharePoint — reason for creating the rule, rationale when trader calls'},{c:'b',t:'rules change log would be helpful — in platform, not a separate Excel'},{c:'g',t:'hard to see what changed — which column to look at'},{c:'o',t:'jumping back and forth — lose my place, creates room for error'},{c:'g',t:'free form personal notes — tracking why rule was created, changed'},{c:'b',t:'ask for a reason when someone makes a change — optional or required'}]},
-  {id:5,label:'Cluster 05',title:'Help content not accessible',stickies:[{c:'g',t:'never seen help content — too far away'},{c:'p',t:'apply to managed acct advisor and super trader — not super descriptive'},{c:'b',t:"doesn't know help content exists — didn't know that was here, that's cool"},{c:'y',t:'hover to see keyword meaning would be too much — needs a dedicated button'}]},
-  {id:6,label:'Cluster 06',title:'Triggered rules lack visibility',span2:true,stickies:[{c:'b',tall:true,t:'no plain-language explanation of why a rule blocked a trade — just the rule name'},{c:'b',tall:true,t:'rule conditions may have changed since it triggered — no way to know without digging'},{c:'o',t:'no paper trail connecting a triggered rule to what the conditions were at that moment'},{c:'g',t:'compliance user has to manually reconstruct what happened when a trader calls'},{c:'y',t:'rule name alone is not enough context — need to see what criteria matched'}]},
+  {id:1,label:'Cluster 01',title:'Rules list lacks searchability',stickies:[{c:'g',t:"inactive rules take up space  -  nice to filter off ones you don't need"},{c:'o',t:'finding rule use ctrl + F  -  use separate Excel to track changes'},{c:'p',t:'search on rules list could be better  -  do ctrl+F for rules with a criteria'},{c:'y',t:'smart search for keywords  -  on metadata like a book catalog'}]},
+  {id:2,label:'Cluster 02',title:'Keyword selection is opaque and error-prone',stickies:[{c:'g',t:'would be helpful to have keyword definition info where you are selecting it'},{c:'y',t:'only know what keyword means by trial and error  -  select and click next'},{c:'b',t:'cumbersome to figure out what keywords apply  -  call NFS, trial and error'},{c:'y',t:'today email CSM to ask what a keyword does if not familiar with it'}]},
+  {id:3,label:'Cluster 03',title:'Difficult to build a rule without tribal knowledge',stickies:[{c:'g',t:'linear box for long entries  -  not easy to enter or jump to end of 60 entries'},{c:'b',t:'hard to know where to find help  -  not intuitive to click the question mark'},{c:'y',t:'formatting long list of symbols to put in the system'},{c:'y',t:'took a couple years to really understand who this would impact'}]},
+  {id:4,label:'Cluster 04',title:'Insufficient documentation and audit tracking',span2:true,stickies:[{c:'o',t:'rule creation free form  -  put the list into Excel and concatenate'},{c:'y',t:'list of rules  -  have to go into each rule, copy to Excel to search'},{c:'o',t:'track in SharePoint  -  reason for creating the rule, rationale when trader calls'},{c:'b',t:'rules change log would be helpful  -  in platform, not a separate Excel'},{c:'g',t:'hard to see what changed  -  which column to look at'},{c:'o',t:'jumping back and forth  -  lose my place, creates room for error'},{c:'g',t:'free form personal notes  -  tracking why rule was created, changed'},{c:'b',t:'ask for a reason when someone makes a change  -  optional or required'}]},
+  {id:5,label:'Cluster 05',title:'Help content not accessible',stickies:[{c:'g',t:'never seen help content  -  too far away'},{c:'p',t:'apply to managed acct advisor and super trader  -  not super descriptive'},{c:'b',t:"doesn't know help content exists  -  didn't know that was here, that's cool"},{c:'y',t:'hover to see keyword meaning would be too much  -  needs a dedicated button'}]},
+  {id:6,label:'Cluster 06',title:'Triggered rules lack visibility',span2:true,stickies:[{c:'b',tall:true,t:'no plain-language explanation of why a rule blocked a trade  -  just the rule name'},{c:'b',tall:true,t:'rule conditions may have changed since it triggered  -  no way to know without digging'},{c:'o',t:'no paper trail connecting a triggered rule to what the conditions were at that moment'},{c:'g',t:'compliance user has to manually reconstruct what happened when a trader calls'},{c:'y',t:'rule name alone is not enough context  -  need to see what criteria matched'}]},
 ]
 
 function PrototypeEmbed(){
@@ -326,12 +326,12 @@ function PrototypeEmbed(){
       <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 24px',background:'rgba(255,255,255,0.6)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
           <div>
-            <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accentDark}}>Interactive Prototype — Rule Management Redesign</div>
+            <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accentDark}}>Interactive Prototype  -  Rule Management Redesign</div>
             <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.5)',fontStyle:'italic',marginTop:2}}>Press Esc or click × to close</div>
           </div>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
-        <iframe src="/rule-management-prototype-v1.html" style={{flex:1,width:'100%',border:'none'}} title="Rule Management Prototype — V1"/>
+        <iframe src="/rule-management-prototype-v1.html" style={{flex:1,width:'100%',border:'none'}} title="Rule Management Prototype  -  V1"/>
       </div>
     )}
   </>)
@@ -344,7 +344,7 @@ function AffinityMap(){
   return(<>
     <div onClick={()=>setOpen(true)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setOpen(true)} style={{background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',borderRadius:20,padding:'28px 28px 22px',cursor:'pointer',boxShadow:'0 4px 24px rgba(44,59,85,0.08)',border:'1px solid rgba(125,145,165,0.22)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:18}}>
-        <span style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accentDark}}>FigJam — Synthesis Board</span>
+        <span style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accentDark}}>FigJam  -  Synthesis Board</span>
         <span style={{fontSize:11,fontWeight:600,color:accentDark,background:'rgba(255,255,255,0.55)',border:'1px solid rgba(125,145,165,0.3)',borderRadius:20,padding:'5px 14px'}}>⛶ Explore board</span>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10}}>
@@ -360,8 +360,8 @@ function AffinityMap(){
       <div style={{position:'fixed',inset:0,zIndex:9000,background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px, rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:24}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 28px',background:'rgba(255,255,255,0.5)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
           <div>
-            <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark}}>Synthesis Board — FigJam</div>
-            <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.55)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio — representative stickies shown, not all verbatims included</div>
+            <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark}}>Synthesis Board  -  FigJam</div>
+            <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.55)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio  -  representative stickies shown, not all verbatims included</div>
           </div>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
@@ -403,8 +403,8 @@ const annTxt = {fontSize:10,fontWeight:600,color:'rgba(255,220,150,0.85)',lineHe
 const hmwItems=[
   {id:1,pill:'HMW 01',pillText:'Locate, understand & manage rules',
    q:"How might we make it faster to find, understand, and act on rules without digging through a long list?",
-   stickies:[{c:'b',t:"Search rules by keyword, channel, status, or metadata — not just by name"},{c:'g',t:"Bulk actions: activate, deactivate, apply to multiple rules at once"},{c:'y',t:"User-created tags to find thematically related rules"},{c:'b',t:"Plain language rule preview visible without navigating from list"}],
-   visual:<MockFrame label="Rule Management — search on metadata">
+   stickies:[{c:'b',t:"Search rules by keyword, channel, status, or metadata  -  not just by name"},{c:'g',t:"Bulk actions: activate, deactivate, apply to multiple rules at once"},{c:'y',t:"User-created tags to find thematically related rules"},{c:'b',t:"Plain language rule preview visible without navigating from list"}],
+   visual:<MockFrame label="Rule Management  -  search on metadata">
      <style>{`@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}`}</style>
      <div style={{display:'flex',alignItems:'center',border:'1px solid rgba(255,255,255,0.18)',borderRadius:6,padding:'7px 12px',marginBottom:10,background:'rgba(255,255,255,0.05)',gap:8}}>
        <span style={{fontSize:13,color:'rgba(255,255,255,0.35)'}}>⌕</span>
@@ -451,7 +451,7 @@ const hmwItems=[
          </div>
        </div>
      </div>
-     <div style={annStyle}><span style={annArr}>↑</span><span style={annTxt}>search on metadata — rule detail visible without navigating from list</span></div>
+     <div style={annStyle}><span style={annArr}>↑</span><span style={annTxt}>search on metadata  -  rule detail visible without navigating from list</span></div>
    </MockFrame>
   },
   {id:2,pill:'HMW 02',pillText:'Find the right keywords',
@@ -465,12 +465,12 @@ const hmwItems=[
    visual:<HMW03Visual/>
   },
   {id:4,pill:'HMW 04',pillText:'Intuitive controls for building rules',
-   q:"How might we provide more ease + flexibility when building rules — with more intuitive controls to input values?",
+   q:"How might we provide more ease + flexibility when building rules  -  with more intuitive controls to input values?",
    stickies:[],
    visual:<HMW04Visual/>
   },
   {id:5,pill:'HMW 05 + 06',pillText:'Confidence before go-live & audit trail after',
-   q:"How might we give users confidence their rule will do what they want before it goes live — and enable better documentation and audit tracking after?",
+   q:"How might we give users confidence their rule will do what they want before it goes live  -  and enable better documentation and audit tracking after?",
    stickies:[],
    visual:<HMW05Visual/>
   },
@@ -496,9 +496,9 @@ const sTx4={g:'#051a0a',y:'#1a1200',b:'#001828',o:'#2a0800'}
 
 function HMW02Visual(){
   const [tab,setTab]=useState(0)
-  const tabs=['Concept 1 — Keyword selector','Concept 2 — Keyword assistant']
+  const tabs=['Concept 1  -  Keyword selector','Concept 2  -  Keyword assistant']
   const stickies=[
-    [{c:'y',t:"Keyword descriptions surfaced inline — not buried in a help doc"},{c:'g',t:"Hover icon reveals definition + accepted values at point of selection"}],
+    [{c:'y',t:"Keyword descriptions surfaced inline  -  not buried in a help doc"},{c:'g',t:"Hover icon reveals definition + accepted values at point of selection"}],
     [{c:'b',t:"Keyword assistant suggests relevant keywords based on what you're trying to restrict"},{c:'o',t:"Send transcript to support if still stuck"}],
   ]
   return(
@@ -565,10 +565,10 @@ function HMW02Visual(){
 
 function HMW03Visual(){
   const [tab,setTab]=useState(0)
-  const tabs=['Concept 1 — Help icon in-page','Concept 2 — Step-by-step guidance']
+  const tabs=['Concept 1  -  Help icon in-page','Concept 2  -  Step-by-step guidance']
   const stickies=[
-    [{c:'b',t:"Help icon links directly to keyword definition and relevant rule help content"},{c:'y',t:"Contextual help throughout the create rule flow — not just on the landing page"}],
-    [{c:'g',t:"Don't bury it — users shouldn't discover help by accident"},{c:'y',t:"Instructions provided at each step reduce errors before they happen"}],
+    [{c:'b',t:"Help icon links directly to keyword definition and relevant rule help content"},{c:'y',t:"Contextual help throughout the create rule flow  -  not just on the landing page"}],
+    [{c:'g',t:"Don't bury it  -  users shouldn't discover help by accident"},{c:'y',t:"Instructions provided at each step reduce errors before they happen"}],
   ]
   return(
     <CarouselShell tabs={tabs} tab={tab} setTab={setTab}>
@@ -581,7 +581,7 @@ function HMW03Visual(){
           <div style={{padding:'14px 16px'}}>
             {tab===0 ? (<>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
-                <span style={{fontSize:13,fontWeight:600,color:'rgba(255,255,255,0.85)'}}>Add clause — Rule Logic</span>
+                <span style={{fontSize:13,fontWeight:600,color:'rgba(255,255,255,0.85)'}}>Add clause  -  Rule Logic</span>
                 <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(155,165,175,0.2)',border:'1px solid rgba(155,165,175,0.4)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,color:'rgba(155,165,175,0.9)',fontWeight:700,flexShrink:0}}>?</div>
               </div>
               <div style={{background:'rgba(125,145,165,0.15)',border:'1px solid rgba(155,165,175,0.25)',borderRadius:6,padding:'10px 12px',marginBottom:14}}>
@@ -604,7 +604,7 @@ function HMW03Visual(){
               <div style={{...annStyle,marginTop:10}}><span style={annArr}>↑</span><span style={annTxt}>help icon links directly to keyword + rule help content</span></div>
             </>):(<>
               <div style={{display:'flex',gap:4,marginBottom:12}}>{[1,1,1,0,0].map((f,i)=><div key={i} style={{flex:1,height:3,borderRadius:2,background:f?'rgba(155,165,175,0.7)':'rgba(255,255,255,0.12)'}}/>)}</div>
-              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.1em',color:'rgba(155,165,175,0.7)',marginBottom:6,textTransform:'uppercase'}}>Step 3 of 5 — Rule Logic</div>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.1em',color:'rgba(155,165,175,0.7)',marginBottom:6,textTransform:'uppercase'}}>Step 3 of 5  -  Rule Logic</div>
               <div style={{fontSize:15,fontWeight:600,color:'rgba(255,255,255,0.9)',marginBottom:12,lineHeight:1.3}}>Define your rule conditions</div>
               <div style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(255,255,255,0.1)',borderLeft:'3px solid rgba(155,165,175,0.5)',borderRadius:5,padding:'10px 12px',marginBottom:16}}>
                 <div style={{fontSize:10,color:'rgba(89,80,74,0.5)',lineHeight:1.6}}>Each clause narrows which orders this rule applies to. Select a keyword, choose an operator, then enter the values to match against.</div>
@@ -645,10 +645,10 @@ function HMW03Visual(){
 
 function HMW04Visual(){
   const [tab, setTab] = useState(0)
-  const tabs=['Concept 1 — Rule builder','Concept 2 — List manager']
+  const tabs=['Concept 1  -  Rule builder','Concept 2  -  List manager']
   const stickies = [
-    [{c:'g',t:"Rule builder breaks down each clause into an intuitive step"},{c:'b',t:"More intuitive form controls to match input value types — e.g. bulk import vs. pasting a comma-separated list into a simple input box"},{c:'o',t:"Validate format on input — account numbers vs. security symbols have different formats"},{c:'y',t:"Decision tree / guided workflow — give users somewhere to start (not pictured)"}],
-    [{c:'g',t:"Define a list once, reuse it across many rules"},{c:'b',t:"Edit list values in one place — all rules using it update automatically"},{c:'y',t:"Rule builder — better controls shown in Concept 1"}],
+    [{c:'g',t:"Rule builder breaks down each clause into an intuitive step"},{c:'b',t:"More intuitive form controls to match input value types  -  e.g. bulk import vs. pasting a comma-separated list into a simple input box"},{c:'o',t:"Validate format on input  -  account numbers vs. security symbols have different formats"},{c:'y',t:"Decision tree / guided workflow  -  give users somewhere to start (not pictured)"}],
+    [{c:'g',t:"Define a list once, reuse it across many rules"},{c:'b',t:"Edit list values in one place  -  all rules using it update automatically"},{c:'y',t:"Rule builder  -  better controls shown in Concept 1"}],
   ]
   return (
     <CarouselShell tabs={tabs} tab={tab} setTab={setTab}>
@@ -656,7 +656,7 @@ function HMW04Visual(){
         <div style={{background:'#252d3d',borderRadius:12,overflow:'hidden',border:'1px solid rgba(255,255,255,0.1)',fontFamily:'Inter,sans-serif'}}>
           <div style={{background:'#1d2433',padding:'7px 12px',display:'flex',alignItems:'center',gap:5,borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
             {['#ff5f57','#ffbd2e','#28c840'].map(c=><span key={c} style={{width:8,height:8,borderRadius:'50%',background:c,display:'inline-block'}}/>)}
-            <span style={{fontSize:10,color:'rgba(255,255,255,0.35)',marginLeft:6,fontStyle:'italic'}}>{tab===0?'Rule builder — better controls':'List manager'}</span>
+            <span style={{fontSize:10,color:'rgba(255,255,255,0.35)',marginLeft:6,fontStyle:'italic'}}>{tab===0?'Rule builder  -  better controls':'List manager'}</span>
           </div>
           <div style={{padding:'14px 16px'}}>
             {tab===0 ? (<>
@@ -698,9 +698,9 @@ function HMW04Visual(){
                   </div>
                 </div>
               </div>
-              <div style={annStyle}><span style={annTxt}>input type matches the data — no more comma-separated guesswork</span><span style={annArr}>↑</span></div>
+              <div style={annStyle}><span style={annTxt}>input type matches the data  -  no more comma-separated guesswork</span><span style={annArr}>↑</span></div>
             </>) : (<>
-              <div style={{fontSize:10,fontStyle:'italic',color:'rgba(255,255,255,0.35)',marginBottom:12}}>Saved lists — reusable across rules</div>
+              <div style={{fontSize:10,fontStyle:'italic',color:'rgba(255,255,255,0.35)',marginBottom:12}}>Saved lists  -  reusable across rules</div>
               <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:12}}>
                 {[{name:'High-risk securities',items:'42 items',rules:'3 rules',color:'rgba(155,165,175,0.8)'},{name:'Exempt accounts',items:'18 items',rules:'1 rule',color:'rgba(106,129,178,0.8)'},{empty:true}].map((r,i)=>(
                   <div key={i} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',background:'rgba(255,255,255,0.04)',border:'1px solid rgba(255,255,255,0.08)',borderRadius:8}}>
@@ -736,10 +736,10 @@ function HMW04Visual(){
 
 function HMW05Visual(){
   const [tab, setTab] = useState(0)
-  const tabs=['Concept 1 — Rule preview','Concept 2 — Change history']
+  const tabs=['Concept 1  -  Rule preview','Concept 2  -  Change history']
   const stickies = [
-    [{c:'y',t:"Plain-language rule preview builds live as user adds clauses — confidence before activation"},{c:'g',t:"Review & Confirm step shows full rule summary before going live"}],
-    [{c:'b',t:"Audit log at rule-level and across all rules — two view options"},{c:'g',t:"Free-form notes: capture why a rule was created or changed — inside the platform"},{c:'o',t:"Prompt for change reason — optional or required by org"}],
+    [{c:'y',t:"Plain-language rule preview builds live as user adds clauses  -  confidence before activation"},{c:'g',t:"Review & Confirm step shows full rule summary before going live"}],
+    [{c:'b',t:"Audit log at rule-level and across all rules  -  two view options"},{c:'g',t:"Free-form notes: capture why a rule was created or changed  -  inside the platform"},{c:'o',t:"Prompt for change reason  -  optional or required by org"}],
   ]
   const events = [
     {label:'Modified',color:'rgba(155,165,175,0.9)',border:'rgba(155,165,175,0.45)',bg:'rgba(155,165,175,0.12)',dot:'#8a9aaa',name:'K.D.',detail:'Added 3 account values',time:'Today 9:41am'},
@@ -762,7 +762,7 @@ function HMW05Visual(){
               ))}
               <div style={annStyle}><span style={annArr}>↑</span><span style={annTxt}>plain-language preview builds as you go</span></div>
             </>) : (<>
-              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(255,255,255,0.3)',marginBottom:12}}>Audit trail — in platform</div>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(255,255,255,0.3)',marginBottom:12}}>Audit trail  -  in platform</div>
               <div style={{position:'relative'}}>
                 {/* Vertical timeline line centered at x=8 */}
                 <div style={{position:'absolute',left:8,top:0,bottom:0,width:2,background:'rgba(255,255,255,0.1)',borderRadius:2}}/>
@@ -781,7 +781,7 @@ function HMW05Visual(){
                   </div>
                 ))}
               </div>
-              <div style={{...annStyle,marginTop:16}}><span style={annArr}>↑</span><span style={annTxt}>rule-level or all-rules timeline — no more Excel</span></div>
+              <div style={{...annStyle,marginTop:16}}><span style={annArr}>↑</span><span style={annTxt}>rule-level or all-rules timeline  -  no more Excel</span></div>
             </>)}
           </div>
         </div>
@@ -936,7 +936,7 @@ function PartBFeatureTabs({tabs}) {
         </div>
       )}
 
-      {/* Video / image area — full width */}
+      {/* Video / image area  -  full width */}
       <div style={{position:'relative',borderRadius:12,overflow:'hidden',background:'#f7f8fa',border:`1px solid ${borderLight}`}}>
         {/* After layer */}
         <div style={{transition:'opacity 0.35s ease',opacity:showBefore?0:1,pointerEvents:showBefore?'none':'auto'}}>
@@ -1052,7 +1052,7 @@ function BeforeAfterWipe() {
     <div style={{marginBottom:40}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}}>
         <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:deepBlue,opacity:0.7}}>
-          {showBefore ? 'Before — Legacy Rules List' : 'After — Redesigned Rule Management'}
+          {showBefore ? 'Before  -  Legacy Rules List' : 'After  -  Redesigned Rule Management'}
         </div>
         <div style={{display:'flex',gap:8,alignItems:'center'}}>
           {toggleBtn}
@@ -1071,7 +1071,7 @@ function BeforeAfterWipe() {
           <div onClick={e => e.stopPropagation()} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16,maxWidth:'90vw'}}>
             <div style={{display:'flex',alignItems:'center',gap:16}}>
               <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accentDark}}>
-                {showBefore ? 'Before — Legacy Rules List' : 'After — Redesigned Rule Management'}
+                {showBefore ? 'Before  -  Legacy Rules List' : 'After  -  Redesigned Rule Management'}
               </div>
               {toggleBtn}
             </div>
@@ -1088,34 +1088,34 @@ function BeforeAfterWipe() {
 const iterationCards = [
   {
     id:1,
-    feedback:'Clause preview felt editable — users tried to interact with the form fields in the preview panel. In v2, we removed the form representation entirely and replaced it with a read-only summary, making the distinction between preview and configuration unambiguous.',
-    v1Label:'V1 — Form fields in preview',
-    v2Label:'V2 — Read-only summary',
+    feedback:'Clause preview felt editable  -  users tried to interact with the form fields in the preview panel. In v2, we removed the form representation entirely and replaced it with a read-only summary, making the distinction between preview and configuration unambiguous.',
+    v1Label:'V1  -  Form fields in preview',
+    v2Label:'V2  -  Read-only summary',
     v1:{type:'video',src:'/iter-1v1.mov'},
     v2:{type:'video',src:'/iter-1v2.mov'},
   },
   {
     id:2,
-    feedback:'Bulk value entry surface was not intuitive — users were thrown off by the basic text input with "Add Value" and "Add List of Values" options side by side. There was no structure, no validation feedback, and no format guidance for file uploads.',
+    feedback:'Bulk value entry surface was not intuitive  -  users were thrown off by the basic text input with "Add Value" and "Add List of Values" options side by side. There was no structure, no validation feedback, and no format guidance for file uploads.',
     changed:'Replaced the flat input with a structured values grid showing each entry with inline validation status. Added a dedicated "Upload a List" action with format guidance and a sample template.',
-    v1Label:'V1 — Flat input with no structure',
-    v2Label:'V2 — Structured values grid + upload',
+    v1Label:'V1  -  Flat input with no structure',
+    v2Label:'V2  -  Structured values grid + upload',
     v1:{type:'video',src:'/iter-2v1.mov'},
     v2:{type:'video',src:'/iter-2v2.mov'},
   },
   {
     id:3,
-    feedback:'Users wondered what would happen if an invalid value was added — a validation gap we hadn\'t fully considered. This led to the editable review grid with per-row validation icons and counts, so users can catch and fix errors before saving.',
-    v1Label:'V1 — No inline validation',
-    v2Label:'V2 — Inline validation per row',
+    feedback:'Users wondered what would happen if an invalid value was added  -  a validation gap we hadn\'t fully considered. This led to the editable review grid with per-row validation icons and counts, so users can catch and fix errors before saving.',
+    v1Label:'V1  -  No inline validation',
+    v2Label:'V2  -  Inline validation per row',
     v1:{type:'video',src:'/iter-3v1.mov'},
     v2:{type:'video',src:'/iter-3v2.mov'},
   },
   {
     id:4,
-    feedback:'Order Placed By step lacked the contextual definitions users loved on Order Outcome — an inconsistency they noticed immediately. V2 added role descriptions to match the pattern established elsewhere in the flow.',
-    v1Label:'V1 — No role descriptions',
-    v2Label:'V2 — Contextual role definitions added',
+    feedback:'Order Placed By step lacked the contextual definitions users loved on Order Outcome  -  an inconsistency they noticed immediately. V2 added role descriptions to match the pattern established elsewhere in the flow.',
+    v1Label:'V1  -  No role descriptions',
+    v2Label:'V2  -  Contextual role definitions added',
     v1:{type:'image',src:'/v1-opb-fullpage.png'},
     v2:{type:'image',src:'/v2-opb-fullpage.png'},
   },
@@ -1304,7 +1304,7 @@ export default function RulesCaseStudy(){
 
   return(<div className="rules-cs-page cs-page rules-page" style={{fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'hidden'}}>
     <Nav/>
-    {/* Sticky chapter nav — left rail at ≥1440px viewport */}
+    {/* Sticky chapter nav  -  left rail at ≥1440px viewport */}
     <aside
       className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
       aria-label="Case study chapters"
@@ -1324,7 +1324,7 @@ export default function RulesCaseStudy(){
         ))}
       </ul>
     </aside>
-    {/* Floating word bar — mid-viewport fallback (768–1439px) */}
+    {/* Floating word bar  -  mid-viewport fallback (768–1439px) */}
     <aside
       ref={chapterBarRef}
       className={`om-chapter-bar${navVisible ? ' is-visible' : ''}`}
@@ -1346,7 +1346,7 @@ export default function RulesCaseStudy(){
       </ul>
     </aside>
 
-    {/* Home-style ambient radial-gradient wrapper — same 11-orb wash used on
+    {/* Home-style ambient radial-gradient wrapper  -  same 11-orb wash used on
         home and OM, cycling steel-blue → gold → terracotta down the full page. */}
     <div style={{
       background: `
@@ -1378,8 +1378,8 @@ export default function RulesCaseStudy(){
           {['Research','Strategy','Product Design','Testing'].map(tag=>(<span key={tag} style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(245,232,211,0.4)',color:accentDark}}>{tag}</span>))}
           <span style={{fontSize:11,fontWeight:600,padding:'3px 10px',borderRadius:20,background:'rgba(245,232,211,0.55)',color:accentDark,border:'1px solid rgba(55,43,11,0.18)'}}>Shipped ✓</span>
         </div>
-        <h1 style={{fontFamily:'var(--f-slab)',fontSize:42,fontWeight:600,lineHeight:1.25,letterSpacing:'-0.5px',color:'#372B0B',maxWidth:780,marginBottom:16,opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine — Compliance, Redesigned for Enterprise Trading</h1>
-        <p style={{fontSize:18,fontWeight:400,fontStyle:'italic',color:'rgba(55,43,11,0.7)',marginBottom:60,opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product — navigating complexity, prioritizing impact</p>
+        <h1 style={{fontFamily:'var(--f-slab)',fontSize:42,fontWeight:600,lineHeight:1.25,letterSpacing:'-0.5px',color:'#372B0B',maxWidth:780,marginBottom:16,opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine  -  Compliance, Redesigned for Enterprise Trading</h1>
+        <p style={{fontSize:18,fontWeight:400,fontStyle:'italic',color:'rgba(55,43,11,0.7)',marginBottom:60,opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product  -  navigating complexity, prioritizing impact</p>
       </div>
       <div style={{...ct,marginTop:48,overflow:'hidden',paddingBottom:0,opacity:0,animation:'fadeUp 0.7s ease 0.55s forwards'}}>
         <div style={{display:'flex',alignItems:'flex-end',justifyContent:'center',gap:32,paddingTop:48}}>
@@ -1401,7 +1401,7 @@ export default function RulesCaseStudy(){
               </div>
               <div style={{flex:1,overflow:'hidden'}}>
                 <div style={{padding:'6px 10px',borderBottom:'1px solid rgba(255,255,255,0.1)',display:'flex',gap:8}}>{['STATUS','RULE NAME'].map(h=><span key={h} style={{fontSize:7,fontWeight:700,color:'rgba(89,80,74,0.5)'}}>{h}</span>)}</div>
-                {['Crypto ETF Blacklist','PIP Whitelist — Inv. Prof','Suitability Check — IRA','Large Cap Growth Block','Fixed Income — Restrict'].map(n=>(<div key={n} style={{padding:'7px 10px',borderBottom:'1px solid rgba(255,255,255,0.06)',display:'flex',alignItems:'center',gap:8}}><div style={{padding:'2px 8px',borderRadius:8,background:'rgba(155,165,175,0.2)',fontSize:9,fontWeight:700,color:'rgba(155,165,175,0.9)',flexShrink:0}}>Active</div><span style={{fontSize:10,color:'rgba(255,255,255,0.75)',overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{n}</span></div>))}
+                {['Crypto ETF Blacklist','PIP Whitelist  -  Inv. Prof','Suitability Check  -  IRA','Large Cap Growth Block','Fixed Income  -  Restrict'].map(n=>(<div key={n} style={{padding:'7px 10px',borderBottom:'1px solid rgba(255,255,255,0.06)',display:'flex',alignItems:'center',gap:8}}><div style={{padding:'2px 8px',borderRadius:8,background:'rgba(155,165,175,0.2)',fontSize:9,fontWeight:700,color:'rgba(155,165,175,0.9)',flexShrink:0}}>Active</div><span style={{fontSize:10,color:'rgba(255,255,255,0.75)',overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{n}</span></div>))}
               </div>
               <div style={{width:160,borderLeft:'1px solid rgba(255,255,255,0.1)',padding:14,flexShrink:0}}>
                 <div style={{fontSize:7,fontWeight:700,color:'rgba(255,255,255,0.45)',marginBottom:8}}>RULE LOGIC</div>
@@ -1434,9 +1434,9 @@ export default function RulesCaseStudy(){
     <section id="ch-tldr" style={sec('transparent')}>
       <div style={ct}>
         <h2 style={{fontFamily:'var(--f-slab)',fontSize:72,fontWeight:600,color:accentDark,lineHeight:1,marginBottom:40}}>tl;dr</h2>
-        <p style={{fontSize:20,fontWeight:500,lineHeight:1.65,letterSpacing:'-0.3px',color:'#7a4f35',maxWidth:820,marginBottom:72}}>Across a suite of compliance tools on an enterprise investing platform, we identified where to focus design effort — then redesigned the rule management and creation experience from the ground up. The result: a shipped, user-tested redesign that replaced tribal knowledge with guided workflows and shadow spreadsheets with built-in documentation.</p>
+        <p style={{fontSize:20,fontWeight:500,lineHeight:1.65,letterSpacing:'-0.3px',color:'#7a4f35',maxWidth:820,marginBottom:72}}>Across a suite of compliance tools on an enterprise investing platform, we identified where to focus design effort  -  then redesigned the rule management and creation experience from the ground up. The result: a shipped, user-tested redesign that replaced tribal knowledge with guided workflows and shadow spreadsheets with built-in documentation.</p>
         <div className="meta-pills">
-          <span className="chip chip--neutral">Lead UX Designer — Trading</span>
+          <span className="chip chip--neutral">Lead UX Designer  -  Trading</span>
           <span className="chip chip--neutral">Q1–Q4 2025</span>
           <span className="chip chip--neutral">Design · Product · Engineering · Business</span>
           <span className="chip chip--neutral">Shipped ✓</span>
@@ -1448,24 +1448,24 @@ export default function RulesCaseStudy(){
     <section id="ch-framing" style={sec('transparent')}>
       <div style={ct}>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.018em'}}>finding the right problem <span style={{fontWeight:300,fontStyle:'italic'}}>before designing the right solution</span></h2>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>This wasn't a project that started with a design brief. It started with two questions: across a complex, sprawling ecosystem of aging compliance tools — where do we even begin? How do we make an impact?</p>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760}}>I led the team through a structured discovery and sprint process — analyzing user interviews, synthesizing research, and facilitating design thinking workshops — before a single pixel was touched. The decision about <em>what</em> to design was as deliberate as the design itself.</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>This wasn't a project that started with a design brief. It started with two questions: across a complex, sprawling ecosystem of aging compliance tools  -  where do we even begin? How do we make an impact?</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760}}>I led the team through a structured discovery and sprint process  -  analyzing user interviews, synthesizing research, and facilitating design thinking workshops  -  before a single pixel was touched. The decision about <em>what</em> to design was as deliberate as the design itself.</p>
       </div>
     </section>
 
     {/* DISCOVERY */}
     <section id="ch-discovery" style={{...sec('transparent'),paddingTop:160,paddingBottom:160}}>
       <div style={ct}>
-        <StepLabel>Step 01 — Discovery</StepLabel>
+        <StepLabel>Step 01  -  Discovery</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28,maxWidth:760}}>Surveying the Compliance Landscape</h2>
-        <p style={{fontSize:16,lineHeight:1.8,color:deepBlue,maxWidth:640,marginBottom:100}}>We surfaced existing user interviews that had never been acted on — bringing product, engineering, and business together to synthesize themes and align on the problem space.</p>
+        <p style={{fontSize:16,lineHeight:1.8,color:deepBlue,maxWidth:640,marginBottom:100}}>We surfaced existing user interviews that had never been acted on  -  bringing product, engineering, and business together to synthesize themes and align on the problem space.</p>
 
         <div style={{marginBottom:56}}>
           <StepLabel>The existing experience</StepLabel>
           <h3 style={{fontSize:19,fontWeight:700,color:accentDark,marginBottom:10}}>What users were working with</h3>
-          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:620,marginBottom:32}}>Before anything else, it helps to see the starting point. The legacy rules management experience was functional — but barely. See what we mean below.</p>
+          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:620,marginBottom:32}}>Before anything else, it helps to see the starting point. The legacy rules management experience was functional  -  but barely. See what we mean below.</p>
           <div>
-              {/* Rules table preview — matches actual legacy UI */}
+              {/* Rules table preview  -  matches actual legacy UI */}
               <div style={{background:'white',borderRadius:4,overflow:'hidden',marginBottom:24,fontFamily:'Arial,Helvetica,sans-serif',fontSize:11,boxShadow:'0 2px 12px rgba(0,0,0,0.1)'}}>
                 <div style={{borderLeft:'4px solid #222',paddingLeft:7,fontWeight:'bold',fontSize:13,textDecoration:'underline',padding:'10px 14px 6px',borderBottom:'1px solid #ddd'}}>Rules</div>
                 <div style={{overflowX:'auto'}}>
@@ -1488,7 +1488,7 @@ export default function RulesCaseStudy(){
                         {id:'U016',name:'Multi-Branch Activity Review',active:'No',ip:true,maa:true,inv:true,st:true,detail:'REVIEW, If Branch =[ 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, … ]'},
                         {id:'U017',name:'Penny Stock Block',active:'Yes',ip:true,maa:true,inv:false,st:false,detail:'REJECT, If Order Type =[ MKT], If Symbol Price < [ 1.00], If Exchange =[ OTC, PINK, … ]'},
                         {id:'U018',name:'Options Level Enforcement',active:'Yes',ip:false,maa:false,inv:true,st:true,detail:'REVIEW, If Instrument Type =[ OPT], If Options Level < [ 3], If Strategy =[ SPREAD, NAKED, STRADDLE, … ]'},
-                        {id:'U019',name:'Concentration Limit — Equity',active:'No',ip:true,maa:true,inv:true,st:false,detail:'REVIEW, If Position Concentration > [ 20.00 %], If Asset Class =[ EQ], If Account Type =[ IRA, ROTH, … ]'},
+                        {id:'U019',name:'Concentration Limit  -  Equity',active:'No',ip:true,maa:true,inv:true,st:false,detail:'REVIEW, If Position Concentration > [ 20.00 %], If Asset Class =[ EQ], If Account Type =[ IRA, ROTH, … ]'},
                         {id:'U020',name:'Short Sale Locate Check',active:'Yes',ip:true,maa:false,inv:false,st:true,detail:'REJECT, If Action =[ SS], If Locate Status =[ NOT_CONFIRMED], If Symbol / CUSIP =[ … ]'},
                         {id:'U021',name:'Day Trade Buying Power',active:'Yes',ip:true,maa:true,inv:true,st:true,detail:'REVIEW, If Day Trade Count >= [ 4], If Account Buying Power < [ ORDER_VALUE], If Period =[ ROLLING_5D]'},
                         {id:'U022',name:'Foreign Issuer Disclosure',active:'No',ip:false,maa:true,inv:true,st:false,detail:'REVIEW, If Issuer Country !=[ US], If Market Cap < [ 500000000], If Action =[ B, S, … ]'},
@@ -1527,7 +1527,7 @@ export default function RulesCaseStudy(){
         <div style={{marginTop:56}}>
           <div className="rules-problem-cards" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(460px, 1fr))',gap:20}}>
 
-            {/* 01 — Findability */}
+            {/* 01  -  Findability */}
             <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
               <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',position:'relative',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',overflow:'hidden',minHeight:220}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:300,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontSize:9,boxShadow:'2px 2px 6px rgba(0,0,0,0.1)',opacity:0.9}}>
@@ -1568,11 +1568,11 @@ export default function RulesCaseStudy(){
               </div>
             </div>
 
-            {/* 02 — Keywords opaque */}
+            {/* 02  -  Keywords opaque */}
             <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
               <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',position:'relative',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',overflow:'hidden',minHeight:220}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:240,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 6px rgba(0,0,0,0.1)'}}>
-                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:9.5,color:'#1a1a1a'}}>Rule Keywords — Select 1 to 4:</div>
+                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:9.5,color:'#1a1a1a'}}>Rule Keywords  -  Select 1 to 4:</div>
                   <div style={{fontSize:7.5,fontWeight:700,color:'#555',padding:'3px 8px',background:'#f5f5f5',borderBottom:'1px solid #e8e8e8',letterSpacing:'0.04em',textTransform:'uppercase'}}>Account Related</div>
                   {['Rep Type','Rep Status','Rep Credentials','Rep Production Level'].map(k=>(
                     <div key={k} style={{display:'flex',alignItems:'center',gap:6,padding:'3px 8px',fontSize:9,color:'#333',borderBottom:'1px solid #f0f0f0'}}>
@@ -1585,16 +1585,16 @@ export default function RulesCaseStudy(){
                     <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#d4e0ec'}}>Next &gt;&gt;</button>
                   </div>
                 </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>100+ keywords — no descriptions or context provided</div>
+                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>100+ keywords  -  no descriptions or context provided</div>
               </div>
               <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>02</div>
                 <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Guesswork shouldn't be part of building a compliance rule</div>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Only know what a keyword means by trial and error — select it and click next, then go back and search again for another keyword"</p>
+                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Only know what a keyword means by trial and error  -  select it and click next, then go back and search again for another keyword"</p>
               </div>
             </div>
 
-            {/* 03 — Rule creation */}
+            {/* 03  -  Rule creation */}
             <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
               <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:280,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
@@ -1618,16 +1618,16 @@ export default function RulesCaseStudy(){
                     <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#d4e0ec'}}>Save Rule</button>
                   </div>
                 </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Free text — up to 20,000 comma-separated values</div>
+                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Free text  -  up to 20,000 comma-separated values</div>
               </div>
               <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>03</div>
                 <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>The system expects expertise it never provides</div>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"One-line box for 600 ticker symbols — impossible to jump to the end of that list"</p>
+                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"One-line box for 600 ticker symbols  -  impossible to jump to the end of that list"</p>
               </div>
             </div>
 
-            {/* 04 — Shadow systems */}
+            {/* 04  -  Shadow systems */}
             <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
               <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
                 <div style={{transform:'scale(1.55)',transformOrigin:'center center'}}>
@@ -1635,8 +1635,8 @@ export default function RulesCaseStudy(){
 
                   {/* Platform window */}
                   <div style={{border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:138}}>
-                    <div style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,background:'#d4e0ec',borderBottom:'1px solid rgba(0,0,0,0.1)',color:'#1a1a1a'}}>Platform — Rules</div>
-                    {['U023 — Equity Buy Cap','U030 — NF Training Hold','U058 — Reject Order Flag'].map(r=>(
+                    <div style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,background:'#d4e0ec',borderBottom:'1px solid rgba(0,0,0,0.1)',color:'#1a1a1a'}}>Platform  -  Rules</div>
+                    {['U023  -  Equity Buy Cap','U030  -  NF Training Hold','U058  -  Reject Order Flag'].map(r=>(
                       <div key={r} style={{padding:'2px 6px',fontSize:7.5,color:'#555',borderBottom:'1px solid #f0f0f0',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{r}</div>
                     ))}
                     <div style={{padding:'2px 6px',fontSize:7,color:'#aaa',fontStyle:'italic'}}>+ 58 more…</div>
@@ -1689,11 +1689,11 @@ export default function RulesCaseStudy(){
               <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>04</div>
                 <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Users forced outside the platform for context</div>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Jumping back and forth loses my place — and if I forget to update the spreadsheet, it's hard to know the single source of truth. In compliance, that gap can mean a costly trading error."</p>
+                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Jumping back and forth loses my place  -  and if I forget to update the spreadsheet, it's hard to know the single source of truth. In compliance, that gap can mean a costly trading error."</p>
               </div>
             </div>
 
-            {/* 05 — Help buried */}
+            {/* 05  -  Help buried */}
             <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
               <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
                 <div style={{width:240,transform:'scale(1.55)',transformOrigin:'center center'}}>
@@ -1711,11 +1711,11 @@ export default function RulesCaseStudy(){
                     </div>
                   </div>
                 </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Help buried in top-right nav — rarely discovered</div>
+                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Help buried in top-right nav  -  rarely discovered</div>
               </div>
               <div style={{padding:'24px 28px 28px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>05</div>
-                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Help exists — users just never find it</div>
+                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Help exists  -  users just never find it</div>
                 <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Didn't know that was here, that's cool"</p>
               </div>
             </div>
@@ -1731,7 +1731,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
-        <StepLabel>Step 02 — Design Sprint</StepLabel>
+        <StepLabel>Step 02  -  Design Sprint</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14,letterSpacing:'-0.018em'}}>
           <span>Insights</span>
           <svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style={{flexShrink:0,color:accent}}>
@@ -1744,10 +1744,10 @@ export default function RulesCaseStudy(){
           <span>Concept Sketches</span>
         </h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:16}}>With five problem areas defined, I convinced key players from our product team to join me in a design thinking sprint. The goal was shared ownership of the direction, not just the deliverable.</p>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>And it worked. This isn't like redesigning a weather app — one misconfigured rule can instantaneously affect thousands of trades firm-wide. Having engineering constraints and business logic in the room while sketching made the ideas sharper and compressed weeks of back-and-forth into a single sprint.</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>And it worked. This isn't like redesigning a weather app  -  one misconfigured rule can instantaneously affect thousands of trades firm-wide. Having engineering constraints and business logic in the room while sketching made the ideas sharper and compressed weeks of back-and-forth into a single sprint.</p>
         <div style={{width:40,height:3,background:accentMid,borderRadius:2,marginBottom:32}}/>
         <div style={{display:'flex',alignItems:'center',marginBottom:8}}>
-          <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent}}>How Might We — Six Opportunity Areas</p>
+          <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent}}>How Might We  -  Six Opportunity Areas</p>
         </div>
         <p style={{fontSize:12,color:deepBlue,opacity:0.7,marginBottom:16,fontStyle:'italic'}}>Select a prompt to see the concept sketches and ideas it generated.</p>
         <div style={{marginBottom:24}}>
@@ -1762,13 +1762,13 @@ export default function RulesCaseStudy(){
     {/* PRIORITIZATION */}
     <section id="ch-prioritization" style={sec('transparent')}>
       <div style={ct}>
-        <StepLabel>Step 03 — Prioritization</StepLabel>
+        <StepLabel>Step 03  -  Prioritization</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>Deciding Where to Start</h2>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>With 6 HMW areas and related concepts generated, the team assessed impact vs. effort — keeping in mind business, tech, and other environmental constraints.</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>With 6 HMW areas and related concepts generated, the team assessed impact vs. effort  -  keeping in mind business, tech, and other environmental constraints.</p>
 
         {/* Effort vs Impact Matrix */}
         <div style={{background:`radial-gradient(rgba(55,43,11,0.06) 1px, transparent 1px) 0 0 / 28px 28px, rgba(244,239,227,0.8)`,border:'1px solid rgba(55,43,11,0.12)',borderRadius:14,padding:'24px 32px 16px 44px',marginBottom:4,position:'relative'}}>
-          {/* Y axis label — rotated, pinned to left inside box */}
+          {/* Y axis label  -  rotated, pinned to left inside box */}
           <div style={{position:'absolute',left:0,top:0,bottom:0,width:28,display:'flex',alignItems:'center',justifyContent:'center'}}>
             <div style={{transform:'rotate(-90deg)',fontSize:8,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'#3d3530',whiteSpace:'nowrap'}}>↓ LOWER IMPACT · HIGHER IMPACT ↑</div>
           </div>
@@ -1780,9 +1780,9 @@ export default function RulesCaseStudy(){
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
                 {hmw:'HMW 04',title:'More intuitive form controls',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-                {hmw:'HMW 03',title:'Surface help where it\'s needed — contextual guidance',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-                {hmw:'HMW 01',title:'Find & manage rules — search and filter on metadata + plain language rule preview',phase:'Phase 1',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
-                {hmw:'HMW 05',title:'Intuitive rule builder — split panel, plain language preview builds as details are added',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 03',title:'Surface help where it\'s needed  -  contextual guidance',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 01',title:'Find & manage rules  -  search and filter on metadata + plain language rule preview',phase:'Phase 1',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
+                {hmw:'HMW 05',title:'Intuitive rule builder  -  split panel, plain language preview builds as details are added',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:c.hmw==='HMW 01'?'calc(40% - 5px)':'calc(30% - 8px)',minWidth:110,flexShrink:0}}>
                   <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
@@ -1797,9 +1797,9 @@ export default function RulesCaseStudy(){
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>HIGH IMPACT · HIGH EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 02',title:'Keyword assistant — view keyword descriptions on selection surface',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-                {hmw:'HMW 06',title:'Documentation & audit trail — change history',phase:'Phase 3',bg:'#ede8f5',border:'rgba(120,90,160,0.2)',pillBg:'rgba(120,90,160,0.12)',pillColor:'#6b4f9e'},
-                {hmw:'HMW 04',title:'List Manager — bulk editing, inheritance, validation',phase:'Deferred',bg:'#fdf0dc',border:'rgba(176,122,48,0.2)',pillBg:'rgba(176,122,48,0.12)',pillColor:'#b07a30'},
+                {hmw:'HMW 02',title:'Keyword assistant  -  view keyword descriptions on selection surface',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 06',title:'Documentation & audit trail  -  change history',phase:'Phase 3',bg:'#ede8f5',border:'rgba(120,90,160,0.2)',pillBg:'rgba(120,90,160,0.12)',pillColor:'#6b4f9e'},
+                {hmw:'HMW 04',title:'List Manager  -  bulk editing, inheritance, validation',phase:'Deferred',bg:'#fdf0dc',border:'rgba(176,122,48,0.2)',pillBg:'rgba(176,122,48,0.12)',pillColor:'#b07a30'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(50% - 5px)',minWidth:120}}>
                   <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
@@ -1841,15 +1841,15 @@ export default function RulesCaseStudy(){
               </div>
             </div>
           </div>
-          {/* X axis label — inside, bottom center */}
+          {/* X axis label  -  inside, bottom center */}
           <div style={{textAlign:'center',paddingTop:12,fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>← LOWER EFFORT · HIGHER EFFORT →</div>
         </div>
 
         <h3 style={{fontSize:16,fontWeight:700,color:accentDark,letterSpacing:'-0.2px',marginTop:56,marginBottom:28}}>The resulting phased approach</h3>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
           {[
-            {pill:'✓ Phase 1',title:'Rules List',body:'Users need to find and understand existing rules before anything else. Real search, filtering, and a plain language rule preview accomplish this. The layout of this page — and getting users familiar with the plain language format — made it easier to build rules in Phase 2, which reused the same pattern.',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
-            {pill:'→ Phase 2',title:'Rule Creation',body:'Getting new rules into the system cleanly — with guided input, contextual keyword help, and confidence before going live — was the most consequential workflow. It also laid the groundwork for edit rule, which could follow the same pattern with minimal additional mapping.',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+            {pill:'✓ Phase 1',title:'Rules List',body:'Users need to find and understand existing rules before anything else. Real search, filtering, and a plain language rule preview accomplish this. The layout of this page  -  and getting users familiar with the plain language format  -  made it easier to build rules in Phase 2, which reused the same pattern.',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
+            {pill:'→ Phase 2',title:'Rule Creation',body:'Getting new rules into the system cleanly  -  with guided input, contextual keyword help, and confidence before going live  -  was the most consequential workflow. It also laid the groundwork for edit rule, which could follow the same pattern with minimal additional mapping.',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
             {pill:'→ Phase 3',title:'Edit Rule + Change History',body:'Editing and viewing change history depends on users having a solid mental model of rules first. Sequencing this after creation and list work made the later problem easier to solve.',bg:'#ede8f5',border:'rgba(120,90,160,0.2)',pillBg:'rgba(120,90,160,0.12)',pillColor:'#6b4f9e'},
             {pill:'→ Deferred',title:'List Manager',body:null,bg:'#fdf0dc',border:'rgba(176,122,48,0.2)',pillBg:'rgba(176,122,48,0.12)',pillColor:'#b07a30'},
           ].map(card=>(
@@ -1859,9 +1859,9 @@ export default function RulesCaseStudy(){
               {card.body && <p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{card.body}</p>}
               {card.title === 'List Manager' && (
                 <>
-                  <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:16}}>The most exciting concept from the sprint — and the most complex. Sprint edge-case analysis revealed significant downstream complexity. Deferred, not abandoned.</p>
+                  <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:16}}>The most exciting concept from the sprint  -  and the most complex. Sprint edge-case analysis revealed significant downstream complexity. Deferred, not abandoned.</p>
                   <div style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:4,padding:'6px 12px',borderRadius:8,background:'rgba(176,122,48,0.12)',border:'1px solid rgba(176,122,48,0.25)'}}>
-                    <span style={{fontSize:12,fontStyle:'italic',color:'#b07a30',letterSpacing:'0.01em'}}>↓ See note on pivoting in the face of tech constraints — in Redesigning Rule Creation below</span>
+                    <span style={{fontSize:12,fontStyle:'italic',color:'#b07a30',letterSpacing:'0.01em'}}>↓ See note on pivoting in the face of tech constraints  -  in Redesigning Rule Creation below</span>
                   </div>
                 </>
               )}
@@ -1877,17 +1877,17 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
-        <StepLabel>Step 04 — Lofi Exploration</StepLabel>
+        <StepLabel>Step 04  -  Lofi Exploration</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>Mapping the End-to-End Workflow</h2>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>With our priorities set, I started in low fidelity to map the full workflow end to end — how screens connect, where users enter and exit, and what the overall shape of the experience looks like before sweating any details. These wireframes became the centerpiece of a cross-functional review with engineering and product, where we stress-tested feasibility, flagged edge cases, and aligned on the bigger puzzle pieces before zooming in.</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:720,marginBottom:48}}>With our priorities set, I started in low fidelity to map the full workflow end to end  -  how screens connect, where users enter and exit, and what the overall shape of the experience looks like before sweating any details. These wireframes became the centerpiece of a cross-functional review with engineering and product, where we stress-tested feasibility, flagged edge cases, and aligned on the bigger puzzle pieces before zooming in.</p>
         <LofiFlow/>
       </div>
     </section>
 
-    {/* ASIDE — List Manager / Tech Constraint */}
+    {/* ASIDE  -  List Manager / Tech Constraint */}
     <section id="ch-closer-look" style={{...sec('transparent'),paddingTop:72,paddingBottom:80}}>
       <div style={ct}>
-        <StepLabel>Step 05 — A Closer Look</StepLabel>
+        <StepLabel>Step 05  -  A Closer Look</StepLabel>
         {/* Aside header */}
         <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:28}}>
           <div style={{width:3,height:36,background:'#b07a30',borderRadius:2,flexShrink:0}}/>
@@ -1897,11 +1897,11 @@ export default function RulesCaseStudy(){
           </div>
         </div>
 
-        <p style={{fontSize:14,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:40}}>With the end-to-end flow mapped, we also had to zoom in on many fine details that would make a big impact on the experience. One of the most significant was the input mechanism for keywords and clauses — how compliance teams actually get values into a rule. This is a good example of how a seemingly small interaction can carry enormous weight. During the HMW sprint, one of the strongest concepts was a dedicated List Manager — a way to define, store, and reuse named value sets across multiple rules. But a hard infrastructure constraint forced a pivot. To understand why this detail mattered so much, it helps to see what the legacy process actually looked like.</p>
+        <p style={{fontSize:14,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:40}}>With the end-to-end flow mapped, we also had to zoom in on many fine details that would make a big impact on the experience. One of the most significant was the input mechanism for keywords and clauses  -  how compliance teams actually get values into a rule. This is a good example of how a seemingly small interaction can carry enormous weight. During the HMW sprint, one of the strongest concepts was a dedicated List Manager  -  a way to define, store, and reuse named value sets across multiple rules. But a hard infrastructure constraint forced a pivot. To understand why this detail mattered so much, it helps to see what the legacy process actually looked like.</p>
 
         {/* Two-step annotated visual */}
         <div style={{background:'#f7f6f2',border:'1px solid rgba(202,213,226,0.35)',borderRadius:14,padding:'32px 36px',marginBottom:36}}>
-          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(144,161,185,0.7)',marginBottom:24}}>Legacy workflow — uploading a securities list to a rule</div>
+          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(144,161,185,0.7)',marginBottom:24}}>Legacy workflow  -  uploading a securities list to a rule</div>
 
           {/* Step 1 */}
           <div style={{marginBottom:32}}>
@@ -1909,7 +1909,7 @@ export default function RulesCaseStudy(){
               <div style={{width:22,height:22,borderRadius:'50%',background:'#b07a30',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                 <span style={{fontSize:10,fontWeight:800,color:'white'}}>1</span>
               </div>
-              <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Leave rule creation — navigate to a separate import page via main nav</div>
+              <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Leave rule creation  -  navigate to a separate import page via main nav</div>
             </div>
             <div style={{display:'flex',gap:20,alignItems:'flex-start'}}>
               <div style={{flex:1}}>
@@ -1943,7 +1943,7 @@ export default function RulesCaseStudy(){
                 </div>
               </div>
               <div style={{width:200,flexShrink:0,background:'#f5c542',borderRadius:6,padding:'12px 14px',boxShadow:'2px 3px 10px rgba(0,0,0,0.15)',position:'relative',top:8}}>
-                <div style={{fontSize:11,lineHeight:1.55,color:'#3d2800',fontWeight:500}}>This page lives in main nav — not linked to or from rule creation. No obvious path here if you don't already know it exists.</div>
+                <div style={{fontSize:11,lineHeight:1.55,color:'#3d2800',fontWeight:500}}>This page lives in main nav  -  not linked to or from rule creation. No obvious path here if you don't already know it exists.</div>
               </div>
             </div>
 
@@ -1973,7 +1973,7 @@ export default function RulesCaseStudy(){
             {/* Warning note */}
             <div style={{marginTop:16,padding:'14px 18px',background:'rgba(176,122,48,0.08)',border:'1px solid rgba(176,122,48,0.2)',borderRadius:8,display:'flex',gap:10,alignItems:'flex-start'}}>
               <span style={{fontSize:14,flexShrink:0}}>⚠️</span>
-              <p style={{fontSize:12,lineHeight:1.65,color:'#7a5020',margin:0}}>And the master lists themselves? Always managed <em>outside</em> the platform entirely — in Excel or shared drives — because the system couldn't store them. Two potential sources of truth, with no reconciliation mechanism.</p>
+              <p style={{fontSize:12,lineHeight:1.65,color:'#7a5020',margin:0}}>And the master lists themselves? Always managed <em>outside</em> the platform entirely  -  in Excel or shared drives  -  because the system couldn't store them. Two potential sources of truth, with no reconciliation mechanism.</p>
             </div>
           </div>
 
@@ -1984,12 +1984,12 @@ export default function RulesCaseStudy(){
               <div style={{width:22,height:22,borderRadius:'50%',background:'#b07a30',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                 <span style={{fontSize:10,fontWeight:800,color:'white'}}>2</span>
               </div>
-              <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Back in rule creation — set keyword to "Securities Upload," then match rule name exactly to the CSV filename</div>
+              <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Back in rule creation  -  set keyword to "Securities Upload," then match rule name exactly to the CSV filename</div>
             </div>
             <div style={{display:'flex',gap:20,alignItems:'flex-start'}}>
               <div style={{flex:1}}>
                 <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:'100%',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
-                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'5px 10px',fontWeight:700,fontSize:11,color:'#1a1a1a'}}>Rule Management — Edit Rule</div>
+                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'5px 10px',fontWeight:700,fontSize:11,color:'#1a1a1a'}}>Rule Management  -  Edit Rule</div>
                   <div style={{padding:'12px 16px'}}>
                     <div style={{display:'flex',gap:12,alignItems:'center',marginBottom:10,flexWrap:'wrap'}}>
                       <span style={{fontSize:10,color:'#555'}}>rule 0000001</span>
@@ -2032,9 +2032,9 @@ export default function RulesCaseStudy(){
 
         </div>
 
-        {/* Concept vs. Shipped — side by side */}
+        {/* Concept vs. Shipped  -  side by side */}
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,marginBottom:40,alignItems:'stretch'}}>
-          <ImgFrame label="HMW Concept — Standalone List Manager" stretch>
+          <ImgFrame label="HMW Concept  -  Standalone List Manager" stretch>
           <div style={{borderRadius:12,overflow:'hidden',background:'#23283a',padding:'18px 20px',fontFamily:"'Inter',-apple-system,sans-serif",display:'flex',flexDirection:'column',height:'100%',boxSizing:'border-box'}}>
             {/* Window chrome */}
             <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:16}}>
@@ -2044,9 +2044,9 @@ export default function RulesCaseStudy(){
               <span style={{fontSize:11,color:'rgba(255,255,255,0.45)',marginLeft:8,letterSpacing:'0.02em'}}>List manager</span>
             </div>
             {/* Subtitle */}
-            <div style={{fontSize:10,color:'rgba(255,255,255,0.35)',marginBottom:14,letterSpacing:'0.01em'}}>Saved lists — reusable across rules</div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.35)',marginBottom:14,letterSpacing:'0.01em'}}>Saved lists  -  reusable across rules</div>
             {/* List items */}
-            {[{name:'High-risk securities',items:42,rules:3},{name:'Exempt accounts',items:18,rules:1},{name:'Licensed reps — Series 7',items:134,rules:2},{name:'Restricted entities',items:27,rules:4},{name:'Emerging market issuers',items:61,rules:1}].map((l,i)=>(
+            {[{name:'High-risk securities',items:42,rules:3},{name:'Exempt accounts',items:18,rules:1},{name:'Licensed reps  -  Series 7',items:134,rules:2},{name:'Restricted entities',items:27,rules:4},{name:'Emerging market issuers',items:61,rules:1}].map((l,i)=>(
               <div key={i} style={{background:'rgba(255,255,255,0.07)',borderRadius:8,padding:'11px 14px',marginBottom:8,display:'flex',alignItems:'center',gap:10}}>
                 <div style={{width:7,height:7,borderRadius:'50%',background:'#6B8EBF',flexShrink:0}}/>
                 <span style={{fontSize:12,color:'rgba(255,255,255,0.88)',fontWeight:500,flex:1}}>{l.name}</span>
@@ -2065,7 +2065,7 @@ export default function RulesCaseStudy(){
             <div style={{fontSize:10,color:'#d4a843',fontStyle:'italic',fontWeight:600}}>↑ define once, reuse across many rules</div>
           </div>
           </ImgFrame>
-          <ImgFrame label="Pivoted Direction — Bulk Upload Within the Rule" stretch>
+          <ImgFrame label="Pivoted Direction  -  Bulk Upload Within the Rule" stretch>
             <div style={{borderRadius:12,overflow:'hidden',background:'#23283a',padding:'18px 20px',fontFamily:"'Inter',-apple-system,sans-serif",display:'flex',flexDirection:'column',height:'100%',boxSizing:'border-box'}}>
               {/* Window chrome */}
               <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:16}}>
@@ -2115,7 +2115,7 @@ export default function RulesCaseStudy(){
           {[
             {
               label:'What we wanted to build',
-              body:'User interviews surfaced a clear opportunity: a dedicated List Manager — a way for compliance teams to define named value sets once and reuse them across rules. When a security gets blacklisted or a rep changes licensing status, you\'d update one list and every rule referencing it would stay current. It was the strongest concept to come out of our HMW sprint.'
+              body:'User interviews surfaced a clear opportunity: a dedicated List Manager  -  a way for compliance teams to define named value sets once and reuse them across rules. When a security gets blacklisted or a rep changes licensing status, you\'d update one list and every rule referencing it would stay current. It was the strongest concept to come out of our HMW sprint.'
             },
             {
               label:'Why we had to pivot',
@@ -2123,7 +2123,7 @@ export default function RulesCaseStudy(){
             },
             {
               label:'Where we pivoted to',
-              body:'The rule itself could still store its own value set — just not as a reusable, named list. So we redirected the design toward making the in-rule input experience dramatically better: structured input with bulk upload via CSV, paste, or manual entry — plus real-time validation. No more comma-separated text box. No more filename-matching ritual. This is the kind of detail that\'s easy to overlook in a wireframe, but makes or breaks the day-to-day experience for compliance teams managing hundreds of values. It\'s not the List Manager, but it solves the most acute version of the problem and lays the foundation for when full list management becomes feasible.'
+              body:'The rule itself could still store its own value set  -  just not as a reusable, named list. So we redirected the design toward making the in-rule input experience dramatically better: structured input with bulk upload via CSV, paste, or manual entry  -  plus real-time validation. No more comma-separated text box. No more filename-matching ritual. This is the kind of detail that\'s easy to overlook in a wireframe, but makes or breaks the day-to-day experience for compliance teams managing hundreds of values. It\'s not the List Manager, but it solves the most acute version of the problem and lays the foundation for when full list management becomes feasible.'
             },
           ].map((item, i, arr) => (
             <div key={item.label} style={{padding:'28px 0',borderTop:`1px solid ${borderLight}`}}>
@@ -2140,13 +2140,13 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-a" aria-hidden="true"></div>
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
-        <StepLabel>Step 06 — Design</StepLabel>
+        <StepLabel>Step 06  -  Design</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>The Redesign</h2>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:20}}>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype — two interconnected workflows designed as a coherent system:</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:20}}>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype  -  two interconnected workflows designed as a coherent system:</p>
         <ul style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:640,marginBottom:32,paddingLeft:20,display:'flex',flexDirection:'column',gap:6}}>
-          <li><strong>Rules list</strong> — find, scan, and understand rules with real search and plain-language previews</li>
-          <li><strong>Rule creation</strong> — a guided stepped flow replacing the blank, expert-only form</li>
-          <li>Plain-language logic introduced in the list carries directly into creation — familiarity built intentionally</li>
+          <li><strong>Rules list</strong>  -  find, scan, and understand rules with real search and plain-language previews</li>
+          <li><strong>Rule creation</strong>  -  a guided stepped flow replacing the blank, expert-only form</li>
+          <li>Plain-language logic introduced in the list carries directly into creation  -  familiarity built intentionally</li>
         </ul>
         <p style={{fontSize:14,lineHeight:1.7,color:deepBlue,opacity:0.75,maxWidth:640,marginBottom:40}}>Explore both end to end in the prototype, or read the breakdown below.</p>
 
@@ -2157,35 +2157,35 @@ export default function RulesCaseStudy(){
         {/* Divider */}
         <div style={{width:'100%',height:1,background:'rgba(66,125,219,0.12)',marginBottom:64}}/>
 
-        {/* Part A — Rules List */}
+        {/* Part A  -  Rules List */}
         <div style={{marginBottom:64}}>
           <div style={{display:'flex',flexDirection:'column',gap:4,marginBottom:8}}>
             <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.16em',textTransform:'uppercase',color:accent}}>Part A</span>
             <h3 style={{fontSize:22,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',margin:0}}>Rules List</h3>
           </div>
-          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>The legacy rules list had one job — display all rules — and did so, but without any ability to navigate, filter, or understand. The redesign turned a static table into a usable decision-making surface — with filtering, persistent rule detail, and plain-language logic all accessible from one view.</p>
+          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:32}}>The legacy rules list had one job  -  display all rules  -  and did so, but without any ability to navigate, filter, or understand. The redesign turned a static table into a usable decision-making surface  -  with filtering, persistent rule detail, and plain-language logic all accessible from one view.</p>
           <BeforeAfterWipe/>
           <div style={{display:'flex',flexDirection:'column',gap:16}}>
-            {[{num:'01',title:'Two-panel layout with plain-language rule logic',body:'A rules list alongside a persistent right detail panel — showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.'},{num:'02',title:'Find the right rule fast — filtering and inline preview',body:'Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel — no navigation required, no losing your place in the list.'},{num:'03',title:'Rule details and quick actions, without leaving the list',body:"The detail panel surfaces everything you'd otherwise have to dig for — rule logic, applies-to scope, and modification history — alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction."}].map(d=>(<div key={d.num} style={{display:'flex',gap:28,padding:'28px 0',borderTop:`1px solid ${borderLight}`}}><div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,flexShrink:0,width:40}}>{d.num}</div><div><div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8}}>{d.title}</div><p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{d.body}</p></div></div>))}
+            {[{num:'01',title:'Two-panel layout with plain-language rule logic',body:'A rules list alongside a persistent right detail panel  -  showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.'},{num:'02',title:'Find the right rule fast  -  filtering and inline preview',body:'Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel  -  no navigation required, no losing your place in the list.'},{num:'03',title:'Rule details and quick actions, without leaving the list',body:"The detail panel surfaces everything you'd otherwise have to dig for  -  rule logic, applies-to scope, and modification history  -  alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction."}].map(d=>(<div key={d.num} style={{display:'flex',gap:28,padding:'28px 0',borderTop:`1px solid ${borderLight}`}}><div style={{fontSize:32,fontWeight:800,color:accentDark,lineHeight:1,flexShrink:0,width:40}}>{d.num}</div><div><div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8}}>{d.title}</div><p style={{fontSize:13,lineHeight:1.65,color:deepBlue}}>{d.body}</p></div></div>))}
           </div>
         </div>
 
         {/* Divider */}
         <div style={{width:'100%',height:1,background:'rgba(66,125,219,0.12)',marginBottom:64}}/>
 
-        {/* Part B — Rule Creation */}
+        {/* Part B  -  Rule Creation */}
         <div>
           <div style={{display:'flex',flexDirection:'column',gap:4,marginBottom:8}}>
             <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.16em',textTransform:'uppercase',color:accent}}>Part B</span>
             <h3 style={{fontSize:22,fontWeight:800,color:accentDark,letterSpacing:'-0.3px',margin:0}}>Rule Creation</h3>
           </div>
-          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:40}}>The legacy creation experience assumed expert knowledge. The redesign built that knowledge into the flow — replacing a blank form with a guided workflow. Core structural shift: from a single overwhelming page to a stepped flow.</p>
+          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:700,marginBottom:40}}>The legacy creation experience assumed expert knowledge. The redesign built that knowledge into the flow  -  replacing a blank form with a guided workflow. Core structural shift: from a single overwhelming page to a stepped flow.</p>
           <PartBFeatureTabs
             tabs={[
               {
                 num:'01',
                 title:'Search, preview, and select clauses',
-                body:"The Add Clauses modal became a three-column layout: searchable clause list on the left, a preview panel in the center showing each clause's name, value type, and examples, and a selected clauses summary on the right. Users can preview a clause before committing — eliminating the trial-and-error loop.",
+                body:"The Add Clauses modal became a three-column layout: searchable clause list on the left, a preview panel in the center showing each clause's name, value type, and examples, and a selected clauses summary on the right. Users can preview a clause before committing  -  eliminating the trial-and-error loop.",
                 afterVid:"/design-vid-b1.mov",
                 beforeVid:"/legacy-vid-b1a.mov",
               },
@@ -2199,7 +2199,7 @@ export default function RulesCaseStudy(){
               {
                 num:'03',
                 title:'Live plain-language rule preview throughout',
-                body:'As users add clauses, the Rule Logic panel builds up a plain-English summary in real time — keyword, operator, and values rendered as a readable sentence. By the time they reach Review & Confirm, the full rule is visible in human-readable form, giving confidence before going live.',
+                body:'As users add clauses, the Rule Logic panel builds up a plain-English summary in real time  -  keyword, operator, and values rendered as a readable sentence. By the time they reach Review & Confirm, the full rule is visible in human-readable form, giving confidence before going live.',
                 afterVid:"/design-vid-b3.mov",
                 beforeImg:"/legacy-rule-creation.png",
               },
@@ -2212,18 +2212,18 @@ export default function RulesCaseStudy(){
 
     <section id="ch-validate" style={sec('transparent')}>
       <div style={ct}>
-        <StepLabel>Step 07 — Validate</StepLabel>
+        <StepLabel>Step 07  -  Validate</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>What Changed After Testing</h2>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:40}}>With the mid-high fidelity prototype in hand, I brought it to user testing sessions with compliance officers. Each workflow step was mapped to a specific research question, with areas of highest uncertainty — clause selection, value input, and the add list flow — as the focus. Here's what we heard, and what changed as a result. You can also <a href="/rule-management-prototype-v2-updated.html" target="_blank" rel="noreferrer" style={{color:terracotta,fontWeight:600,textDecoration:'underline',textUnderlineOffset:3}}>explore the updated v2 prototype</a> with all post-testing changes applied.</p>
-        {/* What worked well — compact */}
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:40}}>With the mid-high fidelity prototype in hand, I brought it to user testing sessions with compliance officers. Each workflow step was mapped to a specific research question, with areas of highest uncertainty  -  clause selection, value input, and the add list flow  -  as the focus. Here's what we heard, and what changed as a result. You can also <a href="/rule-management-prototype-v2-updated.html" target="_blank" rel="noreferrer" style={{color:terracotta,fontWeight:600,textDecoration:'underline',textUnderlineOffset:3}}>explore the updated v2 prototype</a> with all post-testing changes applied.</p>
+        {/* What worked well  -  compact */}
         <div style={{marginBottom:48}}>
           <div style={{fontSize:13,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',marginBottom:16,color:accent}}>What worked well</div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-            {["Rule Management screen improved — filtering helpful, rule preview on the right landed well","General workflow described as intuitive, smooth, comfortable — looks great and a lot easier to use","Add Clause step: users liked the search, additional info, and flexibility of quick add vs. preview first","Plain language rule preview that builds throughout the flow was a standout — users specifically called it out","Upload pattern felt familiar and seamless","Review & Confirm: users loved the rule preview at the end"].map((item,i)=>(<div key={i} style={{fontSize:13,lineHeight:1.6,color:deepBlue,padding:'10px 14px',borderRadius:8,background:'rgba(66,125,219,0.07)',borderLeft:`3px solid ${accentMid}`}}>{item}</div>))}
+            {["Rule Management screen improved  -  filtering helpful, rule preview on the right landed well","General workflow described as intuitive, smooth, comfortable  -  looks great and a lot easier to use","Add Clause step: users liked the search, additional info, and flexibility of quick add vs. preview first","Plain language rule preview that builds throughout the flow was a standout  -  users specifically called it out","Upload pattern felt familiar and seamless","Review & Confirm: users loved the rule preview at the end"].map((item,i)=>(<div key={i} style={{fontSize:13,lineHeight:1.6,color:deepBlue,padding:'10px 14px',borderRadius:8,background:'rgba(66,125,219,0.07)',borderLeft:`3px solid ${accentMid}`}}>{item}</div>))}
           </div>
         </div>
 
-        {/* What we iterated on — stacked cards with visuals + fullscreen overlay */}
+        {/* What we iterated on  -  stacked cards with visuals + fullscreen overlay */}
         <div style={{fontSize:13,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',marginBottom:24,color:terracotta}}>What we iterated on</div>
         <IterationCards/>
       </div>
@@ -2237,14 +2237,14 @@ export default function RulesCaseStudy(){
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Outcomes</StepLabel>
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,letterSpacing:'-0.018em',marginBottom:28}}>From shipped to what's next</h2>
-        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase — edit rule, change history, and eventually the full List Manager.</p>
+        <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase  -  edit rule, change history, and eventually the full List Manager.</p>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:32}}>
-          {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page — reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
+          {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page  -  reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
         </div>
         <div style={{padding:32,background:accentLight,border:`1px solid ${accentMid}`,borderRadius:12}}>
-          <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:16}}>What's next — Phase 2</p>
+          <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:16}}>What's next  -  Phase 2</p>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:16}}>
-            {['Edit Rule flow — building on the creation patterns established in Phase 1','Rule Change History — surfacing the audit trail users currently track in Excel','List Manager — the most complex and most requested capability, now better scoped'].map(t=>(<div key={t} style={{padding:'14px 16px',background:'rgba(125,145,165,0.08)',borderRadius:8,fontSize:12,lineHeight:1.6,color:deepBlue}}>{t}</div>))}
+            {['Edit Rule flow  -  building on the creation patterns established in Phase 1','Rule Change History  -  surfacing the audit trail users currently track in Excel','List Manager  -  the most complex and most requested capability, now better scoped'].map(t=>(<div key={t} style={{padding:'14px 16px',background:'rgba(125,145,165,0.08)',borderRadius:8,fontSize:12,lineHeight:1.6,color:deepBlue}}>{t}</div>))}
           </div>
         </div>
       </div>
@@ -2259,15 +2259,15 @@ export default function RulesCaseStudy(){
           {[
             {
               label:'Measuring what shipped',
-              body:'This project shipped two complete workflows — rule management and rule creation — and the qualitative signal was strong: testing validated the core patterns, and the compliance team adopted the new flows without the kind of pushback that usually accompanies enterprise redesigns. But I didn\'t establish success metrics before launch. I should have partnered with product to define what "better" looked like quantitatively — whether that was time-to-create-a-rule, support ticket volume, or error rates on value entry. The absence of hard numbers is the biggest gap in this work, and it\'s something I now build into every project from the start: define the measurement plan during discovery, not after ship.'
+              body:'This project shipped two complete workflows  -  rule management and rule creation  -  and the qualitative signal was strong: testing validated the core patterns, and the compliance team adopted the new flows without the kind of pushback that usually accompanies enterprise redesigns. But I didn\'t establish success metrics before launch. I should have partnered with product to define what "better" looked like quantitatively  -  whether that was time-to-create-a-rule, support ticket volume, or error rates on value entry. The absence of hard numbers is the biggest gap in this work, and it\'s something I now build into every project from the start: define the measurement plan during discovery, not after ship.'
             },
             {
               label:'Influencing the roadmap, not just the interface',
-              body:'The List Manager pivot is the moment in this project I think about most. We identified a clear, high-impact solution — and then hit an infrastructure wall that meant it couldn\'t ship in this cycle. I\'m proud of how quickly we redirected into a strong alternative. But looking back, I could have pushed harder to frame the List Manager as a multi-phase investment rather than accepting the deferral as binary. If I\'d built a clearer case for the incremental data architecture work — partnering with engineering to scope a minimal foundation in Phase 1 — we might have gotten closer to the full vision sooner. That\'s an instinct I\'ve since sharpened: shaping the roadmap conditions, not just designing within them.'
+              body:'The List Manager pivot is the moment in this project I think about most. We identified a clear, high-impact solution  -  and then hit an infrastructure wall that meant it couldn\'t ship in this cycle. I\'m proud of how quickly we redirected into a strong alternative. But looking back, I could have pushed harder to frame the List Manager as a multi-phase investment rather than accepting the deferral as binary. If I\'d built a clearer case for the incremental data architecture work  -  partnering with engineering to scope a minimal foundation in Phase 1  -  we might have gotten closer to the full vision sooner. That\'s an instinct I\'ve since sharpened: shaping the roadmap conditions, not just designing within them.'
             },
             {
               label:'Designing patterns, not just screens',
-              body:'The plain-language rule preview, the stepped creation flow, the structured value input — these weren\'t just solutions to individual problems. They became the interaction patterns that the rest of the compliance suite would build on. But I didn\'t make that explicit enough during the project. I should have documented the emerging pattern language more deliberately — creating shared artifacts that the broader team could reference as the product expanded. I\'ve learned that at a certain level of complexity, the system you leave behind matters as much as the feature you ship.'
+              body:'The plain-language rule preview, the stepped creation flow, the structured value input  -  these weren\'t just solutions to individual problems. They became the interaction patterns that the rest of the compliance suite would build on. But I didn\'t make that explicit enough during the project. I should have documented the emerging pattern language more deliberately  -  creating shared artifacts that the broader team could reference as the product expanded. I\'ve learned that at a certain level of complexity, the system you leave behind matters as much as the feature you ship.'
             },
           ].map((item, i) => (
             <div key={item.label} style={{padding:'28px 0',borderTop:i===0?'none':`1px solid ${borderLight}`}}>

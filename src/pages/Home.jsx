@@ -78,7 +78,7 @@ export default function Home() {
               </div>
               <div className={styles.projectContent}>
                 <h2 className={styles.projectTitleMuted}>Next Case Study</h2>
-                <p className={styles.projectSubMuted}>In progress — check back soon.</p>
+                <p className={styles.projectSubMuted}>In progress  -  check back soon.</p>
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function Home() {
               </div>
               <div className={styles.projectContent}>
                 <h2 className={styles.projectTitleMuted}>Next Case Study</h2>
-                <p className={styles.projectSubMuted}>In progress — check back soon.</p>
+                <p className={styles.projectSubMuted}>In progress  -  check back soon.</p>
               </div>
             </div>
           </div>
@@ -106,13 +106,13 @@ export default function Home() {
             <p className={styles.sectionLabel}>About</p>
             <h2 className={styles.aboutTitle}>
               I design for<br />
-              <em>complexity</em> —<br />
+              <em>complexity</em>  - <br />
               not despite it.
             </h2>
           </div>
           <div className={styles.aboutRight} data-reveal data-reveal-delay="1">
             <p className={styles.aboutBody}>
-              I'm a Lead UX Designer specializing in data-dense, high-stakes product environments — institutional investing platforms, trading workflows, and design systems that serve tens of thousands of professionals.
+              I'm a Lead UX Designer specializing in data-dense, high-stakes product environments  -  institutional investing platforms, trading workflows, and design systems that serve tens of thousands of professionals.
             </p>
             <p className={styles.aboutBody}>
               My work sits at the intersection of information architecture, interaction design, and systems thinking. I care deeply about the moment when complexity becomes clarity.

@@ -46,7 +46,7 @@ const CHAPTERS = [
   { id: 'ch-next',         label: "What's next" },
 ]
 
-// Same hook used on the home page — adds .revealed to [data-reveal] elements
+// Same hook used on the home page  -  adds .revealed to [data-reveal] elements
 // once they cross 10% into the viewport.
 function useScrollReveal() {
   const ref = useRef(null)
@@ -121,12 +121,12 @@ export default function OrderManagementCaseStudy() {
       if (zoomControls) zoomControls.style.display = visible ? 'none' : 'inline-flex'
       if (!stage) return
       // Compare mode: stage starts below the centered toggle controls.
-      // Single-image mode: stage spans the full viewport — close + zoom
+      // Single-image mode: stage spans the full viewport  -  close + zoom
       // controls float on top so the image can fill the entire height.
       stage.style.top = visible ? '170px' : '0'
       stage.style.bottom = visible ? '32px' : '0'
       // Reset any single-image overrides when re-entering compare mode.
-      // Important: explicitly set the dark backdrop here — relying on '' to
+      // Important: explicitly set the dark backdrop here  -  relying on '' to
       // fall back to the HTML inline style doesn't work because the inline
       // attribute is mutated by openImage. Set it directly so the backdrop
       // fully obscures page content.
@@ -243,7 +243,7 @@ export default function OrderManagementCaseStudy() {
       if (!stage || !lb) return
       setControlsVisible(false)
       // Single-image mode: backdrop is the EXACT same composition as the OM
-      // page hero — mustard gradient at 0.55/0.65 alpha layered over cream.
+      // page hero  -  mustard gradient at 0.55/0.65 alpha layered over cream.
       // Cream base keeps it fully opaque so the page can't bleed through.
       lb.style.background = '#F6F6F1'
       lb.style.backdropFilter = 'blur(24px)'
@@ -259,7 +259,7 @@ export default function OrderManagementCaseStudy() {
       el.src = src
       if (alt) el.alt = alt
       // At zoom=1 the image fits the stage. After load, capture the rendered
-      // fit size — zoomImage multiplies that captured size by zoomLevel so
+      // fit size  -  zoomImage multiplies that captured size by zoomLevel so
       // each click is a true 10% increase relative to fit, not a jump from
       // height-limited to width-100% of the stage.
       el.style.cssText =
@@ -513,7 +513,7 @@ export default function OrderManagementCaseStudy() {
 
   // --- Chapter nav: scrollspy + visibility ---
   // Watches each chapter section. The "active" chapter is the topmost section
-  // whose top has crossed ~30% down the viewport — i.e. the one the reader is
+  // whose top has crossed ~30% down the viewport  -  i.e. the one the reader is
   // currently scrolling through. Nav fades in once the reader has scrolled
   // past the hero, and out once they reach the closing reflection.
   useEffect(() => {
@@ -556,7 +556,7 @@ export default function OrderManagementCaseStudy() {
   }, [])
 
   // When the active chapter changes, auto-center its label inside the
-  // bottom word bar (only relevant when the bar is the visible variant —
+  // bottom word bar (only relevant when the bar is the visible variant  - 
   // overflow scrolling kicks in when the labels exceed viewport width).
   useEffect(() => {
     const bar = chapterBarRef.current
@@ -584,7 +584,7 @@ export default function OrderManagementCaseStudy() {
     })
   }
 
-  // Hero pill tags — mirror the home page's fadeUp stagger.
+  // Hero pill tags  -  mirror the home page's fadeUp stagger.
   const heroPills = [
     { label: 'Research',       variant: 'blue' },
     { label: 'Strategy',       variant: 'gold' },
@@ -597,7 +597,7 @@ export default function OrderManagementCaseStudy() {
     <div ref={pageRef} className="cs-page" style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Nav />
 
-      {/* Sticky chapter nav — left rail at ≥1440px viewport.
+      {/* Sticky chapter nav  -  left rail at ≥1440px viewport.
           .is-visible only adds the fade-in once the reader is past the hero. */}
       <aside
         className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
@@ -619,7 +619,7 @@ export default function OrderManagementCaseStudy() {
         </ul>
       </aside>
 
-      {/* Floating word bar — mid-viewport fallback (768–1439px). Same
+      {/* Floating word bar  -  mid-viewport fallback (768–1439px). Same
           scrollspy state drives the active label; the bar scrolls
           horizontally if it overflows, with auto-centering on active. */}
       <aside
@@ -644,11 +644,11 @@ export default function OrderManagementCaseStudy() {
       </aside>
 
 
-      {/* Home-style ambient radial-gradient wrapper — same multi-color wash
+      {/* Home-style ambient radial-gradient wrapper  -  same multi-color wash
           behind the hero + body content. The case study is ~4-5x taller than
           the home, so the 7-orb pattern used on home would leave visible
           cream gaps between bursts. Scaled up to 11 larger, softer orbs that
-          cycle steel-blue → gold → terracotta down the full page length —
+          cycle steel-blue → gold → terracotta down the full page length  - 
           keeps the wash continuous and the individual pops subtle. */}
       <div>
         <section style={{ padding: 'clamp(80px, 10vw, 120px) 0 clamp(48px, 6vw, 80px)' }}>
@@ -677,7 +677,7 @@ export default function OrderManagementCaseStudy() {
               maxWidth: 560,
               margin: '0 0 36px',
             }}>
-              We explored the bold direction, let research kill it, and shipped the disciplined one — sometimes the most impactful design work is knowing what not to build.
+              We explored the bold direction, let research kill it, and shipped the disciplined one  -  sometimes the most impactful design work is knowing what not to build.
             </p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {heroPills.map(({ label }) => (

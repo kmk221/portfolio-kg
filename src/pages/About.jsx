@@ -61,7 +61,7 @@ export default function About() {
                     <p style={{ fontSize: 13, color: 'var(--clay-ink)', margin: '0 0 1px', fontFamily: 'var(--f-mono)', letterSpacing: '0.02em' }}>Cornell University (Online) · 2025</p>
                   </div>
                   <div>
-                    <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)', margin: '0 0 2px' }}>BS Psychology — Cognitive Neuroscience</p>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)', margin: '0 0 2px' }}>BS Psychology  -  Cognitive Neuroscience</p>
                     <p style={{ fontSize: 13, color: 'var(--clay-ink)', margin: '0 0 1px', fontFamily: 'var(--f-mono)', letterSpacing: '0.02em' }}>University of Denver · 2014</p>
                     <p style={{ fontSize: 12, color: 'var(--ink-3)', margin: 0 }}>Magna Cum Laude</p>
                   </div>
@@ -126,14 +126,14 @@ export default function About() {
                     bullets: [
                       { label: 'Strategic Career Progression', body: 'Progressed through foundational roles from retail trading and brokerage operations to Agile project management, team leadership, and new employee onboarding.' },
                       { label: 'Service Design & Onboarding', body: 'Directed site-wide onboarding for 150+ new hires, redesigning the training user journey to drastically reduce speed-to-proficiency and improve employee engagement.' },
-                      { label: 'Operational Strategy & Cost Savings', body: 'Delivered $1.2M in annual cost savings by re-engineering a 500-person operations workflow — utilizing systems thinking to define new performance metrics and career progressions.' },
+                      { label: 'Operational Strategy & Cost Savings', body: 'Delivered $1.2M in annual cost savings by re-engineering a 500-person operations workflow  -  utilizing systems thinking to define new performance metrics and career progressions.' },
                       { label: 'Early UX Leadership', body: "Awarded 1st place in Fidelity's company-wide Process Improvement Competition for a user-centered redesign of the account re-registration process; advised mobile and web trading squads on design decisions via the Young Savvy Advisory Board." },
                     ],
                   },
                 ].map((job, i, arr) => (
                   <div key={job.dates} style={{ position: 'relative', paddingBottom: i < arr.length - 1 ? 52 : 0 }}>
 
-                    {/* Timeline node — centered on the 1px line at x=5 from container edge */}
+                    {/* Timeline node  -  centered on the 1px line at x=5 from container edge */}
                     <div style={{
                       position: 'absolute',
                       left: -28,

@@ -49,7 +49,7 @@ export default function Nav() {
             kristin<span style={{ color: 'var(--clay)' }}>.</span>garza
           </Link>
 
-          {/* Desktop nav — only rendered when not mobile */}
+          {/* Desktop nav  -  only rendered when not mobile */}
           {!isMobile && (
             <ul className="nav-links-desktop">
               {isHome ? (
@@ -67,7 +67,7 @@ export default function Nav() {
             </ul>
           )}
 
-          {/* Hamburger — only on mobile */}
+          {/* Hamburger  -  only on mobile */}
           {isMobile && (
             <button
               className="nav-hamburger"

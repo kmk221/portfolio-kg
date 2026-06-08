@@ -83,7 +83,7 @@
 }
 .cs-page .om-gold-rule { flex: 1; height: 1px; background: rgba(184,103,87,0.3); }
 .cs-page .om-gold-title {
-  font-size: clamp(26px, 3.2vw, 38px); font-weight: 700; line-height: 1.2;
+  font-family: var(--f-serif); font-size: clamp(26px, 3.2vw, 38px); font-weight: 300; line-height: 1.2;
   color: #372B0B; margin-bottom: 20px; letter-spacing: -0.01em;
 }
 .cs-page .om-gold-lede {

@@ -657,19 +657,19 @@ export default function OrderManagementCaseStudy() {
               <span className="eyebrow">Case Study · Order Management · 2025</span>
             </div>
             <h1 style={{
-              fontFamily: 'var(--f-slab)',
-              fontWeight: 400,
+              fontFamily: 'var(--f-serif)',
+              fontWeight: 300,
               fontSize: 'clamp(36px, 5vw, 64px)',
-              letterSpacing: '-0.02em',
-              lineHeight: 1.05,
-              color: 'var(--ink)',
+              letterSpacing: '-0.01em',
+              lineHeight: 1.1,
+              color: '#372B0B',
               margin: '0 0 20px',
             }}>
-              Killing the Big Idea<span style={{ color: 'var(--clay)' }}>.</span>
+              Addition Through Subtraction<span style={{ color: 'var(--clay)' }}>.</span>
             </h1>
             <p style={{
               fontFamily: 'var(--f-serif)',
-              fontStyle: 'italic',
+              fontStyle: 'normal',
               fontWeight: 300,
               fontSize: 'clamp(17px, 1.5vw, 21px)',
               lineHeight: 1.55,
@@ -677,7 +677,7 @@ export default function OrderManagementCaseStudy() {
               maxWidth: 560,
               margin: '0 0 36px',
             }}>
-              We explored the bold direction, let research kill it, and shipped the disciplined one  -  sometimes the most impactful design work is knowing what not to build.
+              Pivoting from a feature‑heavy dashboard to a focused, essential workflow that unlocked a clean component and layout pattern used across multiple applications.
             </p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {heroPills.map(({ label }) => (
@@ -687,7 +687,18 @@ export default function OrderManagementCaseStudy() {
           </div>
         </section>
 
-        <div className="om-page" dangerouslySetInnerHTML={{ __html: HERO_ANIM_HTML }} />
+        <div className="om-page" style={{ padding: '0 0 clamp(48px, 6vw, 80px)' }}>
+          <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 64px' }}>
+            <video
+              src="/om-assets/post.mov"
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{ width: '100%', borderRadius: 12, display: 'block' }}
+            />
+          </div>
+        </div>
 
         <div className="om-page" dangerouslySetInnerHTML={{ __html: REST_BODY_HTML }} />
 

@@ -28,6 +28,17 @@
   .om-page .container { max-width: var(--content-w); width: 100%; margin: 0 auto; padding: 0 var(--side-p); }
 
   
+  /* Section headings — Crimson Pro light, matches om-gold-title */
+  .om-page h2,
+  .om-page h3,
+  .om-page h4 {
+    font-family: var(--f-serif) !important;
+    font-weight: 300 !important;
+    color: #372B0B !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.2 !important;
+  }
+
   .om-page .step-label {
     font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 40px;

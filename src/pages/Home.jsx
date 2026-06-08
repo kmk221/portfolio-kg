@@ -19,13 +19,8 @@ export default function Home() {
         <div className={styles.heroInner}>
           <p className={`${styles.eyebrow} fade-up fade-up-delay-1`}>Product Design Portfolio</p>
           <h1 className={`${styles.heroTitle} fade-up fade-up-delay-2`}>
-            Designing systems<br />
-            <span className={styles.heroTitleLight}>that scale with people.</span>
+            Crafting simple, thoughtful, and delightful experiences for humans in a complex digital world.
           </h1>
-          <p className={`${styles.heroSub} fade-up fade-up-delay-3`}>
-            Lead UX Designer focused on complex data-dense workflows,<br />
-            design systems, and institutional product experiences.
-          </p>
         </div>
       </section>
 
@@ -112,10 +107,10 @@ export default function Home() {
           </div>
           <div className={styles.aboutRight} data-reveal data-reveal-delay="1">
             <p className={styles.aboutBody}>
-              I'm a Lead UX Designer specializing in data-dense, high-stakes product environments  -  institutional investing platforms, trading workflows, and design systems that serve tens of thousands of professionals.
+              I'm a senior UX designer who specializes in bringing clarity to complex systems and making products feel simple, thoughtful, and human. I care about craft, warmth, and designing experiences that feel intuitive without losing depth.
             </p>
             <p className={styles.aboutBody}>
-              My work sits at the intersection of information architecture, interaction design, and systems thinking. I care deeply about the moment when complexity becomes clarity.
+              I'm drawn to work that serves real people, but also leaves room for instinct, bold choices, and design that challenges what's expected. I'm motivated by the opportunity to create digital experiences that are not only more approachable and smoother, but also bring moments of surprise and delight.
             </p>
             <div className={styles.aboutStats}>
               <div className={styles.stat}>

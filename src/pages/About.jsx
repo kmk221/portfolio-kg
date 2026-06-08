@@ -14,7 +14,7 @@ export default function About() {
           </div>
           <div className="about-header-layout">
             <p className="about-header-bio">
-              Product Designer with 10+ years of experience across enterprise financial services, project management, and leadership. Specialized in deconstructing complex institutional workflows into highly efficient and simple user experiences. Proven track record of leveraging user insights to drive operational efficiency and deliver data-driven solutions in high-stakes environments.
+              Senior UX Designer with 10+ years of experience across enterprise financial services, product strategy, and leadership. I specialize in bringing clarity to complex institutional workflows and making data-dense tools feel simple, thoughtful, and human. My work is shaped by real needs and data but guided by instinct, bold choices, and design that challenges what's expected. My goal is to lower barriers, create momentum, and help people feel more capable, confident, and connected to what matters.
             </p>
             <div className="about-contact-pills">
               <a href="mailto:kmkerney221@gmail.com">kmkerney221@gmail.com</a>
@@ -36,13 +36,13 @@ export default function About() {
                 <span className="eyebrow" style={{ display: 'block', marginBottom: 20 }}>Skills</span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                   {[
-                    { title: 'Product Design & Strategy', body: 'Problem framing, designing data-dense enterprise workflows, information architecture, and scalable UX patterns.' },
-                    { title: 'Execution & Craft', body: 'User research, usability testing (UserTesting, Qualtrics), and translating complex insights into validated product decisions.' },
-                    { title: 'Research & Insights', body: 'High-fidelity prototyping (Figma), interaction design, and ensuring accessibility and usability best practices.' },
-                    { title: 'AI-Augmented & Technical Workflows', body: 'AI-augmented design (Claude, Lovable), rapid prototyping (Vercel), and front-end development fundamentals (HTML/CSS).' },
-                    { title: 'Systems Thinking', body: 'Architecting solutions across fragmented enterprise ecosystems using Service Blueprinting to map end-to-end user journeys against technical constraints.' },
-                    { title: 'Regulatory & Compliance UX', body: 'Designing within rigid financial regulatory constraints (FINRA/SEC); managing secure Identity & Access Management (IAM) and authentication workflows.' },
-                    { title: 'Collaboration & Product Delivery', body: 'Agile delivery (JIRA, Confluence), cross-functional leadership, and data-informed decision-making via Adobe Analytics.' },
+                    { title: 'Product Design & Strategy', body: 'Problem framing, defining product vision, simplifying data-dense workflows, information architecture, and scalable UX patterns.' },
+                    { title: 'Execution & Craft', body: 'High-fidelity prototyping, interaction design, micro-interactions, and experiences that feel approachable, accessible, and enjoyable.' },
+                    { title: 'Research & Insights', body: 'User interviews, usability testing (UserTesting, Qualtrics), synthesizing complex insights, and using them to guide clear, confident product decisions.' },
+                    { title: 'AI-Augmented & Technical Workflows', body: 'Harnessing AI as a design partner to explore concepts faster within real constraints — prompting with design systems and technical requirements in mind, stress-testing clickable code prototypes, and using judgment, craft, and front-end fundamentals to choose which directions to pursue and what ultimately ships.' },
+                    { title: 'Systems Thinking', body: 'Architecting solutions across fragmented enterprise ecosystems; service blueprinting end-to-end journeys against technical, regulatory, and organizational constraints.' },
+                    { title: 'Regulatory & Compliance UX', body: 'Designing within strict financial regulations and sensitive client-data constraints, translating complex compliance and security requirements into experiences that feel clear, trustworthy, and human.' },
+                    { title: 'Collaboration & Product Delivery', body: 'Agile delivery (JIRA, Confluence), partnering with cross-functional teams, and aligning stakeholders through clear narratives and user-informed decisions.' },
                   ].map(skill => (
                     <div key={skill.title}>
                       <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--clay-ink)', margin: '0 0 4px', fontFamily: 'var(--f-sans)' }}>{skill.title}</p>
@@ -93,10 +93,10 @@ export default function About() {
                     title: 'Lead UX Designer, Trading',
                     company: 'Fidelity Investments',
                     bullets: [
-                      { label: 'Platform Ecosystem Strategy', body: 'Unified 15+ trading applications under a standardized design system, replacing legacy fragmentation with reusable atomic components. Reduced development overhead and accelerated speed-to-market while ensuring a cohesive, enterprise-wide platform experience.' },
-                      { label: 'Strategic Leadership & Product Vision', body: 'Partnered with PM and Engineering leadership to align disparate trading squads under a unified roadmap; led the strategic prioritization of high-impact design efforts within technical and regulatory constraints to ensure the most valuable product enhancements were delivered first.' },
-                      { label: 'Performance Optimization', body: 'Streamlined data-dense trading interfaces to reduce costly trade errors and service inquiries that burdened product, sales, and service teams. Transformed legacy bottlenecks into high-velocity workflows that increased user satisfaction and long-term platform loyalty.' },
-                      { label: 'AI-Driven Delivery', body: 'Leveraged AI-augmented workflows to discover, build, and test more quickly for earlier stakeholder alignment and collaboration on complex, data-dense, and technical features.' },
+                      { label: 'Platform Ecosystem Strategy', body: 'Unified 15+ trading applications under a standardized design system, replacing legacy fragmentation with reusable atomic components. Delivered a cohesive, human-centered platform experience while reducing development overhead and accelerating speed-to-market.' },
+                      { label: 'Strategic Leadership & Product Vision', body: 'Partnered with PM and Engineering leadership to align disparate trading squads under a unified roadmap. Led prioritization of high-impact design work within technical and regulatory constraints, focusing on the flows that most improved client confidence and day-to-day usability.' },
+                      { label: 'Performance Optimization', body: 'Redesigned data-dense trading interfaces to reduce costly trade errors and service inquiries that burdened product, sales, and service teams. Turned legacy bottlenecks into approachable, clear, high-velocity workflows that increased satisfaction and efficiency.' },
+                      { label: 'AI-Driven Delivery', body: 'Leveraged AI-augmented workflows to explore concepts, prototype, and test more quickly, enabling earlier alignment on complex, technical features without sacrificing craft or clarity.' },
                     ],
                   },
                   {
@@ -104,9 +104,9 @@ export default function About() {
                     title: 'UX Designer, Core Platform Utilities',
                     company: 'Fidelity Investments',
                     bullets: [
-                      { label: 'User Research', body: 'Conducted targeted user research and usability testing to demystify opaque institutional workflows, translating qualitative findings into actionable design recommendations for platform-wide utilities including search, workflow management, security & authentication, and help systems.' },
-                      { label: 'Cross-functional Leadership', body: 'Facilitated design thinking workshops that brought together developers, product owners, and user groups to foster a collaborative, user-centered product culture.' },
-                      { label: 'Strategic Insights', body: 'Provided design leadership and visual strategy for internal and client-facing solutions, ensuring a seamless transition from legacy workflows to enhanced digital experiences.' },
+                      { label: 'User Research', body: 'Conducted targeted user research and usability testing to understand complex institutional workflows, translating findings into clearer, more intuitive designs for platform-wide utilities (search, workflow management, security & authentication, help systems).' },
+                      { label: 'Cross-functional Leadership', body: 'Facilitated design workshops with developers, product owners, and user groups to build shared understanding and keep complex decisions anchored in real user needs.' },
+                      { label: 'Strategic Insights', body: 'Provided design leadership and visual strategy for internal and client-facing solutions, guiding teams through the transition from legacy workflows to more cohesive, human-centered digital experiences.' },
                     ],
                   },
                   {
@@ -114,9 +114,10 @@ export default function About() {
                     title: 'UX Design Immersive',
                     company: 'General Assembly',
                     bullets: [
-                      { label: 'Intensive Career Transition', body: 'Completed a 1000+ hour immersive program with a dedicated outcomes focus, mastering the end-to-end product lifecycle from discovery to delivery.' },
+                      { label: 'Intensive Career Transition', body: 'Completed a 1000+ hour immersive program with a dedicated outcomes focus, mastering the end-to-end product lifecycle from discovery to delivery, with a focus on complex, multi-stakeholder problems.' },
                       { label: 'Sharper Sense (Client Consultancy)', body: 'Led a high-impact design sprint to define product strategy and core feature sets for a biotech company, delivering a full handoff of a high-fidelity prototyped site and strategic content that facilitated successful seed funding and initial launch.' },
                       { label: 'Epic Funds (Client Consultancy)', body: 'Led a comprehensive product discovery and redesign process for a private equity fund. Provided strategic consultation to determine optimal product-market fit between a promotional site and a functional technology platform, resulting in increased brand clarity and consumer engagement.' },
+                      { label: 'Stakeholder Management', body: 'Developed and presented high-fidelity prototypes and research synthesis to local business partners, ensuring design solutions aligned with technical constraints and business goals.' },
                     ],
                   },
                   {
@@ -127,7 +128,7 @@ export default function About() {
                       { label: 'Strategic Career Progression', body: 'Progressed through foundational roles from retail trading and brokerage operations to Agile project management, team leadership, and new employee onboarding.' },
                       { label: 'Service Design & Onboarding', body: 'Directed site-wide onboarding for 150+ new hires, redesigning the training user journey to drastically reduce speed-to-proficiency and improve employee engagement.' },
                       { label: 'Operational Strategy & Cost Savings', body: 'Delivered $1.2M in annual cost savings by re-engineering a 500-person operations workflow  -  utilizing systems thinking to define new performance metrics and career progressions.' },
-                      { label: 'Early UX Leadership', body: "Awarded 1st place in Fidelity's company-wide Process Improvement Competition for a user-centered redesign of the account re-registration process; advised mobile and web trading squads on design decisions via the Young Savvy Advisory Board." },
+                      { label: 'Early UX Leadership', body: "Awarded 1st place in Fidelity's company-wide Process Improvement Competition for a user-centered redesign of the account re-registration process; advised mobile and web trading squads on design decisions via the Young Savvy Advisory Board; attended and provided internal SME guidance at hackathon conference to help modernize an internal operations application." },
                     ],
                   },
                 ].map((job, i, arr) => (

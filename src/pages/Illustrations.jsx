@@ -164,7 +164,7 @@ export default function Illustrations() {
               maxWidth: '72ch',
               margin: '0 0 16px',
             }}>
-              Every piece here is hand-drawn by me, with a mouse, in Figma. No AI, no shortcuts. Just patient, click-by-click line work. These started as surprises, a birthday card here, a wedding gift there. Once friends and family saw a few, they started asking for more. Many of the people illustrations are drawn from real photos or memories, but I like to add creative twists that make them feel a little more personal. Here are a few favorites.
+              Every piece here is hand-drawn by me, with a mouse, in Figma. No AI, no shortcuts. Just patient, click-by-click line work. These started as surprises: a birthday card here, a wedding gift there. Once friends and family saw a few, they started asking for more. Many of the illustrations are drawn from real photos or memories, but I like to add small twists that make them feel a little more personal.
             </p>
             <p style={{
               fontFamily: 'var(--f-sans)',
@@ -174,7 +174,7 @@ export default function Illustrations() {
               maxWidth: '72ch',
               margin: 0,
             }}>
-              There's something therapeutic about starting from nothing and slowly bringing a moment to life, click by click. What I love about this work is the iteration, trying different versions, adjusting a line weight or a composition until something really pops. But what keeps me coming back is seeing someone's face when they recognize themselves or a memory in a drawing. That reaction is exactly what I want from my design career: to use judgment to pick a direction, iterate with care, obsess over the details, and create experiences that spark joy. In a world where anyone can generate an image, the value is in the taste, intention, and craft behind it, and in creating something that feels deeply personal to the people it's made for.
+              There's something therapeutic about starting from nothing and slowly bringing a moment to life, click by click. I love the iteration: trying different versions, adjusting a line weight or composition until something feels inevitable. But what keeps me coming back is seeing someone's face when they recognize themselves or a memory in a drawing. That reaction is the same thing I'm chasing in my product work: using judgment to pick a direction, iterating with care, obsessing over details, and creating experiences that feel simple, human, and quietly delightful. In a world where anyone can generate an image, the value is in the taste, intention, and craft behind it, and in making something that feels deeply personal to the people it's made for.
             </p>
           </div>
         </section>

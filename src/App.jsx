@@ -17,9 +17,7 @@ export default function Home() {
               <span className="eyebrow-title">UX Designer · Product Thinker</span>
             </span>
             <h1 className="hero-headline">
-              Taming complexity and making<br />
-              hard tasks simple for&nbsp;<span style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', letterSpacing: 1, color: 'var(--slate-deep)', display: 'inline-block', lineHeight: '1', verticalAlign: '0.05em' }}>humans</span><br />
-              who depend on them.
+              Crafting simple, thoughtful, and delightful experiences for <span style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', letterSpacing: 1, color: 'var(--slate-deep)', display: 'inline-block', lineHeight: '1', verticalAlign: '0.05em' }}>humans</span> in a complex digital world.
             </h1>
             <div className="ctas">
               <a href="#work" className="btn btn--lg">View work ↓</a>
@@ -49,19 +47,19 @@ export default function Home() {
             <div className="home-about-layout">
               <div className="home-about-text">
                 <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, margin: '0 0 24px' }}>
-                  I'm a Lead UX Designer who thrives at the intersection of product strategy, systems thinking, and technical constraints  -  unwinding tangled workflows into experiences that feel effortless. I like to go deep on the complexity beneath the surface, understanding every constraint and dependency. Then I untangle it in a way the user never knows it existed. I bring stakeholder alignment and a deep commitment to user needs to every problem I take on, most recently unifying 15+ trading applications under a cohesive design system at a leading B2B financial services firm.
+                  I'm a senior UX designer who specializes in bringing clarity to complex systems and making products feel simple, thoughtful, and human. I care about craft, warmth, and designing experiences that feel intuitive without losing depth. I'm drawn to designing for people and products that help make life a little better. My work is shaped by real needs and data, but also guided by instinct and bold choices that challenge what's expected and create moments of surprise and delight. My goal is to lower barriers, create momentum, and help people feel more capable, confident, and connected to what matters.
                 </p>
                 <Link to="/about" className="btn btn--secondary">
                   More + resume →
                 </Link>
               </div>
               <div className="home-about-chips">
-                <span className="chip chip--neutral">Product Strategy</span>
-                <span className="chip chip--neutral">Platform Ecosystems</span>
+                <span className="chip chip--neutral">Product Design</span>
                 <span className="chip chip--neutral">Systems Thinking</span>
-                <span className="chip chip--neutral">Enterprise UX</span>
-                <span className="chip chip--neutral">AI-Augmented Design</span>
                 <span className="chip chip--neutral">Design Systems</span>
+                <span className="chip chip--neutral">Human-Centered UX</span>
+                <span className="chip chip--neutral">AI-Augmented Design</span>
+                <span className="chip chip--neutral">Craft + Clarity</span>
               </div>
             </div>
           </div>

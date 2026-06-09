@@ -8,6 +8,7 @@ import RulesCaseStudy from './pages/RulesCaseStudy.jsx'
 import OrderManagementCaseStudy from './pages/OrderManagementCaseStudy.jsx'
 import CaseStudyOM from './pages/CaseStudyOM.jsx'
 import ColorPreview from './pages/ColorPreview.jsx'
+import DesignSystem from './pages/DesignSystem.jsx'
 import About from './pages/About.jsx'
 import AIDesign from './pages/AIDesign.jsx'
 import Illustrations from './pages/Illustrations.jsx'
@@ -44,6 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/ai-design" element={<AIDesign />} />
         <Route path="/illustrations" element={<Illustrations />} />
         <Route path="/preview/color" element={<ColorPreview />} />
+        <Route path="/design-system" element={<DesignSystem />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

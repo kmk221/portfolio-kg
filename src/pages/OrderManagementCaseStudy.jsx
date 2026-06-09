@@ -35,15 +35,11 @@ import './OrderManagementCaseStudy.css'
 // corresponding section's id in OrderManagementCaseStudy.body.html, and
 // `label` is the rail label shown on desktop (≥1200px).
 const CHAPTERS = [
-  { id: 'ch-tldr',         label: 'tl;dr' },
-  { id: 'ch-framing',      label: 'Context' },
-  { id: 'ch-legacy',       label: 'Legacy' },
-  { id: 'ch-research',     label: 'Research' },
-  { id: 'ch-principles',   label: 'Principles' },
-  { id: 'ch-design',       label: 'New design' },
-  { id: 'ch-outcome',      label: 'Outcome' },
-  { id: 'ch-pilot',        label: 'Pilot' },
-  { id: 'ch-next',         label: "What's next" },
+  { id: 'ch-product-context', label: 'Context' },
+  { id: 'ch-research',    label: 'Research' },
+  { id: 'ch-design',      label: 'Redesign' },
+  { id: 'ch-outcome',     label: 'Outcome' },
+  { id: 'ch-reflection',  label: 'Reflection' },
 ]
 
 // Same hook used on the home page  -  adds .revealed to [data-reveal] elements
@@ -77,6 +73,7 @@ export default function OrderManagementCaseStudy() {
   const chapterBarRef = useRef(null)
   const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
   const [navVisible, setNavVisible] = useState(false)
+  const [navCollapsed, setNavCollapsed] = useState(false)
 
   useEffect(() => {
     // Scroll to top whenever this page mounts.
@@ -597,12 +594,22 @@ export default function OrderManagementCaseStudy() {
     <div ref={pageRef} className="cs-page" style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Nav />
 
-      {/* Sticky chapter nav  -  left rail at ≥1440px viewport.
-          .is-visible only adds the fade-in once the reader is past the hero. */}
+      {/* Sticky chapter nav  -  left rail at ≥1100px viewport. */}
       <aside
-        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
+        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}${navCollapsed ? ' is-collapsed' : ''}`}
         aria-label="Case study chapters"
       >
+        <div className="om-chapter-nav-header">
+          <span className="om-chapter-nav-title">{navCollapsed ? '' : "What's inside"}</span>
+          <button
+            type="button"
+            className="om-chapter-nav-toggle"
+            aria-label={navCollapsed ? 'Expand navigation' : 'Collapse navigation'}
+            onClick={() => setNavCollapsed(c => !c)}
+          >
+            {navCollapsed ? '›' : '‹'}
+          </button>
+        </div>
         <ul className="om-chapter-nav-list">
           {CHAPTERS.map(({ id, label }) => (
             <li key={id}>
@@ -695,6 +702,7 @@ export default function OrderManagementCaseStudy() {
               loop
               muted
               playsInline
+              poster="/om-assets/shipped-still.png"
               style={{ width: '100%', borderRadius: 12, display: 'block' }}
             />
           </div>

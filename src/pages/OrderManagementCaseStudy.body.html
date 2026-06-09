@@ -109,7 +109,7 @@
 <!-- ===== TL;DR ===== -->
 <section id="ch-tldr" data-reveal class="section" style="background: var(--page-bg); padding-top: 160px; padding-bottom: 160px;">
   <div class="container">
-    <h2 style="font-size: 72px; font-weight: 800; color: var(--espresso); line-height: 1; margin-bottom: 56px;">tl;dr</h2>
+    <h2 style="font-size: clamp(36px, 5vw, 64px) !important; font-weight: 300; color: var(--espresso); line-height: 1; margin-bottom: 56px;">tl;dr</h2>
     <div style="display: flex; flex-direction: column; gap: 36px; max-width: 820px; margin-bottom: 48px;">
       <div>
         <div class="section-spread" style="margin-bottom: 12px;"><span class="eyebrow">Context</span><span class="rule"></span></div>
@@ -166,7 +166,7 @@
       The system users lived in
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 40px;">
-      Here's what users were working with every day  -  three compounding pain points. Each is worth looking at on its own.
+      Here's what users were working with every day: three compounding pain points that made a high-stakes workflow harder than it needed to be.
     </p>
 
     <!-- Tabbed progressive-disclosure: only one pain point at a time -->
@@ -179,9 +179,7 @@
 
       <!-- 2A: Spatial problem -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="spatial" id="legacy-panel-spatial" aria-labelledby="legacy-tab-spatial">
-        <p class="om-tab-description">
-          Filters expanded vertically from the top, order details from the bottom  -  both crushed the orders table. Users had to choose: filter, view details, or see their list. Pick one.
-        </p>
+        <p class="om-tab-description">Filters and order details both expanded vertically, collapsing the orders table from opposite ends. Users couldn't filter, review details, and see their list at the same time — forcing constant trade-offs in a workflow where all three mattered.</p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
             <source src="/om-assets/legacy-spatial-1.mov" type="video/mp4">
@@ -191,9 +189,7 @@
 
       <!-- 2B: Hidden actions -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="hidden" id="legacy-panel-hidden" aria-labelledby="legacy-tab-hidden" hidden>
-        <p class="om-tab-description">
-          No checkboxes, no visual affordance for selection. Bulk actions required shift-clicking and a right-click context menu. Buttons toggled enabled/disabled with no explanation.
-        </p>
+        <p class="om-tab-description">There was no visible way to select orders — bulk actions were buried behind shift-clicks and right-click menus. In a workflow built around acting on multiple orders at once, there was no visual affordance for this critical action.</p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
             <source src="/om-assets/legacy-hidden-actions.mov" type="video/mp4">
@@ -203,9 +199,7 @@
 
       <!-- 2C: Blind send flow -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="blind-send" id="legacy-panel-blind-send" aria-labelledby="legacy-tab-blind-send" hidden>
-        <p class="om-tab-description">
-          Invisible selection → vague send options → useless verification screen (no individual orders visible, nothing fixable) → no confirmation after sending.
-        </p>
+        <p class="om-tab-description">The send flow offered no visibility into what was being sent or why errors existed — just vague options and a confirmation screen with nothing actionable. Sending orders is the highest-stakes moment in the workflow, and users were doing it blind.</p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
             <source src="/om-assets/legacy-blind-send.mov" type="video/mp4">
@@ -229,7 +223,7 @@
       Testing the dashboard hypothesis
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 40px;">
-      We began with a hypothesis: if Order Management is an end-to-end workflow, a central dashboard might help users move more fluidly across it. Early signals from incident reports and usability issues suggested fragmentation was a real problem, so we explored whether a more consolidated view could solve it.
+      We began with a hypothesis: if Order Management is an end-to-end workflow, a central dashboard might help users move more fluidly across it. Early signals from incident reports and usability issues suggested fragmentation was real, so we explored whether a more consolidated view could solve it.
     </p>
     <div style="margin-bottom: 64px;">
       <img src="/om-assets/concept-1.png" alt="Lo-fi dashboard concept A shown to users" style="width: 100%; border-radius: 10px; display: block; box-shadow: 0 2px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);" />
@@ -240,7 +234,7 @@
       How I pressure-tested the idea
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 64px;">
-      To test the direction, I ran exploratory interviews with roughly 20 participants across clearing and custody, then used rough concept feedback to get a quick read on the dashboard idea. This wasn't a polished concept test — it was a gut check on whether the direction actually supported the way people worked.
+      To test the direction, I ran exploratory interviews with roughly 20 participants across clearing and custody, then used rough concept feedback to get an early read on the dashboard idea. This wasn't a polished concept test — it was a gut check on whether the direction actually matched the way people worked.
     </p>
 
     <!-- ── 3. What users actually needed ── -->
@@ -248,7 +242,7 @@
       What users actually needed
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 32px;">
-      The research told a different story. Users didn't want a dashboard — they wanted the list, made faster. The core need wasn't to see everything at once; it was to move efficiently between the order list and the few details needed to take action without losing their place.
+      The research told a different story. Users didn't want a dashboard — they wanted the list, made faster. Their core need wasn't to see everything at once, but to move quickly between the order list and the few details needed to act without losing their place.
     </p>
 
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; max-width: 900px; margin-bottom: 48px; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); padding: 48px 0;">
@@ -441,24 +435,30 @@
       </div>
     </div>
 
-    <div class="callout" style="margin-top: 32px;">
-      <span class="icon" style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="1" width="26" height="26" rx="5" stroke="rgba(184,103,87,0.5)" stroke-width="1.5" fill="none"/>
-          <path d="M8 10h12M8 14h8M8 18h10" stroke="rgba(184,103,87,0.7)" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M19 7l3 3-3 3" stroke="rgba(184,103,87,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M9 21l-3-3 3-3" stroke="rgba(184,103,87,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-      </span>
-      <div>
-        <p class="callout-label">The reframe</p>
-        <p>The zooming users needed was between the list and individual order details  -  check a limit price, review an error, confirm a status  -  not between the list and full account context.</p>
-      </div>
+    <div class="callout-plain" style="margin-top: 40px; max-width: 720px;">
+      <h3 class="callout-heading">The reframe</h3>
+      <p class="callout-body">The zooming users needed was between the list and individual order details — check a limit price, review an error, confirm a status — not between the list and a full account-level dashboard.</p>
     </div>
 
     <!-- Honda Accord pull quote -->
-    <div style="margin-top: 48px; max-width: 720px; padding: 28px 32px; background: var(--accent-light); border: 1px solid var(--border-light); border-radius: 12px; border-left: 4px solid var(--accent);">
-      <blockquote style="font-size: 17px; font-style: italic; color: var(--warm-gray); margin: 0 0 8px;">"It works like a Honda Accord. Not flashy, but reliable."</blockquote>
+    <div style="margin-top: 48px; max-width: 720px; padding: 28px 32px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 12px;">
+      <!-- Honda Accord line illustration -->
+      <svg width="240" height="120" viewBox="0 0 240 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: 320px; height: auto; display: block; margin-bottom: 20px;" aria-label="Honda Accord line illustration">
+        <path d="M12 70V63C12 59 15 57 21 56C34 53 50 51 66 50C74 49 79 48 85 43L105 30C110 27 115 27 123 27H150C158 27 162 28 167 33L192 47C199 50 207 51 216 53C221 54 224 56 224 61V70" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M224 70L223 73C222 76 219 76 214 76H196C196 71.2261 194.104 66.6477 190.728 63.2721C187.352 59.8964 182.774 58 178 58C173.226 58 168.648 59.8964 165.272 63.2721C161.896 66.6477 160 71.2261 160 76H78C78 71.2261 76.1036 66.6477 72.7279 63.2721C69.3523 59.8964 64.7739 58 60 58C55.2261 58 50.6477 59.8964 47.2721 63.2721C43.8964 66.6477 42 71.2261 42 76H22C15 76 12 74 12 70" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M60 91C68.2843 91 75 84.2843 75 76C75 67.7157 68.2843 61 60 61C51.7157 61 45 67.7157 45 76C45 84.2843 51.7157 91 60 91Z" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M178 91C186.284 91 193 84.2843 193 76C193 67.7157 186.284 61 178 61C169.716 61 163 67.7157 163 76C163 84.2843 169.716 91 178 91Z" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g opacity="0.85">
+          <path d="M60 82C63.3137 82 66 79.3137 66 76C66 72.6863 63.3137 70 60 70C56.6863 70 54 72.6863 54 76C54 79.3137 56.6863 82 60 82Z" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M178 82C181.314 82 184 79.3137 184 76C184 72.6863 181.314 70 178 70C174.686 70 172 72.6863 172 76C172 79.3137 174.686 82 178 82Z" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M90 47C120 43 165 43 187 47" stroke="var(--clay)" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M106 30L92 46" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M166 33L186 47" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M132 49V70" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M114 55H124" stroke="var(--clay)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+      <blockquote style="font-family: var(--f-script); font-size: 22px; font-style: normal; color: var(--clay); margin: 0 0 8px; line-height: 1.4;">"It works like a Honda Accord. Not flashy, but reliable."</blockquote>
       <cite style="font-size: 13px; color: var(--accent); font-style: normal;">— Senior Adviser, Custody firm</cite>
       <p style="font-size: 14px; line-height: 1.7; color: var(--warm-gray); margin-top: 12px; margin-bottom: 0;">That framing clarified something important: reliability wasn't just a preference. In a time-sensitive trading workflow, slow, broken, or inaccessible tools carry real cost.</p>
     </div>
@@ -474,51 +474,51 @@
       Rules for every decision<span style="color: var(--accent);">.</span>
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 32px;">
-      The research and concept feedback shaped a clear set of guiding principles for the redesign:
+      Research and concept feedback shaped a set of guiding principles for the redesign.
     </p>
 
     <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px; margin-bottom: 48px; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); padding: 48px 0;">
       <div>
         <p style="font-size: 40px; font-weight: 300; color: var(--slate-deep); line-height: 1; margin: 0 0 16px; font-family: var(--f-serif);">01</p>
         <p style="font-size: 18px; font-weight: 300; font-family: var(--f-serif); color: var(--accent-dark); margin: 0 0 10px;">Protect the table</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Nothing shrinks or obscures the order list.</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">The order list never shrinks or hides.</p>
       </div>
       <div>
         <p style="font-size: 40px; font-weight: 300; color: var(--slate-deep); line-height: 1; margin: 0 0 16px; font-family: var(--f-serif);">02</p>
         <p style="font-size: 18px; font-weight: 300; font-family: var(--f-serif); color: var(--accent-dark); margin: 0 0 10px;">Go horizontal</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Stop competing for limited vertical space.</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Free up vertical space; move supporting UI into a horizontal layer.</p>
       </div>
       <div>
         <p style="font-size: 40px; font-weight: 300; color: var(--slate-deep); line-height: 1; margin: 0 0 16px; font-family: var(--f-serif);">03</p>
         <p style="font-size: 18px; font-weight: 300; font-family: var(--f-serif); color: var(--accent-dark); margin: 0 0 10px;">Make configuration effortless</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Ensure setup feels practically automatic.</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Setup should feel almost automatic, not like managing a settings page.</p>
       </div>
       <div>
         <p style="font-size: 40px; font-weight: 300; color: var(--slate-deep); line-height: 1; margin: 0 0 16px; font-family: var(--f-serif);">04</p>
         <p style="font-size: 18px; font-weight: 300; font-family: var(--f-serif); color: var(--accent-dark); margin: 0 0 10px;">Surface relevant actions</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">The right next step should feel obvious.</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">The next step should be obvious from the state of the row.</p>
       </div>
       <div>
         <p style="font-size: 40px; font-weight: 300; color: var(--slate-deep); line-height: 1; margin: 0 0 16px; font-family: var(--f-serif);">05</p>
         <p style="font-size: 18px; font-weight: 300; font-family: var(--f-serif); color: var(--accent-dark); margin: 0 0 10px;">One surface, one job</p>
-        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Monitoring and acting — not deep account analysis.</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">This screen is for monitoring and acting on orders — not deep account analysis.</p>
       </div>
     </div>
 
     <div class="om-roadmap-grid" style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px;">
-      <div class="om-gold-card" style="padding: 24px 28px; border-radius: 12px;">
-        <p style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #B86757; margin-bottom: 12px;">Shipped in V1</p>
+      <div style="padding: 24px 28px; border-radius: 12px; background: transparent; border: 1px solid var(--clay-edge);">
+        <p style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay); margin-bottom: 12px;">Shipped in v1</p>
         <ul style="font-size: 14px; line-height: 1.75; color: rgba(55,43,11,0.85); padding-left: 18px; margin: 0;">
           <li>Horizontal layout</li>
           <li>Configurable views</li>
-          <li>Visible selection and bulk actions</li>
+          <li>Clear selection and bulk actions</li>
           <li>Redesigned send flow</li>
           <li>Order details panel</li>
           <li>Active filter chips</li>
         </ul>
       </div>
-      <div class="om-gold-card" style="padding: 24px 28px; border-radius: 12px;">
-        <p style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #8F4638; margin-bottom: 12px;">Deferred to roadmap</p>
+      <div style="padding: 24px 28px; border-radius: 12px; background: transparent; border: 1px solid var(--clay-edge);">
+        <p style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay); margin-bottom: 12px;">Deferred to roadmap</p>
         <ul style="font-size: 14px; line-height: 1.75; color: rgba(55,43,11,0.85); padding-left: 18px; margin: 0;">
           <li>Proactive alerting</li>
           <li>Supporting utilities (live quotes, positions, balances)</li>
@@ -550,7 +550,7 @@
       <!-- Filters -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="filters" id="ms-panel-filters" aria-labelledby="ms-tab-filters">
         <p class="om-tab-description">
-          Wanted a filter dropdown and pill-based pattern, but design system team lacked capacity for new components. Pivoted to composing a horizontal collapsible filter panel from existing atoms. Active filter pills above the table show exactly what's included/excluded.
+          Wanted a pill-based filter pattern, but the design system couldn't support new components. I composed a horizontal, collapsible filter panel from existing atoms instead. Active filter pills above the table show at a glance what's included or excluded.
         </p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
@@ -562,7 +562,7 @@
       <!-- Table -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="table" id="ms-panel-table" aria-labelledby="ms-tab-table" hidden>
         <p class="om-tab-description">
-          Visible checkboxes, color-coded Buy/Sell badges, row-level warning indicators, configurable columns.
+          Rebalanced the table for a clean left‑to‑right scan: key signals first, status and alerts aligned by column, and hover/tap affordances that keep actions close to where work happens.
         </p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
@@ -574,7 +574,7 @@
       <!-- Order details -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="details" id="ms-panel-details" aria-labelledby="ms-tab-details" hidden>
         <p class="om-tab-description">
-          We initially wanted order details to appear in a persistent panel to the right of the grid  -  keeping the list and detail view side by side. But the design system didn't yet have a component that could house it this way, so for V1 we utilized an expandable drawer that gave users everything in one click while keeping the table visible behind it.
+          Brought essential order details into a side panel so traders can inspect, fix, and confirm without losing their place in the list.
         </p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
@@ -585,7 +585,7 @@
     </div>
     <!-- Send Flow sub-section  -  same container, same surface, no eyebrow break. -->
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin: 80px 0 28px;">
-      Surfacing the right next step
+      Surfacing the right next step.
     </h2>
 
     <div class="om-tabs" data-om-tabs="send-flow">
@@ -598,7 +598,7 @@
       <!-- Smart selection -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="selection" id="sf-panel-selection" aria-labelledby="sf-tab-selection">
         <p class="om-tab-description">
-          Checkboxes + "Select..." dropdown with counts (all on page, all matching filters, all buys, all sells, etc.)  -  intentional, informed choices before sending.
+          Checkboxes plus a "Select…" dropdown with counts (on page, matching filters, all buys, all sells, etc.) turn bulk actions into clear, informed choices before sending.
         </p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
@@ -610,7 +610,7 @@
       <!-- Verification modal -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="verification" id="sf-panel-verification" aria-labelledby="sf-tab-verification" hidden>
         <p class="om-tab-description">
-          Full transparency  -  summary stats, orders grouped by category with error/warning badges, individual orders visible with inline error messages, ability to remove problematic orders. Errors must be resolved before proceeding.
+          A verification step that reads back the action in plain language, highlights risk, and gives a clear escape hatch before anything goes out the door.
         </p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
@@ -622,7 +622,7 @@
       <!-- Cross-linking & feedback -->
       <div class="om-tabpanel" role="tabpanel" data-om-tabpanel="cross-link" id="sf-panel-cross-link" aria-labelledby="sf-tab-cross-link" hidden>
         <p class="om-tab-description">
-          After sending, users are automatically taken to view their orders on the next surface  -  clear, crisp cross-linking that makes it easy to flow through the full order management process from entry to execution to post-execution monitoring, with feedback at every step so users always know where they are and what happened.
+          Subtle links and toasts connect this surface to related tools and states, so traders always know what happened and where to go next.
         </p>
         <div class="om-tab-media">
           <video loop muted playsinline preload="metadata">
@@ -648,28 +648,28 @@
       Working within reality
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 32px;">
-      Every design decision was weighed against four forces: AG Grid's out-of-the-box capabilities, the design system's component library, backend service limitations, and the firm's accessibility standards. The gap between ideal and shippable defined the MVP  -  and the backlog.
+      Every decision had to reconcile four things: AG Grid's capabilities, our design system, backend limits, and strict accessibility standards. The gap between ideal and shippable defined both the MVP and the backlog.
     </p>
 
     <div style="display: flex; flex-direction: column; gap: 12px; max-width: 720px;">
-      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--border-light); border-radius: 10px;">
+      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 10px;">
         <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          <strong style="color: var(--accent-dark);">AG Grid's native in-column filters failed accessibility standards</strong> and didn't align with existing design system components  -  so we composed a persistent filter panel from existing atoms instead.
+          <strong style="color: var(--accent-dark);">AG Grid filters vs. accessibility</strong> — Native in‑column filters failed accessibility and clashed with our system components, so I composed a persistent horizontal filter panel from existing atoms instead.
         </p>
       </div>
-      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--border-light); border-radius: 10px;">
+      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 10px;">
         <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          <strong style="color: var(--accent-dark);">Security logos and live quotes were punted</strong>  -  common stocks and ETFs were feasible, but sourcing was unreliable across the range of mutual funds and fixed income positions, and the performance cost per row was too high.
+          <strong style="color: var(--accent-dark);">Live quotes and logos</strong> — Security logos and live quotes were feasible for some products, but data was unreliable across mutual funds and fixed income, and the performance cost per row was too high. We kept the design ready and deferred the feature.
         </p>
       </div>
-      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--border-light); border-radius: 10px;">
+      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 10px;">
         <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          <strong style="color: var(--accent-dark);">Account-level data for every trade in a book of business wasn't feasible</strong>  -  the backend service couldn't support the volume, so progressive disclosure of account info was deferred.
+          <strong style="color: var(--accent-dark);">Account‑level data for every trade</strong> — Showing full account context for each row would have overloaded the backend. We chose progressive disclosure instead and moved full account views to a later phase.
         </p>
       </div>
-      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--border-light); border-radius: 10px;">
+      <div style="padding: 16px 24px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 10px;">
         <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">
-          <strong style="color: var(--accent-dark);">Saved views required backend persistence that wasn't in scope</strong>  -  a high-value feature we tracked for post-MVP alongside in-column filtering and other AG Grid capabilities we couldn't fully leverage in V1.
+          <strong style="color: var(--accent-dark);">Saved views</strong> — Saved views required backend persistence we didn't have in scope. We still designed for that future state and tracked it alongside in‑column filtering and other AG Grid enhancements for post‑MVP.
         </p>
       </div>
     </div>
@@ -684,27 +684,27 @@
   <div class="container" style="position: relative; z-index: 1;">
     <div class="step-label">Outcome</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
-      What shipped  -  and what it changed
+      What shipped &amp; what it changed
     </h2>
 
     <div class="outcome-grid">
       <div class="outcome-col">
-        <h4>What Changed for Users</h4>
+        <h4>For users</h4>
         <ul>
-          <li>Filter without losing context</li>
-          <li>See issues at a glance with row-level indicators</li>
-          <li>Select with clear, visible affordance</li>
-          <li>Review before sending with full error transparency</li>
-          <li>Get confirmation and execution tracking</li>
-          <li>Configure views to match daily workflow</li>
+          <li>Filter without losing the list.</li>
+          <li>See issues at a glance with row‑level indicators.</li>
+          <li>Select with clear, visible affordances for bulk actions.</li>
+          <li>Review with full error transparency before sending.</li>
+          <li>Track confirmation and execution states in one place.</li>
+          <li>Configure views to match daily workflow.</li>
         </ul>
       </div>
       <div class="outcome-col">
-        <h4>Broader Impact</h4>
+        <h4>For the product &amp; org</h4>
         <ul>
-          <li>New horizontal filter molecule became a reusable platform pattern</li>
-          <li>Established a research-driven approach for modernization work</li>
-          <li>Created a clear roadmap from "ideal" designs that couldn't ship in V1</li>
+          <li>A new horizontal filter pattern became a reusable platform component.</li>
+          <li>The work established a research‑driven playbook for modernization projects.</li>
+          <li>We left a clear roadmap from the "ideal" experience into later releases when backend and data constraints caught up.</li>
         </ul>
       </div>
     </div>
@@ -759,30 +759,21 @@
       What we learned after launch
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 680px; margin-bottom: 8px;">
-      Piloted with users who had access to both legacy and new experiences:
+      We piloted the new surface with users who had access to both the legacy and redesigned experiences. That gave us a clear read on where the changes landed and where the remaining friction still lived.
     </p>
 
     <div class="feedback-list">
       <div class="feedback-item">
-        <div class="bullet"></div>
-        <div>
-          <h4>Tab Visibility</h4>
-          <p>Sent vs. Draft tabs weren't distinct enough  -  users missed the state change</p>
-        </div>
+        <h4>Tab clarity</h4>
+        <p>Sent and Draft states weren't distinct enough; some users missed the state change. This pushed us to strengthen the tab treatment and rely less on subtle cues.</p>
       </div>
       <div class="feedback-item">
-        <div class="bullet"></div>
-        <div>
-          <h4>Details Friction</h4>
-          <p>Overlay panel blocked grid scrolling  -  opened door to split panel concept</p>
-        </div>
+        <h4>Details interaction</h4>
+        <p>The drawer pattern interrupted grid scrolling. That feedback opened the door to a split-panel pattern that kept the list and details active at the same time.</p>
       </div>
       <div class="feedback-item">
-        <div class="bullet"></div>
-        <div>
-          <h4>Error Visibility</h4>
-          <p>Scanning for issues across large order sets wasn't fast enough</p>
-        </div>
+        <h4>Error scanning</h4>
+        <p>Scanning for issues across large order sets still required too much visual effort. We used that signal to explore stronger row-level indicators and smarter defaults for error views.</p>
       </div>
     </div>
 
@@ -839,159 +830,30 @@
   <div class="om-gold-glow-a" aria-hidden="true"></div>
   <div class="om-gold-glow-b" aria-hidden="true"></div>
   <div class="container" style="position: relative; z-index: 1;">
-    <div class="step-label">Looking Ahead</div>
+    <div class="step-label">What's Next</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 16px;">
-      Remaining opportunities to tackle
+      Where this surface can grow
     </h2>
     <p style="font-size: 15px; line-height: 1.75; color: var(--deep-text); max-width: 720px; margin-bottom: 40px;">
-      Throughout the design process, we deliberately put a pin in features that didn't make the MVP cut  -  whether due to design system capacity, backend limitations, or the need to keep the initial release focused. These aren't abandoned ideas; they're the next layer of value, informed by everything we learned shipping V1 and observing the pilot.
+      Some high-value ideas were intentionally deferred—not because they lacked value, but because they depended on data, backend support, or more time in the wild. The next phase is about making the same surface smarter without making it busier.
     </p>
 
-    <!-- Punted from V1  -  peek title + image, click to reveal context -->
-    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Circling back post-MVP</p>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 28px;">
-      Tap any card to read why it was deferred and what it would unlock.
-    </p>
-
-    <div class="om-expand-grid om-expand-grid--feature">
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-security-logos.png" alt="Security logos in the order grid" class="om-expand-image">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Security logos</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>Visual identifiers for each position in the grid  -  feasible for common stocks and ETFs, but sourcing was unreliable for more obscure mutual funds and fixed income instruments.</p>
-        </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px;">
+      <div style="padding: 24px 24px 28px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 12px;">
+        <p style="font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin: 0 0 12px;">Saved views</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Remember the filters, columns, and sort states that matter most to each user so the surface opens in a familiar, ready-to-work state.</p>
       </div>
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-saved-views.png" alt="Saved views dropdown" class="om-expand-image">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Saved views</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>User-configurable presets for filters, columns, and sort order  -  required backend support for persistence that wasn't available for V1.</p>
-        </div>
+      <div style="padding: 24px 24px 28px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 12px;">
+        <p style="font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin: 0 0 12px;">Smarter filtering</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Evolve from a persistent panel toward lighter inline or context-aware filters as accessibility and system support improve.</p>
       </div>
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-inline-filtering.png" alt="In-column dropdown filtering" class="om-expand-image">
-          <div class="om-expand-header">
-            <span class="om-expand-title">In-column filtering</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>AG Grid's native in-column filters didn't meet accessibility standards, and the design system couldn't support a new component. The persistent filter panel was the right V1 call, but a sleeker inline option remains on the table.</p>
-        </div>
+      <div style="padding: 24px 24px 28px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 12px;">
+        <p style="font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin: 0 0 12px;">Deeper account context</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Pull positions, balances, and other account signals into the flow only when they're needed to make a decision—never by default.</p>
       </div>
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-live-quotes.png" alt="Live quotes in the detail panel" class="om-expand-image" style="object-position: top;">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Live quotes</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>Real-time price data inline with orders  -  punted due to the same data sourcing and performance constraints as security logos.</p>
-        </div>
-      </div>
-
-      <div class="om-expand-card om-expand-card--tall" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <img src="/om-assets/postmvp-progressive-disclosure.png" alt="Account snapshot in the detail panel" class="om-expand-image om-expand-image--tall">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Account context</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>Contextual access to positions, balances, and other account-level utilities without leaving the order surface  -  blocked by backend service limitations on pulling account info at scale.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Directional thinking  -  text-only expand cards -->
-    <p style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;">Directional thinking</p>
-    <p style="font-size: 13px; line-height: 1.65; color: var(--warm-gray); max-width: 640px; margin-bottom: 28px;">
-      Where the design tension goes next. Tap any to read more.
-    </p>
-
-    <div class="om-expand-stack">
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Inline intelligence</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>The post-pilot pivot partially solved for this with better row-level indicators, but there's more to explore  -  particularly around enabling users to customize their quick filters with saved views or next-best-action filters that surface what needs attention without requiring manual filtering every time.</p>
-        </div>
-      </div>
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Progressive disclosure for supporting data</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>Live quotes, account balances, and positions don't need to be on screen at all times  -  but they need to be one interaction away. A contextual flyout or expandable row that surfaces the right data for the selected order, then collapses back to keep the surface clean.</p>
-        </div>
-      </div>
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Smart defaults and saved workflows</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>The system could learn what each user cares about  -  which filters they apply first, which order types they monitor  -  and pre-load those views on arrival. "Tell me what I need to know" starts with remembering what I asked for last time.</p>
-        </div>
-      </div>
-
-      <div class="om-expand-card" data-om-expand-card>
-        <button class="om-expand-trigger" type="button" aria-expanded="false">
-          <div class="om-expand-header">
-            <span class="om-expand-title">Shared components across trading surfaces</span>
-            <span class="om-expand-icon" aria-hidden="true"></span>
-          </div>
-        </button>
-        <div class="om-expand-content" hidden>
-          <p>Quote, positions, and balance data appear across multiple tools in the platform. Building these as shared, modular components means they can be dropped into Order Management contextually  -  without being rebuilt or taking up permanent real estate.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="callout" style="margin-top: 0;">
-      <span class="icon" style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="1" width="26" height="26" rx="5" stroke="rgba(184,103,87,0.5)" stroke-width="1.5" fill="none"/>
-          <circle cx="14" cy="12" r="4" stroke="rgba(184,103,87,0.7)" stroke-width="1.5" fill="none"/>
-          <path d="M14 18v4" stroke="rgba(184,103,87,0.7)" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M10 22h8" stroke="rgba(184,103,87,0.7)" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </span>
-      <div>
-        <p class="callout-label">The design tension</p>
-        <p>The core question for the next phase: how do you make a surface smarter without making it busier? The answer probably isn't additive  -  it's about making the existing elements more context-aware, so the same screen serves different needs at different moments without changing shape.</p>
+      <div style="padding: 24px 24px 28px; background: transparent; border: 1px solid var(--clay-edge); border-radius: 12px;">
+        <p style="font-family: var(--f-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin: 0 0 12px;">Context-aware assistance</p>
+        <p style="font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0;">Use what we know about the active order set to surface next-best actions, warnings, or checks without flooding the screen.</p>
       </div>
     </div>
   </div>
@@ -1001,15 +863,15 @@
 <!-- Reflection  -  closing payoff on the cream surface so the case study ends
      on the same canvas it started on. The closing paragraph carries its own
      emphasis via larger type + a terracotta-accent left border. -->
-<section data-reveal class="section" style="background: transparent; padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
+<section id="ch-reflection" data-reveal class="section" style="background: transparent; padding-top: clamp(100px, 11vw, 140px); padding-bottom: clamp(100px, 11vw, 140px);">
   <div class="container">
     <div class="step-label">Reflection</div>
     <h2 style="font-size: 28px; font-weight: 800; color: var(--warm-gray); letter-spacing: -0.3px; margin-bottom: 32px;">
-      What actually shipped<span style="color: var(--accent);">.</span>
+      Why the simpler answer was the right one
     </h2>
     <div style="max-width: 820px; padding: 28px 32px; border-left: 4px solid var(--accent); background: rgba(184,103,87,0.04); border-radius: 0 12px 12px 0;">
       <p style="font-size: clamp(16px, 1.6vw, 19px); font-weight: 400; line-height: 1.75; color: rgba(55,43,11,0.82); margin: 0;">
-        There's a version of this case study where the punchline is a shiny new dashboard. Instead, what shipped was a better version of what users already trusted  -  modernized filtering, a layout that respects how people actually scan a list, order details you can reach without losing your place, and a send flow that builds confidence instead of anxiety. The irony is that we explored the bold direction specifically so we could come back to the simple one with conviction. The research didn't just tell us what to build  -  it gave us the evidence to push back on the flashier path and the discipline to ship only what mattered.
+        There's a version of this case study where the punchline is a brand-new dashboard. Instead, what shipped was a better version of what users already trusted: modernized filtering, a layout that respects how people actually scan a list, order details you can reach without losing your place, and a send flow that builds confidence instead of anxiety. Exploring the heavier, feature-rich direction first gave us the evidence to walk back to the simple one with conviction. For me, that's the core of the work: use research to cut through "more" as the default answer, protect the parts of the system people already rely on, and ship only the changes that make their day feel calmer, clearer, and more automatic.
       </p>
     </div>
   </div>

@@ -104,7 +104,7 @@ export default function Home() {
               </div>
               <div className="body">
                 <h3>Redesigning Order Management</h3>
-                <p>The surface every trade at an advisory firm flows through  -  redesigned to enhance visibility, reduce errors, and remove the steps traders had quietly learned to skip.</p>
+                <p>The core trading surface at an advisory firm—redesigned to make high-stakes work clearer, calmer, and harder to get wrong.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--clay-deep)' }}>→</span></div>
               </div>
             </Link>

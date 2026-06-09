@@ -1064,19 +1064,17 @@ function ConceptCarousel() {
 // Chapter list for the side-rail scrollspy. Each id matches a section's id
 // below; collapsed-on-hover dot strip at ≥1440px.
 const CHAPTERS = [
-  { id: 'ch-tldr',       label: 'tl;dr' },
-  { id: 'ch-context',    label: 'Context' },
-  { id: 'ch-hypothesis', label: 'Hypothesis' },
-  { id: 'ch-research',   label: 'Research' },
-  { id: 'ch-problem',    label: 'Problem' },
-  { id: 'ch-solution',   label: 'Solution' },
-  { id: 'ch-outcomes',   label: 'Outcomes' },
-  { id: 'ch-reflection', label: 'Reflection' },
+  { id: 'ch-tldr',        label: 'Context' },
+  { id: 'ch-research',    label: 'Research' },
+  { id: 'ch-solution',    label: 'Redesign' },
+  { id: 'ch-outcomes',    label: 'Outcome' },
+  { id: 'ch-reflection',  label: 'Reflection' },
 ]
 
 export default function CaseStudy() {
   const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
   const [navVisible, setNavVisible] = useState(false)
+  const [navCollapsed, setNavCollapsed] = useState(false)
 
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
@@ -1122,12 +1120,22 @@ export default function CaseStudy() {
     <div className="cs-page positions-page">
       <Nav />
 
-      {/* Sticky chapter side rail  -  collapses to a dot strip and expands
-          on hover. Hidden via CSS at < 1440px viewports. */}
+      {/* Sticky chapter nav  -  left rail at ≥1100px viewport */}
       <aside
-        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}`}
+        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}${navCollapsed ? ' is-collapsed' : ''}`}
         aria-label="Case study chapters"
       >
+        <div className="om-chapter-nav-header">
+          <span className="om-chapter-nav-title">{navCollapsed ? '' : "What's inside"}</span>
+          <button
+            type="button"
+            className="om-chapter-nav-toggle"
+            aria-label={navCollapsed ? 'Expand navigation' : 'Collapse navigation'}
+            onClick={() => setNavCollapsed(c => !c)}
+          >
+            {navCollapsed ? '›' : '‹'}
+          </button>
+        </div>
         <ul className="om-chapter-nav-list">
           {CHAPTERS.map(({ id, label }) => (
             <li key={id}>
@@ -1155,114 +1163,116 @@ export default function CaseStudy() {
         paddingTop: 'var(--section-padding)', overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column'
       }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
-            <span className="eyebrow">Case Study · Positions · 2022</span>
+          <div style={{ marginBottom: 32 }}>
+            <span className="eyebrow">Case Study · Positions · 2025</span>
+          </div>
+          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: '#372B0B', margin: '0 0 20px' }}>Surfacing Positions Data<span style={{ color: 'var(--slate)' }}>.</span></h1>
+          <p style={{ fontFamily: 'var(--f-serif)', fontStyle: 'normal', fontWeight: 300, fontSize: 'clamp(17px, 1.5vw, 21px)', lineHeight: 1.55, color: 'var(--ink-2)', maxWidth: 560, margin: '0 0 36px' }}>Designing in-flow context for institutional investing workflows—bringing account and position data to the moment it matters most.</p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {['Research', 'Strategy', 'Product Design', 'Design Systems'].map(tag => (
-              <span key={tag} className="chip chip--clay">{tag}</span>
+              <span key={tag} className="chip chip--neutral">{tag}</span>
             ))}
           </div>
-          <h1 className="cs-hero-title" style={{ color: 'var(--ink)' }}>Surfacing Positions Data in Trading Applications</h1>
-          <p className="cs-hero-subtitle" style={{ color: 'var(--ink-2)' }}>Designing in-flow context for institutional investing workflows</p>
         </div>
-        <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '48px auto 0', overflow: 'hidden', paddingBottom: 0 }}>
-          <div className="cs-hero-screens" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 32, paddingTop: 48 }}>
-            {/* Screen 1  -  Order ticket with in-context positions panel */}
-            <div style={{ width: 560, height: 360, background: 'rgba(22,38,62,0.92)', borderRadius: '10px 10px 0 0', boxShadow: '0 8px 32px rgba(46,74,107,0.22)', border: '1px solid rgba(125,145,165,0.2)', overflow: 'hidden', flexShrink: 0, marginBottom: 0 }}>
-              <div style={{ background: 'rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 6 }}>
-                {[0.3, 0.2].map((o, i) => <span key={i} style={{ width: 7, height: 7, borderRadius: '50%', background: `rgba(255,255,255,${o})`, display: 'inline-block' }} />)}
-                <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontWeight: 600, marginLeft: 6 }}>Order Entry  -  Jane Smith (IRA · ****4821)</span>
-                <div style={{ marginLeft: 'auto', background: 'rgba(90,158,124,0.3)', borderRadius: 4, padding: '2px 8px', fontSize: 8, color: 'rgba(220,255,230,0.9)', fontWeight: 600 }}>● Live</div>
+        {/* High-fidelity hero mockup — order entry ticket + inline positions panel */}
+        <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '48px auto 0', padding: '0 var(--side-padding)', paddingBottom: 0 }}>
+          <div style={{ borderRadius: '12px 12px 0 0', overflow: 'hidden', boxShadow: '0 20px 60px rgba(22,38,62,0.22), 0 4px 16px rgba(22,38,62,0.12)', border: '1px solid rgba(125,145,165,0.18)', borderBottom: 'none' }}>
+            {/* App top nav */}
+            <div style={{ background: '#1a2744', padding: '0 20px', height: 38, display: 'flex', alignItems: 'center', gap: 0, justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                {['🏠 Home', 'Menu ▾', 'User Options ▾'].map(item => (
+                  <span key={item} style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', fontWeight: 500, cursor: 'pointer' }}>{item}</span>
+                ))}
               </div>
-              <div style={{ display: 'flex', height: 'calc(100% - 29px)' }}>
-                {/* Left  -  order ticket form */}
-                <div style={{ width: 230, borderRight: '1px solid rgba(255,255,255,0.1)', padding: 14, flexShrink: 0 }}>
-                  <div style={{ fontSize: 7, fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', marginBottom: 10, textTransform: 'uppercase' }}>Order Ticket</div>
-                  <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.5)', marginBottom: 3 }}>Symbol</div>
-                  <div style={{ height: 18, background: 'rgba(255,255,255,0.12)', borderRadius: 3, marginBottom: 10, display: 'flex', alignItems: 'center', padding: '0 6px', fontSize: 9, color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>AAPL</div>
-                  <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
-                    <div style={{ flex: 1, height: 18, background: 'rgba(90,158,124,0.3)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, color: 'rgba(220,255,230,0.95)', fontWeight: 700 }}>BUY</div>
-                    <div style={{ flex: 1, height: 18, background: 'rgba(255,255,255,0.08)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>SELL</div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.5)', marginBottom: 3 }}>Qty</div>
-                      <div style={{ height: 18, background: 'rgba(144,180,255,0.18)', border: '1px solid rgba(144,180,255,0.45)', borderRadius: 3, display: 'flex', alignItems: 'center', padding: '0 6px', fontSize: 9, color: 'rgba(255,255,255,0.9)', fontWeight: 600 }}>120</div>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.5)', marginBottom: 3 }}>Price</div>
-                      <div style={{ height: 18, background: 'rgba(255,255,255,0.12)', borderRadius: 3, display: 'flex', alignItems: 'center', padding: '0 6px', fontSize: 9, color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>MKT</div>
-                    </div>
-                  </div>
-                  <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.5)', marginBottom: 3 }}>Time in force</div>
-                  <div style={{ height: 18, background: 'rgba(255,255,255,0.12)', borderRadius: 3, marginBottom: 14, display: 'flex', alignItems: 'center', padding: '0 6px', fontSize: 9, color: 'rgba(255,255,255,0.85)' }}>Day</div>
-                  <div style={{ height: 22, background: 'rgba(144,180,255,0.35)', border: '1px solid rgba(144,180,255,0.55)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, color: 'rgba(255,255,255,0.95)', fontWeight: 700, letterSpacing: 0.3 }}>PREVIEW ORDER</div>
-                </div>
-                {/* Right  -  in-context positions panel (the outcome) */}
-                <div style={{ flex: 1, padding: 14, overflow: 'hidden', background: 'rgba(246,251,222,0.035)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
-                    <div style={{ width: 3, height: 10, background: 'rgba(246,251,222,0.6)', borderRadius: 2 }} />
-                    <div style={{ fontSize: 7, fontWeight: 700, color: 'rgba(246,251,222,0.75)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Positions  -  in context</div>
-                    <div style={{ marginLeft: 'auto', fontSize: 7, color: 'rgba(255,255,255,0.4)' }}>12 holdings</div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
-                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.06)', borderRadius: 4, padding: '6px 8px' }}>
-                      <div style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.45)', marginBottom: 2 }}>AAPL SHARES HELD</div>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.95)' }}>842</div>
-                    </div>
-                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.06)', borderRadius: 4, padding: '6px 8px' }}>
-                      <div style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.45)', marginBottom: 2 }}>MARKET VALUE</div>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.95)' }}>$186.4k</div>
-                    </div>
-                    <div style={{ flex: 1, background: 'rgba(90,158,124,0.18)', borderRadius: 4, padding: '6px 8px' }}>
-                      <div style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.45)', marginBottom: 2 }}>DAY P/L</div>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(150,220,180,0.95)' }}>+1.8%</div>
-                    </div>
-                  </div>
-                  <div style={{ padding: '4px 0', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', gap: 8 }}>
-                    {['SYMBOL', 'QTY', 'MKT VAL', 'DAY %'].map(h => <span key={h} style={{ flex: 1, fontSize: 6.5, fontWeight: 700, color: 'rgba(255,255,255,0.45)', letterSpacing: 0.3 }}>{h}</span>)}
-                  </div>
-                  {[
-                    { s: 'AAPL', q: '842', v: '$186.4k', p: '+1.8%', hl: true },
-                    { s: 'MSFT', q: '410', v: '$172.1k', p: '+0.4%' },
-                    { s: 'GOOGL', q: '260', v: '$41.6k', p: '-0.2%', neg: true },
-                    { s: 'NVDA', q: '95', v: '$118.3k', p: '+2.6%' },
-                    { s: 'VTI', q: '1,200', v: '$324.0k', p: '+0.3%' },
-                  ].map(row => (
-                    <div key={row.s} style={{ padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 8, alignItems: 'center', background: row.hl ? 'rgba(144,180,255,0.08)' : 'transparent', borderRadius: row.hl ? 3 : 0, paddingLeft: row.hl ? 4 : 0 }}>
-                      <span style={{ flex: 1, fontSize: 8, fontWeight: 700, color: row.hl ? 'rgba(180,210,255,0.95)' : 'rgba(255,255,255,0.82)' }}>{row.s}</span>
-                      <span style={{ flex: 1, fontSize: 8, color: 'rgba(255,255,255,0.7)' }}>{row.q}</span>
-                      <span style={{ flex: 1, fontSize: 8, color: 'rgba(255,255,255,0.7)' }}>{row.v}</span>
-                      <span style={{ flex: 1, fontSize: 8, fontWeight: 600, color: row.neg ? 'rgba(220,140,140,0.9)' : 'rgba(150,220,180,0.9)' }}>{row.p}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontWeight: 500 }}>↩ Sign Out</span>
             </div>
-            {/* Screen 2  -  Legacy positions drawer (hidden/collapsed) */}
-            <div style={{ width: 340, height: 290, background: 'rgba(22,38,62,0.88)', borderRadius: '10px 10px 0 0', boxShadow: '0 8px 32px rgba(46,74,107,0.18)', border: '1px solid rgba(125,145,165,0.18)', overflow: 'hidden', flexShrink: 0, alignSelf: 'flex-end', marginBottom: 40 }}>
-              <div style={{ background: 'rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'rgba(255,255,255,0.3)', display: 'inline-block' }} />
-                <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.55)', fontWeight: 600, marginLeft: 6 }}>Legacy Trade Ticket</span>
+            {/* App body */}
+            <div style={{ display: 'flex', background: '#f4f5f7', minHeight: 480 }}>
+              {/* Left sidebar */}
+              <div style={{ width: 36, background: '#1a2744', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 16, gap: 18, flexShrink: 0 }}>
+                {['👤','📄','🔔','📋','📈','📊','✏️'].map((icon, i) => (
+                  <div key={i} style={{ width: 24, height: 24, borderRadius: 6, background: i === 3 ? 'rgba(255,255,255,0.15)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, opacity: i === 3 ? 1 : 0.45 }}>{icon}</div>
+                ))}
               </div>
-              <div style={{ position: 'relative', height: 'calc(100% - 29px)' }}>
-                <div style={{ padding: 12 }}>
-                  <div style={{ fontSize: 7, fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em', marginBottom: 10, textTransform: 'uppercase' }}>Order Form</div>
-                  {['Symbol', 'Action', 'Quantity', 'Price', 'TIF'].map((l, i) => (
-                    <div key={l} style={{ marginBottom: 8 }}>
-                      <div style={{ fontSize: 6.5, color: 'rgba(255,255,255,0.4)', marginBottom: 2 }}>{l}</div>
-                      <div style={{ height: 14, background: 'rgba(255,255,255,0.08)', borderRadius: 2, width: i === 0 ? '60%' : i === 2 ? '40%' : '80%' }} />
-                    </div>
-                  ))}
-                  {/* "where are my positions?" indicator */}
-                  <div style={{ marginTop: 10, padding: '6px 8px', background: 'rgba(194,112,112,0.1)', border: '1px dashed rgba(194,112,112,0.4)', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <span style={{ fontSize: 9, color: 'rgba(230,170,170,0.9)' }}>?</span>
-                    <span style={{ fontSize: 7, color: 'rgba(230,170,170,0.75)', fontStyle: 'italic' }}>positions buried in drawer</span>
+              {/* Main content */}
+              <div style={{ flex: 1, padding: '24px 28px' }}>
+                {/* Page header */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+                  <div>
+                    <div style={{ fontSize: 11, color: '#6b7a99', marginBottom: 4, fontWeight: 500 }}>← Back to Orders</div>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: '#1a2744' }}>Order Entry Ticket</div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ fontSize: 10, color: '#6b7a99' }}>Jane Smith · IRA · ****4821</div>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#4caf7d' }} />
+                    <span style={{ fontSize: 10, color: '#4caf7d', fontWeight: 600 }}>Live</span>
                   </div>
                 </div>
-                {/* Collapsed bottom drawer */}
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 20, background: 'rgba(144,161,185,0.15)', borderTop: '1px solid rgba(144,161,185,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 10px' }}>
-                  <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.5)', letterSpacing: 0.3, fontWeight: 600 }}>▲  POSITIONS</span>
-                  <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)' }}>hidden</span>
+                {/* Two-panel layout */}
+                <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                  {/* Order ticket panel */}
+                  <div style={{ width: 300, background: '#fff', borderRadius: 10, border: '1px solid #e2e6ef', padding: '20px 20px 16px', flexShrink: 0 }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6b7a99', marginBottom: 16 }}>Order Entry Ticket</div>
+                    {/* Symbol */}
+                    <div style={{ marginBottom: 12 }}>
+                      <div style={{ fontSize: 10, color: '#6b7a99', marginBottom: 4, fontWeight: 500 }}>Symbol</div>
+                      <div style={{ height: 32, background: '#f4f5f7', border: '1px solid #dde2ef', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 10px', fontSize: 13, color: '#1a2744', fontWeight: 700 }}>AAPL</div>
+                    </div>
+                    {/* Buy / Sell */}
+                    <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+                      <div style={{ flex: 1, height: 32, background: '#e8f5ee', border: '1.5px solid #4caf7d', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#2d7a52', fontWeight: 700 }}>BUY</div>
+                      <div style={{ flex: 1, height: 32, background: '#f4f5f7', border: '1px solid #dde2ef', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#9aa3b8', fontWeight: 600 }}>SELL</div>
+                    </div>
+                    {/* Qty + Price */}
+                    <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 10, color: '#6b7a99', marginBottom: 4, fontWeight: 500 }}>Quantity</div>
+                        <div style={{ height: 32, background: '#fff', border: '1.5px solid #4a7cdc', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 10px', fontSize: 13, color: '#1a2744', fontWeight: 700 }}>120</div>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: 10, color: '#6b7a99', marginBottom: 4, fontWeight: 500 }}>Price Type</div>
+                        <div style={{ height: 32, background: '#f4f5f7', border: '1px solid #dde2ef', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 10px', fontSize: 11, color: '#1a2744', fontWeight: 600 }}>Market ▾</div>
+                      </div>
+                    </div>
+                    {/* TIF */}
+                    <div style={{ marginBottom: 20 }}>
+                      <div style={{ fontSize: 10, color: '#6b7a99', marginBottom: 4, fontWeight: 500 }}>Time in Force</div>
+                      <div style={{ height: 32, background: '#f4f5f7', border: '1px solid #dde2ef', borderRadius: 6, display: 'flex', alignItems: 'center', padding: '0 10px', fontSize: 11, color: '#1a2744', fontWeight: 600 }}>Day ▾</div>
+                    </div>
+                    {/* Buttons */}
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <div style={{ flex: 1, height: 34, background: '#fff', border: '1px solid #dde2ef', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#6b7a99', fontWeight: 600, cursor: 'pointer' }}>Cancel</div>
+                      <div style={{ flex: 2, height: 34, background: '#4a7cdc', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#fff', fontWeight: 700, cursor: 'pointer' }}>Verify Order</div>
+                    </div>
+                  </div>
+                  {/* Positions panel */}
+                  <div style={{ flex: 1, background: '#fff', borderRadius: 10, border: '1px solid #e2e6ef', overflow: 'hidden' }}>
+                    <div style={{ padding: '14px 18px 10px', borderBottom: '1px solid #f0f2f7', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1a2744' }}>Positions</span>
+                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#f5b731' }} />
+                    </div>
+                    {/* Column headers */}
+                    <div style={{ padding: '8px 18px', display: 'grid', gridTemplateColumns: '1fr 60px 64px', gap: 0, borderBottom: '1px solid #f0f2f7' }}>
+                      {['Symbol', 'Shares', 'Day %'].map(h => (
+                        <span key={h} style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9aa3b8' }}>{h}</span>
+                      ))}
+                    </div>
+                    {[
+                      { s: 'AAPL', q: '120 sh', p: '+2.4%', pos: true, hl: true },
+                      { s: 'MSFT', q: '85 sh',  p: '+1.1%', pos: true },
+                      { s: 'GOOGL', q: '40 sh', p: '-0.8%', pos: false },
+                      { s: 'NVDA', q: '60 sh',  p: '+5.2%', pos: true },
+                      { s: 'AMZN', q: '30 sh',  p: '+0.6%', pos: true },
+                      { s: 'JPM',  q: '90 sh',  p: '-1.3%', pos: false },
+                      { s: 'TSLA', q: '25 sh',  p: '+3.1%', pos: true },
+                    ].map(row => (
+                      <div key={row.s} style={{ padding: '10px 18px', display: 'grid', gridTemplateColumns: '1fr 60px 64px', borderBottom: '1px solid #f7f8fb', background: row.hl ? '#f0f4ff' : '#fff', alignItems: 'center' }}>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: row.hl ? '#4a7cdc' : '#1a2744' }}>{row.s}</span>
+                        <span style={{ fontSize: 11, color: '#6b7a99', fontWeight: 500 }}>{row.q}</span>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: row.pos ? '#2d7a52' : '#c0392b', textAlign: 'right' }}>{row.p}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

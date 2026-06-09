@@ -34,20 +34,37 @@
   .om-page h4 {
     font-family: var(--f-serif) !important;
     font-weight: 300 !important;
+    font-size: clamp(26px, 3.2vw, 38px) !important;
     color: #372B0B !important;
     letter-spacing: -0.01em !important;
     line-height: 1.2 !important;
+    margin-bottom: 20px !important;
   }
 
   .om-page .step-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 40px;
+    font-family: var(--f-mono);
+    font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--clay, #9E644B); display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
   }
   .om-page .step-label::after {
     content: ''; flex: 1; height: 1px; background: var(--border-light);
   }
   .om-page .step-label.light { color: rgba(247,245,240,0.7); }
   .om-page .step-label.light::after { background: rgba(255,255,255,0.15); }
+
+  /* outcome-col and feedback-item h4s are eyebrow labels, not section headings —
+     override the blanket h4 serif rule */
+  .om-page .outcome-col h4,
+  .om-page .feedback-item h4 {
+    font-family: var(--f-mono) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: var(--clay, #9E644B) !important;
+    margin-bottom: 6px !important;
+    line-height: 1.3 !important;
+  }
 
   
   .om-page .tag-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
@@ -125,36 +142,55 @@
   .om-page .quote-block cite { font-size: 12px; font-weight: 600; color: var(--accent-dark); font-style: normal; }
 
   
-  .om-page .callout {
-    margin-top: 48px; padding: 28px 36px; background: var(--peach-light);
-    border: 1px solid rgba(184,103,87,0.25); border-radius: 12px;
-    display: flex; gap: 16px; align-items: flex-start;
+  /* Plain callout — heading + body, no card frame */
+  .om-page .callout-plain { }
+  .om-page .callout-heading {
+    font-family: var(--f-serif) !important;
+    font-weight: 300 !important;
+    font-size: clamp(26px, 3.2vw, 38px) !important;
+    color: #372B0B !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
   }
-  .om-page .callout .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
-  .om-page .callout .callout-label {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent-dark); margin-bottom: 6px;
+  .om-page .callout-body {
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+    color: var(--deep-text) !important;
+    margin: 0 !important;
   }
-  .om-page .callout p { font-size: 14px; line-height: 1.65; color: var(--warm-gray); }
 
   
-  .om-page .feedback-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .om-page .feedback-list { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 32px; }
   .om-page .feedback-item {
-    padding: 20px 28px; background: var(--accent-light); border: 1px solid var(--border-light);
-    border-radius: 10px; display: flex; gap: 16px; align-items: flex-start;
+    padding: 24px 24px 28px; background: transparent; border: 1px solid var(--clay-edge);
+    border-radius: 12px; display: flex; flex-direction: column; gap: 0;
   }
-  .om-page .feedback-item .bullet {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--peach);
-    flex-shrink: 0; margin-top: 6px;
+  .om-page .feedback-item .bullet { display: none; }
+  .om-page .feedback-item h4 {
+    font-family: var(--f-mono) !important;
+    font-size: 11px !important; font-weight: 500 !important; letter-spacing: 0.16em !important;
+    text-transform: uppercase !important; color: var(--clay) !important;
+    margin-bottom: 12px !important;
   }
-  .om-page .feedback-item h4 { font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 4px; }
-  .om-page .feedback-item p { font-size: 13px; line-height: 1.6; color: var(--warm-gray); }
+  .om-page .feedback-item p { font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0; }
+  @media (max-width: 720px) {
+    .om-page .feedback-list { grid-template-columns: 1fr; }
+  }
 
   
-  .om-page .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+  .om-page .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .om-page .outcome-col {
+    background: transparent;
+    border: 1px solid var(--clay-edge);
+    border-radius: 12px;
+    padding: 28px 28px 32px;
+  }
   .om-page .outcome-col h4 {
-    font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 16px;
+    font-family: var(--f-mono) !important;
+    font-size: 11px !important; font-weight: 500 !important; letter-spacing: 0.16em !important;
+    text-transform: uppercase !important; color: var(--clay) !important;
+    margin-bottom: 20px !important;
   }
   .om-page .outcome-col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
   .om-page .outcome-col li {
@@ -163,7 +199,7 @@
   }
   .om-page .outcome-col li::before {
     content: ''; position: absolute; left: 0; top: 8px;
-    width: 8px; height: 8px; border-radius: 50%; background: var(--peach); opacity: 0.6;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--clay-edge);
   }
 
   

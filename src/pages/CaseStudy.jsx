@@ -1211,7 +1211,7 @@ export default function CaseStudy() {
                 {/* Two-panel layout */}
                 <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                   {/* Order ticket panel */}
-                  <div style={{ width: 300, background: '#fff', borderRadius: 10, border: '1px solid #e2e6ef', padding: '20px 20px 16px', flexShrink: 0 }}>
+                  <div style={{ flex: 2, background: '#fff', borderRadius: 10, border: '1px solid #e2e6ef', padding: '20px 20px 16px', flexShrink: 0 }}>
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6b7a99', marginBottom: 16 }}>Order Entry Ticket</div>
                     {/* Symbol */}
                     <div style={{ marginBottom: 12 }}>
@@ -1246,7 +1246,7 @@ export default function CaseStudy() {
                     </div>
                   </div>
                   {/* Positions panel */}
-                  <div style={{ flex: 1, background: '#fff', borderRadius: 10, border: '1px solid #e2e6ef', overflow: 'hidden' }}>
+                  <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: 10, border: '1px solid #e2e6ef', overflow: 'hidden' }}>
                     <div style={{ padding: '14px 18px 10px', borderBottom: '1px solid #f0f2f7', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1a2744' }}>Positions</span>
                       <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#f5b731' }} />
@@ -1850,21 +1850,6 @@ export default function CaseStudy() {
                 <p style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(246,251,222,0.65)' }}>{card.desc}</p>
               </div>
             ))}
-          </div>
-          <div>
-            <h3 style={{ fontSize: 20, fontWeight: 700, color: 'rgba(246,251,222,0.8)', marginBottom: 24 }}>Initial Feedback from SMEs</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {[
-                { quote: "This is the first time I've been able to see both my positions and my order in the same view. It sounds simple but it changes everything about how I work.", role: 'Product Manager, Internal SME' },
-                { quote: "Clients are asking fewer questions about why their orders look different from what they expected. The in-context positions panel gives advisors the confidence to get it right the first time.", role: 'Client Success Manager, Internal SME' },
-                { quote: "We've had to do almost no customization per application. The design system component just works.", role: 'Implementation Specialist, Internal SME' },
-              ].map((q, i) => (
-                <div key={i} style={{ padding: '20px 28px', background: 'rgba(246,251,222,0.06)', border: '1px solid rgba(246,251,222,0.1)', borderRadius: 10 }}>
-                  <p style={{ fontSize: 15, fontStyle: 'italic', lineHeight: 1.6, color: 'rgba(246,251,222,0.9)', marginBottom: 8 }}>"{q.quote}"</p>
-                  <p style={{ fontSize: 12, fontWeight: 500, color: 'rgba(246,251,222,0.45)' }}> -  {q.role}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

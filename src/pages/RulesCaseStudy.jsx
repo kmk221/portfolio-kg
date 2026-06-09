@@ -1229,6 +1229,229 @@ function IterationCards(){
   </>)
 }
 
+function SynthesisSection(){
+  const [active, setActive] = useState(0)
+
+  const cards = [
+    {
+      num:'01',
+      title:"Rules list lacks searchability",
+      summary:"Rules are only findable with Ctrl+F and truncated text; compliance teams keep spreadsheets just to locate the right one.",
+      caption:"Rules lived in a dense grid that could only be searched with Ctrl+F—and even that broke once text was truncated—so compliance officers kept parallel spreadsheets just to track down the rule they needed.",
+      quote:'"Have to use ctrl+F to find rules and some cutoff logic is unsearchable so I have to keep a separate spreadsheet to simply track down a rule"',
+      visual:(
+        <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:300,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontSize:9,boxShadow:'2px 2px 6px rgba(0,0,0,0.1)',opacity:0.9}}>
+          <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:10,color:'#1a1a1a'}}>Rules</div>
+          <div style={{display:'grid',gridTemplateColumns:'28px 82px 22px 1fr',background:'#e8e8e8',borderBottom:'1px solid #ccc'}}>
+            {['ID','Rule Name','Act.','Detail'].map(h=><div key={h} style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,color:'#333',borderRight:'1px solid #ccc'}}>{h}</div>)}
+          </div>
+          {[['U021','Equity Watch List','Yes','REJECT, If Symbol = [AAPL, MSFT, AMZN, TSLA, GOOG…',true],['U022','Rep Account Monitor','No','REVIEW, If Accepting Rep = [033000086, 04400012…',false],['U023','Branch Hold Flag','Yes','REJECT, If Branch = [123, 124, 125, 126, 127, 128…',false],['U024','Commission Threshold','No','REJECT, If Commission Variance > 2.50%',false],['U025','Low Dollar Order Cap','Yes','REVIEW, If Account Number = [033370983, 044000…',false]].map(([id,name,a,d,highlight],i)=>(
+            <div key={id} style={{display:'grid',gridTemplateColumns:'28px 82px 22px 1fr',background:highlight?'#fffbcc':i%2===0?'#fff':'#fafafa',borderBottom:'1px solid #f0f0f0'}}>
+              <div style={{padding:'3px 6px',fontSize:8,color:'#2563eb',fontWeight:600,borderRight:'1px solid #eee'}}>{id}</div>
+              <div style={{padding:'3px 6px',fontSize:8,color:'#333',fontWeight:highlight?700:400,borderRight:'1px solid #eee'}}>{highlight?<><span style={{background:'#fdee73',borderRadius:1}}>Equity</span>{' Watch List'}</>:name}</div>
+              <div style={{padding:'3px 6px',fontSize:7.5,color:'#555',borderRight:'1px solid #eee'}}>{a}</div>
+              <div style={{padding:'3px 6px',fontSize:8,color:'#888',fontStyle:'italic',overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{d}</div>
+            </div>
+          ))}
+          <div style={{padding:'3px 8px',fontSize:7.5,color:'#aaa',fontStyle:'italic',borderTop:'1px solid #eee'}}>… 55 more rules</div>
+        </div>
+      ),
+      callout:'Only searchable with Ctrl+F which cannot locate data in truncated portion',
+    },
+    {
+      num:'02',
+      title:"Keyword selection is opaque and error-prone",
+      summary:"Over a hundred keywords with no definitions—users pick by trial and error, clicking next to discover what each one does.",
+      caption:"Keyword selection was a blind trial-and-error process: over a hundred options with no descriptions, forcing users to select one, click next, and backtrack repeatedly just to understand what each keyword did.",
+      quote:'"Only know what a keyword means by trial and error  —  select it and click next, then go back and search again for another keyword"',
+      visual:(
+        <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:240,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 6px rgba(0,0,0,0.1)'}}>
+          <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:9.5,color:'#1a1a1a'}}>Rule Keywords — Select 1 to 4:</div>
+          <div style={{fontSize:7.5,fontWeight:700,color:'#555',padding:'3px 8px',background:'#f5f5f5',borderBottom:'1px solid #e8e8e8',letterSpacing:'0.04em',textTransform:'uppercase'}}>Account Related</div>
+          {['Rep Type','Rep Status','Rep Credentials','Rep Production Level'].map(k=>(
+            <div key={k} style={{display:'flex',alignItems:'center',gap:6,padding:'3px 8px',fontSize:9,color:'#333',borderBottom:'1px solid #f0f0f0'}}>
+              <div style={{width:9,height:9,border:'1px solid #999',borderRadius:1,background:'white',flexShrink:0}}/>
+              {k}
+            </div>
+          ))}
+          <div style={{padding:'4px 8px',textAlign:'right',background:'#fafafa',borderTop:'1px solid #eee',display:'flex',justifyContent:'flex-end',gap:4}}>
+            <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#f0f0f0'}}>Cancel</button>
+            <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#d4e0ec'}}>Next &gt;&gt;</button>
+          </div>
+        </div>
+      ),
+      callout:'100+ keywords — no descriptions or context provided',
+    },
+    {
+      num:'03',
+      title:"The system expects expertise it never provides",
+      summary:"Free-text inputs and no guidance assume expertise the platform never teaches; new users can take years to build confidence.",
+      caption:"Core inputs assumed deep institutional knowledge—a single free‑text field for hundreds of ticker symbols with no structure, preview, or validation—turning everyday rule updates into error‑prone chores.",
+      quote:'"One-line box for 600 ticker symbols — impossible to jump to the end of that list"',
+      visual:(
+        <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:280,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
+          <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:10,color:'#1a1a1a'}}>Rule Details</div>
+          <div style={{padding:'6px 8px',borderBottom:'1px solid #eee'}}>
+            <div style={{fontSize:8,color:'#555',marginBottom:3}}>CUSIP/Symbol/SEDOL <span style={{color:'#c00'}}>*</span></div>
+            <div style={{display:'flex',gap:4,alignItems:'center'}}>
+              <select style={{fontSize:8,padding:'1px 4px',border:'1px solid #aaa',borderRadius:2,color:'#333',flexShrink:0}}><option>Equal to</option></select>
+              <div style={{border:'1px solid #aaa',borderRadius:2,background:'white',padding:'2px 6px',fontSize:8,color:'#888',fontStyle:'italic',flex:1,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>AAPL, TSLA, AMZN, MSFT, GOOGL…</div>
+            </div>
+          </div>
+          <div style={{padding:'5px 8px',borderBottom:'1px solid #eee'}}>
+            <div style={{fontSize:8,color:'#555',marginBottom:2}}>Action <span style={{color:'#c00'}}>*</span></div>
+            <div style={{display:'flex',gap:4}}>
+              <select style={{fontSize:8,padding:'1px 4px',border:'1px solid #aaa',borderRadius:2}}><option>Equal to</option></select>
+              <select style={{fontSize:8,padding:'1px 4px',border:'1px solid #aaa',borderRadius:2}}><option>BUY</option></select>
+            </div>
+          </div>
+          <div style={{padding:'4px 8px',display:'flex',justifyContent:'flex-end',gap:4,background:'#fafafa'}}>
+            <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#f0f0f0'}}>Cancel</button>
+            <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#d4e0ec'}}>Save Rule</button>
+          </div>
+        </div>
+      ),
+      callout:'Free text — up to 20,000 comma-separated values',
+    },
+    {
+      num:'04',
+      title:"Insufficient documentation and audit tracking",
+      summary:"Rule rationales and change history live in external spreadsheets; if those fall out of sync, there's no authoritative record inside the platform.",
+      caption:"Rule rationales, change history, and scope lived in a separate Excel tracker that had to be updated manually; if the spreadsheet and the system disagreed, there was no obvious source of truth in high‑stakes situations.",
+      quote:'"Jumping back and forth loses my place — and if I forget to update the spreadsheet, it\'s hard to know the single source of truth. In compliance, that gap can mean a costly trading error."',
+      visual:(
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <div style={{border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:138}}>
+            <div style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,background:'#d4e0ec',borderBottom:'1px solid rgba(0,0,0,0.1)',color:'#1a1a1a'}}>Platform — Rules</div>
+            {['U023 — Equity Buy Cap','U030 — NF Training Hold','U058 — Reject Order Flag'].map(r=>(
+              <div key={r} style={{padding:'2px 6px',fontSize:7.5,color:'#555',borderBottom:'1px solid #f0f0f0',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{r}</div>
+            ))}
+            <div style={{padding:'2px 6px',fontSize:7,color:'#aaa',fontStyle:'italic'}}>+ 58 more…</div>
+          </div>
+          <div style={{color:'#9ba8b8',fontSize:14}}>⇄</div>
+          <div style={{border:'1px solid #b0b0b0',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:152}}>
+            <div style={{background:'#1d6b38',padding:'3px 6px'}}><span style={{fontSize:7,color:'white',fontWeight:600}}>rules_tracker.xlsx</span></div>
+            <div style={{display:'grid',gridTemplateColumns:'18px 36px 56px 36px',background:'#e8e8e8',borderBottom:'1px solid #bbb'}}>
+              {['','Rule','Rationale','Updated'].map(h=><div key={h} style={{padding:'2px 3px',fontSize:6.5,fontWeight:700,color:'#444',borderRight:'1px solid #ccc',textAlign:'center'}}>{h}</div>)}
+            </div>
+            {[['1','U023','Equity res…','Mar 2'],['2','U030','Training ID…','Feb 28'],['3','U058','Order flag…','Mar 10']].map(([n,id,rat,date],i)=>(
+              <div key={n} style={{display:'grid',gridTemplateColumns:'18px 36px 56px 36px',background:i%2===0?'#fff':'#f7f7f7',borderBottom:'1px solid #eee'}}>
+                <div style={{padding:'2px 3px',fontSize:6.5,color:'#999',background:'#f0f0f0',borderRight:'1px solid #ddd',textAlign:'center'}}>{n}</div>
+                <div style={{padding:'2px 3px',fontSize:7,color:'#2563eb',borderRight:'1px solid #eee'}}>{id}</div>
+                <div style={{padding:'2px 3px',fontSize:7,color:'#555',borderRight:'1px solid #eee',overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{rat}</div>
+                <div style={{padding:'2px 3px',fontSize:6.5,color:'#888'}}>{date}</div>
+              </div>
+            ))}
+            <div style={{padding:'2px 5px',fontSize:6.5,color:'#aaa',fontStyle:'italic',borderTop:'1px solid #eee'}}>+ 58 more rows…</div>
+          </div>
+        </div>
+      ),
+      callout:'Manual copy & paste between systems',
+    },
+    {
+      num:'05',
+      title:"Help content not accessible",
+      summary:"The only in-product help is buried in a top-nav link most users have never found—never surfaced at the moment of need.",
+      caption:"The only in‑product help lived in a generic help center link buried in the top nav—technically present, practically invisible, and never surfaced at the moment someone was configuring a rule.",
+      quote:'"Didn\'t know that was here, that\'s cool"',
+      visual:(
+        <div style={{width:240,transform:'scale(1.55)',transformOrigin:'center center'}}>
+          <div style={{border:'1px solid #b8b8b8',borderRadius:3,overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
+            <div style={{background:'#3a4553',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+              <span style={{fontSize:8.5,color:'white',fontWeight:700}}>ABC Investing</span>
+              <div style={{display:'flex',gap:8,alignItems:'center'}}>
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.3" strokeLinejoin="round"><polyline points="1,6 6,1 11,6"/><rect x="3" y="6" width="6" height="5.2" rx="0.5"/></svg>
+                <span style={{fontSize:8,color:'rgba(255,255,255,0.65)',background:'rgba(255,255,255,0.15)',borderRadius:'50%',width:14,height:14,display:'inline-flex',alignItems:'center',justifyContent:'center'}}>?</span>
+              </div>
+            </div>
+            <div style={{padding:8,background:'white'}}>
+              <div style={{fontSize:8,fontWeight:700,color:'#1a1a1a',marginBottom:4}}>Rules</div>
+              {[90,75,60].map(w=><div key={w} style={{height:5,background:'#eee',borderRadius:2,marginBottom:3,width:`${w}%`}}/>)}
+            </div>
+          </div>
+        </div>
+      ),
+      callout:'Help buried in top-right nav — rarely discovered',
+    },
+  ]
+
+  const c = cards[active]
+
+  return (
+    <div style={{marginTop:72,marginBottom:24}}>
+      <StepLabel>Synthesis</StepLabel>
+      <h3 style={{fontFamily:'var(--f-serif)',fontSize:22,fontWeight:400,color:accentDark,letterSpacing:'-0.2px',marginBottom:8}}>Five problem areas emerged</h3>
+      <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:32}}>Bringing interviews, screenshots, and support stories together surfaced five patterns we could design against.</p>
+
+      {/* Two-column layout: cards left (1/3), visual panel right (2/3) */}
+      <div style={{display:'grid',gridTemplateColumns:'1fr 2fr',gap:24,alignItems:'start'}}>
+
+        {/* Left: stacked cards */}
+        <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          {cards.map((card,i)=>{
+            const isActive = active===i
+            return(
+              <button
+                key={card.num}
+                onClick={()=>setActive(i)}
+                style={{
+                  background: isActive ? '#F2DCD0' : 'rgba(242,220,208,0.4)',
+                  border: isActive ? '1px solid #D9AC97' : '1px solid rgba(217,172,151,0.35)',
+                  borderRadius:12,
+                  padding:'18px 20px',
+                  cursor:'pointer',
+                  textAlign:'left',
+                  fontFamily:'inherit',
+                  display:'flex',
+                  flexDirection:'column',
+                  gap:6,
+                  transition:'all 0.15s',
+                  boxShadow: isActive ? '0 2px 10px rgba(55,43,11,0.07)' : 'none',
+                  outline:'none',
+                }}
+              >
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                  <span style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:isActive?terracotta:'rgba(184,103,87,0.45)'}}>{card.num}</span>
+                  {!isActive && <span style={{fontSize:11,color:'rgba(184,103,87,0.5)',fontWeight:500}}>View →</span>}
+                </div>
+                <div style={{fontFamily:'var(--f-serif)',fontSize:15,fontWeight:isActive?700:400,color:isActive?accentDark:'rgba(44,59,85,0.65)',lineHeight:1.35}}>{card.title}</div>
+              </button>
+            )
+          })}
+
+          <div style={{marginTop:8}}>
+            <a
+              href="https://www.figma.com/board/fOKBJ0Tc2lHQtjQiUKUugr/HMW-and-Concepts?node-id=0-1&t=xeVKVgdQRSJCUicq-1"
+              target="_blank"
+              rel="noreferrer"
+              className="btn btn--secondary"
+            >
+              Explore synthesis board in FigJam ↗
+            </a>
+          </div>
+        </div>
+
+        {/* Right: sticky visual panel */}
+        <div style={{position:'sticky',top:100}}>
+          <div style={{background:'#F2DCD0',border:'1px solid #D9AC97',borderRadius:14,overflow:'hidden',boxShadow:'0 2px 14px rgba(55,43,11,0.07)'}}>
+            <div style={{background:'radial-gradient(rgba(55,43,11,0.08) 1px,transparent 1px) 0 0/22px 22px, rgba(212,221,231,0.45)',padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',minHeight:240,overflow:'hidden',position:'relative'}}>
+              {c.visual}
+              <div style={{position:'absolute',bottom:16,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'7px 14px',fontSize:10,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',boxShadow:'0 2px 8px rgba(74,111,165,0.1)'}}>{c.callout}</div>
+            </div>
+            <div style={{padding:'22px 26px 26px',display:'flex',flexDirection:'column',gap:12}}>
+              <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:terracotta}}>What this looked like</div>
+              <div style={{fontFamily:'var(--f-serif)',fontSize:17,fontWeight:700,color:accentDark,lineHeight:1.35}}>{c.title}</div>
+              <p style={{fontSize:13,lineHeight:1.7,color:deepBlue,margin:0}}>{c.caption}</p>
+              <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid rgba(184,103,87,0.3)`,lineHeight:1.55,margin:0}}>{c.quote}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
 export default function RulesCaseStudy(){
   const chapterBarRef = useRef(null)
   const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
@@ -1502,302 +1725,7 @@ export default function RulesCaseStudy(){
           </div>
         </div>
 
-        <div style={{marginTop:72,marginBottom:24}}>
-          <StepLabel>Synthesis</StepLabel>
-          <h3 style={{fontFamily:'var(--f-serif)',fontSize:22,fontWeight:400,color:accentDark,letterSpacing:'-0.2px',marginBottom:8}}>Five problem areas emerged</h3>
-          <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:28}}>Bringing interviews, screenshots, and support stories together surfaced five patterns we could design against.</p>
-
-          {/* Legend */}
-          <div style={{display:'flex',flexWrap:'wrap',gap:16,marginBottom:28,padding:'12px 16px',background:'rgba(212,221,231,0.25)',border:'1px solid rgba(125,145,165,0.2)',borderRadius:8}}>
-            <span style={{fontSize:10,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',color:deepBlue,opacity:0.5,marginRight:4,alignSelf:'center'}}>Key</span>
-            {[
-              {color:'#9bbf7a',label:'Direct user quotes'},
-              {color:'#8aafc4',label:'Workflow observations'},
-              {color:'#cc7a58',label:'Support / ops input'},
-              {color:'#e8b84b',label:'Business / risk constraints'},
-            ].map(({color,label})=>(
-              <span key={label} style={{display:'flex',alignItems:'center',gap:6,fontSize:11,color:deepBlue}}>
-                <span style={{width:8,height:8,borderRadius:'50%',background:color,flexShrink:0,display:'inline-block'}}/>
-                {label}
-              </span>
-            ))}
-          </div>
-
-          {/* Synthesis cards */}
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14,marginBottom:16}}>
-            {[
-              {
-                num:'01',
-                title:'Rules list lacks searchability',
-                body:'Rules are only findable with Ctrl+F and truncated text; compliance teams keep spreadsheets just to locate the right one.',
-                dots:['#9bbf7a','#8aafc4'],
-                sources:'Interviews · Workflow observations',
-              },
-              {
-                num:'02',
-                title:'Keyword selection is opaque and error-prone',
-                body:'Over a hundred keywords with no definitions—users pick by trial and error, clicking next to discover what each one does.',
-                dots:['#9bbf7a','#e8b84b'],
-                sources:'Interviews · Support tickets',
-              },
-              {
-                num:'03',
-                title:'Difficult to build a rule without tribal knowledge',
-                body:'Free-text inputs and no guidance assume expertise the platform never teaches; new users can take years to build confidence.',
-                dots:['#9bbf7a','#8aafc4'],
-                sources:'Interviews · Workflow observations',
-              },
-              {
-                num:'04',
-                title:'Insufficient documentation and audit tracking',
-                body:'Rule rationales and change history live in external spreadsheets; if those fall out of sync, there\'s no authoritative record inside the platform.',
-                dots:['#cc7a58','#9bbf7a'],
-                sources:'Support / ops input · Interviews',
-              },
-              {
-                num:'05',
-                title:'Help content not accessible',
-                body:'The only in-product help is buried in a top-nav link most users have never found—never surfaced at the moment of need.',
-                dots:['#8aafc4','#cc7a58'],
-                sources:'Workflow observations · Support input',
-              },
-            ].map(card=>(
-              <div key={card.num} style={{background:'white',border:'1px solid rgba(202,213,226,0.4)',borderRadius:10,padding:'20px 20px 16px',display:'flex',flexDirection:'column',gap:10,boxShadow:'0 1px 6px rgba(44,59,85,0.05)'}}>
-                <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:8}}>
-                  <span style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',color:accent,textTransform:'uppercase'}}>{card.num}</span>
-                  <div style={{display:'flex',gap:4,flexShrink:0}}>
-                    {card.dots.map((c,i)=><span key={i} style={{width:7,height:7,borderRadius:'50%',background:c,display:'inline-block'}}/>)}
-                  </div>
-                </div>
-                <div style={{fontSize:13,fontWeight:700,color:accentDark,lineHeight:1.35}}>{card.title}</div>
-                <p style={{fontSize:12,lineHeight:1.6,color:deepBlue,margin:0,flex:1}}>{card.body}</p>
-                <div style={{fontSize:10,color:accent,opacity:0.7,letterSpacing:'0.04em',borderTop:'1px solid rgba(125,145,165,0.15)',paddingTop:10,marginTop:4}}>{card.sources}</div>
-              </div>
-            ))}
-            {/* FigJam thumbnail — 6th cell */}
-            <div style={{background:'radial-gradient(rgba(55,43,11,0.08) 1px,transparent 1px) 0 0/20px 20px,rgba(212,221,231,0.45)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:10,padding:'16px',display:'flex',flexDirection:'column',justifyContent:'space-between',cursor:'pointer'}} onClick={()=>{}}>
-              <div>
-                <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accentDark,opacity:0.6,marginBottom:10}}>Working synthesis board in FigJam</div>
-                <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:5,marginBottom:12}}>
-                  {[['#9bbf7a',3],['#8aafc4',3],['#e8b84b',2],['#cc7a58',4],['#9bbf7a',2],['#8aafc4',3]].map(([c,n],i)=>(
-                    <div key={i} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:4,padding:'4px 6px',display:'flex',gap:2,flexWrap:'wrap'}}>
-                      {Array(n).fill(null).map((_,j)=><span key={j} style={{width:6,height:6,borderRadius:1,background:c,opacity:0.7,display:'inline-block'}}/>)}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <a href="https://www.figma.com/board/fOKBJ0Tc2lHQtjQiUKUugr/HMW-and-Concepts?node-id=0-1&t=xeVKVgdQRSJCUicq-1" target="_blank" rel="noreferrer" style={{fontSize:11,fontWeight:700,color:accent,textDecoration:'none',display:'flex',alignItems:'center',gap:4}} onClick={e=>e.stopPropagation()}>
-                Explore full board in FigJam ↗
-              </a>
-            </div>
-          </div>
-
-          <p style={{fontSize:11,color:deepBlue,opacity:0.5,fontStyle:'italic',marginBottom:0}}>Each theme is backed by multiple data points, not a single loud quote. The next section zooms in on each area with screenshots and user quotes.</p>
-        </div>
-
-        <div style={{marginTop:56}}>
-          <div className="rules-problem-cards" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit, minmax(460px, 1fr))',gap:20}}>
-
-            {/* 01  -  Findability */}
-            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
-              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',position:'relative',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',overflow:'hidden',minHeight:220}}>
-                <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:300,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontSize:9,boxShadow:'2px 2px 6px rgba(0,0,0,0.1)',opacity:0.9}}>
-                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:10,color:'#1a1a1a'}}>Rules</div>
-                  <div style={{display:'grid',gridTemplateColumns:'28px 82px 22px 1fr',background:'#e8e8e8',borderBottom:'1px solid #ccc'}}>
-                    {['ID','Rule Name','Act.','Detail'].map(h=><div key={h} style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,color:'#333',borderRight:'1px solid #ccc'}}>{h}</div>)}
-                  </div>
-                  {[
-                    ['U021','Equity Watch List','Yes','REJECT, If Symbol = [AAPL, MSFT, AMZN, TSLA, GOOG…',true],
-                    ['U022','Rep Account Monitor','No','REVIEW, If Accepting Rep = [033000086, 04400012…',false],
-                    ['U023','Branch Hold Flag','Yes','REJECT, If Branch = [123, 124, 125, 126, 127, 128…',false],
-                    ['U024','Commission Threshold','No','REJECT, If Commission Variance > 2.50%',false],
-                    ['U025','Low Dollar Order Cap','Yes','REVIEW, If Account Number = [033370983, 044000…',false],
-                  ].map(([id,name,a,d,highlight],i)=>(
-                    <div key={id} style={{display:'grid',gridTemplateColumns:'28px 82px 22px 1fr',background:highlight?'#fffbcc':i%2===0?'#fff':'#fafafa',borderBottom:'1px solid #f0f0f0'}}>
-                      <div style={{padding:'3px 6px',fontSize:8,color:'#2563eb',fontWeight:600,borderRight:'1px solid #eee'}}>{id}</div>
-                      <div style={{padding:'3px 6px',fontSize:8,color:'#333',fontWeight:highlight?700:400,borderRight:'1px solid #eee'}}>
-                        {highlight?<><span style={{background:'#fdee73',borderRadius:1}}>Equity</span>{' Watch List'}</>:name}
-                      </div>
-                      <div style={{padding:'3px 6px',fontSize:7.5,color:'#555',borderRight:'1px solid #eee'}}>{a}</div>
-                      <div style={{padding:'3px 6px',fontSize:8,color:'#888',fontStyle:'italic',overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{d}</div>
-                    </div>
-                  ))}
-                  <div style={{padding:'3px 8px',fontSize:7.5,color:'#aaa',fontStyle:'italic',borderTop:'1px solid #eee'}}>… 55 more rules</div>
-                </div>
-                {/* Ctrl+F callout */}
-                <div style={{position:'absolute',top:16,right:16,background:'#f1f3f4',border:'1px solid #ccc',borderRadius:4,padding:'7px 12px',fontFamily:'Arial,sans-serif',display:'flex',alignItems:'center',gap:8,boxShadow:'0 2px 8px rgba(0,0,0,0.18)',color:'#333'}}>
-                  <span style={{fontSize:12,fontWeight:600}}>Find:</span>
-                  <div style={{background:'white',border:'1px solid #bbb',borderRadius:2,padding:'3px 8px',fontSize:12,color:'#555',width:80}}>equity</div>
-                  <span style={{fontSize:12,color:'#888'}}>1 of 60</span>
-                </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Only searchable with Ctrl+F which cannot locate data in truncated portion</div>
-              </div>
-              <div style={{padding:'24px 28px 28px'}}>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>01</div>
-                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Users can't manage what they can't find</div>
-                <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:12}}>Rules lived in a dense grid that could only be searched with Ctrl+F—and even that broke once text was truncated—so compliance officers kept parallel spreadsheets just to track down the rule they needed.</p>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Have to use ctrl+F to find rules and some cutoff logic is unsearchable so I have to keep a separate spreadsheet to simply track down a rule"</p>
-              </div>
-            </div>
-
-            {/* 02  -  Keywords opaque */}
-            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
-              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',position:'relative',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',overflow:'hidden',minHeight:220}}>
-                <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:240,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 6px rgba(0,0,0,0.1)'}}>
-                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:9.5,color:'#1a1a1a'}}>Rule Keywords  -  Select 1 to 4:</div>
-                  <div style={{fontSize:7.5,fontWeight:700,color:'#555',padding:'3px 8px',background:'#f5f5f5',borderBottom:'1px solid #e8e8e8',letterSpacing:'0.04em',textTransform:'uppercase'}}>Account Related</div>
-                  {['Rep Type','Rep Status','Rep Credentials','Rep Production Level'].map(k=>(
-                    <div key={k} style={{display:'flex',alignItems:'center',gap:6,padding:'3px 8px',fontSize:9,color:'#333',borderBottom:'1px solid #f0f0f0'}}>
-                      <div style={{width:9,height:9,border:'1px solid #999',borderRadius:1,background:'white',flexShrink:0}}/>
-                      {k}
-                    </div>
-                  ))}
-                  <div style={{padding:'4px 8px',textAlign:'right',background:'#fafafa',borderTop:'1px solid #eee',display:'flex',justifyContent:'flex-end',gap:4}}>
-                    <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#f0f0f0'}}>Cancel</button>
-                    <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#d4e0ec'}}>Next &gt;&gt;</button>
-                  </div>
-                </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>100+ keywords  -  no descriptions or context provided</div>
-              </div>
-              <div style={{padding:'24px 28px 28px'}}>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>02</div>
-                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Guesswork shouldn't be part of building a compliance rule</div>
-                <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:12}}>Keyword selection was a blind trial-and-error process: over a hundred options with no descriptions, forcing users to select one, click next, and backtrack repeatedly just to understand what each keyword did.</p>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Only know what a keyword means by trial and error  -  select it and click next, then go back and search again for another keyword"</p>
-              </div>
-            </div>
-
-            {/* 03  -  Rule creation */}
-            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
-              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
-                <div style={{fontFamily:'Arial,Helvetica,sans-serif',width:280,transform:'scale(1.55)',transformOrigin:'center center',border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
-                  <div style={{background:'#d4e0ec',borderBottom:'1px solid #a0b8cc',padding:'4px 8px',fontWeight:700,fontSize:10,color:'#1a1a1a'}}>Rule Details</div>
-                  <div style={{padding:'6px 8px',borderBottom:'1px solid #eee'}}>
-                    <div style={{fontSize:8,color:'#555',marginBottom:3}}>CUSIP/Symbol/SEDOL <span style={{color:'#c00'}}>*</span></div>
-                    <div style={{display:'flex',gap:4,alignItems:'center'}}>
-                      <select style={{fontSize:8,padding:'1px 4px',border:'1px solid #aaa',borderRadius:2,color:'#333',flexShrink:0}}><option>Equal to</option></select>
-                      <div style={{border:'1px solid #aaa',borderRadius:2,background:'white',padding:'2px 6px',fontSize:8,color:'#888',fontStyle:'italic',flex:1,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>AAPL, TSLA, AMZN, MSFT, GOOGL…</div>
-                    </div>
-                  </div>
-                  <div style={{padding:'5px 8px',borderBottom:'1px solid #eee'}}>
-                    <div style={{fontSize:8,color:'#555',marginBottom:2}}>Action <span style={{color:'#c00'}}>*</span></div>
-                    <div style={{display:'flex',gap:4}}>
-                      <select style={{fontSize:8,padding:'1px 4px',border:'1px solid #aaa',borderRadius:2}}><option>Equal to</option></select>
-                      <select style={{fontSize:8,padding:'1px 4px',border:'1px solid #aaa',borderRadius:2}}><option>BUY</option></select>
-                    </div>
-                  </div>
-                  <div style={{padding:'4px 8px',display:'flex',justifyContent:'flex-end',gap:4,background:'#fafafa'}}>
-                    <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#f0f0f0'}}>Cancel</button>
-                    <button style={{fontSize:8,padding:'2px 8px',border:'1px solid #aaa',borderRadius:2,background:'#d4e0ec'}}>Save Rule</button>
-                  </div>
-                </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Free text  -  up to 20,000 comma-separated values</div>
-              </div>
-              <div style={{padding:'24px 28px 28px'}}>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>03</div>
-                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>The system expects expertise it never provides</div>
-                <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:12}}>Core inputs assumed deep institutional knowledge—a single free‑text field for hundreds of ticker symbols with no structure, preview, or validation—turning everyday rule updates into error‑prone chores.</p>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"One-line box for 600 ticker symbols  -  impossible to jump to the end of that list"</p>
-              </div>
-            </div>
-
-            {/* 04  -  Shadow systems */}
-            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
-              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
-                <div style={{transform:'scale(1.55)',transformOrigin:'center center'}}>
-                <div style={{display:'flex',alignItems:'center',gap:10}}>
-
-                  {/* Platform window */}
-                  <div style={{border:'1px solid #b8b8b8',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:138}}>
-                    <div style={{padding:'3px 6px',fontSize:7.5,fontWeight:700,background:'#d4e0ec',borderBottom:'1px solid rgba(0,0,0,0.1)',color:'#1a1a1a'}}>Platform  -  Rules</div>
-                    {['U023  -  Equity Buy Cap','U030  -  NF Training Hold','U058  -  Reject Order Flag'].map(r=>(
-                      <div key={r} style={{padding:'2px 6px',fontSize:7.5,color:'#555',borderBottom:'1px solid #f0f0f0',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{r}</div>
-                    ))}
-                    <div style={{padding:'2px 6px',fontSize:7,color:'#aaa',fontStyle:'italic'}}>+ 58 more…</div>
-                  </div>
-
-                  {/* Arrow */}
-                  <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:3,color:'#9ba8b8',fontSize:14,fontWeight:400,lineHeight:1}}>⇄</div>
-
-                  {/* Excel window */}
-                  <div style={{border:'1px solid #b0b0b0',borderRadius:3,background:'white',overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)',width:152}}>
-                    {/* Title bar */}
-                    <div style={{background:'#1d6b38',padding:'3px 6px',display:'flex',alignItems:'center',gap:4}}>
-                      <span style={{fontSize:7,color:'white',fontWeight:600,letterSpacing:'0.01em'}}>rules_tracker.xlsx</span>
-                    </div>
-                    {/* Formula bar */}
-                    <div style={{background:'#f5f5f5',borderBottom:'1px solid #ddd',padding:'2px 5px',display:'flex',alignItems:'center',gap:4}}>
-                      <span style={{fontSize:6.5,color:'#777',fontWeight:600,borderRight:'1px solid #ddd',paddingRight:4}}>A2</span>
-                      <span style={{fontSize:6.5,color:'#555'}}>U023</span>
-                    </div>
-                    {/* Column headers */}
-                    <div style={{display:'grid',gridTemplateColumns:'18px 36px 56px 36px',background:'#e8e8e8',borderBottom:'1px solid #bbb'}}>
-                      {['','Rule','Rationale','Updated'].map(h=>(
-                        <div key={h} style={{padding:'2px 3px',fontSize:6.5,fontWeight:700,color:'#444',borderRight:'1px solid #ccc',textAlign:'center'}}>{h}</div>
-                      ))}
-                    </div>
-                    {/* Data rows */}
-                    {[
-                      ['1','U023','Equity res…','Mar 2'],
-                      ['2','U030','Training ID…','Feb 28'],
-                      ['3','U058','Order flag…','Mar 10'],
-                    ].map(([n,id,rat,date],i)=>(
-                      <div key={n} style={{display:'grid',gridTemplateColumns:'18px 36px 56px 36px',background:i%2===0?'#fff':'#f7f7f7',borderBottom:'1px solid #eee'}}>
-                        <div style={{padding:'2px 3px',fontSize:6.5,color:'#999',background:'#f0f0f0',borderRight:'1px solid #ddd',textAlign:'center'}}>{n}</div>
-                        <div style={{padding:'2px 3px',fontSize:7,color:'#2563eb',borderRight:'1px solid #eee'}}>{id}</div>
-                        <div style={{padding:'2px 3px',fontSize:7,color:'#555',borderRight:'1px solid #eee',overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}}>{rat}</div>
-                        <div style={{padding:'2px 3px',fontSize:6.5,color:'#888'}}>{date}</div>
-                      </div>
-                    ))}
-                    <div style={{padding:'2px 5px',fontSize:6.5,color:'#aaa',fontStyle:'italic',borderTop:'1px solid #eee'}}>+ 58 more rows…</div>
-                    {/* Sheet tab */}
-                    <div style={{background:'#e8e8e8',borderTop:'1px solid #ccc',padding:'2px 6px',display:'flex',gap:4}}>
-                      <span style={{fontSize:6.5,background:'white',border:'1px solid #bbb',borderBottom:'none',padding:'1px 5px',borderRadius:'2px 2px 0 0',color:'#333',fontWeight:600}}>Rules Tracker</span>
-                    </div>
-                  </div>
-
-                </div>
-                </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Manual copy &amp; paste between systems</div>
-              </div>
-              <div style={{padding:'24px 28px 28px'}}>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>04</div>
-                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Users forced outside the platform for context</div>
-                <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:12}}>Rule rationales, change history, and scope lived in a separate Excel tracker that had to be updated manually; if the spreadsheet and the system disagreed, there was no obvious source of truth in high‑stakes situations.</p>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Jumping back and forth loses my place  -  and if I forget to update the spreadsheet, it's hard to know the single source of truth. In compliance, that gap can mean a costly trading error."</p>
-              </div>
-            </div>
-
-            {/* 05  -  Help buried */}
-            <div style={{display:'flex',flexDirection:'column',background:'white',borderRadius:14,border:`1px solid rgba(202,213,226,0.35)`,overflow:'hidden',boxShadow:'0 1px 10px rgba(0,0,0,0.05)'}}>
-              <div style={{padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',width:'100%',background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',position:'relative',overflow:'hidden',minHeight:220}}>
-                <div style={{width:240,transform:'scale(1.55)',transformOrigin:'center center'}}>
-                  <div style={{border:'1px solid #b8b8b8',borderRadius:3,overflow:'hidden',fontFamily:'Arial',boxShadow:'2px 2px 5px rgba(0,0,0,0.1)'}}>
-                    <div style={{background:'#3a4553',padding:'5px 10px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                      <span style={{fontSize:8.5,color:'white',fontWeight:700}}>ABC Investing</span>
-                      <div style={{display:'flex',gap:8,alignItems:'center'}}>
-                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.3" strokeLinejoin="round"><polyline points="1,6 6,1 11,6"/><rect x="3" y="6" width="6" height="5.2" rx="0.5"/></svg>
-                        <span style={{fontSize:8,color:'rgba(255,255,255,0.65)',background:'rgba(255,255,255,0.15)',borderRadius:'50%',width:14,height:14,display:'inline-flex',alignItems:'center',justifyContent:'center'}}>?</span>
-                      </div>
-                    </div>
-                    <div style={{padding:8,background:'white'}}>
-                      <div style={{fontSize:8,fontWeight:700,color:'#1a1a1a',marginBottom:4}}>Rules</div>
-                      {[90,75,60].map(w=><div key={w} style={{height:5,background:'#eee',borderRadius:2,marginBottom:3,width:`${w}%`}}/>)}
-                    </div>
-                  </div>
-                </div>
-                <div style={{position:'absolute',bottom:22,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'8px 16px',fontSize:11,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',letterSpacing:'0.01em',boxShadow:'0 2px 10px rgba(74,111,165,0.1)'}}>Help buried in top-right nav  -  rarely discovered</div>
-              </div>
-              <div style={{padding:'24px 28px 28px'}}>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:8}}>05</div>
-                <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.35}}>Help exists—users just never find it</div>
-                <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:12}}>The only in‑product help lived in a generic help center link buried in the top nav—technically present, practically invisible, and never surfaced at the moment someone was configuring a rule.</p>
-                <p style={{fontSize:13,fontStyle:'italic',color:accentDark,paddingLeft:12,borderLeft:`2px solid ${accentMid}`,lineHeight:1.55}}>"Didn't know that was here, that's cool"</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <SynthesisSection/>
       </div>
     </section>
 
@@ -2339,8 +2267,8 @@ export default function RulesCaseStudy(){
               body:'This project shipped two complete workflows  -  rule management and rule creation  -  and the qualitative signal was strong: testing validated the core patterns, and the compliance team adopted the new flows without the kind of pushback that usually accompanies enterprise redesigns. But I didn\'t establish success metrics before launch. I should have partnered with product to define what "better" looked like quantitatively  -  whether that was time-to-create-a-rule, support ticket volume, or error rates on value entry. The absence of hard numbers is the biggest gap in this work, and it\'s something I now build into every project from the start: define the measurement plan during discovery, not after ship.'
             },
             {
-              label:'Influencing the roadmap, not just the interface',
-              body:'The List Manager pivot is the moment in this project I think about most. We identified a clear, high-impact solution  -  and then hit an infrastructure wall that meant it couldn\'t ship in this cycle. I\'m proud of how quickly we redirected into a strong alternative. But looking back, I could have pushed harder to frame the List Manager as a multi-phase investment rather than accepting the deferral as binary. If I\'d built a clearer case for the incremental data architecture work  -  partnering with engineering to scope a minimal foundation in Phase 1  -  we might have gotten closer to the full vision sooner. That\'s an instinct I\'ve since sharpened: shaping the roadmap conditions, not just designing within them.'
+              label:'Starting simple was the better strategy',
+              body:'The List Manager was the concept we were most attached to—a powerful way to define lists once and reuse them across rules. But when we tested the simpler "add values within the rule" flow, compliance users were more excited by how much it reduced fragility with almost no extra learning curve. It made me more skeptical of big, system‑heavy ideas when a lighter, MVP solution solves the sharpest pain: start with the smallest thing that reduces risk and complexity, then earn your way to more ambitious patterns only if users actually need them.'
             },
             {
               label:'Designing patterns, not just screens',

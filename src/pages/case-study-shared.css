@@ -88,7 +88,7 @@
   color: #372B0B; margin-bottom: 20px; letter-spacing: -0.01em;
 }
 .cs-page .om-gold-lede {
-  font-size: 15px; line-height: 1.75; color: rgba(55,43,11,0.72);
+  font-size: 15px; line-height: 1.75; color: #372B0B;
   max-width: 680px; margin-bottom: 40px;
 }
 
@@ -133,7 +133,7 @@
 }
 .cs-page .om-gold-body {
   font-size: clamp(16px, 1.6vw, 19px); font-weight: 400; line-height: 1.75;
-  color: rgba(55,43,11,0.82); margin: 0;
+  color: #372B0B; margin: 0;
 }
 
 

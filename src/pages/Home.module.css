@@ -75,8 +75,7 @@
   font-size: 18px;
   font-weight: 400;
   line-height: 1.65;
-  color: #372B0B;
-  opacity: 0.72;
+  color: #3D3322;
   animation: fadeUp 0.7s ease 0.35s both;
 }
 
@@ -189,8 +188,7 @@
   font-size: 16px;
   font-weight: 400;
   font-style: italic;
-  color: #372B0B;
-  opacity: 0.68;
+  color: #5C4E2E;
   line-height: 1.5;
   margin-bottom: 20px;
 }
@@ -198,7 +196,6 @@
 .projectSubMuted {
   font-size: 15px;
   color: #5F7A9A;
-  opacity: 0.7;
 }
 
 .projectDetails {
@@ -311,7 +308,6 @@
   font-weight: 400;
   line-height: 1.7;
   color: #F5E8D3;
-  opacity: 0.85;
   margin-bottom: 20px;
 }
 

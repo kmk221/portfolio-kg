@@ -712,6 +712,7 @@ strong { font-weight: 600; color: var(--ink); }
 .work-card.clay:hover p, .work-card.ochre:hover p, .work-card.slate:hover p { color: rgba(250,247,240,0.82); }
 .work-card.clay:hover .cta, .work-card.ochre:hover .cta, .work-card.slate:hover .cta { color: var(--bg); border-color: rgba(250,247,240,0.45); }
 .work-card.clay:hover .cta .arr, .work-card.ochre:hover .cta .arr, .work-card.slate:hover .cta .arr { color: rgba(250,247,240,0.45) !important; }
+.work-card.clay:hover .cat, .work-card.ochre:hover .cat, .work-card.slate:hover .cat { color: rgba(250,247,240,0.6); }
 
 /* Bold (saturated) variant — deep fill, cream text */
 .work-card.bold.clay  { background: var(--clay-deep);  border-color: var(--clay-deep); }

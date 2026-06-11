@@ -103,7 +103,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="body">
-                <h3>Redesigning Order Management</h3>
+                <div className="cat">Order Management · Trading</div>
+                <h3>Addition Through Subtraction</h3>
                 <p>The core trading surface at an advisory firm—redesigned to make high-stakes work clearer, calmer, and harder to get wrong.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--clay-deep)' }}>→</span></div>
               </div>
@@ -132,6 +133,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="body">
+                <div className="cat">Compliance · Rules Engine</div>
                 <h3>Inside the Rule Engine</h3>
                 <p>A conditional logic engine that automates which trades reach the market  -  redesigned to replace tribal knowledge with approachable, intuitive workflows compliance teams can move through confidently.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--ochre-deep)' }}>→</span></div>
@@ -164,7 +166,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="body">
-                <h3>Simplifying Positions Info</h3>
+                <div className="cat">Trading Platform · Design Systems</div>
+                <h3>Well-Positioned</h3>
                 <p>Surfacing critical portfolio data next to trading workflows  -  eliminating context switching, reducing reliance on memorization, and scaling as a reusable platform-wide component.</p>
                 <div className="cta"><span /><span className="arr" style={{ color: 'var(--slate-deep)' }}>→</span></div>
               </div>

@@ -383,6 +383,171 @@ function AffinityMap(){
 }
 
 
+/* ── Ideation highlight reel  -  compact concept cards from the HMW sprint.
+   A skimmable stand-in for the full sketch explorer: each card pairs a mini
+   mockup with the HMW prompt it answered. The FigJam board carries the rest. */
+function ReelCard({pill,title,cap,children}){
+  return(
+    <div style={{width:330,flexShrink:0,scrollSnapAlign:'start',background:'#FFFFFD',borderRadius:12,overflow:'hidden',border:'1px solid rgba(44,59,85,0.14)',boxShadow:'0 2px 14px rgba(44,59,85,0.07)',fontFamily:'Inter,sans-serif',display:'flex',flexDirection:'column'}}>
+      <div style={{padding:'14px 16px',flex:1}}>{children}</div>
+      <div style={{padding:'12px 16px 14px',background:'rgba(196,207,223,0.18)',borderTop:'1px solid rgba(44,59,85,0.08)'}}>
+        <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:4}}>{pill}</div>
+        <div style={{fontSize:13,fontWeight:700,color:accentDark,marginBottom:4}}>{title}</div>
+        <div style={{fontSize:11,lineHeight:1.55,color:'rgba(44,59,85,0.65)'}}>{cap}</div>
+      </div>
+    </div>
+  )
+}
+
+function IdeationReel(){
+  const railRef=useRef(null)
+  const nudge=(dir)=>railRef.current?.scrollBy({left:dir*346,behavior:'smooth'})
+  const ann=(text)=>(<div style={{display:'flex',gap:4,marginTop:10,alignItems:'flex-start'}}><span style={{fontSize:11,color:'#b07a30'}}>↑</span><span style={{fontSize:10,fontWeight:600,color:'#b07a30',fontStyle:'italic',lineHeight:1.4}}>{text}</span></div>)
+  const logicRow=(text,bg,bl,tc,bold)=>(<div style={{borderRadius:4,padding:'6px 9px',marginBottom:5,background:bg,borderLeft:`3px solid ${bl}`,color:tc,fontSize:10.5,lineHeight:1.4,fontWeight:bold?600:400}}>{text}</div>)
+  return(
+    <div>
+      <style>{`
+        .ideation-reel{scrollbar-width:thin;scrollbar-color:rgba(44,59,85,0.25) transparent}
+        .ideation-reel::-webkit-scrollbar{height:6px}
+        .ideation-reel::-webkit-scrollbar-track{background:transparent}
+        .ideation-reel::-webkit-scrollbar-thumb{background:rgba(44,59,85,0.2);border-radius:100px}
+        .ideation-reel::-webkit-scrollbar-thumb:hover{background:rgba(44,59,85,0.35)}
+      `}</style>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:14}}>
+        <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent}}>Sprint Highlights  -  Seven Concepts</p>
+        <div style={{display:'flex',gap:8}}>
+          {[['‹','Scroll reel left',-1],['›','Scroll reel right',1]].map(([ch,label,dir])=>(
+            <button key={ch} type="button" onClick={()=>nudge(dir)} aria-label={label} style={{width:34,height:34,borderRadius:'50%',background:'rgba(255,255,255,0.6)',border:'1px solid rgba(125,145,165,0.35)',color:accentDark,fontSize:17,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all 0.2s'}}>{ch}</button>
+          ))}
+        </div>
+      </div>
+      <div ref={railRef} className="ideation-reel" style={{display:'flex',gap:16,overflowX:'auto',scrollSnapType:'x proximity',paddingBottom:14}}>
+
+        {/* 1  -  Search on metadata */}
+        <ReelCard pill="HMW 01" title="Find & understand rules" cap="Real search across names and metadata, with plain-language rule detail right in the list  -  no more Ctrl+F.">
+          <div style={{display:'flex',alignItems:'center',border:'1px solid rgba(44,59,85,0.2)',borderRadius:6,padding:'6px 10px',marginBottom:8,background:'rgba(44,59,85,0.03)',gap:7}}>
+            <span style={{fontSize:12,color:'rgba(44,59,85,0.4)'}}>⌕</span>
+            <span style={{fontSize:11,color:accentDark,flex:1}}>AAP</span>
+            <span style={{fontSize:10,color:'rgba(44,59,85,0.35)'}}>Filters</span>
+          </div>
+          <div style={{display:'flex',gap:6,marginBottom:8}}>
+            <span style={{fontSize:9,fontWeight:600,padding:'2px 9px',borderRadius:20,background:'rgba(95,122,154,0.12)',border:'1px solid rgba(95,122,154,0.45)',color:'#4a6378'}}>Active</span>
+            <span style={{fontSize:9,padding:'2px 9px',borderRadius:20,background:'rgba(44,59,85,0.04)',border:'1px solid rgba(44,59,85,0.15)',color:'rgba(44,59,85,0.45)'}}>All channels</span>
+          </div>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'6px 8px',background:'rgba(95,122,154,0.1)',borderRadius:4,borderLeft:'2px solid rgba(95,122,154,0.6)',marginBottom:4}}>
+            <span style={{fontSize:10.5,color:accentDark,fontWeight:600}}>Review high dollar tech stock</span>
+            <span style={{fontSize:8.5,fontWeight:700,padding:'1px 6px',borderRadius:10,background:'rgba(95,122,154,0.15)',color:'#4a6378'}}>Active</span>
+          </div>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'5px 8px',borderRadius:4,marginBottom:6,background:'rgba(44,59,85,0.03)'}}>
+            <span style={{fontSize:10,color:'rgba(44,59,85,0.35)'}}>Crypto ETF Blacklist</span>
+            <span style={{fontSize:8.5,padding:'1px 6px',borderRadius:10,background:'rgba(44,59,85,0.05)',color:'rgba(44,59,85,0.35)'}}>Active</span>
+          </div>
+          <div style={{fontSize:9.5,fontStyle:'italic',color:'rgba(95,122,154,0.75)'}}>1 result for "AAP"</div>
+          {ann('search on metadata  -  rule detail without leaving the list')}
+        </ReelCard>
+
+        {/* 2  -  Keyword definitions */}
+        <ReelCard pill="HMW 02" title="Keywords, explained" cap="Definitions and accepted values surfaced at the moment of selection  -  ending the trial-and-error loop.">
+          <div style={{fontSize:8,fontWeight:700,letterSpacing:'0.1em',color:accent,marginBottom:6,textTransform:'uppercase'}}>Keyword Detail</div>
+          <div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:6}}>Security Type</div>
+          <div style={{fontSize:10,color:'rgba(44,59,85,0.6)',lineHeight:1.55,marginBottom:8}}>Filters orders based on the type of security being traded.</div>
+          <div style={{fontSize:9,color:'rgba(44,59,85,0.4)',marginBottom:3}}>Accepted values</div>
+          <div style={{fontSize:10,color:'#4a6378',marginBottom:10}}>Equity, Fixed Income, ETF, Mutual Fund…</div>
+          <div style={{background:'rgba(95,122,154,0.1)',border:'1px solid rgba(95,122,154,0.35)',borderRadius:5,padding:'6px 10px',textAlign:'center',fontSize:10,fontWeight:600,color:'#4a6378'}}>+ Add to rule</div>
+          {ann('definition and values before committing to a keyword')}
+        </ReelCard>
+
+        {/* 3  -  Contextual help */}
+        <ReelCard pill="HMW 03" title="Help where it's needed" cap="Contextual guidance inside the create-rule flow  -  not buried in a help center nobody finds.">
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
+            <span style={{fontSize:12,fontWeight:600,color:accentDark}}>Add clause  -  Rule Logic</span>
+            <div style={{width:24,height:24,borderRadius:'50%',background:'rgba(95,122,154,0.12)',border:'1px solid rgba(95,122,154,0.4)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,color:'#4a6378',fontWeight:700,flexShrink:0}}>?</div>
+          </div>
+          <div style={{background:'rgba(196,207,223,0.25)',border:'1px solid rgba(95,122,154,0.25)',borderRadius:6,padding:'9px 11px',marginBottom:10}}>
+            <div style={{fontSize:10.5,fontWeight:700,color:accentDark,marginBottom:4}}>Keyword help</div>
+            <div style={{fontSize:9.5,color:'rgba(44,59,85,0.6)',lineHeight:1.55,marginBottom:6}}>Each clause filters orders by a specific condition. Select a keyword to see accepted values.</div>
+            <div style={{fontSize:9.5,color:'#4a6378',textDecoration:'underline'}}>View full keyword guide →</div>
+          </div>
+          <div style={{background:'rgba(44,59,85,0.03)',border:'1px solid rgba(44,59,85,0.1)',borderRadius:5,padding:'8px 10px',height:30,display:'flex',alignItems:'center'}}><div style={{height:4,background:'rgba(44,59,85,0.12)',borderRadius:2,width:'45%'}}/></div>
+          {ann('keyword-specific guidance directly in the flow')}
+        </ReelCard>
+
+        {/* 4  -  Structured value input */}
+        <ReelCard pill="HMW 04" title="Structured value entry" cap="Bulk upload with validation instead of one comma-separated text box for thousands of values.">
+          <div style={{fontSize:8,fontStyle:'italic',color:'rgba(44,59,85,0.4)',marginBottom:4}}>single-line input</div>
+          <div style={{position:'relative',display:'inline-block',width:140,marginBottom:12}}>
+            <div style={{border:'1px solid rgba(44,59,85,0.15)',borderRadius:4,padding:'5px 8px',background:'rgba(44,59,85,0.02)',display:'flex',alignItems:'center',gap:6}}>
+              <span style={{fontSize:9,color:'rgba(44,59,85,0.35)'}}>Values</span>
+              <div style={{height:4,background:'rgba(44,59,85,0.08)',borderRadius:2,flex:1}}/>
+            </div>
+            <svg style={{position:'absolute',top:-6,left:-6,width:'calc(100% + 12px)',height:'calc(100% + 12px)',pointerEvents:'none'}} viewBox="0 0 112 42" preserveAspectRatio="none">
+              <line x1="4" y1="4" x2="108" y2="38" stroke="rgba(200,80,80,0.7)" strokeWidth="2.5" strokeLinecap="round"/>
+              <line x1="108" y1="4" x2="4" y2="38" stroke="rgba(200,80,80,0.7)" strokeWidth="2.5" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <div style={{fontSize:8,fontStyle:'italic',color:'rgba(44,59,85,0.4)',marginBottom:4}}>import tool</div>
+          <div style={{border:'1.5px dashed rgba(95,122,154,0.5)',borderRadius:5,padding:'10px 12px',background:'rgba(95,122,154,0.05)',textAlign:'center'}}>
+            <div style={{fontSize:10.5,fontWeight:600,color:accentDark,marginBottom:2}}>↑ Upload CSV</div>
+            <div style={{fontSize:8.5,color:'rgba(44,59,85,0.45)'}}>or paste values</div>
+          </div>
+          {ann('input type matches the data  -  no more comma-separated guesswork')}
+        </ReelCard>
+
+        {/* 5  -  List manager */}
+        <ReelCard pill="HMW 04" title="List manager" cap="Define a list once, reuse it across rules  -  the concept an infrastructure constraint deferred (see The Pivot).">
+          <div style={{fontSize:9.5,fontStyle:'italic',color:'rgba(44,59,85,0.45)',marginBottom:9}}>Saved lists  -  reusable across rules</div>
+          {[{name:'High-risk securities',items:'42 items',rules:'3 rules',color:'#5F7A9A'},{name:'Exempt accounts',items:'18 items',rules:'1 rule',color:'#6a81b2'}].map((r,i)=>(
+            <div key={i} style={{display:'flex',alignItems:'center',gap:8,padding:'8px 11px',background:'rgba(44,59,85,0.03)',border:'1px solid rgba(44,59,85,0.1)',borderRadius:8,marginBottom:6}}>
+              <div style={{width:7,height:7,borderRadius:'50%',background:r.color,flexShrink:0}}/>
+              <span style={{fontSize:11,fontWeight:500,color:accentDark,flex:1}}>{r.name}</span>
+              <span style={{fontSize:9.5,color:'rgba(44,59,85,0.4)'}}>{r.items}</span>
+              <span style={{fontSize:9,fontWeight:600,padding:'1px 8px',borderRadius:20,background:'rgba(95,122,154,0.1)',border:'1px solid rgba(95,122,154,0.3)',color:'#4a6378'}}>{r.rules}</span>
+            </div>
+          ))}
+          <div style={{fontSize:11,color:'#4a6378',marginTop:2}}>+ Create new list</div>
+          {ann('define once, reuse across many rules')}
+        </ReelCard>
+
+        {/* 6  -  Plain-language preview */}
+        <ReelCard pill="HMW 05" title="Confidence before go-live" cap="A plain-language preview that builds as the rule is built  -  the concept users later called out as the standout.">
+          <div style={{fontSize:8.5,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(44,59,85,0.4)',marginBottom:8}}>Builds as you go</div>
+          {logicRow('If Account No. is one of…','rgba(106,129,178,0.12)','rgba(106,129,178,0.55)','#3d5377')}
+          {logicRow('and Action is Buy','rgba(92,177,118,0.1)','rgba(92,177,118,0.5)','#2d6c44')}
+          {logicRow('→ then REJECTED','rgba(230,150,60,0.12)','rgba(210,140,60,0.6)','#9a6420',true)}
+          {ann('plain-language preview builds as you go')}
+        </ReelCard>
+
+        {/* 7  -  Audit trail */}
+        <ReelCard pill="HMW 06" title="Audit trail, in-platform" cap="Rule change history inside the product  -  retiring the shadow spreadsheet as the source of truth.">
+          <div style={{fontSize:8.5,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(44,59,85,0.4)',marginBottom:10}}>Audit trail  -  in platform</div>
+          <div style={{position:'relative'}}>
+            <div style={{position:'absolute',left:7,top:0,bottom:0,width:2,background:'rgba(44,59,85,0.1)',borderRadius:2}}/>
+            {[
+              {label:'Modified',color:'#4a6378',border:'rgba(95,122,154,0.4)',bg:'rgba(95,122,154,0.1)',dot:'#8a9aaa',name:'K.D.',time:'Today 9:41am'},
+              {label:'Activated',color:'#9a7420',border:'rgba(200,160,60,0.45)',bg:'rgba(230,184,75,0.15)',dot:'#d4a843',name:'S.R.',time:'Mar 2, 2:15pm'},
+              {label:'Created',color:'#2e7396',border:'rgba(91,160,200,0.4)',bg:'rgba(91,160,200,0.12)',dot:'#5b9fc8',name:'K.D.',time:'Feb 28, 10:00am'},
+            ].map((r,i)=>(
+              <div key={i} style={{display:'flex',alignItems:'flex-start',marginBottom:i<2?12:0,position:'relative'}}>
+                <div style={{width:16,height:16,borderRadius:'50%',background:r.dot,flexShrink:0,zIndex:1,border:'2px solid #FFFFFD',marginTop:1,marginRight:10}}/>
+                <div style={{flex:1}}>
+                  <div style={{display:'flex',alignItems:'center',gap:7,marginBottom:3}}>
+                    <span style={{fontSize:9,fontWeight:600,padding:'1px 9px',borderRadius:20,background:r.bg,border:`1px solid ${r.border}`,color:r.color}}>{r.label}</span>
+                    <span style={{fontSize:8.5,color:'rgba(44,59,85,0.45)'}}>by {r.name}</span>
+                  </div>
+                  <div style={{fontSize:8.5,color:'rgba(44,59,85,0.35)'}}>{r.time}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {ann('rule-level or all-rules timeline  -  no more Excel')}
+        </ReelCard>
+
+      </div>
+    </div>
+  )
+}
+
+
 function ImageLightbox({src, onClose}) {
   useEffect(() => {
     const h = (e) => { if(e.key==='Escape') onClose() }

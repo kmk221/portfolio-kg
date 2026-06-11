@@ -10,7 +10,7 @@
     --peach: var(--terracotta);                  /* was #B3866B */
     --peach-light: rgba(144, 161, 185, 0.10);
     --espresso: var(--deep-brown);               /* was #241D15 — uses home --deep-brown */
-    --deep-text: rgba(55, 43, 11, 0.72);
+    --deep-text: #372B0B;
     --page-bg: transparent;                      /* let the JSX radial gradient show through */
     --section-alt: rgba(196, 207, 223, 0.28);    /* soft steel-blue wash — echoes home's cool sections */
     --side-p: 64px;

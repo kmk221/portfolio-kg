@@ -6,11 +6,9 @@ import './CaseStudy.css'
 // --- Mini animated illustrations for heuristic cards ---
 const panelBg = '#3d4f63'
 const panelBorder = 'rgba(144,161,185,0.25)'
-const rowBg = 'rgba(255,255,255,0.06)'
 const textDim = 'rgba(246,251,222,0.45)'
 const textBright = 'rgba(246,251,222,0.9)'
 const green = '#5a9e7c'
-const red = '#c27070'
 
 // 1. Forced Context Switching  -  type qty, open drawer to check shares, come back
 function AnimContextSwitch() {
@@ -141,60 +139,6 @@ function AnimHiddenInfo() {
   )
 }
 
-// 3. Inefficient Workflow  -  drawer slides up covering form
-function AnimInefficient() {
-  const [open, setOpen] = useState(false)
-  useEffect(() => {
-    const t = setInterval(() => setOpen(o => !o), 1600)
-    return () => clearInterval(t)
-  }, [])
-
-  const drawerH = open ? 62 : 0
-  const blockWidths = [100, 75, 100, 60, 85, 55, 90, 70]
-
-  return (
-    <div style={{ background: panelBg, borderRadius: 8, padding: 10, fontFamily: 'Inter,sans-serif', fontSize: 10, color: textBright, border: `1px solid ${panelBorder}`, minHeight: 90, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: 4 }}>
-      {/* Header */}
-      <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: 0.5, color: textDim }}>ORDER ENTRY TICKET</div>
-      {/* Blocked-out form fields */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1 }}>
-        {blockWidths.map((w, i) => (
-          <div key={i} style={{
-            height: 7, width: `${w}%`,
-            background: open && i >= 4 ? 'rgba(194,112,112,0.18)' : 'rgba(255,255,255,0.09)',
-            borderRadius: 3,
-            opacity: open && i >= 4 ? 0.35 : 1,
-            transition: 'opacity 0.4s, background 0.4s',
-          }}/>
-        ))}
-      </div>
-      {/* Red tint overlay on blocked portion */}
-      {open && (
-        <div style={{ position: 'absolute', bottom: drawerH, left: 0, right: 0, height: 38, background: 'rgba(194,112,112,0.08)', borderTop: '1px dashed rgba(194,112,112,0.35)', transition: 'opacity 0.4s', pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 8 }}>
-          <span style={{ fontSize: 8, color: 'rgba(194,112,112,0.7)', fontWeight: 700 }}>blocked</span>
-        </div>
-      )}
-      {/* Drawer sliding up from bottom */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: drawerH, background: '#2d3e50', border: '1px solid rgba(144,161,185,0.4)', borderRadius: '6px 6px 0 0', transition: 'height 0.4s ease', overflow: 'hidden' }}>
-        {drawerH > 10 && (
-          <div style={{ padding: '6px 10px', display: 'flex', gap: 6 }}>
-            {/* Vertical list of tickers */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
-              <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: 0.5, color: textDim, marginBottom: 2 }}>POSITIONS</div>
-              {['AAPL','MSFT','GOOGL','NVDA'].map(t => (
-                <div key={t} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(144,161,185,0.12)', paddingBottom: 2 }}>
-                  <span style={{ fontSize: 8, fontWeight: 700, color: textBright }}>{t}</span>
-                  <span style={{ fontSize: 8, color: green }}>+1.8%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
 // 4. Competing Elements  -  drawer at bottom fights with order entry form
 function AnimCompeting() {
   const [drawerH, setDrawerH] = useState(0)
@@ -257,139 +201,10 @@ function AnimCompeting() {
   )
 }
 
-// 5. Information Overload  -  too many columns scrolling
-function AnimOverload() {
-  const [scrollY, setScrollY] = useState(0)
-  const totalRows = 18
-  const visibleRows = 3
-  const maxScroll = totalRows - visibleRows
-
-  useEffect(() => {
-    let dir = 1
-    const t = setInterval(() => {
-      setScrollY(y => {
-        const next = y + dir
-        if (next >= maxScroll) dir = -1
-        if (next <= 0) dir = 1
-        return next
-      })
-    }, 180)
-    return () => clearInterval(t)
-  }, [])
-
-  const tickers = ['AAPL','MSFT','GOOGL','NVDA','AMZN','JPM','TSLA','META','BRK','V','JNJ','WMT','PG','UNH','HD','BAC','XOM','CVX','LLY','MA']
-  const visibleTickers = tickers.slice(scrollY, scrollY + visibleRows)
-  const scrollPct = (scrollY / maxScroll) * 100
-
-  return (
-    <div style={{ background: panelBg, borderRadius: 8, padding: 10, fontFamily: 'Inter,sans-serif', fontSize: 10, color: textBright, border: `1px solid ${panelBorder}`, minHeight: 90, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-        <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: 0.5, color: textDim }}>POSITIONS  -  {totalRows} ROWS</div>
-        <div style={{ fontSize: 8, color: textDim }}>↕ scrolling</div>
-      </div>
-      <div style={{ flex: 1, display: 'flex', gap: 4, overflow: 'hidden' }}>
-        {/* List */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3 }}>
-          {/* Header row */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4, paddingBottom: 4, borderBottom: `1px solid rgba(144,161,185,0.2)` }}>
-            {['Ticker','Value','P&L'].map(h => <span key={h} style={{ fontSize: 8, fontWeight: 700, color: textDim }}>{h}</span>)}
-          </div>
-          {/* Visible rows */}
-          {visibleTickers.map((t, i) => (
-            <div key={t} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 4, padding: '2px 0', borderBottom: `1px solid rgba(144,161,185,0.1)`, transition: 'opacity 0.1s', opacity: i === 0 || i === visibleRows - 1 ? 0.4 : 1 }}>
-              <span style={{ fontSize: 9, fontWeight: 700, color: textBright }}>{t}</span>
-              <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 2, alignSelf: 'center' }}/>
-              <span style={{ fontSize: 9, color: ['GOOGL','JPM','BRK','JNJ','BAC'].includes(t) ? red : green, fontWeight: 600 }}>
-                {['GOOGL','JPM','BRK','JNJ','BAC'].includes(t) ? '-' : '+'}{(1 + (t.charCodeAt(0) % 40) / 10).toFixed(1)}%
-              </span>
-            </div>
-          ))}
-        </div>
-        {/* Scrollbar */}
-        <div style={{ width: 5, background: 'rgba(255,255,255,0.07)', borderRadius: 3, position: 'relative', flexShrink: 0 }}>
-          <div style={{
-            position: 'absolute', left: 0, right: 0,
-            height: `${(visibleRows / totalRows) * 100}%`,
-            top: `${scrollPct * (1 - visibleRows / totalRows)}%`,
-            background: 'rgba(144,161,185,0.6)', borderRadius: 3,
-            transition: 'top 0.18s linear',
-          }}/>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// 6. Inconsistent Implementation  -  4 different drawer styles cycling
-function AnimInconsistent() {
-  const [active, setActive] = useState(0)
-  useEffect(() => {
-    const t = setInterval(() => setActive(a => (a + 1) % 4), 1200)
-    return () => clearInterval(t)
-  }, [])
-
-  const posColor = 'rgba(144,161,185,0.85)'
-  const mainBlock = { background: 'rgba(255,255,255,0.07)', borderRadius: 3 }
-
-  // Each app: a small wireframe with POSITIONS block in a different location
-  const apps = [
-    // App 1: Bottom drawer  -  positions strip at bottom
-    <div key="a" style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <div style={{ ...mainBlock, flex: 1 }}/>
-      <div style={{ height: '28%', background: posColor, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ fontSize: 7, fontWeight: 800, color: panelBg, letterSpacing: 0.5 }}>POSITIONS</span>
-      </div>
-    </div>,
-    // App 2: Side panel  -  positions on right
-    <div key="b" style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row', gap: 2 }}>
-      <div style={{ ...mainBlock, flex: 1 }}/>
-      <div style={{ width: '35%', background: posColor, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ fontSize: 7, fontWeight: 800, color: panelBg, letterSpacing: 0.5, writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>POSITIONS</span>
-      </div>
-    </div>,
-    // App 3: Dashboard tile  -  positions is one tile in a grid
-    <div key="c" style={{ width: '100%', height: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 2 }}>
-      <div style={{ ...mainBlock }}/>
-      <div style={{ background: posColor, borderRadius: 3, border: '1.5px dashed rgba(255,255,255,0.4)' }}/>
-      <div style={{ ...mainBlock }}/>
-      <div style={{ ...mainBlock }}/>
-    </div>,
-    // App 4: Full page  -  positions takes whole screen
-    <div key="d" style={{ width: '100%', height: '100%', background: posColor, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <span style={{ fontSize: 7, fontWeight: 800, color: panelBg, letterSpacing: 0.5 }}>POSITIONS</span>
-    </div>,
-  ]
-
-  const labels = ['Bottom Drawer', 'Side Panel', 'Small Tile', 'Full Page App']
-
-  return (
-    <div style={{ background: panelBg, borderRadius: 8, padding: 10, fontFamily: 'Inter,sans-serif', color: textBright, border: `1px solid ${panelBorder}`, minHeight: 90, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 5, flex: 1 }}>
-        {apps.map((app, i) => (
-          <div key={i} style={{
-            background: rowBg, borderRadius: 5, padding: 5,
-            border: `1.5px solid ${i === active ? 'rgba(144,161,185,0.7)' : 'rgba(144,161,185,0.12)'}`,
-            opacity: i === active ? 1 : 0.45,
-            transition: 'all 0.5s',
-            display: 'flex', flexDirection: 'column', gap: 4,
-          }}>
-            <div style={{ fontSize: 7, fontWeight: 700, color: i === active ? textBright : textDim, letterSpacing: 0.3, marginBottom: 2 }}>App {i+1}</div>
-            <div style={{ flex: 1 }}>{app}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{ marginTop: 6, fontSize: 8, color: textDim, textAlign: 'center' }}>{labels[active]}</div>
-    </div>
-  )
-}
-
 const heuristicItems = [
   { heuristic: 'Recognition Rather than Recall', severity: 'Critical', title: 'Forced Context Switching', desc: 'Advisors needed to remember positions data while navigating to and from the positions drawer, placing unnecessary load on working memory during complex trading tasks.', animation: <AnimContextSwitch /> },
   { heuristic: 'Visibility of System Status', severity: 'High', title: 'Hidden Positions Information', desc: 'Positions data was buried in collapsed drawers with minimal affordance. Users had no indication of what data was available or how to access it without prior knowledge.', animation: <AnimHiddenInfo /> },
-  { heuristic: 'Flexibility and Efficiency of Use', severity: 'High', title: 'Inefficient Workflow Patterns', desc: 'Opening the positions drawer obscured the primary trade entry form, forcing users to toggle between views rather than reference both simultaneously.', animation: <AnimInefficient /> },
   { heuristic: 'User Control and Freedom', severity: 'High', title: 'Competing Interface Elements', desc: 'Bottom drawer competed with trade entry form for visual focus and screen space, creating an either/or choice when both were needed simultaneously.', animation: <AnimCompeting /> },
-  { heuristic: 'Aesthetic and Minimalist Design', severity: 'Medium', title: 'Wrong Depth of Detail', desc: 'The drawer optimized for depth over breadth  -  surfacing exhaustive details on a few positions, when the workflow demands the opposite: a handful of key fields across many positions simultaneously.', animation: <AnimOverload /> },
-  { heuristic: 'Consistency and Standards', severity: 'Medium', title: 'Inconsistent Implementation', desc: 'Four different trading applications implemented positions access in four different ways  -  increasing cognitive overhead for users who switched between applications.', animation: <AnimInconsistent /> },
 ]
 
 const journeyStages = [
@@ -569,7 +384,7 @@ function JourneyMap() {
         </div>
       </div>
       {/* Stage counter hint */}
-      <p style={{ textAlign: 'center', fontSize: 12, color: 'rgba(144,161,185,0.6)', marginTop: 12 }}>Stage {active + 1} of {journeyStages.length}  -  click any stage to explore</p>
+      <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--ink-mute)', marginTop: 12 }}>Stage {active + 1} of {journeyStages.length}  -  click any stage to explore</p>
     </div>
   )
 }
@@ -1023,14 +838,14 @@ function ConceptCarousel() {
   const concept = concepts[idx]
   return (
     <div style={{ marginTop: 24 }}>
-      <div className="concept-card-grid" style={{ border: '1px solid rgba(144,161,185,0.25)', borderRadius: 14, overflow: 'hidden', display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
+      <div className="concept-card-grid" style={{ border: '1px solid var(--hairline)', borderRadius: 14, overflow: 'hidden', display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
         {/* Illustration  -  16:9 */}
-        <div style={{ background: 'rgba(202,213,226,0.1)' }}>
+        <div style={{ background: 'rgba(55,43,11,0.03)' }}>
           {getConceptIllustration(concept.name, 16)}
         </div>
         {/* Text  -  right side */}
-        <div style={{ padding: '36px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderLeft: '1px solid rgba(144,161,185,0.15)', background: 'rgba(243,239,217,0.4)' }}>
-          <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--steel-blue)', background: 'rgba(144,161,185,0.12)', border: '1px solid rgba(144,161,185,0.3)', padding: '4px 10px', borderRadius: 4, alignSelf: 'flex-start', marginBottom: 20 }}>Other Concepts Explored</span>
+        <div style={{ padding: '36px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderLeft: '1px solid var(--hairline)', background: 'rgba(243,239,217,0.4)' }}>
+          <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--ink-3)', background: 'transparent', border: '1px solid var(--hairline-strong)', padding: '4px 10px', borderRadius: 999, alignSelf: 'flex-start', marginBottom: 20 }}>Other Concepts Explored</span>
           <h3 style={{ fontSize: 20, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 20 }}>{concept.name}</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {concept.pros.map((p, i) => (
@@ -1044,19 +859,19 @@ function ConceptCarousel() {
       </div>
       {/* Navigation */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, marginTop: 20 }}>
-        <button onClick={prev} style={{ width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(144,161,185,0.35)', background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--steel-blue)' }}>
+        <button onClick={prev} style={{ width: 36, height: 36, borderRadius: '50%', border: '1px solid var(--hairline-strong)', background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--clay)' }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polyline points="10,3 5,8 10,13"/></svg>
         </button>
         <div style={{ display: 'flex', gap: 8 }}>
           {concepts.map((_, i) => (
-            <button key={i} onClick={() => setIdx(i)} style={{ width: 8, height: 8, borderRadius: '50%', border: 'none', cursor: 'pointer', padding: 0, background: i === idx ? 'var(--steel-blue)' : 'rgba(144,161,185,0.3)', transition: 'background 0.2s' }} />
+            <button key={i} onClick={() => setIdx(i)} style={{ width: 8, height: 8, borderRadius: '50%', border: 'none', cursor: 'pointer', padding: 0, background: i === idx ? 'var(--clay)' : 'var(--hairline-strong)', transition: 'background 0.2s' }} />
           ))}
         </div>
-        <button onClick={next} style={{ width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(144,161,185,0.35)', background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--steel-blue)' }}>
+        <button onClick={next} style={{ width: 36, height: 36, borderRadius: '50%', border: '1px solid var(--hairline-strong)', background: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--clay)' }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polyline points="6,3 11,8 6,13"/></svg>
         </button>
       </div>
-      <p style={{ textAlign: 'center', fontSize: 12, color: 'rgba(144,161,185,0.7)', marginTop: 8 }}>{idx + 1} of {concepts.length} concepts</p>
+      <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--ink-mute)', marginTop: 8 }}>{idx + 1} of {concepts.length} concepts</p>
     </div>
   )
 }
@@ -1166,7 +981,7 @@ export default function CaseStudy() {
           <div style={{ marginBottom: 32 }}>
             <span className="eyebrow">Case Study · Trading Platform · Design Systems · 2025</span>
           </div>
-          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: '#372B0B', margin: '0 0 20px' }}>Well-Positioned<span style={{ color: 'var(--slate)' }}>.</span></h1>
+          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: '#372B0B', margin: '0 0 20px' }}>Well-Positioned<span style={{ color: 'var(--clay)' }}>.</span></h1>
           <p style={{ fontFamily: 'var(--f-serif)', fontStyle: 'normal', fontWeight: 300, fontSize: 'clamp(17px, 1.5vw, 21px)', lineHeight: 1.55, color: 'var(--ink-2)', maxWidth: 560, margin: '0 0 36px' }}>Designing in-flow context for institutional investing workflows—bringing account and position data to the moment it matters most.</p>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {['Research', 'Strategy', 'Product Design', 'Design Systems'].map(tag => (
@@ -1284,9 +1099,9 @@ export default function CaseStudy() {
       <section id="ch-tldr" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)', display: 'flex', flexDirection: 'column', gap: 56 }}>
           <div>
-            <h2 style={{ fontSize: 'clamp(40px, 8vw, 80px)', fontWeight: 700, color: 'var(--ink-2)', lineHeight: 1.2, marginBottom: 20 }}>tl;dr</h2>
-            <p style={{ fontSize: 'clamp(17px, 2.5vw, 22px)', fontWeight: 500, lineHeight: 1.65, letterSpacing: '-0.3px', color: 'var(--terracotta)' }}>
-              Across the enterprise investing platform, we re-architected how portfolio positions data appeared within trading workflows. We then scaled this order ticket enhancement into a reusable design system component and layout pattern, unlocking compounding efficiency gains across the platform's many data-dense applications.
+            <h2 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 300, color: '#372B0B', lineHeight: 1.1, marginBottom: 20 }}>tl;dr</h2>
+            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.75, color: '#372B0B', maxWidth: 820 }}>
+              Across 10 trading applications, portfolio positions data — the context every advisor needs to make a trade — was hidden in drawers, buried below the fold, or living in a separate app entirely. Advisors had independently built the same workaround: a second monitor just to see their own positions. The brief was to fix one order ticket. I reframed it to fix the platform. I designed a horizontal positions panel that surfaced essential context without competing with the primary workflow, then partnered with the design system team to formalize it as a reusable component requiring no custom work per application — and embedded a success measurement framework and event tracking into the engineering handoff from day one. The pattern shipped across 10+ applications with ~90% design system coverage, aligning 10+ product teams on a single layout standard for data-dense workflows.
             </p>
           </div>
           <div className="meta-pills">
@@ -1297,66 +1112,38 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      {/* 3. FRAMING  -  steel blue */}
-      <section style={{ background: 'var(--steel-blue)', padding: 'var(--section-padding) 0' }}>
+      {/* 3. FRAMING  -  warm callout on cream, matching CS1's highlighted blocks */}
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 style={{ fontSize: 30, letterSpacing: 0.4, color: 'var(--bg)', lineHeight: 1.3, marginBottom: 32, paddingTop: 32 }}>
-            <strong style={{ fontWeight: 900 }}>impact + scale {'>'}</strong>{' '}
-            <span style={{ fontWeight: 300 }}>convenience + speed</span>
+          <h2 className="cs-h2" style={{ marginBottom: 32 }}>
+            impact + scale {'>'} convenience + speed
           </h2>
-          <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.7, letterSpacing: '-0.31px', color: 'white', maxWidth: 961, marginBottom: 16 }}>
-            This work was initially planned as a routine feature lift-and-shift; bringing an existing positions drawer pattern from another order ticket into a new trading application. While this approach optimized for speed, early design exploration revealed that simply integrating the existing drawer into the new app would perpetuate significant discoverability and workflow issues that existed on the platform.
-          </p>
-          <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.7, letterSpacing: '-0.31px', color: 'white', maxWidth: 961 }}>
-            I led lightweight design explorations that reframed the problem from <em>how to integrate an existing component</em> to <em>how to design for efficient in-flow decision-making</em>. In partnership with product, design system, and development teams, we identified an opportunity to establish a simple yet impactful new solution that would scale beyond a single trade ticket and support a broader range of contextual utilities across the platform's data-dense workflows.
-          </p>
+          <div style={{ maxWidth: 961, padding: '28px 32px', borderLeft: '4px solid var(--clay)', background: 'rgba(184,103,87,0.04)', borderRadius: '0 12px 12px 0' }}>
+            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.7, color: 'var(--ink-2)', marginBottom: 16 }}>
+              This work was initially planned as a routine feature lift-and-shift; bringing an existing positions drawer pattern from another order ticket into a new trading application. While this approach optimized for speed, early design exploration revealed that simply integrating the existing drawer into the new app would perpetuate significant discoverability and workflow issues that existed on the platform.
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>
+              I led lightweight design explorations that reframed the problem from <em>how to integrate an existing component</em> to <em>how to design for efficient in-flow decision-making</em>. In partnership with product, design system, and development teams, we identified an opportunity to establish a simple yet impactful new solution that would scale beyond a single trade ticket and support a broader range of contextual utilities across the platform's data-dense workflows.
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.7, color: 'var(--ink-2)', marginTop: 16, marginBottom: 0 }}>
+              The goal wasn't to solve one ticket — it was to establish a pattern that wouldn't require custom work each time a new application needed positions context.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* 4. PROJECT DETAILS */}
       <section id="ch-context" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 className="cs-h2">Project Details</h2>
-          <div className="details-grid">
-            {[
-              { heading: 'Context', items: [
-                'An institutional investing platform used by advisors to manage client portfolios',
-                'Trading workflows span multiple applications, varying by advisor role and asset class',
-                'While these apps evolved independently, all relied on portfolio positions data as critical context',
-              ]},
-              { heading: 'Opportunity', items: [
-                'Despite being central to trading, portfolio positions were treated as secondary across these applications',
-                'Positions info was hidden within drawers rather than intentionally integrated into workflows',
-                'Advisors were forced to interrupt order entry to reference holdings  -  introducing friction and risk',
-              ]},
-              { heading: 'Key Outcomes', items: [
-                'Redesigned positions as an in-context component surfaced alongside trade entry',
-                'Improved discoverability and scan-ability of key portfolio data at the moment of decision',
-                'Reduced context switching and supported faster, more confident, accurate trade execution',
-                'Established a new design system component and page layout standard for data-dense workflows',
-              ]},
-            ].map(col => (
-              <div key={col.heading} className="details-col">
-                <img
-                  src={col.heading === 'Context' ? '/context.svg' : col.heading === 'Opportunity' ? '/opportunity.svg' : '/key outcomes.svg'}
-                  alt={col.heading}
-                  style={{ width: '100%', marginBottom: 24, borderRadius: 8 }}
-                />
-                <h3 className="details-col-heading">{col.heading}</h3>
-                <ul className="details-list">{col.items.map((item, i) => <li key={i}>{item}</li>)}</ul>
-              </div>
-            ))}
-          </div>
-
           {/* Measurement constraint callout */}
-          <div style={{ marginTop: 48, padding: '28px 36px', background: 'rgba(106,129,178,0.08)', border: '1px solid rgba(106,129,178,0.2)', borderRadius: 12 }}>
+          <div style={{ padding: '28px 36px', background: 'transparent', border: '1px solid var(--clay-edge)', borderRadius: 12 }}>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 10 }}>
               <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
                 <polygon points="9,0 18,16 0,16" fill="#F5C518"/>
                 <rect x="8" y="5" width="2" height="5" fill="#7a5c00"/>
                 <rect x="8" y="12" width="2" height="2" fill="#7a5c00"/>
               </svg>
-              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--slate)', margin: 0 }}>A note on measurement</p>
+              <p style={{ fontFamily: 'var(--f-mono)', fontSize: 13, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay)', margin: 0 }}>A note on measurement</p>
             </div>
             <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)', margin: 0, paddingLeft: 32 }}>
               This project was completed in an environment without mature analytics infrastructure or established KPI frameworks for UX work. Quantitative instrumentation wasn't yet standard practice on this platform. Rather than treat this as an inevitable constraint, I defined and proposed a comprehensive measurement approach to guide future implementation and product decisions. The plan included a detailed success framework and measurement plan  -  in the <strong>Measuring Success</strong> section below.
@@ -1368,27 +1155,8 @@ export default function CaseStudy() {
       {/* 5. PROBLEM HYPOTHESIS */}
       <section id="ch-hypothesis" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 className="cs-h2">Initial Problem Hypothesis &amp; Key Questions</h2>
-          <p className="cs-body">Our trading platform serves professional traders managing complex institutional portfolios. <strong>The initial hypothesis was clear: positions data is critical to every trade decision, yet it remained hidden, secondary, or spatially competitive with the primary task.</strong> We set out to understand the full scope of this problem before proposing any solution.</p>
-          <p className="cs-body" style={{ marginBottom: 16 }}>Key questions guiding discovery:</p>
-          <ul style={{ paddingLeft: 24, display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 0 }}>
-            {[
-              'How and where does positions data currently appear across trading applications?',
-              'What friction does this cause for advisors during order entry?',
-              'Are there workarounds that reveal latent user needs?',
-              'What would ideal in-flow positions access look like across different trading contexts?',
-            ].map((q, i) => (
-              <li key={i} style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)' }}>{q}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 6. PROCESS */}
-      <section style={{ background: '#B86757', padding: 'var(--section-padding) 0' }}>
-        <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#F5E8D3', marginBottom: 56 }}>Design Process</p>
-          <img src="/process.svg" alt="Our design process" style={{ width: '100%', maxWidth: 900, display: 'block', margin: '0 auto' }} />
+          <h2 className="cs-h2">Initial Problem Hypothesis</h2>
+          <p className="cs-body" style={{ marginBottom: 0 }}><strong>The initial hypothesis was clear: positions data is critical to every trade decision, yet it remained hidden, secondary, or spatially competitive with the primary task.</strong></p>
         </div>
       </section>
 
@@ -1406,13 +1174,13 @@ export default function CaseStudy() {
             ))}
           </div>
           {/* Featured Example */}
-          <div style={{ marginTop: 48, borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(144,161,185,0.2)' }}>
-            <div style={{ padding: '16px 24px', background: 'white', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(144,161,185,0.15)' }}>
+          <div style={{ marginTop: 48, borderRadius: 12, overflow: 'hidden', border: '1px solid var(--hairline)' }}>
+            <div style={{ padding: '16px 24px', background: 'white', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid var(--hairline)' }}>
               <h4 style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink-2)', margin: 0 }}>Multi-Order Ticket</h4>
               <span className="featured-badge">Featured Example</span>
-              <span style={{ fontSize: 12, color: 'var(--steel-blue)', marginLeft: 'auto' }}>Bottom Drawer Pattern</span>
+              <span style={{ fontSize: 12, color: 'var(--ink-mute)', marginLeft: 'auto' }}>Bottom Drawer Pattern</span>
             </div>
-            <div style={{ padding: 24, background: 'rgba(202,213,226,0.08)' }}>
+            <div style={{ padding: 24, background: 'rgba(55,43,11,0.03)' }}>
               <img src="/featuredexample.png" alt="Multi-Order Ticket featured example" style={{ width: '100%', display: 'block', borderRadius: 8 }} />
             </div>
             <div style={{ padding: '24px', background: 'white' }}>
@@ -1424,7 +1192,7 @@ export default function CaseStudy() {
                   { title: 'Unclear Trigger Component & Label', desc: 'Ambiguous trigger placement and text suggests navigation rather than in-page context' },
                   { title: 'Obscures Primary Interface', desc: 'Opening drawer covers trade entry form  -  forces toggle behavior between positions and order entry' },
                 ].map((issue, i) => (
-                  <div key={i} style={{ background: 'rgba(202,213,226,0.15)', borderLeft: '4px solid #d89396', borderRadius: 4, padding: '14px 16px 14px 18px' }}>
+                  <div key={i} style={{ background: 'rgba(184,103,87,0.05)', borderLeft: '3px solid var(--clay)', borderRadius: 4, padding: '14px 16px 14px 18px' }}>
                     <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--warm-gray)', marginBottom: 6 }}>{issue.title}</p>
                     <p style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--ink-2)', margin: 0 }}>{issue.desc}</p>
                   </div>
@@ -1447,7 +1215,7 @@ export default function CaseStudy() {
                   </div>
                   <p className="audit-card-pattern">{card.pattern}</p>
                 </div>
-                <div style={{ padding: '16px 24px 0', background: 'rgba(202,213,226,0.08)', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ padding: '16px 24px 0', background: 'rgba(55,43,11,0.03)', display: 'flex', justifyContent: 'center' }}>
                   <img src={card.img} alt={card.title} style={{ width: '100%', maxHeight: 160, objectFit: 'contain', display: 'block' }} />
                 </div>
                 <div className="audit-card-body">
@@ -1460,6 +1228,10 @@ export default function CaseStudy() {
             <p className="finding-callout-label">Summary</p>
             <p className="finding-callout-text">Positions data had been architecturally positioned as supplementary, on-demand content  -  but was behaviorally used as essential, always-on context. The recurring theme across every application: vertical orientation, spatial competition, and hidden triggers.</p>
           </div>
+          <div className="finding-callout" style={{ marginTop: 24 }}>
+            <p className="finding-callout-label">Behavioral Insight</p>
+            <p className="finding-callout-text">The most telling signal wasn't in any interview — it was behavioral: the majority of advisors had independently developed the same workaround: open positions in a separate window, position on a second monitor, and manually reference while entering trades. When users invent the same workaround independently, the design has already told them the answer. The solution needed to give users simultaneous access to both positions and the trade entry form — without the second monitor.</p>
+          </div>
         </div>
       </section>
 
@@ -1470,18 +1242,18 @@ export default function CaseStudy() {
           <p className="cs-body">Across these applications, a heuristic evaluation surfaced consistent violations that compounded into significant workflow friction for advisors.</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 40 }}>
             {heuristicItems.map(item => (
-              <div key={item.title} style={{ borderRadius: 12, border: '1px solid rgba(144,161,185,0.18)', overflow: 'hidden', background: 'var(--cream)' }}>
+              <div key={item.title} style={{ borderRadius: 12, border: '1px solid var(--hairline)', overflow: 'hidden', background: 'var(--cream)' }}>
                 {/* Animation */}
                 <div style={{ padding: '20px 20px 16px' }}>
                   {item.animation}
                 </div>
                 {/* Info */}
-                <div style={{ padding: '0 20px 20px', borderTop: '1px solid rgba(144,161,185,0.12)', paddingTop: 16 }}>
+                <div style={{ padding: '0 20px 20px', borderTop: '1px solid var(--hairline)', paddingTop: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
                     <h4 style={{ fontSize: 15, fontWeight: 700, color: 'var(--warm-gray)', margin: 0 }}>{item.title}</h4>
                     <span className={`issue-severity issue-severity--${item.severity.toLowerCase()}`} style={{ flexShrink: 0 }}>{item.severity}</span>
                   </div>
-                  <span style={{ fontSize: 11, color: '#B17C5D', fontWeight: 600, display: 'block', marginBottom: 10 }}>{item.heuristic}</span>
+                  <span style={{ fontSize: 11, color: 'var(--clay)', fontWeight: 600, display: 'block', marginBottom: 10 }}>{item.heuristic}</span>
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--ink-2)', margin: 0 }}>{item.desc}</p>
                 </div>
               </div>
@@ -1511,10 +1283,6 @@ export default function CaseStudy() {
               </div>
             ))}
           </div>
-          <div className="finding-callout" style={{ marginTop: 40 }}>
-            <p className="finding-callout-label">Behavioral Analytics Insight</p>
-            <p className="finding-callout-text">The majority of advisors had independently developed the same workaround: open positions in a separate window, position on second monitor, and manually reference while entering trades. This self-created workaround validated our design direction  -  the solution needed to give users simultaneous access to both positions and the trade entry form.</p>
-          </div>
         </div>
       </section>
 
@@ -1522,12 +1290,7 @@ export default function CaseStudy() {
       <section style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
           <h2 className="cs-h2">Journey Mapping</h2>
-          <p className="cs-body">Mapping the end-to-end workflow revealed how positions friction compounded across every stage of the advisor's trading journey.</p>
           <JourneyMap />
-          <div className="quote-block" style={{ marginTop: 40 }}>
-            <p className="quote-text">"The positions drawer isn't just a UX issue  -  it's a compliance risk. Advisors are making decisions without complete information because the tool makes it too hard to have both visible at once."</p>
-            <p className="quote-attribution"> -  Compliance Officer, Internal SME Interview</p>
-          </div>
         </div>
       </section>
 
@@ -1556,26 +1319,33 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      {/* 12. PROBLEM DEFINED */}
-      <section id="ch-problem" style={{ background: '#B86757', padding: 'var(--section-padding) 0' }}>
+      {/* 12. PROBLEM DEFINED  -  warm cream with CS1-style callout emphasis */}
+      <section id="ch-problem" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 className="cs-h2" style={{ color: '#F5E8D3' }}>Problem: Validated &amp; Defined</h2>
-          <p style={{ fontSize: 20, fontWeight: 700, lineHeight: 1.5, color: '#f6fbde', marginBottom: 20, marginTop: 32 }}>
-            Portfolio positions data is prerequisite context for every trade decision  -  yet the current design treats it as supplementary, on-demand information. This structural mismatch forces advisors to choose between seeing their positions and entering a trade, two tasks that must happen simultaneously.
-          </p>
-          <p style={{ fontSize: 16, lineHeight: 1.7, color: 'rgba(246,251,222,0.85)' }}>
-            The result: advisors interrupt their workflows, accept higher cognitive load, build manual workarounds, and make decisions with incomplete information  -  introducing friction, inefficiency, and risk at the highest-stakes moment of the trading process.
-          </p>
+          <h2 className="cs-h2">Problem: Validated &amp; Defined</h2>
+          <div style={{ maxWidth: 820, padding: '28px 32px', borderLeft: '4px solid var(--clay)', background: 'rgba(184,103,87,0.04)', borderRadius: '0 12px 12px 0', marginTop: 32 }}>
+            <p style={{ fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, lineHeight: 1.6, color: '#372B0B', marginBottom: 16 }}>
+              Portfolio positions data is prerequisite context for every trade decision  -  yet the current design treats it as supplementary, on-demand information. This structural mismatch forces advisors to choose between seeing their positions and entering a trade, two tasks that must happen simultaneously.
+            </p>
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>
+              The result: advisors interrupt their workflows, accept higher cognitive load, build manual workarounds, and make decisions with incomplete information  -  introducing friction, inefficiency, and risk at the highest-stakes moment of the trading process.
+            </p>
+          </div>
 
-          {/* Business Impact callout */}
+          <div className="quote-block" style={{ marginTop: 40 }}>
+            <p className="quote-text">"The positions drawer isn't just a UX issue  -  it's a compliance risk. Advisors are making decisions without complete information because the tool makes it too hard to have both visible at once."</p>
+            <p className="quote-attribution"> -  Compliance Officer, Internal SME Interview</p>
+          </div>
+
+          {/* Business Impact callout  -  outlined cards, matching CS1's constraint cards */}
           <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            <div style={{ background: 'rgba(0,0,0,0.15)', borderRadius: 12, padding: '28px 32px', borderTop: '3px solid rgba(246,251,222,0.4)' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: 'rgba(246,251,222,0.6)', marginBottom: 10 }}>Client Relationship Risk</p>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'rgba(246,251,222,0.9)', margin: 0 }}>Trading errors are among the most costly outcomes a firm can face. When advisors make decisions with incomplete position data, errors increase  -  damaging trust between our clients and the end investors they trade on behalf of. In an industry where reputation is everything, preventable errors are not a UX problem. They are a business problem.</p>
+            <div style={{ background: 'transparent', borderRadius: 12, padding: '28px 32px', border: '1px solid var(--clay-edge)' }}>
+              <p style={{ fontFamily: 'var(--f-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay)', marginBottom: 10 }}>Client Relationship Risk</p>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>Trading errors are among the most costly outcomes a firm can face. When advisors make decisions with incomplete position data, errors increase  -  damaging trust between our clients and the end investors they trade on behalf of. In an industry where reputation is everything, preventable errors are not a UX problem. They are a business problem.</p>
             </div>
-            <div style={{ background: 'rgba(0,0,0,0.15)', borderRadius: 12, padding: '28px 32px', borderTop: '3px solid rgba(246,251,222,0.4)' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: 'rgba(246,251,222,0.6)', marginBottom: 10 }}>Operational Cost</p>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'rgba(246,251,222,0.9)', margin: 0 }}>Each trading error generates downstream work: service inquiries, manual corrections, and follow-up from our support teams. Reducing workflow friction isn't just about advisor experience  -  it directly reduces the volume of error-driven support load and the internal cost of remediation that follows.</p>
+            <div style={{ background: 'transparent', borderRadius: 12, padding: '28px 32px', border: '1px solid var(--clay-edge)' }}>
+              <p style={{ fontFamily: 'var(--f-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay)', marginBottom: 10 }}>Operational Cost</p>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>Each trading error generates downstream work: service inquiries, manual corrections, and follow-up from our support teams. Reducing workflow friction isn't just about advisor experience  -  it directly reduces the volume of error-driven support load and the internal cost of remediation that follows.</p>
             </div>
           </div>
         </div>
@@ -1585,19 +1355,6 @@ export default function CaseStudy() {
       <section id="ch-solution" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
           <h2 className="cs-h2">Defining Solution Parameters</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginTop: 40 }}>
-            {[
-              { img: '/requirement.svg', title: 'Requirements', items: ['Positions visible alongside trade entry without user action', 'Must not obscure or compete with primary interface', 'Must work across all 10 applications with minimal custom work', 'Implementable within design system constraints'] },
-              { img: '/howmight.svg', title: 'How Might We...', items: ['Surface positions data native to the trade entry flow?', 'Optimize for breadth over depth?', 'Establish a pattern flexible enough to scale platform-wide?', 'Reduce interactions needed to reference positions to zero?'] },
-              { img: '/strategic.svg', title: 'Alignment', items: ['Design system team committed to contributing new component', 'Engineering confirmed feasibility of horizontal panel layout', 'Product aligned on piloting in one application first'] },
-            ].map(card => (
-              <div key={card.title} style={{ background: 'white', border: '1px solid rgba(144,161,185,0.2)', borderRadius: 12, padding: '32px 28px' }}>
-                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(177,124,93,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}><img src={card.img} alt={card.title} style={{ width: 24, height: 24, filter: 'invert(55%) sepia(27%) saturate(700%) hue-rotate(330deg) brightness(88%)' }} /></div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 16 }}>{card.title}</h3>
-                <ul className="details-list">{card.items.map((item, i) => <li key={i}>{item}</li>)}</ul>
-              </div>
-            ))}
-          </div>
           <div style={{ marginTop: 40 }}>
             <h3 className="cs-h3">Solution Principles</h3>
             <div className="principle-row">
@@ -1646,22 +1403,22 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      {/* 15. KEY DESIGN DECISIONS */}
-      <section style={{ background: '#3d4f63', padding: 'var(--section-padding) 0' }}>
+      {/* 15. KEY DESIGN DECISIONS  -  warm cream, matching CS1 */}
+      <section style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 className="cs-h2" style={{ color: '#f6fbde' }}>Key Design Decisions</h2>
+          <h2 className="cs-h2">Key Design Decisions</h2>
           <div className="decision-list">
             {[
               { title: 'Eliminated Context Switching', desc: 'By making positions persistently visible alongside the trade form  -  not behind a toggle  -  advisors could reference and enter data simultaneously for the first time.' },
-              { title: 'Prioritized Breadth over Depth', desc: 'The horizontal card layout maximizes the number of positions visible at once. We surfaced the 4-5 most relevant fields  -  ticker, shares, current value, unrealized gain/loss  -  not all 12+ columns.' },
+              { title: 'Prioritized Breadth over Depth', desc: 'The horizontal card layout maximizes the number of positions visible at once. I surfaced the 4-5 most relevant fields  -  ticker, shares, current value, unrealized gain/loss  -  not all 12+ columns.' },
               { title: 'Built in the Spirit of the Design System', desc: 'Designed to align with the existing visual language, spacing tokens, and interaction patterns. Worked directly with the design system team during development to formalize the component spec.' },
               { title: 'Scalable Across All Trading Use Cases', desc: 'Designed as a context-agnostic "horizontal contextual data panel"  -  applicable not just to positions, but to any data-dense workflow across the platform requiring secondary reference data.' },
             ].map((d, i) => (
               <div key={i} className="decision-item">
-                <div className="decision-check" style={{ background: 'rgba(246,251,222,0.12)', borderColor: 'rgba(246,251,222,0.2)' }}><img src="/check.svg" alt="check" style={{ width: 24, height: 24, filter: 'brightness(0) invert(1)' }} /></div>
+                <div className="decision-check" style={{ background: 'var(--clay-tint)', borderColor: 'var(--clay-edge)' }}><img src="/check.svg" alt="check" style={{ width: 24, height: 24, filter: 'invert(55%) sepia(27%) saturate(700%) hue-rotate(330deg) brightness(88%)' }} /></div>
                 <div>
-                  <h4 className="cs-h4" style={{ color: '#f6fbde' }}>{d.title}</h4>
-                  <p className="cs-body" style={{ margin: 0, color: 'rgba(246,251,222,0.75)' }}>{d.desc}</p>
+                  <h4 className="cs-h4">{d.title}</h4>
+                  <p className="cs-body" style={{ margin: 0 }}>{d.desc}</p>
                 </div>
               </div>
             ))}
@@ -1702,18 +1459,18 @@ export default function CaseStudy() {
       <section style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
           <h2 className="cs-h2">Scaling &amp; Rollout</h2>
-          <p className="cs-body">Any change to live trading workflows required careful, staged rollout. We structured a phased approach that prioritized learning and iteration at each stage before expanding.</p>
+          <p className="cs-body">Any change to live trading workflows required careful, staged rollout. I structured a phased approach that prioritized learning and iteration at each stage before expanding.</p>
           <div className="app-grid" style={{ marginTop: 40 }}>
             {[
-              { phase: 'Phase 1', title: 'Pilot  -  Multi-Order Ticket', desc: 'Introduced the horizontal positions panel in the highest-traffic trading application. Collected feedback and iterated on column priority and display density.', status: 'Complete', sc: '#5a9e7c', sb: 'rgba(90,158,124,0.3)' },
-              { phase: 'Phase 2', title: 'Expand  -  Order Entry Tickets', desc: 'Applied the standardized component across the 6 individual order entry ticket applications, using the design system component to ensure consistency.', status: 'Complete', sc: '#5a9e7c', sb: 'rgba(90,158,124,0.3)' },
-              { phase: 'Phase 3', title: 'Scale  -  Platform-Wide', desc: 'Rolled out the pattern to all 10 identified applications and established it as the default layout standard for data-dense contexts.', status: 'In Progress', sc: 'var(--slate)', sb: 'rgba(106,129,178,0.3)' },
-              { phase: 'Future', title: 'Generalize  -  Contextual Data Pattern', desc: 'Extend beyond positions to support account summaries, model benchmarks, compliance checks, and order history.', status: 'Planned', sc: 'var(--steel-blue)', sb: 'rgba(144,161,185,0.3)' },
+              { phase: 'Phase 1', title: 'Pilot  -  Multi-Order Ticket', desc: 'Introduced the horizontal positions panel in the highest-traffic trading application. Collected feedback and iterated on column priority and display density.', status: 'Complete', sc: '#8E4A2E', sb: 'var(--clay)' },
+              { phase: 'Phase 2', title: 'Expand  -  Order Entry Tickets', desc: 'Applied the standardized component across the 6 individual order entry ticket applications, using the design system component to ensure consistency.', status: 'Complete', sc: '#8E4A2E', sb: 'var(--clay)' },
+              { phase: 'Phase 3', title: 'Scale  -  Platform-Wide', desc: 'Rolled out the pattern to all 10 identified applications and established it as the default layout standard for data-dense contexts.', status: 'In Progress', sc: '#6B5E45', sb: 'var(--hairline-strong)' },
+              { phase: 'Future', title: 'Generalize  -  Contextual Data Pattern', desc: 'Extend beyond positions to support account summaries, model benchmarks, compliance checks, and order history.', status: 'Planned', sc: '#6B5E45', sb: 'var(--hairline-strong)' },
             ].map(item => (
-              <div key={item.phase} style={{ padding: '28px 32px', border: '1px solid rgba(144,161,185,0.2)', borderRadius: 12, background: 'white' }}>
+              <div key={item.phase} style={{ padding: '28px 32px', border: '1px solid var(--hairline)', borderRadius: 12, background: 'white' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                   <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--terracotta)' }}>{item.phase}</span>
-                  <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 8px', borderRadius: 4, color: item.sc, background: 'rgba(0,0,0,0.04)', border: `1px solid ${item.sb}` }}>{item.status}</span>
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 999, color: item.sc, background: 'transparent', border: `1px solid ${item.sb}` }}>{item.status}</span>
                 </div>
                 <h4 style={{ fontSize: 16, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 8 }}>{item.title}</h4>
                 <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-2)' }}>{item.desc}</p>
@@ -1746,7 +1503,7 @@ export default function CaseStudy() {
               {
                 label: 'Task Completion Rate',
                 badge: 'Critical',
-                badgeColor: '#c0392b',
+                badgeColor: '#8E4A2E',
                 what: '% of users who successfully complete an order entry with the new positions panel',
                 how: 'Event tracking: position_panel_task_completed',
                 target: 'Baseline TBD → Improve by 25%+ within 60 days',
@@ -1754,7 +1511,7 @@ export default function CaseStudy() {
               {
                 label: 'Time to Complete Order',
                 badge: 'Critical',
-                badgeColor: '#c0392b',
+                badgeColor: '#8E4A2E',
                 what: 'Average time from opening order entry to submitting order',
                 how: 'Timestamp delta: start_order → complete_order',
                 target: 'Baseline TBD → Reduce by 30% (hypothesis: ~4min → ~2.5min)',
@@ -1762,7 +1519,7 @@ export default function CaseStudy() {
               {
                 label: 'Support Ticket Volume',
                 badge: 'High (Can measure now!)',
-                badgeColor: '#e67e22',
+                badgeColor: '#6B5E45',
                 what: '# of support tickets tagged "order entry" or "position tracking"',
                 how: 'Support system data (existing)',
                 target: 'Current baseline ~240/month → Reduce to <160/month (-30%)',
@@ -1770,28 +1527,28 @@ export default function CaseStudy() {
               {
                 label: 'Trading Efficiency (Orders/Hour)',
                 badge: 'Critical',
-                badgeColor: '#c0392b',
+                badgeColor: '#8E4A2E',
                 what: 'Average orders completed per trading hour per user',
                 how: 'May be available in existing business systems',
                 target: 'Current unknown → Improve by 20%+',
               },
             ].map(metric => (
-              <div key={metric.label} style={{ padding: '24px 28px', border: '1px solid rgba(144,161,185,0.25)', borderRadius: 10 }}>
+              <div key={metric.label} style={{ padding: '24px 28px', border: '1px solid var(--clay-edge)', borderRadius: 10 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
                   <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink-2)', margin: 0 }}>{metric.label}</p>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: 'white', background: metric.badgeColor, padding: '3px 10px', borderRadius: 4, whiteSpace: 'nowrap', marginLeft: 12 }}>{metric.badge}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: metric.badgeColor, background: 'transparent', border: `1px solid ${metric.badgeColor}`, padding: '3px 10px', borderRadius: 999, whiteSpace: 'nowrap', marginLeft: 12 }}>{metric.badge}</span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <p style={{ fontSize: 13, color: 'var(--warm-gray)', margin: 0 }}><strong>What:</strong> {metric.what}</p>
                   <p style={{ fontSize: 13, color: 'var(--warm-gray)', margin: 0 }}><strong>How:</strong> {metric.how}</p>
-                  <p style={{ fontSize: 13, color: 'var(--slate)', margin: 0 }}><strong>Target:</strong> {metric.target}</p>
+                  <p style={{ fontSize: 13, color: '#8E4A2E', margin: 0 }}><strong>Target:</strong> {metric.target}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Interim note */}
-          <div style={{ padding: '20px 28px', background: 'rgba(106,129,178,0.06)', borderLeft: '3px solid var(--slate)', borderRadius: '0 8px 8px 0', marginBottom: 56 }}>
+          <div style={{ padding: '20px 28px', background: 'rgba(184,103,87,0.05)', borderLeft: '3px solid var(--clay)', borderRadius: '0 8px 8px 0', marginBottom: 56 }}>
             <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', margin: 0, fontStyle: 'italic' }}>
               In the interim, I tracked qualitative signals through user interviews and support ticket analysis to validate directional improvements while instrumentation was being built.
             </p>
@@ -1802,17 +1559,17 @@ export default function CaseStudy() {
           <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)', marginBottom: 28 }}>
             I collaborated with engineering to ensure the redesign included proper event architecture from day one  -  so that when the analytics platform launched, tracking would already be in place with no retroactive instrumentation needed.
           </p>
-          <div style={{ background: '#1e1e2e', borderRadius: 10, padding: '28px 32px', marginBottom: 28 }}>
+          <div style={{ background: 'transparent', border: '1px solid var(--clay-edge)', borderRadius: 10, padding: '28px 32px', marginBottom: 28 }}>
             {[
               { event: 'position_panel_opened', trigger: 'User clicks to expand position panel', params: 'user_id, timestamp, panel_state (collapsed→expanded)' },
               { event: 'order_entry_started', trigger: 'User begins filling out order form', params: 'user_id, timestamp, order_type, source_screen' },
               { event: 'order_entry_completed', trigger: 'User successfully submits order', params: 'user_id, timestamp, order_id, time_to_complete, position_panel_used (boolean)' },
               { event: 'order_entry_error', trigger: 'User encounters an error during order entry', params: 'user_id, timestamp, error_type, error_message, step_in_flow' },
             ].map(spec => (
-              <div key={spec.event} style={{ marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-                <p style={{ fontSize: 13, fontWeight: 700, color: '#a8d8a8', margin: '0 0 6px', fontFamily: 'monospace' }}>{spec.event}</p>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', margin: '0 0 4px' }}><span style={{ color: 'rgba(255,255,255,0.4)' }}>Trigger:</span> {spec.trigger}</p>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', margin: 0 }}><span style={{ color: 'rgba(255,255,255,0.4)' }}>Parameters:</span> {spec.params}</p>
+              <div key={spec.event} style={{ marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--hairline)' }}>
+                <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--clay-ink)', margin: '0 0 6px', fontFamily: 'var(--f-mono)' }}>{spec.event}</p>
+                <p style={{ fontSize: 12, color: 'var(--ink-3)', margin: '0 0 4px' }}><span style={{ color: 'var(--ink-mute)' }}>Trigger:</span> {spec.trigger}</p>
+                <p style={{ fontSize: 12, color: 'var(--ink-3)', margin: 0 }}><span style={{ color: 'var(--ink-mute)' }}>Parameters:</span> {spec.params}</p>
               </div>
             ))}
           </div>
@@ -1822,32 +1579,32 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      {/* 18. RESULTS  -  steel blue */}
-      <section id="ch-outcomes" style={{ background: 'var(--steel-blue)', padding: 'var(--section-padding) 0' }}>
+      {/* 18. RESULTS  -  warm cream, matching CS1 */}
+      <section id="ch-outcomes" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 style={{ fontSize: 36, fontWeight: 700, color: 'var(--bg)', marginBottom: 48 }}>Results &amp; Impact</h2>
+          <h2 className="cs-h2" style={{ marginBottom: 48 }}>Results &amp; Impact</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, marginBottom: 56 }}>
             {[
               { icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(246,251,222,0.9)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9E644B" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
                   </svg>
                 ), title: 'Improved Discoverability', desc: 'Positions information now visible without hunting through drawers or switching applications' },
               { icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(246,251,222,0.9)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9E644B" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="2" y1="12" x2="22" y2="12"/><polyline points="8,6 2,12 8,18"/><polyline points="16,6 22,12 16,18"/>
                   </svg>
                 ), title: 'Better Scannability', desc: 'Horizontal layout leverages available screen real estate  -  more positions visible at once' },
               { icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(246,251,222,0.9)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9E644B" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
                   </svg>
                 ), title: 'Platform Consistency', desc: 'Unified pattern across all trading pages reduces cognitive overhead when switching applications' },
             ].map(card => (
-              <div key={card.title} style={{ padding: '28px', background: 'rgba(246,251,222,0.07)', border: '1px solid rgba(246,251,222,0.12)', borderRadius: 12 }}>
-                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(246,251,222,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>{card.icon}</div>
-                <h4 style={{ fontSize: 16, fontWeight: 700, color: 'var(--bg)', marginBottom: 8 }}>{card.title}</h4>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(246,251,222,0.65)' }}>{card.desc}</p>
+              <div key={card.title} style={{ padding: '28px', background: 'transparent', border: '1px solid var(--clay-edge)', borderRadius: 12 }}>
+                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--clay-tint)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>{card.icon}</div>
+                <h4 style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink)', marginBottom: 8 }}>{card.title}</h4>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-3)' }}>{card.desc}</p>
               </div>
             ))}
           </div>
@@ -1869,52 +1626,6 @@ export default function CaseStudy() {
                   <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)' }}>{item.desc}</p>
                 </div>
               ))}
-            </div>
-          </div>
-          <div className="reflection-grid">
-            <div>
-              <h3 className="reflection-col-heading">What Went Well</h3>
-              <ul className="reflection-list good">
-                <li><img src="/check.svg" alt="check" /><span>Rapid prototyping allowed us to test and discard ideas quickly  -  we evaluated 5 concepts in the time a traditional process might review 1</span></li>
-                <li><img src="/check.svg" alt="check" /><span>Early cross-functional alignment with engineering prevented late-stage redesigns</span></li>
-                <li><img src="/check.svg" alt="check" /><span>Design system team involvement from day one meant the contributed component required almost no rework post-handoff</span></li>
-                <li><img src="/check.svg" alt="check" /><span>Research artifacts (journey map, audit matrix) became reusable tools referenced by other teams months after the project ended</span></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="reflection-col-heading">What I'd Do Differently</h3>
-              <ul className="reflection-list different">
-                <li>Involve more end-user advisors earlier in concept evaluation  -  SME proxies provided good coverage but couldn't fully replicate real trader response</li>
-                <li>Define quantitative success metrics upfront  -  our outcome measurement was largely qualitative. I've since developed the success framework and instrumentation plan documented in this case study as a model for future projects</li>
-                <li>Document design rationale more formally during development  -  some nuanced decisions weren't captured and required re-explanation later</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 20. NEXT STEPS */}
-      <section style={{ background: 'var(--cream)', padding: '100px 0 120px' }}>
-        <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
-          <h2 className="cs-h2">Next Steps</h2>
-          <div className="next-steps-grid">
-            <div>
-              <h3 className="next-steps-heading">Planned Enhancements</h3>
-              <ul className="next-steps-list">
-                <li>Advanced filtering and search within the positions panel</li>
-                <li>Customizable alerts based on position changes or thresholds</li>
-                <li>Mobile-optimized version for on-the-go monitoring</li>
-                <li>Integration with trade execution confirmation workflows</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="next-steps-heading">Continuous Improvement</h3>
-              <ul className="next-steps-list">
-                <li>Monthly feedback sessions with representative advisor cohorts</li>
-                <li>A/B testing of new features before full rollout</li>
-                <li>Analytics monitoring for usage patterns and adoption gaps</li>
-                <li>Quarterly review of feature adoption and satisfaction metrics</li>
-              </ul>
             </div>
           </div>
         </div>

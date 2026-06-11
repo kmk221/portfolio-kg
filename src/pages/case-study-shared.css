@@ -53,13 +53,10 @@
   --side-padding:    64px;
   --content-width:   1240px;
 }
-/* Rules case study overrides — slate accent. */
-.cs-page.rules-page {
-  --accent:       var(--slate);
-  --accent-dark:  var(--slate-deep);
-  --accent-mid:   var(--slate-edge);
-  --accent-light: var(--slate-tint);
-}
+/* Rules case study — inherits the default terracotta accent so eyebrows,
+   tabs, and focus states read identically to Order Management (the
+   reference case study). The old steel-blue override was removed when the
+   case studies were unified on the warm palette. */
 
 
 /* --------------------------------------------------------------------------
@@ -70,7 +67,9 @@
    secondary cream-tinted glow keep the section feeling warm-anchored
    against the cool surface. */
 .cs-page .om-gold {
-  background: var(--surface);
+  /* Transparent so every section sits on the same warm cream canvas —
+     matches Order Management, where alternating fills were removed. */
+  background: transparent;
   position: relative;
 }
 .cs-page .om-gold-dots { display: none; }

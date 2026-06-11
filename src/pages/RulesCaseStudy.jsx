@@ -2,7 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import Nav from '../components/Nav.jsx'
 import './case-study-shared.css'
 
-const accent='#5F7A9A',accentDark='#2C3B55',accentMid='rgba(196,207,223,0.5)',accentLight='rgba(196,207,223,0.28)',accentPale='#E6ECF2',textLight='#edeef0',warmGray='#372B0B',deepBlue='#2C3B55',cream='#F6F6F1',pageBg='#FFFFFC',borderLight='rgba(196,207,223,0.3)',terracotta='#B86757'
+// Palette matches the Order Management case study (the reference): terracotta
+// accent, charcoal text, warm cream page surface. The old steel-blue values
+// were replaced when the case studies were unified on the warm palette.
+const accent='#9E644B',accentDark='#372B0B',accentMid='rgba(184,103,87,0.35)',accentLight='rgba(184,103,87,0.06)',accentPale='#F2DCD0',textLight='#edeef0',warmGray='#372B0B',deepBlue='#372B0B',cream='var(--bg)',pageBg='var(--bg)',borderLight='rgba(184,103,87,0.18)',terracotta='#9E644B'
 const sideP='clamp(20px, 5vw, 64px)',contentW='1240px'
 const sec=(bg)=>({width:'100%',padding:`clamp(60px, 10vw, 140px) 0`,background:bg})
 const ct={maxWidth:contentW,width:'100%',margin:'0 auto',padding:`0 ${sideP}`}
@@ -26,7 +29,7 @@ function StepLabel({children,light}){
 }
 
 function Callout({icon,title,body,style:s}){
-  return <div style={{marginTop:64,padding:'28px 36px',background:accentLight,border:'1px solid rgba(125,145,165,0.2)',borderRadius:12,display:'flex',gap:16,alignItems:'flex-start',...s}}><span style={{fontSize:20,flexShrink:0,marginTop:2}}>{icon}</span><div><p style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark,marginBottom:6}}>{title}</p><p style={{fontSize:14,lineHeight:1.65,color:accentDark}}>{body}</p></div></div>
+  return <div style={{marginTop:64,padding:'28px 36px',background:accentLight,border:'1px solid rgba(184,103,87,0.2)',borderRadius:12,display:'flex',gap:16,alignItems:'flex-start',...s}}><span style={{fontSize:20,flexShrink:0,marginTop:2}}>{icon}</span><div><p style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark,marginBottom:6}}>{title}</p><p style={{fontSize:14,lineHeight:1.65,color:accentDark}}>{body}</p></div></div>
 }
 
 function ImgFrame({label,children,stretch}){
@@ -34,7 +37,7 @@ function ImgFrame({label,children,stretch}){
 }
 
 function Placeholder({h=200,label,warm}){
-  return <div style={{background:warm?'linear-gradient(135deg,#f5f0eb,#ede8e3)':'linear-gradient(135deg,#ededee,#dde1e5)',border:`1px solid ${warm?'rgba(177,124,93,0.2)':'rgba(125,145,165,0.2)'}`,borderRadius:10,height:h,display:'flex',alignItems:'center',justifyContent:'center',color:warm?terracotta:accent,fontSize:12,fontWeight:600,letterSpacing:'0.05em',textTransform:'uppercase',textAlign:'center',padding:'0 20px'}}>{label}</div>
+  return <div style={{background:warm?'linear-gradient(135deg,#f5f0eb,#ede8e3)':'linear-gradient(135deg,#ededee,#dde1e5)',border:`1px solid ${warm?'rgba(177,124,93,0.2)':'rgba(184,103,87,0.2)'}`,borderRadius:10,height:h,display:'flex',alignItems:'center',justifyContent:'center',color:warm?terracotta:accent,fontSize:12,fontWeight:600,letterSpacing:'0.05em',textTransform:'uppercase',textAlign:'center',padding:'0 20px'}}>{label}</div>
 }
 
 /* Shared close button used inside every fullscreen view in this case study.
@@ -74,7 +77,7 @@ function LofiFlow(){
     </div>
     {/* Fullscreen lightbox  -  dark bg, floating cards */}
     {open&&(
-      <div onClick={()=>setOpen(false)} id="lofi-lightbox" style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',justifyContent:'center',padding:'88px 0 40px'}}>
+      <div onClick={()=>setOpen(false)} id="lofi-lightbox" style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(246, 241, 232, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',justifyContent:'center',padding:'88px 0 40px'}}>
         <style>{`
           #lofi-lightbox-scroll::-webkit-scrollbar{height:6px}
           #lofi-lightbox-scroll::-webkit-scrollbar-track{background:transparent}
@@ -83,7 +86,7 @@ function LofiFlow(){
           #lofi-lightbox-scroll{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent}
         `}</style>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 28px',flexShrink:0}}>
-          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)'}}>Lofi Wireframe Flow</span>
+          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(55, 43, 11, 0.55)'}}>Lofi Wireframe Flow</span>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
         <div id="lofi-lightbox-scroll" onClick={e=>e.stopPropagation()} style={{overflowX:'auto',padding:'0 48px 16px',flex:1,display:'flex',alignItems:'center'}}>
@@ -91,7 +94,7 @@ function LofiFlow(){
             <LofiFlowStrip/>
           </div>
         </div>
-        <div style={{textAlign:'center',fontSize:11,color:'rgba(44, 59, 85, 0.4)',letterSpacing:'0.06em',flexShrink:0}}>Scroll to explore · Press Esc to close</div>
+        <div style={{textAlign:'center',fontSize:11,color:'rgba(55, 43, 11, 0.4)',letterSpacing:'0.06em',flexShrink:0}}>Scroll to explore · Press Esc to close</div>
       </div>
     )}
   </>)
@@ -106,7 +109,7 @@ function LofiFlowStrip(){
   const dot=<div style={{width:5,height:5,borderRadius:'50%',background:'#5cb176',flexShrink:0}}/>
   const bc=(active)=>(<div style={{display:'flex',gap:2,padding:'2px 8px',borderBottom:'1px solid rgba(0,0,0,0.05)',alignItems:'center',flexShrink:0}}>{['Kw','Logic','Order','Outcome','Review'].map((s,i)=><span key={i} style={{fontSize:3.5,color:s===active?'rgba(0,0,0,0.65)':'rgba(0,0,0,0.2)',fontWeight:s===active?700:400,borderBottom:s===active?'1px solid rgba(0,0,0,0.45)':'none'}}>{s}</span>)}</div>)
   const pc=(lines)=>(<div style={{border:'1px solid rgba(0,0,0,0.07)',borderRadius:2,padding:'2px 3px',marginBottom:2}}>{lines.map((l,i)=><div key={i} style={{height:2,width:l,background:'rgba(0,0,0,0.09)',borderRadius:1,marginBottom:i<lines.length-1?1:0}}/>)}</div>)
-  const arrow=<div style={{display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,width:24,height:cardH}}><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M0 6h12m0 0l-3.5-3.5m3.5 3.5l-3.5 3.5" stroke="rgba(125,145,165,0.35)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+  const arrow=<div style={{display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,width:24,height:cardH}}><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M0 6h12m0 0l-3.5-3.5m3.5 3.5l-3.5 3.5" stroke="rgba(184,103,87,0.35)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
   const lbl=(text)=>(<div style={{fontSize:7,fontWeight:600,color:deepBlue,textAlign:'center',marginTop:6,letterSpacing:'0.02em',opacity:0.65}}>{text}</div>)
   const sh={fontSize:3.5,fontWeight:700,color:'rgba(0,0,0,0.45)',marginBottom:2}
 
@@ -317,11 +320,11 @@ function PrototypeEmbed(){
       ▶ Meet the redesign
     </button>
     {open&&(
-      <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 24px',background:'rgba(255,255,255,0.6)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
+      <div style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(246, 241, 232, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'12px 24px',background:'rgba(255,255,255,0.6)',borderBottom:'1px solid rgba(184,103,87,0.25)',flexShrink:0}}>
           <div>
             <div style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:accentDark}}>Interactive Prototype  -  Rule Management Redesign</div>
-            <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.5)',fontStyle:'italic',marginTop:2}}>Press Esc or click × to close</div>
+            <div style={{fontSize:10,color:'rgba(55, 43, 11, 0.5)',fontStyle:'italic',marginTop:2}}>Press Esc or click × to close</div>
           </div>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
@@ -336,14 +339,14 @@ function AffinityMap(){
   useEffect(()=>{const h=(e)=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h)},[])
   useEffect(()=>{document.body.style.overflow=open?'hidden':'';return()=>{document.body.style.overflow=''}},[open])
   return(<>
-    <div onClick={()=>setOpen(true)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setOpen(true)} style={{background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(212, 221, 231, 0.55)',borderRadius:20,padding:'28px 28px 22px',cursor:'pointer',boxShadow:'0 4px 24px rgba(44,59,85,0.08)',border:'1px solid rgba(125,145,165,0.22)'}}>
+    <div onClick={()=>setOpen(true)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setOpen(true)} style={{background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 22px 22px, rgba(238, 229, 211, 0.6)',borderRadius:20,padding:'28px 28px 22px',cursor:'pointer',boxShadow:'0 4px 24px rgba(55,43,11,0.08)',border:'1px solid rgba(184,103,87,0.22)'}}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:18}}>
         <span style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accentDark}}>FigJam  -  Synthesis Board</span>
-        <span style={{fontSize:11,fontWeight:600,color:accentDark,background:'rgba(255,255,255,0.55)',border:'1px solid rgba(125,145,165,0.3)',borderRadius:20,padding:'5px 14px'}}>⛶ Explore board</span>
+        <span style={{fontSize:11,fontWeight:600,color:accentDark,background:'rgba(255,255,255,0.55)',border:'1px solid rgba(184,103,87,0.3)',borderRadius:20,padding:'5px 14px'}}>⛶ Explore board</span>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10}}>
         {thumbClusters.map(cl=>(
-          <div key={cl.id} style={{gridColumn:cl.span2?'span 2':undefined,background:'rgba(255,255,255,0.5)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:10,padding:12}}>
+          <div key={cl.id} style={{gridColumn:cl.span2?'span 2':undefined,background:'rgba(255,255,255,0.5)',border:'1px solid rgba(184,103,87,0.25)',borderRadius:10,padding:12}}>
             <div style={{fontSize:8.5,fontWeight:700,color:accentDark,marginBottom:8,lineHeight:1.3}}>{cl.title}</div>
             <div style={{display:'flex',flexWrap:'wrap',gap:4}}>{cl.blobs.map(([c,w],i)=><div key={i} style={{height:18,width:w,borderRadius:3,background:blobColors[c],opacity:0.85}}/>)}</div>
           </div>
@@ -351,19 +354,19 @@ function AffinityMap(){
       </div>
     </div>
     {open&&(
-      <div style={{position:'fixed',inset:0,zIndex:9000,background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px, rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:24}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 28px',background:'rgba(255,255,255,0.5)',borderBottom:'1px solid rgba(125,145,165,0.25)',flexShrink:0}}>
+      <div style={{position:'fixed',inset:0,zIndex:9000,background:'radial-gradient(rgba(55,43,11,0.10) 1px, transparent 1px) 0 0 / 28px 28px, rgba(246, 241, 232, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:24}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'14px 28px',background:'rgba(255,255,255,0.5)',borderBottom:'1px solid rgba(184,103,87,0.25)',flexShrink:0}}>
           <div>
             <div style={{fontSize:12,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:accentDark}}>Synthesis Board  -  FigJam</div>
-            <div style={{fontSize:10,color:'rgba(44, 59, 85, 0.55)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio  -  representative stickies shown, not all verbatims included</div>
+            <div style={{fontSize:10,color:'rgba(55, 43, 11, 0.55)',fontStyle:'italic',marginTop:3}}>Simplified for portfolio  -  representative stickies shown, not all verbatims included</div>
           </div>
           <FullscreenCloseBtn onClose={()=>setOpen(false)}/>
         </div>
         <div style={{flex:1,overflowX:'auto',overflowY:'hidden',padding:'32px 40px 24px'}}>
           <div style={{display:'flex',flexDirection:'row',gap:16,alignItems:'flex-start',minWidth:'max-content'}}>
             {fullClusters.map(cl=>(
-              <div key={cl.id} style={{width:cl.span2?520:320,flexShrink:0,background:'rgba(255,255,255,0.45)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:14,padding:'18px 16px 16px'}}>
-                <div style={{paddingBottom:12,borderBottom:'1px solid rgba(125,145,165,0.2)',marginBottom:10}}>
+              <div key={cl.id} style={{width:cl.span2?520:320,flexShrink:0,background:'rgba(255,255,255,0.45)',border:'1px solid rgba(184,103,87,0.25)',borderRadius:14,padding:'18px 16px 16px'}}>
+                <div style={{paddingBottom:12,borderBottom:'1px solid rgba(184,103,87,0.2)',marginBottom:10}}>
                   <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:4}}>{cl.label}</div>
                   <div style={{fontSize:12,fontWeight:700,color:accentDark,lineHeight:1.3}}>{cl.title}</div>
                 </div>
@@ -388,14 +391,14 @@ function ImageLightbox({src, onClose}) {
     return () => { window.removeEventListener('keydown', h); document.body.style.overflow = '' }
   }, [])
   return (
-    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px'}}>
+    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(246, 241, 232, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px'}}>
       <div style={{position:'absolute',top:80,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
         <FullscreenCloseBtn onClose={onClose}/>
       </div>
       <div onClick={e=>e.stopPropagation()} style={{position:'relative',maxWidth:'90vw',maxHeight:'85vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
-        <img src={src} style={{maxWidth:'100%',maxHeight:'85vh',borderRadius:10,boxShadow:'0 8px 60px rgba(44,59,85,0.18)',display:'block'}}/>
+        <img src={src} style={{maxWidth:'100%',maxHeight:'85vh',borderRadius:10,boxShadow:'0 8px 60px rgba(55,43,11,0.18)',display:'block'}}/>
       </div>
-      <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(44, 59, 85, 0.5)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
+      <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(55, 43, 11, 0.5)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
     </div>
   )
 }
@@ -456,8 +459,8 @@ function PartBFeatureTabs({tabs}) {
               display:'flex',alignItems:'center',gap:7,flexShrink:0,
               fontSize:11,fontWeight:700,letterSpacing:'0.06em',
               padding:'6px 14px',borderRadius:20,cursor:'pointer',
-              background:showBefore?accentLight:'rgba(202,213,226,0.15)',
-              border:`1px solid ${showBefore?'rgba(66,125,219,0.35)':'rgba(202,213,226,0.4)'}`,
+              background:showBefore?accentLight:'rgba(217,172,151,0.15)',
+              border:`1px solid ${showBefore?'rgba(184,103,87,0.35)':'rgba(217,172,151,0.4)'}`,
               color:showBefore?accentDark:warmGray,
               transition:'all 0.2s',outline:'none',
             }}
@@ -476,7 +479,7 @@ function PartBFeatureTabs({tabs}) {
       )}
 
       {/* Video / image area  -  full width */}
-      <div style={{position:'relative',borderRadius:12,overflow:'hidden',background:'#f7f8fa',border:`1px solid ${borderLight}`}}>
+      <div style={{position:'relative',borderRadius:12,overflow:'hidden',background:'#FBF9F4',border:`1px solid ${borderLight}`}}>
         {/* After layer */}
         <div style={{transition:'opacity 0.35s ease',opacity:showBefore?0:1,pointerEvents:showBefore?'none':'auto'}}>
           {tab.afterVid
@@ -513,7 +516,7 @@ function CardWithToggle({num, title, body, afterContent, beforeContent}) {
           <div style={{fontSize:15,fontWeight:700,color:accentDark,marginBottom:10,lineHeight:1.35}}>{title}</div>
           <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:0}}>{body}</p>
         </div>
-        <div style={{background:'#f7f8fa',display:'flex',alignItems:'center',justifyContent:'center',padding:24,position:'relative',minHeight:240}}>
+        <div style={{background:'#FBF9F4',display:'flex',alignItems:'center',justifyContent:'center',padding:24,position:'relative',minHeight:240}}>
           <div style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',transition:'opacity 0.35s ease',opacity:showBefore?0:1,position:'absolute',inset:0,padding:24,pointerEvents:showBefore?'none':'auto'}}>
             {afterContent}
           </div>
@@ -528,7 +531,7 @@ function CardWithToggle({num, title, body, afterContent, beforeContent}) {
               fontSize:11,fontWeight:700,letterSpacing:'0.06em',
               padding:'6px 14px',borderRadius:20,cursor:'pointer',
               background:showBefore?accentLight:'rgba(255,255,255,0.85)',
-              border:`1px solid ${showBefore?'rgba(66,125,219,0.35)':'rgba(202,213,226,0.4)'}`,
+              border:`1px solid ${showBefore?'rgba(184,103,87,0.35)':'rgba(217,172,151,0.4)'}`,
               color:showBefore?accentDark:warmGray,
               transition:'all 0.2s',outline:'none',
               backdropFilter:'blur(4px)',
@@ -563,8 +566,8 @@ function BeforeAfterWipe() {
         display:'flex',alignItems:'center',gap:7,
         fontSize:11,fontWeight:700,letterSpacing:'0.06em',
         padding:'6px 14px',borderRadius:20,cursor:'pointer',
-        background:showBefore?accentLight:'rgba(202,213,226,0.15)',
-        border:`1px solid ${showBefore?'rgba(66,125,219,0.35)':'rgba(202,213,226,0.4)'}`,
+        background:showBefore?accentLight:'rgba(217,172,151,0.15)',
+        border:`1px solid ${showBefore?'rgba(184,103,87,0.35)':'rgba(217,172,151,0.4)'}`,
         color:showBefore?accentDark:warmGray,
         transition:'all 0.2s',outline:'none',
       }}
@@ -575,7 +578,7 @@ function BeforeAfterWipe() {
   )
 
   const imageBlock = (abs) => (
-    <div style={{position:'relative',borderRadius:12,overflow:'hidden',border:'1px solid rgba(202,213,226,0.3)', ...(abs ? {maxWidth:'90vw',maxHeight:'85vh'} : {})}}>
+    <div style={{position:'relative',borderRadius:12,overflow:'hidden',border:'1px solid rgba(217,172,151,0.3)', ...(abs ? {maxWidth:'90vw',maxHeight:'85vh'} : {})}}>
       <img
         src="/rule-management-v1-screenshot.png"
         style={{display:'block',width:'100%',height:'auto',transition:'opacity 0.35s ease',opacity:showBefore?0:1, ...(abs ? {maxHeight:'85vh',objectFit:'contain'} : {})}}
@@ -603,7 +606,7 @@ function BeforeAfterWipe() {
       </div>
 
       {expanded && (
-        <div onClick={() => setExpanded(false)} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px'}}>
+        <div onClick={() => setExpanded(false)} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(246, 241, 232, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px'}}>
           <div style={{position:'absolute',top:80,right:16,zIndex:2}} onClick={e=>e.stopPropagation()}>
             <FullscreenCloseBtn onClose={() => setExpanded(false)}/>
           </div>
@@ -616,7 +619,7 @@ function BeforeAfterWipe() {
             </div>
             {imageBlock(true)}
           </div>
-          <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(44, 59, 85, 0.5)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
+          <div style={{position:'absolute',bottom:24,fontSize:11,color:'rgba(55, 43, 11, 0.5)',letterSpacing:'0.08em'}}>Press Esc or click outside to close</div>
         </div>
       )}
     </div>
@@ -678,7 +681,7 @@ function IterationOverlay({cards,openIdx,onClose}){
   const navBtn=(dir)=>{
     const isLeft=dir==='left'
     const disabled=isLeft?idx===0:idx===cards.length-1
-    return(<button onClick={(e)=>{e.stopPropagation();setIdx(i=>isLeft?i-1:i+1)}} disabled={disabled} style={{width:44,height:44,borderRadius:'50%',background:disabled?'rgba(255,255,255,0.35)':'rgba(255,255,255,0.65)',border:`1px solid ${disabled?'rgba(125,145,165,0.18)':'rgba(125,145,165,0.35)'}`,color:disabled?'rgba(44,59,85,0.25)':accentDark,fontSize:20,cursor:disabled?'default':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all 0.2s'}}>{isLeft?'‹':'›'}</button>)
+    return(<button onClick={(e)=>{e.stopPropagation();setIdx(i=>isLeft?i-1:i+1)}} disabled={disabled} style={{width:44,height:44,borderRadius:'50%',background:disabled?'rgba(255,255,255,0.35)':'rgba(255,255,255,0.65)',border:`1px solid ${disabled?'rgba(184,103,87,0.18)':'rgba(184,103,87,0.35)'}`,color:disabled?'rgba(55,43,11,0.25)':accentDark,fontSize:20,cursor:disabled?'default':'pointer',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,transition:'all 0.2s'}}>{isLeft?'‹':'›'}</button>)
   }
   const renderMedia=(item,abs)=>{
     const s={width:'100%',display:'block',borderRadius:8,...(abs?{maxHeight:'65vh',objectFit:'contain'}:{})}
@@ -687,15 +690,15 @@ function IterationOverlay({cards,openIdx,onClose}){
       :<img src={item.src} alt="" style={s}/>
   }
   return(
-    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(212, 221, 231, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
+    <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(246, 241, 232, 0.92)',backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',display:'flex',flexDirection:'column',paddingTop:80}}>
       {/* Header */}
       <div onClick={e=>e.stopPropagation()} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 32px',flexShrink:0}}>
         <div style={{display:'flex',alignItems:'center',gap:16}}>
-          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)'}}>Iteration {idx+1} of {cards.length}</span>
+          <span style={{fontSize:11,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(55, 43, 11, 0.55)'}}>Iteration {idx+1} of {cards.length}</span>
           {/* v1/v2/both toggle */}
-          <div style={{display:'flex',gap:4,background:'rgba(255,255,255,0.5)',border:'1px solid rgba(125,145,165,0.25)',borderRadius:20,padding:3}}>
+          <div style={{display:'flex',gap:4,background:'rgba(255,255,255,0.5)',border:'1px solid rgba(184,103,87,0.25)',borderRadius:20,padding:3}}>
             {['v1','both','v2'].map(v=>(
-              <button key={v} onClick={()=>setVersion(v)} style={{fontSize:10,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',padding:'4px 12px',borderRadius:16,border:'none',cursor:'pointer',transition:'all 0.2s',background:version===v?accentDark:'transparent',color:version===v?'#fff':'rgba(44, 59, 85, 0.6)'}}>{v==='both'?'Side by side':v.toUpperCase()}</button>
+              <button key={v} onClick={()=>setVersion(v)} style={{fontSize:10,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',padding:'4px 12px',borderRadius:16,border:'none',cursor:'pointer',transition:'all 0.2s',background:version===v?accentDark:'transparent',color:version===v?'#fff':'rgba(55, 43, 11, 0.6)'}}>{v==='both'?'Side by side':v.toUpperCase()}</button>
             ))}
           </div>
         </div>
@@ -706,23 +709,23 @@ function IterationOverlay({cards,openIdx,onClose}){
         {navBtn('left')}
         <div style={{flex:1,maxWidth:1100,display:'flex',flexDirection:'column',gap:20,alignItems:'center'}}>
           {/* Feedback text */}
-          <div style={{background:'rgba(255,255,255,0.55)',border:'1px solid rgba(125,145,165,0.2)',borderRadius:10,padding:'16px 24px',maxWidth:800,width:'100%'}}>
+          <div style={{background:'rgba(255,255,255,0.55)',border:'1px solid rgba(184,103,87,0.2)',borderRadius:10,padding:'16px 24px',maxWidth:800,width:'100%'}}>
             <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:terracotta,marginBottom:6}}>Feedback</div>
             <p style={{fontSize:13,lineHeight:1.7,color:accentDark,margin:0}}>{c.feedback}</p>
-            {c.changed&&<><div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.55)',marginTop:10,marginBottom:4}}>What changed</div><p style={{fontSize:12,lineHeight:1.6,color:deepBlue,margin:0}}>{c.changed}</p></>}
+            {c.changed&&<><div style={{fontSize:10,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'rgba(55, 43, 11, 0.55)',marginTop:10,marginBottom:4}}>What changed</div><p style={{fontSize:12,lineHeight:1.6,color:deepBlue,margin:0}}>{c.changed}</p></>}
           </div>
           {/* Visuals */}
           <div style={{display:'grid',gridTemplateColumns:version==='both'?'1fr 1fr':'1fr',gap:16,width:'100%'}}>
             {(version==='v1'||version==='both')&&(
               <div>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.6)',marginBottom:8}}>{c.v1Label}</div>
-                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(125,145,165,0.25)'}}>{renderMedia(c.v1,true)}</div>
+                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(55, 43, 11, 0.6)',marginBottom:8}}>{c.v1Label}</div>
+                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(184,103,87,0.25)'}}>{renderMedia(c.v1,true)}</div>
               </div>
             )}
             {(version==='v2'||version==='both')&&(
               <div>
-                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(44, 59, 85, 0.6)',marginBottom:8}}>{c.v2Label}</div>
-                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(125,145,165,0.25)'}}>{renderMedia(c.v2,true)}</div>
+                <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',color:'rgba(55, 43, 11, 0.6)',marginBottom:8}}>{c.v2Label}</div>
+                <div style={{borderRadius:8,overflow:'hidden',border:'1px solid rgba(184,103,87,0.25)'}}>{renderMedia(c.v2,true)}</div>
               </div>
             )}
           </div>
@@ -730,7 +733,7 @@ function IterationOverlay({cards,openIdx,onClose}){
         {navBtn('right')}
       </div>
       {/* Footer */}
-      <div style={{textAlign:'center',fontSize:11,color:'rgba(255,255,255,0.2)',letterSpacing:'0.06em',padding:'16px 0',flexShrink:0}}>← → to navigate · Esc to close</div>
+      <div style={{textAlign:'center',fontSize:11,color:'rgba(55,43,11,0.4)',letterSpacing:'0.06em',padding:'16px 0',flexShrink:0}}>← → to navigate · Esc to close</div>
     </div>
   )
 }
@@ -959,7 +962,7 @@ function SynthesisSection(){
                   <span style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:isActive?terracotta:'rgba(184,103,87,0.45)'}}>{card.num}</span>
                   {!isActive && <span style={{fontSize:11,color:'rgba(184,103,87,0.5)',fontWeight:500}}>View →</span>}
                 </div>
-                <div style={{fontFamily:'var(--f-serif)',fontSize:15,fontWeight:isActive?700:400,color:isActive?accentDark:'rgba(44,59,85,0.65)',lineHeight:1.35}}>{card.title}</div>
+                <div style={{fontFamily:'var(--f-serif)',fontSize:15,fontWeight:isActive?700:400,color:isActive?accentDark:'rgba(55,43,11,0.65)',lineHeight:1.35}}>{card.title}</div>
               </button>
             )
           })}
@@ -979,9 +982,9 @@ function SynthesisSection(){
         {/* Right: sticky visual panel */}
         <div style={{position:'sticky',top:100}}>
           <div style={{background:'#F2DCD0',border:'1px solid #D9AC97',borderRadius:14,overflow:'hidden',boxShadow:'0 2px 14px rgba(55,43,11,0.07)'}}>
-            <div style={{background:'radial-gradient(rgba(55,43,11,0.08) 1px,transparent 1px) 0 0/22px 22px, rgba(212,221,231,0.45)',padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',minHeight:240,overflow:'hidden',position:'relative'}}>
+            <div style={{background:'radial-gradient(rgba(55,43,11,0.08) 1px,transparent 1px) 0 0/22px 22px, rgba(238,229,211,0.5)',padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',minHeight:240,overflow:'hidden',position:'relative'}}>
               {c.visual}
-              <div style={{position:'absolute',bottom:16,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(74,111,165,0.3)',borderRadius:8,padding:'7px 14px',fontSize:10,fontFamily:'Inter,sans-serif',color:'#4A6FA5',fontWeight:600,whiteSpace:'nowrap',boxShadow:'0 2px 8px rgba(74,111,165,0.1)'}}>{c.callout}</div>
+              <div style={{position:'absolute',bottom:16,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(158,100,75,0.3)',borderRadius:8,padding:'7px 14px',fontSize:10,fontFamily:'Inter,sans-serif',color:'#8E4A2E',fontWeight:600,whiteSpace:'nowrap',boxShadow:'0 2px 8px rgba(158,100,75,0.1)'}}>{c.callout}</div>
             </div>
             <div style={{padding:'22px 26px 26px',display:'flex',flexDirection:'column',gap:12}}>
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:terracotta}}>What this looked like</div>
@@ -1119,24 +1122,9 @@ export default function RulesCaseStudy(){
       </ul>
     </aside>
 
-    {/* Home-style ambient radial-gradient wrapper  -  same 11-orb wash used on
-        home and OM, cycling steel-blue → gold → terracotta down the full page. */}
-    <div style={{
-      background: `
-        radial-gradient(1200px circle at 15% 2%, rgba(196, 207, 223, 0.42) 0%, transparent 35%),
-        radial-gradient(1100px circle at 92% 8%, rgba(221, 179, 101, 0.34) 0%, transparent 32%),
-        radial-gradient(1000px circle at 6% 18%, rgba(184, 103, 87, 0.26) 0%, transparent 30%),
-        radial-gradient(1200px circle at 88% 26%, rgba(196, 207, 223, 0.30) 0%, transparent 32%),
-        radial-gradient(950px circle at 18% 36%, rgba(221, 179, 101, 0.28) 0%, transparent 30%),
-        radial-gradient(1100px circle at 82% 46%, rgba(184, 103, 87, 0.22) 0%, transparent 32%),
-        radial-gradient(1000px circle at 8% 56%, rgba(196, 207, 223, 0.32) 0%, transparent 30%),
-        radial-gradient(1150px circle at 92% 66%, rgba(221, 179, 101, 0.28) 0%, transparent 32%),
-        radial-gradient(1050px circle at 12% 76%, rgba(184, 103, 87, 0.22) 0%, transparent 30%),
-        radial-gradient(1100px circle at 88% 86%, rgba(196, 207, 223, 0.26) 0%, transparent 32%),
-        radial-gradient(980px circle at 30% 96%, rgba(221, 179, 101, 0.24) 0%, transparent 28%),
-        var(--cream)
-      `,
-    }}>
+    {/* Plain warm-cream canvas — matches Order Management, which sits flat on
+        the page background with no ambient gradient wash. */}
+    <div>
 
     {/* HERO */}
     <section style={{
@@ -1148,7 +1136,7 @@ export default function RulesCaseStudy(){
         <div style={{marginBottom:32,opacity:0,animation:'fadeUp 0.7s ease 0.1s forwards'}}>
           <span className="eyebrow">Case Study · Rule Engine · 2025</span>
         </div>
-        <h1 style={{fontFamily:'var(--f-serif)',fontWeight:300,fontSize:'clamp(36px, 5vw, 64px)',letterSpacing:'-0.01em',lineHeight:1.1,color:'#372B0B',margin:'0 0 20px',opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine<span style={{color:'var(--slate)'}}>.</span></h1>
+        <h1 style={{fontFamily:'var(--f-serif)',fontWeight:300,fontSize:'clamp(36px, 5vw, 64px)',letterSpacing:'-0.01em',lineHeight:1.1,color:'#372B0B',margin:'0 0 20px',opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine<span style={{color:'var(--clay)'}}>.</span></h1>
         <p style={{fontFamily:'var(--f-serif)',fontStyle:'normal',fontWeight:300,fontSize:'clamp(17px, 1.5vw, 21px)',lineHeight:1.55,color:'var(--ink-2)',maxWidth:560,margin:'0 0 36px',opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product—designing a rules engine that replaces programmatic jargon and Excel workarounds with plain-English readbacks, revealing logic in clear, discernible chunks so compliance teams can trust what a rule will do as they build it.</p>
         <div style={{display:'flex',gap:8,flexWrap:'wrap',opacity:0,animation:'fadeUp 0.7s ease 0.5s forwards'}}>
           {['Research','Strategy','Product Design','Testing','Shipped ✓'].map(tag=>(<span key={tag} className="chip chip--neutral">{tag}</span>))}
@@ -1169,17 +1157,17 @@ export default function RulesCaseStudy(){
     {/* TL;DR */}
     <section id="ch-tldr" style={sec('transparent')}>
       <div style={ct}>
-        <h2 style={{fontFamily:'var(--f-serif)',fontSize:72,fontWeight:300,color:accentDark,lineHeight:1,marginBottom:48}}>tl;dr</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:'clamp(36px, 5vw, 64px)',fontWeight:300,color:accentDark,lineHeight:1,marginBottom:48}}>tl;dr</h2>
 
         <div style={{maxWidth:820}}>
           <div style={{marginBottom:36}}>
             <StepLabel>Context</StepLabel>
-            <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,marginTop:16,marginBottom:0}}>The rules engine sits upstream of every trade — governing which orders are permitted to execute across a platform serving &gt;3,300 institutional firms. One misconfigured rule could silently block or pass thousands of trades firm-wide. The system that managed these rules was held together with tribal knowledge and Excel.</p>
+            <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,marginTop:16,marginBottom:0}}>The rules engine sits upstream of every trade — governing which orders are permitted to execute across a platform serving &gt;3,300 institutional firms. One misconfigured rule could silently block or pass thousands of trades firm-wide — resulting in millions of dollars of trade errors to the business on a daily basis. The system that managed these rules was held together with tribal knowledge and Excel workarounds.</p>
           </div>
 
           <div style={{marginBottom:36}}>
             <StepLabel>Approach</StepLabel>
-            <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,marginTop:16,marginBottom:0}}>I led a structured discovery and design sprint to identify the highest-leverage slice of the ecosystem before designing anything. When a hard infrastructure constraint ruled out the strongest concept, I redirected the design to solve the most acute version of the problem — building plain-language rule logic, real search, and guided creation into the workflows compliance teams used every day.</p>
+            <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,marginTop:16,marginBottom:0}}>I led discovery and a design sprint to identify the highest-leverage slice of the ecosystem before designing anything — landing on rule management and rule creation as the two workflows with the most friction and the highest risk of error. We were initially convinced a standalone list manager would be the biggest win, but an infrastructure constraint forced us to look harder at what users actually needed. What we found: they didn't need a separate system — they needed crisp, approachable, and transparent bulk value entry and clause-building directly within the rule. Making those two things simple gave compliance teams something they'd never had: the ability to know exactly what a rule would do as they built or reviewed it, without relying on anyone else to verify it.</p>
           </div>
 
           <div style={{marginBottom:48}}>
@@ -1200,7 +1188,7 @@ export default function RulesCaseStudy(){
     {/* FRAMING */}
     <section id="ch-framing" style={sec('transparent')}>
       <div style={ct}>
-        <h2 style={{fontFamily:'var(--f-serif)',fontSize:'clamp(26px, 3.2vw, 38px)',fontWeight:300,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.3px'}}><span style={{fontWeight:700}}>finding the right problem</span> before designing the right solution</h2>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:'clamp(26px, 3.2vw, 38px)',fontWeight:300,color:accentDark,lineHeight:1.3,marginBottom:36,letterSpacing:'-0.3px'}}>finding the right problem before designing the right solution</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>This wasn't a project that arrived as a neat design brief. It started with two questions: inside a sprawling ecosystem of aging compliance tools, where should we intervene first—and how could design actually reduce risk rather than just re-skin old workflows?</p>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:28}}>I led a structured discovery and sprint process, pulling together existing interviews that had never been acted on, synthesizing research with product and engineering, and facilitating design workshops before a single pixel was drawn. The decision about what to design was as deliberate as the design itself.</p>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:760}}>The plain-language preview, the guided creation flow, the structured value input — these weren't just solutions to individual problems. They became the interaction patterns the rest of the compliance suite would build on.</p>
@@ -1280,7 +1268,7 @@ export default function RulesCaseStudy(){
       <div className="om-gold-glow-b" aria-hidden="true"></div>
       <div style={{...ct,position:'relative',zIndex:1}}>
         <StepLabel>Design Sprint</StepLabel>
-        <h2 style={{fontFamily:'var(--f-serif)',fontSize:28,fontWeight:400,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14,letterSpacing:'-0.018em'}}>
+        <h2 style={{fontFamily:'var(--f-serif)',fontSize:'clamp(26px, 3.2vw, 38px)',fontWeight:300,color:accentDark,marginBottom:8,display:'flex',alignItems:'center',flexWrap:'wrap',gap:14,letterSpacing:'-0.018em'}}>
           <span>From research insights to</span>
           <svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style={{flexShrink:0,color:accent}}>
             <path d="M1 7 H25 M19 1 L25 7 L19 13" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1316,14 +1304,14 @@ export default function RulesCaseStudy(){
           {/* Matrix grid */}
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:0,position:'relative',marginBottom:0}}>
             {/* Quadrant TL */}
-            <div style={{borderRight:'1px solid rgba(125,145,165,0.15)',borderBottom:'1px solid rgba(125,145,165,0.15)',padding:'14px 16px 20px 20px',minHeight:200,display:'flex',flexDirection:'column',gap:10}}>
+            <div style={{borderRight:'1px solid rgba(184,103,87,0.15)',borderBottom:'1px solid rgba(184,103,87,0.15)',padding:'14px 16px 20px 20px',minHeight:200,display:'flex',flexDirection:'column',gap:10}}>
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>HIGH IMPACT · LOW EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 04',title:'More intuitive form controls',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-                {hmw:'HMW 03',title:'Surface help where it\'s needed  -  contextual guidance',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-                {hmw:'HMW 01',title:'Find & manage rules  -  search and filter on metadata + plain language rule preview',phase:'Phase 1',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
-                {hmw:'HMW 05',title:'Intuitive rule builder  -  split panel, plain language preview builds as details are added',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
+                {hmw:'HMW 04',title:'More intuitive form controls',phase:'Phase 2',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+                {hmw:'HMW 03',title:'Surface help where it\'s needed  -  contextual guidance',phase:'Phase 2',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+                {hmw:'HMW 01',title:'Find & manage rules  -  search and filter on metadata + plain language rule preview',phase:'Phase 1',bg:'transparent',border:'var(--clay-edge)',pillBg:'rgba(158,100,75,0.12)',pillColor:'#8E4A2E'},
+                {hmw:'HMW 05',title:'Intuitive rule builder  -  split panel, plain language preview builds as details are added',phase:'Phase 2',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:c.hmw==='HMW 01'?'calc(40% - 5px)':'calc(30% - 8px)',minWidth:110,flexShrink:0}}>
                   <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
@@ -1334,13 +1322,13 @@ export default function RulesCaseStudy(){
               </div>
             </div>
             {/* Quadrant TR */}
-            <div style={{borderBottom:'1px solid rgba(125,145,165,0.15)',padding:'14px 16px 20px 16px',minHeight:200,display:'flex',flexDirection:'column',gap:10}}>
+            <div style={{borderBottom:'1px solid rgba(184,103,87,0.15)',padding:'14px 16px 20px 16px',minHeight:200,display:'flex',flexDirection:'column',gap:10}}>
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>HIGH IMPACT · HIGH EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 02',title:'Keyword assistant  -  view keyword descriptions on selection surface',phase:'Phase 2',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-                {hmw:'HMW 06',title:'Documentation & audit trail  -  change history',phase:'Phase 3',bg:'#ede8f5',border:'rgba(120,90,160,0.2)',pillBg:'rgba(120,90,160,0.12)',pillColor:'#6b4f9e'},
-                {hmw:'HMW 04',title:'List Manager  -  bulk editing, inheritance, validation',phase:'Deferred',bg:'#fdf0dc',border:'rgba(176,122,48,0.2)',pillBg:'rgba(176,122,48,0.12)',pillColor:'#b07a30'},
+                {hmw:'HMW 02',title:'Keyword assistant  -  view keyword descriptions on selection surface',phase:'Phase 2',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+                {hmw:'HMW 06',title:'Documentation & audit trail  -  change history',phase:'Phase 3',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+                {hmw:'HMW 04',title:'List Manager  -  bulk editing, inheritance, validation',phase:'Deferred',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(50% - 5px)',minWidth:120}}>
                   <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
@@ -1351,12 +1339,12 @@ export default function RulesCaseStudy(){
               </div>
             </div>
             {/* Quadrant BL */}
-            <div style={{borderRight:'1px solid rgba(125,145,165,0.15)',padding:'14px 16px 20px 20px',minHeight:160,display:'flex',flexDirection:'column',gap:10}}>
+            <div style={{borderRight:'1px solid rgba(184,103,87,0.15)',padding:'14px 16px 20px 20px',minHeight:160,display:'flex',flexDirection:'column',gap:10}}>
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>LOW IMPACT · LOW EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 01',title:'Bulk actions',phase:'Deprioritized',bg:'#fde8e8',border:'rgba(180,60,60,0.22)',pillBg:'rgba(180,60,60,0.12)',pillColor:'#b04040'},
-                {hmw:'HMW 01',title:'Custom rule description',phase:'Deprioritized',bg:'#fde8e8',border:'rgba(180,60,60,0.22)',pillBg:'rgba(180,60,60,0.12)',pillColor:'#b04040'},
+                {hmw:'HMW 01',title:'Bulk actions',phase:'Deprioritized',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+                {hmw:'HMW 01',title:'Custom rule description',phase:'Deprioritized',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(40% - 5px)',minWidth:110}}>
                   <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
@@ -1371,7 +1359,7 @@ export default function RulesCaseStudy(){
               <div style={{fontSize:9,fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',color:'#3d3530'}}>LOW IMPACT · HIGH EFFORT</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:10}}>
               {[
-                {hmw:'HMW 04',title:'Rule Wizard',phase:'Deprioritized',bg:'#fde8e8',border:'rgba(180,60,60,0.22)',pillBg:'rgba(180,60,60,0.12)',pillColor:'#b04040'},
+                {hmw:'HMW 04',title:'Rule Wizard',phase:'Deprioritized',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
               ].map((c,i)=>(
                 <div key={i} style={{background:c.bg,border:`1px solid ${c.border}`,borderRadius:6,padding:'8px 10px',width:'calc(45% - 5px)',minWidth:120}}>
                   <div style={{fontSize:8,fontWeight:700,color:'#3d3530',letterSpacing:'0.08em',marginBottom:4,opacity:0.8}}>{c.hmw}</div>
@@ -1389,10 +1377,10 @@ export default function RulesCaseStudy(){
         <h3 style={{fontFamily:'var(--f-serif)',fontSize:22,fontWeight:400,color:accentDark,letterSpacing:'-0.2px',marginTop:56,marginBottom:28}}>The resulting phased approach</h3>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
           {[
-            {pill:'✓ Phase 1',title:'Rules List',body:'Users need to find and understand existing rules before anything else. Real search, filtering, and a plain language rule preview accomplish this. The layout of this page  -  and getting users familiar with the plain language format  -  made it easier to build rules in Phase 2, which reused the same pattern.',bg:'#d4edda',border:'rgba(74,124,93,0.25)',pillBg:'rgba(74,124,93,0.15)',pillColor:'#2d5c3a'},
-            {pill:'→ Phase 2',title:'Rule Creation',body:'Getting new rules into the system cleanly  -  with guided input, contextual keyword help, and confidence before going live  -  was the most consequential workflow. It also laid the groundwork for edit rule, which could follow the same pattern with minimal additional mapping.',bg:'#dce8f5',border:'rgba(58,95,138,0.2)',pillBg:'rgba(58,95,138,0.12)',pillColor:'#4a5f72'},
-            {pill:'→ Phase 3',title:'Edit Rule + Change History',body:'Editing and viewing change history depends on users having a solid mental model of rules first. Sequencing this after creation and list work made the later problem easier to solve.',bg:'#ede8f5',border:'rgba(120,90,160,0.2)',pillBg:'rgba(120,90,160,0.12)',pillColor:'#6b4f9e'},
-            {pill:'→ Deferred',title:'List Manager',body:null,bg:'#fdf0dc',border:'rgba(176,122,48,0.2)',pillBg:'rgba(176,122,48,0.12)',pillColor:'#b07a30'},
+            {pill:'✓ Phase 1',title:'Rules List',body:'Users need to find and understand existing rules before anything else. Real search, filtering, and a plain language rule preview accomplish this. The layout of this page  -  and getting users familiar with the plain language format  -  made it easier to build rules in Phase 2, which reused the same pattern.',bg:'transparent',border:'var(--clay-edge)',pillBg:'rgba(158,100,75,0.12)',pillColor:'#8E4A2E'},
+            {pill:'→ Phase 2',title:'Rule Creation',body:'Getting new rules into the system cleanly  -  with guided input, contextual keyword help, and confidence before going live  -  was the most consequential workflow. It also laid the groundwork for edit rule, which could follow the same pattern with minimal additional mapping.',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+            {pill:'→ Phase 3',title:'Edit Rule + Change History',body:'Editing and viewing change history depends on users having a solid mental model of rules first. Sequencing this after creation and list work made the later problem easier to solve.',bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
+            {pill:'→ Deferred',title:'List Manager',body:null,bg:'transparent',border:'var(--hairline-strong)',pillBg:'rgba(31,26,15,0.06)',pillColor:'#6B5E45'},
           ].map(card=>(
             <div key={card.title} style={{borderRadius:12,padding:'28px 32px',background:card.bg,border:`1px solid ${card.border}`}}>
               <div style={{display:'inline-flex',padding:'4px 12px',borderRadius:20,fontSize:11,fontWeight:700,letterSpacing:'0.08em',textTransform:'uppercase',marginBottom:14,background:card.pillBg,color:card.pillColor}}>{card.pill}</div>
@@ -1401,8 +1389,8 @@ export default function RulesCaseStudy(){
               {card.title === 'List Manager' && (
                 <>
                   <p style={{fontSize:13,lineHeight:1.65,color:deepBlue,marginBottom:16}}>The most exciting concept from the sprint  -  and the most complex. Sprint edge-case analysis revealed significant downstream complexity. Deferred, not abandoned.</p>
-                  <div style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:4,padding:'6px 12px',borderRadius:8,background:'rgba(176,122,48,0.12)',border:'1px solid rgba(176,122,48,0.25)'}}>
-                    <span style={{fontSize:12,fontStyle:'italic',color:'#b07a30',letterSpacing:'0.01em'}}>↓ See The Pivot, directly below</span>
+                  <div style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:4,padding:'6px 12px',borderRadius:8,background:'transparent',border:'1px solid var(--hairline-strong)'}}>
+                    <span style={{fontSize:12,fontStyle:'italic',color:'#6B5E45',letterSpacing:'0.01em'}}>↓ See The Pivot, directly below</span>
                   </div>
                 </>
               )}
@@ -1421,23 +1409,23 @@ export default function RulesCaseStudy(){
         <StepLabel>The Pivot</StepLabel>
         {/* Section header */}
         <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:28}}>
-          <div style={{width:3,height:36,background:'#b07a30',borderRadius:2,flexShrink:0}}/>
+          <div style={{width:3,height:36,background:'var(--clay)',borderRadius:2,flexShrink:0}}/>
           <div>
-            <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.16em',textTransform:'uppercase',color:'#b07a30',marginBottom:3}}>When infrastructure ruled out the strongest concept</div>
-            <div style={{fontSize:18,fontWeight:800,color:accentDark,letterSpacing:'-0.2px'}}>The Pivot</div>
+            <div style={{fontFamily:'var(--f-mono)',fontSize:10,fontWeight:500,letterSpacing:'0.16em',textTransform:'uppercase',color:'var(--clay)',marginBottom:3}}>When infrastructure ruled out the strongest concept</div>
+            <div style={{fontFamily:'var(--f-serif)',fontSize:22,fontWeight:400,color:accentDark,letterSpacing:'-0.2px'}}>The Pivot</div>
           </div>
         </div>
 
         <p style={{fontSize:14,lineHeight:1.75,color:deepBlue,maxWidth:760,marginBottom:40}}>With priorities set, I zoomed in on the fine details that would make or break the experience. The most significant was the input mechanism for keywords and clauses  -  how compliance teams actually get values into a rule. During the HMW sprint, one of the strongest concepts was a dedicated List Manager  -  a way to define, store, and reuse named value sets across multiple rules. But a hard infrastructure constraint forced a pivot. To understand why this detail mattered so much, it helps to see what the legacy process actually looked like.</p>
 
         {/* Two-step annotated visual */}
-        <div style={{background:'#f7f6f2',border:'1px solid rgba(202,213,226,0.35)',borderRadius:14,padding:'32px 36px',marginBottom:36}}>
-          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'rgba(144,161,185,0.7)',marginBottom:24}}>Legacy workflow  -  uploading a securities list to a rule</div>
+        <div style={{background:'#f7f6f2',border:'1px solid rgba(217,172,151,0.35)',borderRadius:14,padding:'32px 36px',marginBottom:36}}>
+          <div style={{fontSize:10,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:'var(--ink-mute)',marginBottom:24}}>Legacy workflow  -  uploading a securities list to a rule</div>
 
           {/* Step 1 */}
           <div style={{marginBottom:32}}>
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
-              <div style={{width:22,height:22,borderRadius:'50%',background:'#b07a30',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <div style={{width:22,height:22,borderRadius:'50%',background:'#9E644B',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                 <span style={{fontSize:10,fontWeight:800,color:'white'}}>1</span>
               </div>
               <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Leave rule creation  -  navigate to a separate import page via main nav</div>
@@ -1473,8 +1461,8 @@ export default function RulesCaseStudy(){
                   </div>
                 </div>
               </div>
-              <div style={{width:200,flexShrink:0,background:'#f5c542',borderRadius:6,padding:'12px 14px',boxShadow:'2px 3px 10px rgba(0,0,0,0.15)',position:'relative',top:8}}>
-                <div style={{fontSize:11,lineHeight:1.55,color:'#3d2800',fontWeight:500}}>This page lives in main nav  -  not linked to or from rule creation. No obvious path here if you don't already know it exists.</div>
+              <div style={{width:200,flexShrink:0,background:'rgba(184,103,87,0.05)',border:'1px solid var(--clay-edge)',borderLeft:'3px solid var(--clay)',borderRadius:6,padding:'12px 14px',position:'relative',top:8}}>
+                <div style={{fontSize:11,lineHeight:1.55,color:'#3D3322',fontWeight:500}}>This page lives in main nav  -  not linked to or from rule creation. No obvious path here if you don't already know it exists.</div>
               </div>
             </div>
 
@@ -1502,9 +1490,9 @@ export default function RulesCaseStudy(){
             </div>
 
             {/* Warning note */}
-            <div style={{marginTop:16,padding:'14px 18px',background:'rgba(176,122,48,0.08)',border:'1px solid rgba(176,122,48,0.2)',borderRadius:8,display:'flex',gap:10,alignItems:'flex-start'}}>
+            <div style={{marginTop:16,padding:'14px 18px',background:'rgba(184,103,87,0.05)',borderLeft:'3px solid var(--clay)',borderRadius:'0 8px 8px 0',display:'flex',gap:10,alignItems:'flex-start'}}>
               <span style={{fontSize:14,flexShrink:0}}>⚠️</span>
-              <p style={{fontSize:12,lineHeight:1.65,color:'#7a5020',margin:0}}>And the master lists themselves? Always managed <em>outside</em> the platform entirely  -  in Excel or shared drives  -  because the system couldn't store them. Two potential sources of truth, with no reconciliation mechanism.</p>
+              <p style={{fontSize:12,lineHeight:1.65,color:'#3D3322',margin:0}}>And the master lists themselves? Always managed <em>outside</em> the platform entirely  -  in Excel or shared drives  -  because the system couldn't store them. Two potential sources of truth, with no reconciliation mechanism.</p>
             </div>
           </div>
 
@@ -1512,7 +1500,7 @@ export default function RulesCaseStudy(){
           {/* Step 2 */}
           <div>
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
-              <div style={{width:22,height:22,borderRadius:'50%',background:'#b07a30',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <div style={{width:22,height:22,borderRadius:'50%',background:'#9E644B',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                 <span style={{fontSize:10,fontWeight:800,color:'white'}}>2</span>
               </div>
               <div style={{fontSize:12,fontWeight:700,color:accentDark,letterSpacing:'0.01em'}}>Back in rule creation  -  set keyword to "Securities Upload," then match rule name exactly to the CSV filename</div>
@@ -1554,9 +1542,9 @@ export default function RulesCaseStudy(){
                   </div>
                 </div>
               </div>
-              <div style={{width:200,flexShrink:0,background:'#f5c542',borderRadius:6,padding:'12px 14px',boxShadow:'2px 3px 10px rgba(0,0,0,0.15)',position:'relative',top:8}}>
-                <div style={{fontSize:11,lineHeight:1.55,color:'#3d2800',fontWeight:500,marginBottom:8}}>Rule name has to match the .csv filename exactly.</div>
-                <div style={{fontSize:11,lineHeight:1.55,color:'#3d2800',fontWeight:500}}>No in-product guidance tells you this. Unclear how they're linked.</div>
+              <div style={{width:200,flexShrink:0,background:'rgba(184,103,87,0.05)',border:'1px solid var(--clay-edge)',borderLeft:'3px solid var(--clay)',borderRadius:6,padding:'12px 14px',position:'relative',top:8}}>
+                <div style={{fontSize:11,lineHeight:1.55,color:'#3D3322',fontWeight:500,marginBottom:8}}>Rule name has to match the .csv filename exactly.</div>
+                <div style={{fontSize:11,lineHeight:1.55,color:'#3D3322',fontWeight:500}}>No in-product guidance tells you this. Unclear how they're linked.</div>
               </div>
             </div>
           </div>
@@ -1679,7 +1667,7 @@ export default function RulesCaseStudy(){
         </div>
 
         {/* Divider */}
-        <div style={{width:'100%',height:1,background:'rgba(66,125,219,0.12)',marginBottom:64}}/>
+        <div style={{width:'100%',height:1,background:'rgba(184,103,87,0.12)',marginBottom:64}}/>
 
         {/* Part A  -  Rules List */}
         <div style={{marginBottom:64}}>
@@ -1695,7 +1683,7 @@ export default function RulesCaseStudy(){
         </div>
 
         {/* Divider */}
-        <div style={{width:'100%',height:1,background:'rgba(66,125,219,0.12)',marginBottom:64}}/>
+        <div style={{width:'100%',height:1,background:'rgba(184,103,87,0.12)',marginBottom:64}}/>
 
         {/* Part B  -  Rule Creation */}
         <div>
@@ -1743,7 +1731,7 @@ export default function RulesCaseStudy(){
         <div style={{marginBottom:48}}>
           <div style={{fontSize:13,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',marginBottom:16,color:accent}}>What worked well</div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-            {["Plain language rule preview that builds throughout the flow was a standout  -  users specifically called it out","General workflow described as intuitive, smooth, comfortable","Add Clause step: users liked the search, additional info, and flexibility of quick add vs. preview first"].map((item,i)=>(<div key={i} style={{fontSize:13,lineHeight:1.6,color:deepBlue,padding:'10px 14px',borderRadius:8,background:'rgba(66,125,219,0.07)',borderLeft:`3px solid ${accentMid}`}}>{item}</div>))}
+            {["Plain language rule preview that builds throughout the flow was a standout  -  users specifically called it out","General workflow described as intuitive, smooth, comfortable","Add Clause step: users liked the search, additional info, and flexibility of quick add vs. preview first"].map((item,i)=>(<div key={i} style={{fontSize:13,lineHeight:1.6,color:deepBlue,padding:'10px 14px',borderRadius:8,background:'rgba(184,103,87,0.07)',borderLeft:`3px solid ${accentMid}`}}>{item}</div>))}
           </div>
         </div>
 
@@ -1763,12 +1751,12 @@ export default function RulesCaseStudy(){
         <h2 style={{fontFamily:'var(--f-serif)',fontSize:'clamp(26px, 3.2vw, 38px)',fontWeight:300,color:accentDark,letterSpacing:'-0.3px',marginBottom:28}}>From shipped to what's next</h2>
         <p style={{fontSize:15,lineHeight:1.75,color:deepBlue,maxWidth:680,marginBottom:72}}>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase  -  edit rule, change history, and eventually the full List Manager.</p>
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginBottom:32}}>
-          {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page  -  reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(125,145,165,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
+          {[{title:'Guided creation over blank forms',body:'A guided workflow with clause preview replaced a single overwhelming page  -  reducing expert knowledge required to create a rule correctly.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="4" width="22" height="28" rx="2"/><path d="M13 12h12M13 17h9M13 22h6"/><circle cx="30" cy="30" r="8" fill="#ededee"/><circle cx="30" cy="30" r="6"/><path d="M30 27v1.5"/><circle cx="30" cy="31" r="0.1"/><path d="M30 32.5v0.5"/></svg>)},{title:'Findable, scannable rules list',body:'Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="18" r="10"/><path d="M26 26l8 8"/><path d="M14 18h8M18 14v8"/></svg>)},{title:'Confidence before going live',body:'Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.',icon:(<svg width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="#5a5a42" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="26" height="24" rx="2"/><path d="M6 13h26"/><path d="M15 20l3 3 6-6"/><circle cx="33" cy="30" r="8" fill="#ededee"/><circle cx="33" cy="30" r="6"/><path d="M33 27v4M33 33v1"/></svg>)}].map(card=>(<div key={card.title} style={{background:'white',border:'1px solid rgba(184,103,87,0.15)',borderRadius:12,padding:'28px 24px'}}><div style={{marginBottom:14}}>{card.icon}</div><div style={{fontSize:14,fontWeight:700,color:accentDark,marginBottom:8}}>{card.title}</div><p style={{fontSize:12,lineHeight:1.65,color:deepBlue}}>{card.body}</p></div>))}
         </div>
         <div style={{padding:32,background:accentLight,border:`1px solid ${accentMid}`,borderRadius:12}}>
           <p style={{fontSize:12,fontWeight:700,letterSpacing:'0.14em',textTransform:'uppercase',color:accent,marginBottom:16}}>What's next  -  Phase 2</p>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:16}}>
-            {['Edit Rule flow  -  building on the creation patterns established in Phase 1','Rule Change History  -  surfacing the audit trail users currently track in Excel','List Manager  -  the most complex and most requested capability, now better scoped'].map(t=>(<div key={t} style={{padding:'14px 16px',background:'rgba(125,145,165,0.08)',borderRadius:8,fontSize:12,lineHeight:1.6,color:deepBlue}}>{t}</div>))}
+            {['Edit Rule flow  -  building on the creation patterns established in Phase 1','Rule Change History  -  surfacing the audit trail users currently track in Excel','List Manager  -  the most complex and most requested capability, now better scoped'].map(t=>(<div key={t} style={{padding:'14px 16px',background:'rgba(184,103,87,0.08)',borderRadius:8,fontSize:12,lineHeight:1.6,color:deepBlue}}>{t}</div>))}
           </div>
         </div>
       </div>

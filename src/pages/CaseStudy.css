@@ -34,12 +34,14 @@
 
 /* ── Section headings ── */
 .positions-page .cs-h2 {
-  font-family: var(--f-slab);
-  font-size: clamp(24px, 3.2vw, 34px);
-  font-weight: 600;
+  /* Matches Order Management's section headers: light display serif,
+     dark charcoal. */
+  font-family: var(--f-serif);
+  font-size: clamp(26px, 3.2vw, 38px);
+  font-weight: 300;
   line-height: 1.2;
-  letter-spacing: -0.015em;
-  color: var(--ink);
+  letter-spacing: -0.01em;
+  color: #372B0B;
   margin: 0 0 28px;
 }
 .positions-page .cs-h3 {
@@ -273,20 +275,22 @@
   border-radius: var(--r-pill);
   letter-spacing: 0.04em;
 }
+/* Outlined pills (no fill) per the Order Management tag treatment:
+   terracotta border for the most severe, neutral border otherwise. */
 .positions-page .issue-severity--critical {
-  background: rgba(194,80,80,0.12);
-  color: #9e3535;
-  border: 1px solid rgba(194,80,80,0.25);
+  background: transparent;
+  color: var(--clay-ink);
+  border: 1px solid var(--clay);
 }
 .positions-page .issue-severity--high {
-  background: var(--clay-tint);
-  color: var(--clay-ink);
-  border: 1px solid var(--clay-edge);
+  background: transparent;
+  color: var(--ink-3);
+  border: 1px solid var(--hairline-strong);
 }
 .positions-page .issue-severity--medium {
-  background: var(--ochre-tint);
-  color: var(--ochre-deep);
-  border: 1px solid var(--ochre-edge);
+  background: transparent;
+  color: var(--ink-3);
+  border: 1px solid var(--hairline-strong);
 }
 
 /* ── SME quotes ── */
@@ -296,10 +300,12 @@
   gap: 20px;
 }
 .positions-page .quote-block {
+  /* Pull-quote treatment from Order Management: warm off-white wash with a
+     terracotta left accent, no heavy border. */
   padding: 24px 32px;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-left: 3px solid var(--slate);
+  background: rgba(184, 103, 87, 0.05);
+  border: none;
+  border-left: 3px solid var(--clay);
   border-radius: 0 var(--r-3) var(--r-3) 0;
 }
 .positions-page .quote-text {

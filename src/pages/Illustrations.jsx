@@ -35,7 +35,7 @@ export default function Illustrations() {
     'Frame 281.svg': 'A collaboration with a favorite textile artist that I met on a trip to Portugal',
     'Group 60.svg': 'Cocktail napkins for my brother\'s wedding',
     'Frame 285.svg': 'Embroidered cocktail napkins for friend\'s wedding gift',
-    'Group 62.png': 'College reunion weekend itinerary',
+    'Group 62.svg': 'College reunion weekend itinerary',
     'front2.svg': 'Wedding invite for friends with custom drawings of buildings from their favorite street and wedding venue in Denver',
   }
 
@@ -66,7 +66,7 @@ export default function Illustrations() {
       'front2.svg',
       'Group 397.svg',
       'Group 60.svg',
-      'Group 62.png',
+      'Group 62.svg',
       'Frame 285.svg',
     ]
 
@@ -164,7 +164,7 @@ export default function Illustrations() {
               maxWidth: '72ch',
               margin: '0 0 16px',
             }}>
-              Every piece here is hand-drawn by me, with a mouse, in Figma. No AI, no shortcuts. Just patient, click-by-click line work. These started as surprises: a birthday card here, a wedding gift there. Once friends and family saw a few, they started asking for more. Many of the illustrations are drawn from real photos or memories, but I like to add small twists that make them feel a little more personal.
+              Every piece here is hand-drawn by me, with a mouse, in Figma. No AI, no shortcuts. Just patient, click-by-click line work. These started as surprises: a birthday card here, a party favor there. Once friends and family saw a few, they started asking for more - wedding invites, custom canvas bags, embroidered keepsakes. Many of the illustrations are drawn from real photos or memories, but I like to add small twists that make them feel a little more personal.
             </p>
             <p style={{
               fontFamily: 'var(--f-sans)',
@@ -480,14 +480,14 @@ export default function Illustrations() {
                 )}
               </div>
               <div style={{ position: 'relative', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                <img src={`/illustrations/Group 62.png?v=${Date.now()}`} alt="College reunion itinerary" style={{ height: '700px', width: 'auto', objectFit: 'contain', display: 'block' }} />
-                {stories['Group 62.png'] && (
+                <img src={`/illustrations/Group 62.svg?v=${Date.now()}`} alt="College reunion itinerary" style={{ height: '700px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+                {stories['Group 62.svg'] && (
                   <div
                     style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px' }}
                     onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
                     onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
                   >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Group 62.png']}</p>
+                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Group 62.svg']}</p>
                   </div>
                 )}
               </div>

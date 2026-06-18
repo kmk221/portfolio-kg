@@ -138,8 +138,9 @@ export default function Bits() {
               </div>
             </Link>
 
-            {/* Vibe-Coded Experiments */}
-            <div
+            {/* Vibe-Coded Experiments — Shortlist */}
+            <Link
+              to="/bits/shortlist"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -151,6 +152,8 @@ export default function Bits() {
                 position: 'relative',
                 overflow: 'hidden',
                 transition: 'transform 180ms ease, box-shadow 180ms ease',
+                textDecoration: 'none',
+                color: 'inherit',
               }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.18)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
@@ -160,21 +163,17 @@ export default function Bits() {
                 &lt;/&gt;
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Passion Project · Code</p>
-                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Vibe-Coded Experiments.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>Side projects built by feel  -  quick creative builds where the goal is to learn something new or just make something that sparks joy.</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Coming soon</span>
+                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Passion Project · Mobile + TV</p>
+                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Shortlist.</h3>
+                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>A mobile + Smart TV app for “what do we watch tonight?”  -  taken from research to a coded hi-fi prototype. My window into mobile and multi-device design.</p>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Read the mini case study →</span>
               </div>
-            </div>
+            </Link>
 
           </div>
 
-          {/* ── SMALLER WINS ── */}
-          <div className="section-spread" style={{ marginBottom: 32 }}>
-            <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>Smaller Wins</span>
-            <span className="rule" />
-          </div>
-
+          {/* ── SMALLER WINS ── (removed for now) ── */}
+          {false && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20, marginBottom: 80 }}>
 
             {/* Tile 1  -  Quote Component */}
@@ -347,6 +346,7 @@ export default function Bits() {
             </div>
 
           </div>
+          )}
 
         </section>
 

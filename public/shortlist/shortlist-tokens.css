@@ -1,0 +1,247 @@
+/* =============================================================================
+   SHORTLIST — CROSS-PLATFORM DESIGN TOKENS
+   Two independent axes:
+     • THEME  (color/surface): .theme-tv-dark  ·  .theme-mobile-light
+     • PLATFORM (size/density): [data-platform="tv"]  ·  [data-platform="mobile"]
+
+   Typography, spacing, radius, motion and the avatar palette are SHARED across
+   themes — only color and surface tokens differ. So the TV app stays dark and
+   the mobile app is light, while both render the same components, type and shapes.
+
+   Usage:
+     TV:     <body class="theme-tv-dark"      data-platform="tv">     … </body>
+     Mobile: <body class="theme-mobile-light" data-platform="mobile"> … </body>
+
+   :root carries the dark values as a safe default so any element rendered
+   outside a theme class still resolves. A theme class overrides them.
+
+   Families: Bitter (serif, titles) + DM Sans (sans, body/UI).
+   ============================================================================= */
+
+/* ----------------------------------------------------------------------------
+   1. SHARED, NON-COLOR TOKENS  +  dark defaults
+   ---------------------------------------------------------------------------- */
+:root {
+  /* --- Typography families (shared) --- */
+  --font-serif: "Bitter", Georgia, "Times New Roman", serif;
+  --font-sans:  "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* --- Typography weights (shared) --- */
+  --weight-extralight: 200;   /* synopsis / airy supporting copy */
+  --weight-light:      300;
+  --weight-regular:    400;
+  --weight-medium:     500;
+  --weight-semibold:   600;
+  --weight-bold:       700;
+
+  /* --- Recommender avatar palette (shared — name-hash deterministic) --- */
+  --avatar-1: #b05828;   /* rust */
+  --avatar-2: #4d7a3c;   /* olive */
+  --avatar-3: #5a4a80;   /* muted purple */
+  --avatar-4: #4f6a72;   /* slate-teal */
+  --avatar-5: #8a4530;   /* terracotta */
+
+  /* --- Radius (shared base; platform may tighten md/lg) --- */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+
+  /* --- Motion (shared) --- */
+  --duration-fast:   120ms;
+  --duration-normal: 220ms;
+  --easing-standard:   cubic-bezier(0.2, 0, 0, 1);
+  --easing-decelerate: cubic-bezier(0,   0, 0, 1);
+
+  /* ===== DEFAULT COLOR TOKENS = TV DARK (safe fallback) ===== */
+  --color-bg-base:          #080604;
+  --color-surface-base:     #0f0d0b;
+  --color-surface-raised:   #1c1814;
+  --color-surface-elevated: #241f1a;
+
+  --color-accent-primary:     #e07840;
+  --color-accent-interactive: #b05828;
+  --color-accent-soft:        rgba(224,120,64,0.14);
+
+  --color-status-success:  #6aaa52;
+  --color-status-required: #e07840;
+
+  --color-text-primary:   #f0ebe2;
+  --color-text-secondary: #a8a098;
+  --color-text-muted:     #6a6258;
+  --color-text-strong:    #fdfaf5;
+  --color-note-rec:       #d4ac84;
+
+  --color-focus-outline:   #f0ebe2;
+  --color-border-hairline: rgba(255,255,255,0.10);
+  --color-border-hi:       rgba(255,255,255,0.14);
+
+  /* translucent surface helpers (used by chips, pills, handles, faint fills) */
+  --color-chip-bg:    rgba(255,255,255,0.04);
+  --color-pill-bg:    rgba(18,14,11,0.55);
+  --color-pill-border:rgba(255,255,255,0.18);
+  --color-subtle-bg:  rgba(255,255,255,0.05);
+  --color-handle:     rgba(255,255,255,0.18);
+
+  /* glass + scrim composites */
+  --color-glass-panel: rgba(11,9,7,0.58);
+  --color-scrim-hero:  rgba(15,13,11,0.90);
+  --gradient-hero-h: linear-gradient(90deg,
+      rgba(15,13,11,0.85) 0%,  rgba(15,13,11,0.70) 18%, rgba(15,13,11,0.50) 30%,
+      rgba(15,13,11,0.18) 55%, rgba(15,13,11,0.00) 78%);
+  --gradient-hero-v: linear-gradient(0deg,
+      rgba(15,13,11,0.95) 0%,  rgba(15,13,11,0.82) 28%, rgba(15,13,11,0.55) 48%,
+      rgba(15,13,11,0.20) 68%, rgba(15,13,11,0.00) 88%);
+  --glass-panel-bg: linear-gradient(180deg,
+      rgba(9,7,5,0.58) 0%, rgba(11,9,7,0.50) 38%, rgba(11,9,7,0.46) 100%),
+      linear-gradient(0deg, rgba(255,255,255,0.045), rgba(255,255,255,0.045));
+  --glass-panel-blur: blur(42px) saturate(1.35);
+
+  /* elevation */
+  --shadow-surface:     0 3px 10px rgba(0,0,0,0.50);
+  --shadow-card-raised: 0 16px 48px rgba(0,0,0,0.42);
+  --shadow-button:      0 4px 24px rgba(176,88,40,0.45), 0 1px 4px rgba(0,0,0,0.30);
+}
+
+/* ----------------------------------------------------------------------------
+   2. THEME · TV DARK   (current look — explicit)
+   ---------------------------------------------------------------------------- */
+.theme-tv-dark {
+  --color-bg-base:          #080604;
+  --color-surface-base:     #0f0d0b;
+  --color-surface-raised:   #1c1814;
+  --color-surface-elevated: #241f1a;
+
+  --color-accent-primary:     #e07840;
+  --color-accent-interactive: #b05828;
+  --color-accent-soft:        rgba(224,120,64,0.14);
+
+  --color-status-success:  #6aaa52;
+  --color-status-required: #e07840;
+
+  --color-text-primary:   #f0ebe2;
+  --color-text-secondary: #a8a098;
+  --color-text-muted:     #6a6258;
+  --color-text-strong:    #fdfaf5;
+  --color-note-rec:       #d4ac84;
+
+  --color-focus-outline:   #f0ebe2;
+  --color-border-hairline: rgba(255,255,255,0.10);
+  --color-border-hi:       rgba(255,255,255,0.14);
+
+  --color-chip-bg:    rgba(255,255,255,0.04);
+  --color-pill-bg:    rgba(18,14,11,0.55);
+  --color-pill-border:rgba(255,255,255,0.18);
+  --color-subtle-bg:  rgba(255,255,255,0.05);
+  --color-handle:     rgba(255,255,255,0.18);
+
+  --color-glass-panel: rgba(11,9,7,0.58);
+  --color-scrim-hero:  rgba(15,13,11,0.90);
+
+  --shadow-surface:     0 3px 10px rgba(0,0,0,0.50);
+  --shadow-card-raised: 0 16px 48px rgba(0,0,0,0.42);
+  --shadow-button:      0 4px 24px rgba(176,88,40,0.45), 0 1px 4px rgba(0,0,0,0.30);
+}
+
+/* ----------------------------------------------------------------------------
+   3. THEME · MOBILE LIGHT   (new — same hue family, inverted surfaces)
+   ---------------------------------------------------------------------------- */
+.theme-mobile-light {
+  --color-bg-base:          #f3f0e9;   /* soft paper off-white app background (less yellow) */
+  --color-surface-base:     #fbf9f5;   /* unified drawer/card/sheet surface — creamy off-white */
+  --color-surface-raised:   #fbf9f5;   /* cards (same creamy surface) */
+  --color-surface-elevated: #fbf9f5;   /* sheets, menus, toast — same as drawers */
+
+  --color-accent-primary:     #e07840;  /* brand hue unchanged */
+  --color-accent-interactive: #b05828;
+  --color-accent-soft:        rgba(224,120,64,0.12);
+
+  --color-status-success:  #5a8f3c;     /* deepened for contrast on light */
+  --color-status-required: #c0561f;
+
+  --color-text-primary:   #2a221a;
+  --color-text-secondary: #5c4c3c;
+  --color-text-muted:     #8a7c6d;
+  --color-text-strong:    #1c140d;
+  --color-note-rec:       #8a6a44;
+
+  --color-focus-outline:   #e07840;
+  --color-border-hairline: rgba(42,34,26,0.10);
+  --color-border-hi:       rgba(42,34,26,0.16);
+
+  --color-chip-bg:    rgba(42,34,26,0.05);
+  --color-pill-bg:    rgba(42,34,26,0.04);
+  --color-pill-border:rgba(42,34,26,0.14);
+  --color-subtle-bg:  rgba(42,34,26,0.05);
+  --color-handle:     rgba(42,34,26,0.18);
+
+  --color-glass-panel: rgba(248,243,234,0.80);
+  --color-scrim-hero:  rgba(244,237,225,0.90);
+  --gradient-hero-h: linear-gradient(90deg,
+      rgba(244,237,225,0.92) 0%, rgba(244,237,225,0.70) 22%,
+      rgba(244,237,225,0.30) 50%, rgba(244,237,225,0.00) 80%);
+  --gradient-hero-v: linear-gradient(0deg,
+      rgba(244,237,225,0.95) 0%, rgba(244,237,225,0.70) 35%,
+      rgba(244,237,225,0.20) 70%, rgba(244,237,225,0.00) 92%);
+  --glass-panel-bg: linear-gradient(180deg,
+      rgba(255,255,255,0.78) 0%, rgba(248,243,234,0.72) 100%);
+
+  --shadow-surface:     0 2px 8px rgba(60,40,20,0.12);
+  --shadow-card-raised: 0 12px 32px rgba(60,40,20,0.14);
+  --shadow-button:      0 2px 8px rgba(60,40,20,0.16), 0 1px 2px rgba(60,40,20,0.12);  /* neutral, no orange glow — crisper, family-resemblant to the TV CTA */
+}
+
+/* ----------------------------------------------------------------------------
+   4. PLATFORM · TV   (10-foot — roomier spacing, larger type)
+   ---------------------------------------------------------------------------- */
+[data-platform="tv"], .platform-tv {
+  --type-display-size:   80px;  --type-display-lh: 1.05;  --type-display-weight: var(--weight-semibold); --type-display-family: var(--font-serif);
+  --type-title-size:     26px;  --type-title-lh:   1.25;  --type-title-weight:   var(--weight-medium);   --type-title-family:   var(--font-serif);
+  --type-body-size:      26px;  --type-body-lh:    1.6;   --type-body-weight:    var(--weight-regular);   --type-body-family:    var(--font-sans);
+  --type-body2-size:     20px;  --type-body2-lh:   1.4;   --type-body2-weight:   var(--weight-regular);   --type-body2-family:   var(--font-sans);
+  --type-label-size:     18px;  --type-label-lh:   1.2;   --type-label-weight:   var(--weight-semibold);  --type-label-family:   var(--font-sans);
+  --type-caps-size:      16px;  --type-caps-lh:    1.2;   --type-caps-weight:    var(--weight-bold);      --type-caps-family:    var(--font-sans);
+  --type-caps-tracking:  0.14em;
+
+  --space-xs:  4px;  --space-sm:  8px;  --space-md:  14px; --space-lg:  20px; --space-xl:  28px; --space-xxl: 40px;
+  --space-chunk-within:  14px;
+  --space-chunk-between: 21px;
+  --space-safezone: 5%;
+
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --shadow-focus: inset 0 0 0 2px rgba(240,235,226,0.7), 0 0 0 3px var(--color-accent-primary);
+  --touch-min: 0px;
+}
+
+/* ----------------------------------------------------------------------------
+   5. PLATFORM · MOBILE   (touch — tighter spacing, smaller type)
+   ---------------------------------------------------------------------------- */
+[data-platform="mobile"], .platform-mobile {
+  --type-display-size:   32px;  --type-display-lh: 1.15;  --type-display-weight: var(--weight-semibold); --type-display-family: var(--font-serif);
+  --type-title-size:     18px;  --type-title-lh:   1.20;  --type-title-weight:   var(--weight-semibold); --type-title-family:   var(--font-sans);
+  --type-body-size:      16px;  --type-body-lh:    1.5;   --type-body-weight:    var(--weight-regular);   --type-body-family:    var(--font-sans);
+  --type-body2-size:     14px;  --type-body2-lh:   1.35;  --type-body2-weight:   var(--weight-regular);   --type-body2-family:   var(--font-sans);
+  --type-label-size:     13px;  --type-label-lh:   1.2;   --type-label-weight:   var(--weight-semibold);  --type-label-family:   var(--font-sans);
+  --type-caps-size:      12px;  --type-caps-lh:    1.2;   --type-caps-weight:    var(--weight-bold);      --type-caps-family:    var(--font-sans);
+  --type-caps-tracking:  0.16em;
+
+  --space-xs:  4px;  --space-sm:  8px;  --space-md:  12px; --space-lg:  16px; --space-xl:  24px; --space-xxl: 32px;
+  --space-chunk-within:  12px;
+  --space-chunk-between: 18px;
+  --space-safezone: 16px;
+
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-focus: 0 0 0 2px rgba(224,120,64,0.45);
+  --touch-min: 48px;
+}
+
+/* ----------------------------------------------------------------------------
+   6. REDUCED MOTION
+   ---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0.01ms; --duration-normal: 0.01ms; }
+}

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shortlist — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =============================================================================
+   SHORTLIST — CROSS-PLATFORM DESIGN TOKENS
+   Two independent axes:
+     • THEME  (color/surface): .theme-tv-dark  ·  .theme-mobile-light
+     • PLATFORM (size/density): [data-platform="tv"]  ·  [data-platform="mobile"]
+
+   Typography, spacing, radius, motion and the avatar palette are SHARED across
+   themes — only color and surface tokens differ. So the TV app stays dark and
+   the mobile app is light, while both render the same components, type and shapes.
+
+   Usage:
+     TV:     <body class="theme-tv-dark"      data-platform="tv">     … </body>
+     Mobile: <body class="theme-mobile-light" data-platform="mobile"> … </body>
+
+   :root carries the dark values as a safe default so any element rendered
+   outside a theme class still resolves. A theme class overrides them.
+
+   Families: Bitter (serif, titles) + DM Sans (sans, body/UI).
+   ============================================================================= */
+
+/* ----------------------------------------------------------------------------
+   1. SHARED, NON-COLOR TOKENS  +  dark defaults
+   ---------------------------------------------------------------------------- */
+:root {
+  /* --- Typography families (shared) --- */
+  --font-serif: "Bitter", Georgia, "Times New Roman", serif;
+  --font-sans:  "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* --- Typography weights (shared) --- */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* --- Recommender avatar palette (shared — name-hash deterministic) --- */
+  --avatar-1: #b05828;   /* rust */
+  --avatar-2: #4d7a3c;   /* olive */
+  --avatar-3: #5a4a80;   /* muted purple */
+  --avatar-4: #4f6a72;   /* slate-teal */
+  --avatar-5: #8a4530;   /* terracotta */
+
+  /* --- Radius (shared base; platform may tighten md/lg) --- */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+
+  /* --- Motion (shared) --- */
+  --duration-fast:   120ms;
+  --duration-normal: 220ms;
+  --easing-standard:   cubic-bezier(0.2, 0, 0, 1);
+  --easing-decelerate: cubic-bezier(0,   0, 0, 1);
+
+  /* ===== DEFAULT COLOR TOKENS = TV DARK (safe fallback) ===== */
+  --color-bg-base:          #080604;
+  --color-surface-base:     #0f0d0b;
+  --color-surface-raised:   #1c1814;
+  --color-surface-elevated: #241f1a;
+
+  --color-accent-primary:     #e07840;
+  --color-accent-interactive: #b05828;
+  --color-accent-soft:        rgba(224,120,64,0.14);
+
+  --color-status-success:  #6aaa52;
+  --color-status-required: #e07840;
+
+  --color-text-primary:   #f0ebe2;
+  --color-text-secondary: #a8a098;
+  --color-text-muted:     #6a6258;
+  --color-text-strong:    #fdfaf5;
+  --color-note-rec:       #d4ac84;
+
+  --color-focus-outline:   #f0ebe2;
+  --color-border-hairline: rgba(255,255,255,0.10);
+  --color-border-hi:       rgba(255,255,255,0.14);
+
+  /* translucent surface helpers (used by chips, pills, handles, faint fills) */
+  --color-chip-bg:    rgba(255,255,255,0.04);
+  --color-pill-bg:    rgba(18,14,11,0.55);
+  --color-pill-border:rgba(255,255,255,0.18);
+  --color-subtle-bg:  rgba(255,255,255,0.05);
+  --color-handle:     rgba(255,255,255,0.18);
+
+  /* glass + scrim composites */
+  --color-glass-panel: rgba(11,9,7,0.58);
+  --color-scrim-hero:  rgba(15,13,11,0.90);
+  --gradient-hero-h: linear-gradient(90deg,
+      rgba(15,13,11,0.85) 0%,  rgba(15,13,11,0.70) 18%, rgba(15,13,11,0.50) 30%,
+      rgba(15,13,11,0.18) 55%, rgba(15,13,11,0.00) 78%);
+  --gradient-hero-v: linear-gradient(0deg,
+      rgba(15,13,11,0.95) 0%,  rgba(15,13,11,0.82) 28%, rgba(15,13,11,0.55) 48%,
+      rgba(15,13,11,0.20) 68%, rgba(15,13,11,0.00) 88%);
+  --glass-panel-bg: linear-gradient(180deg,
+      rgba(9,7,5,0.58) 0%, rgba(11,9,7,0.50) 38%, rgba(11,9,7,0.46) 100%),
+      linear-gradient(0deg, rgba(255,255,255,0.045), rgba(255,255,255,0.045));
+  --glass-panel-blur: blur(42px) saturate(1.35);
+
+  /* elevation */
+  --shadow-surface:     0 3px 10px rgba(0,0,0,0.50);
+  --shadow-card-raised: 0 16px 48px rgba(0,0,0,0.42);
+  --shadow-button:      0 4px 24px rgba(176,88,40,0.45), 0 1px 4px rgba(0,0,0,0.30);
+}
+
+/* ----------------------------------------------------------------------------
+   2. THEME · TV DARK   (current look — explicit)
+   ---------------------------------------------------------------------------- */
+.theme-tv-dark {
+  --color-bg-base:          #080604;
+  --color-surface-base:     #0f0d0b;
+  --color-surface-raised:   #1c1814;
+  --color-surface-elevated: #241f1a;
+
+  --color-accent-primary:     #e07840;
+  --color-accent-interactive: #b05828;
+  --color-accent-soft:        rgba(224,120,64,0.14);
+
+  --color-status-success:  #6aaa52;
+  --color-status-required: #e07840;
+
+  --color-text-primary:   #f0ebe2;
+  --color-text-secondary: #a8a098;
+  --color-text-muted:     #6a6258;
+  --color-text-strong:    #fdfaf5;
+  --color-note-rec:       #d4ac84;
+
+  --color-focus-outline:   #f0ebe2;
+  --color-border-hairline: rgba(255,255,255,0.10);
+  --color-border-hi:       rgba(255,255,255,0.14);
+
+  --color-chip-bg:    rgba(255,255,255,0.04);
+  --color-pill-bg:    rgba(18,14,11,0.55);
+  --color-pill-border:rgba(255,255,255,0.18);
+  --color-subtle-bg:  rgba(255,255,255,0.05);
+  --color-handle:     rgba(255,255,255,0.18);
+
+  --color-glass-panel: rgba(11,9,7,0.58);
+  --color-scrim-hero:  rgba(15,13,11,0.90);
+
+  --shadow-surface:     0 3px 10px rgba(0,0,0,0.50);
+  --shadow-card-raised: 0 16px 48px rgba(0,0,0,0.42);
+  --shadow-button:      0 4px 24px rgba(176,88,40,0.45), 0 1px 4px rgba(0,0,0,0.30);
+}
+
+/* ----------------------------------------------------------------------------
+   3. THEME · MOBILE LIGHT   (new — same hue family, inverted surfaces)
+   ---------------------------------------------------------------------------- */
+.theme-mobile-light {
+  --color-bg-base:          #f3f0e9;   /* soft paper off-white app background (less yellow) */
+  --color-surface-base:     #fbf9f5;   /* unified drawer/card/sheet surface — creamy off-white */
+  --color-surface-raised:   #fbf9f5;   /* cards (same creamy surface) */
+  --color-surface-elevated: #fbf9f5;   /* sheets, menus, toast — same as drawers */
+
+  --color-accent-primary:     #e07840;  /* brand hue unchanged */
+  --color-accent-interactive: #b05828;
+  --color-accent-soft:        rgba(224,120,64,0.12);
+
+  --color-status-success:  #5a8f3c;     /* deepened for contrast on light */
+  --color-status-required: #c0561f;
+
+  --color-text-primary:   #2a221a;
+  --color-text-secondary: #5c4c3c;
+  --color-text-muted:     #8a7c6d;
+  --color-text-strong:    #1c140d;
+  --color-note-rec:       #8a6a44;
+
+  --color-focus-outline:   #e07840;
+  --color-border-hairline: rgba(42,34,26,0.10);
+  --color-border-hi:       rgba(42,34,26,0.16);
+
+  --color-chip-bg:    rgba(42,34,26,0.05);
+  --color-pill-bg:    rgba(42,34,26,0.04);
+  --color-pill-border:rgba(42,34,26,0.14);
+  --color-subtle-bg:  rgba(42,34,26,0.05);
+  --color-handle:     rgba(42,34,26,0.18);
+
+  --color-glass-panel: rgba(248,243,234,0.80);
+  --color-scrim-hero:  rgba(244,237,225,0.90);
+  --gradient-hero-h: linear-gradient(90deg,
+      rgba(244,237,225,0.92) 0%, rgba(244,237,225,0.70) 22%,
+      rgba(244,237,225,0.30) 50%, rgba(244,237,225,0.00) 80%);
+  --gradient-hero-v: linear-gradient(0deg,
+      rgba(244,237,225,0.95) 0%, rgba(244,237,225,0.70) 35%,
+      rgba(244,237,225,0.20) 70%, rgba(244,237,225,0.00) 92%);
+  --glass-panel-bg: linear-gradient(180deg,
+      rgba(255,255,255,0.78) 0%, rgba(248,243,234,0.72) 100%);
+
+  --shadow-surface:     0 2px 8px rgba(60,40,20,0.12);
+  --shadow-card-raised: 0 12px 32px rgba(60,40,20,0.14);
+  --shadow-button:      0 4px 18px rgba(176,88,40,0.30), 0 1px 3px rgba(60,40,20,0.18);
+}
+
+/* ----------------------------------------------------------------------------
+   4. PLATFORM · TV   (10-foot — roomier spacing, larger type)
+   ---------------------------------------------------------------------------- */
+[data-platform="tv"], .platform-tv {
+  --type-display-size:   80px;  --type-display-lh: 1.05;  --type-display-weight: var(--weight-semibold); --type-display-family: var(--font-serif);
+  --type-title-size:     26px;  --type-title-lh:   1.25;  --type-title-weight:   var(--weight-medium);   --type-title-family:   var(--font-serif);
+  --type-body-size:      26px;  --type-body-lh:    1.6;   --type-body-weight:    var(--weight-regular);   --type-body-family:    var(--font-sans);
+  --type-body2-size:     20px;  --type-body2-lh:   1.4;   --type-body2-weight:   var(--weight-regular);   --type-body2-family:   var(--font-sans);
+  --type-label-size:     18px;  --type-label-lh:   1.2;   --type-label-weight:   var(--weight-semibold);  --type-label-family:   var(--font-sans);
+  --type-caps-size:      16px;  --type-caps-lh:    1.2;   --type-caps-weight:    var(--weight-bold);      --type-caps-family:    var(--font-sans);
+  --type-caps-tracking:  0.14em;
+
+  --space-xs:  4px;  --space-sm:  8px;  --space-md:  14px; --space-lg:  20px; --space-xl:  28px; --space-xxl: 40px;
+  --space-chunk-within:  14px;
+  --space-chunk-between: 21px;
+  --space-safezone: 5%;
+
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --shadow-focus: inset 0 0 0 2px rgba(240,235,226,0.7), 0 0 0 3px var(--color-accent-primary);
+  --touch-min: 0px;
+}
+
+/* ----------------------------------------------------------------------------
+   5. PLATFORM · MOBILE   (touch — tighter spacing, smaller type)
+   ---------------------------------------------------------------------------- */
+[data-platform="mobile"], .platform-mobile {
+  --type-display-size:   32px;  --type-display-lh: 1.15;  --type-display-weight: var(--weight-semibold); --type-display-family: var(--font-serif);
+  --type-title-size:     18px;  --type-title-lh:   1.20;  --type-title-weight:   var(--weight-medium);   --type-title-family:   var(--font-serif);
+  --type-body-size:      16px;  --type-body-lh:    1.5;   --type-body-weight:    var(--weight-regular);   --type-body-family:    var(--font-sans);
+  --type-body2-size:     14px;  --type-body2-lh:   1.35;  --type-body2-weight:   var(--weight-regular);   --type-body2-family:   var(--font-sans);
+  --type-label-size:     13px;  --type-label-lh:   1.2;   --type-label-weight:   var(--weight-semibold);  --type-label-family:   var(--font-sans);
+  --type-caps-size:      12px;  --type-caps-lh:    1.2;   --type-caps-weight:    var(--weight-bold);      --type-caps-family:    var(--font-sans);
+  --type-caps-tracking:  0.16em;
+
+  --space-xs:  4px;  --space-sm:  8px;  --space-md:  12px; --space-lg:  16px; --space-xl:  24px; --space-xxl: 32px;
+  --space-chunk-within:  12px;
+  --space-chunk-between: 18px;
+  --space-safezone: 16px;
+
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-focus: 0 0 0 2px rgba(224,120,64,0.45);
+  --touch-min: 48px;
+}
+
+/* ----------------------------------------------------------------------------
+   6. REDUCED MOTION
+   ---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0.01ms; --duration-normal: 0.01ms; }
+}
+
+/* ============================ PAGE CHROME ============================ */
+*{box-sizing:border-box;margin:0;padding:0;}
+.brand-logo{display:inline-block;height:20px;width:139px;background-color:var(--color-text-primary);-webkit-mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMjIyIDMyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTZfMTM5KSI+CjxtYXNrIGlkPSJtYXNrMF8xNl8xMzkiIHN0eWxlPSJtYXNrLXR5cGU6bHVtaW5hbmNlIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSIwIiB5PSIwIiB3aWR0aD0iNTAiIGhlaWdodD0iMzIiPgo8cGF0aCBkPSJNNDkuODU1OSAwSDBWMzJINDkuODU1OVYwWiIgZmlsbD0id2hpdGUiLz4KPC9tYXNrPgo8ZyBtYXNrPSJ1cmwoI21hc2swXzE2XzEzOSkiPgo8cGF0aCBkPSJNNDguODg2MiAwQzQ5LjY5NDMgMCA1MC4wOTg1IDAuOTcyMDg1IDQ5LjUyNjMgMS41Mzk2TDM0Ljk0NjIgMTZMNDkuNTI2MyAzMC40NjA0QzUwLjA5ODUgMzEuMDI4IDQ5LjY5NDMgMzIgNDguODg2MiAzMkgwLjkwNjQ3MUMwLjQwNTgyOSAzMiAwIDMxLjU5NjQgMCAzMS4wOTg2VjAuOTAxNDA4QzAgMC40MDM1NyAwLjQwNTg0NSAwIDAuOTA2NDcxIDBINDguODg2MlpNMTQuMDM5MSA3LjU4MTcxQzEzLjQzNDkgNy4yNDYxNCAxMi42OTA2IDcuNjgwNDggMTIuNjkwNiA4LjM2ODY5VjIzLjYzMTNDMTIuNjkwNiAyNC4zMTk1IDEzLjQzNDkgMjQuNzUzOSAxNC4wMzkxIDI0LjQxODNMMjcuNzc5NSAxNi43ODY5TDI3LjgzNTggMTYuNzUzM0MyOC4zODAxIDE2LjQwMDEgMjguMzgwMSAxNS41OTk5IDI3LjgzNTggMTUuMjQ2N0wyNy43Nzk1IDE1LjIxMzFMMTQuMDM5MSA3LjU4MTcxWiIgZmlsbD0iI0VERThFMCIvPgo8L2c+CjxtYXNrIGlkPSJtYXNrMV8xNl8xMzkiIHN0eWxlPSJtYXNrLXR5cGU6bHVtaW5hbmNlIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSI2MSIgeT0iNCIgd2lkdGg9IjE2MSIgaGVpZ2h0PSIyNCI+CjxwYXRoIGQ9Ik0yMjIgNC43MDU4MUg2MS4xNDRWMjcuMjk0SDIyMlY0LjcwNTgxWiIgZmlsbD0id2hpdGUiLz4KPC9tYXNrPgo8ZyBtYXNrPSJ1cmwoI21hc2sxXzE2XzEzOSkiPgo8cGF0aCBkPSJNNjQuMTI3MSAxNS40NTc4QzY0LjEyNzEgMTYuMDEzNyA2NC4zMTgzIDE2LjQ1NDQgNjQuNzAwOCAxNi43ODAzQzY1LjA4MzMgMTcuMDg2OSA2NS41ODA2IDE3LjM0NTYgNjYuMTkyNiAxNy41NTY0QzY2LjgyMzcgMTcuNzY3NCA2Ny40ODM1IDE3Ljk3ODEgNjguMTcyIDE4LjE4ODlDNjguODYwNiAxOC4zOTk4IDY5LjUxMDggMTguNjY4MSA3MC4xMjI4IDE4Ljk5MzlDNzAuNzM0OCAxOS4zMTk3IDcxLjIzMiAxOS43NjA2IDcxLjYxNDUgMjAuMzE2NEM3Mi4wMTYyIDIwLjg1MyA3Mi4yMTcgMjEuNTYyMiA3Mi4yMTcgMjIuNDQzN0M3Mi4yMTcgMjMuNDc4NyA3MS45MzAxIDI0LjM2MDMgNzEuMzU2NCAyNS4wODg2QzcwLjgwMTggMjUuNzk3OCA3MC4wMzY3IDI2LjMzNDQgNjkuMDYxMyAyNi42OTg2QzY4LjA4NiAyNy4wNjI3IDY2Ljk5NTkgMjcuMjQ0NyA2NS43OTEgMjcuMjQ0N0M2NS4wNjQyIDI3LjI0NDcgNjQuMzA4OCAyNy4xODcyIDYzLjUyNDYgMjcuMDcyMkM2Mi43NTk2IDI2Ljk1NzMgNjEuOTY2IDI2Ljc4NDggNjEuMTQzNiAyNi41NTQ4TDYxLjM0NDQgMjIuNTAxMkg2My4xNTE3TDYzLjQzODYgMjQuOTQ0OUM2NC4zMTgzIDI1LjE1NTggNjUuMTMxMiAyNS4yNjExIDY1Ljg3NzEgMjUuMjYxMUM2Ni40NTA4IDI1LjI2MTEgNjcuMDA1NCAyNS4xNzQ4IDY3LjU0MDkgMjUuMDAyNEM2OC4wNzY0IDI0LjgyOTkgNjguNTA2NyAyNC41NzExIDY4LjgzMTkgMjQuMjI2MUM2OS4xNzYxIDIzLjg2MiA2OS4zNDgyIDIzLjQyMTIgNjkuMzQ4MiAyMi45MDM3QzY5LjM0ODIgMjIuMzI4NyA2OS4xNDc0IDIxLjg3ODQgNjguNzQ1OCAyMS41NTI1QzY4LjM2MzMgMjEuMjA3NiA2Ny44NjYgMjAuOTI5NyA2Ny4yNTQgMjAuNzE4OEM2Ni42NjEyIDIwLjUwOCA2Ni4wMjA1IDIwLjI5NzIgNjUuMzMxOSAyMC4wODYzQzY0LjY0MzQgMTkuODc1NSA2My45OTMzIDE5LjYwNzMgNjMuMzgxMiAxOS4yODEzQzYyLjc2OTIgMTguOTU1NiA2Mi4yNzIgMTguNTI0NCA2MS44ODk0IDE3Ljk4NzdDNjEuNTA2OSAxNy40MzE5IDYxLjMxNTcgMTYuNzEzMiA2MS4zMTU3IDE1LjgzMTZDNjEuMzE1NyAxNC44MTU3IDYxLjU3MzkgMTMuOTgyIDYyLjA5MDMgMTMuMzMwNEM2Mi42MDY3IDEyLjY3ODggNjMuMjg1NiAxMi4xOTk2IDY0LjEyNzEgMTEuODkzQzY0Ljk4NzcgMTEuNTg2MyA2NS45MTUyIDExLjQzMyA2Ni45MDk4IDExLjQzM0M2Ny41NzkyIDExLjQzMyA2OC4zMTU1IDExLjUwMDEgNjkuMTE4NyAxMS42MzQzQzY5Ljk0MTIgMTEuNzY4NCA3MC43ODI2IDExLjk2OTYgNzEuNjQzMiAxMi4yMzhMNzEuNDk5OSAxNS43MTY1SDY5LjY2MzhMNjkuMjkwOSAxMy43MzI5QzY4LjQ0OTMgMTMuNTIyMSA2Ny42ODQ0IDEzLjQxNjcgNjYuOTk1OSAxMy40MTY3QzY2LjE1NDQgMTMuNDE2NyA2NS40NjU5IDEzLjU5ODcgNjQuOTMwNCAxMy45NjI4QzY0LjM5NDggMTQuMzI3MSA2NC4xMjcxIDE0LjgyNTMgNjQuMTI3MSAxNS40NTc4Wk04MC4xODY1IDI2Ljk1NzNWMjUuNDMzNkw4Mi4zMzgxIDI0LjkxNjFWNi45NDgyMUw4MC4xODY1IDYuNDMwNzNWNC45MDcwNUw4NS4yMDY4IDQuNzA1ODFWMTMuNjQ2NkM4Ni4wNjc0IDEyLjg5OTIgODYuOTU2NyAxMi4zNDM0IDg3Ljg3NDcgMTEuOTc5MkM4OC43OTI3IDExLjYxNTEgODkuNjYzIDExLjQzMyA5MC40ODUzIDExLjQzM0M5MS43NjY4IDExLjQzMyA5Mi44MjgyIDExLjgzNTUgOTMuNjY5NyAxMi42NDA0Qzk0LjUxMDggMTMuNDI2MyA5NC45MjI4IDE0LjYyNDEgOTQuOTAzMSAxNi4yMzRWMjQuOTE2MUw5Ny4wNTQ0IDI1LjQzMzZWMjYuOTU3M0g5MC4wMjYzVjI1LjQzMzZMOTIuMDM0NSAyNC45NzM2VjE2Ljg2NjVDOTIuMDUzNiAxNS43NzQgOTEuODA1IDE0Ljk2OTEgOTEuMjg4NiAxNC40NTE2QzkwLjc5MTQgMTMuOTE0OSA5MC4xMzE2IDEzLjY0NjYgODkuMzA5MSAxMy42NDY2Qzg4LjY5NzEgMTMuNjQ2NiA4OC4wMjc5IDEzLjgwOTUgODcuMzAxIDE0LjEzNTRDODYuNTkzNCAxNC40NDIgODUuODk1MyAxNC45MzA4IDg1LjIwNjggMTUuNjAxNVYyNC45NzM2TDg3LjIxNDkgMjUuNDMzNlYyNi45NTczSDgwLjE4NjVaTTExMi4wNjggMTEuNDMzQzExNC4yMSAxMS40MzMgMTE1Ljg5MyAxMi4xMDM4IDExNy4xMTcgMTMuNDQ1NEMxMTguMzQxIDE0Ljc2NzggMTE4Ljk1MyAxNi42NDYxIDExOC45NTMgMTkuMDgwMUMxMTguOTUzIDIwLjc0NzUgMTE4LjY1NyAyMi4xOTQ3IDExOC4wNjQgMjMuNDIxMkMxMTcuNDcxIDI0LjYyODYgMTE2LjYyIDI1LjU2NzcgMTE1LjUxMSAyNi4yMzg1QzExNC40MiAyNi45MDk0IDExMy4xIDI3LjI0NDcgMTExLjU1MiAyNy4yNDQ3QzEwOS40MjkgMjcuMjQ0NyAxMDcuNzc0IDI2LjU5MzIgMTA2LjU4OSAyNS4yODk4QzEwNS40MDMgMjMuOTY3NCAxMDQuODEgMjIuMDg5MiAxMDQuODEgMTkuNjU1MUMxMDQuODEgMTcuMTI1MiAxMDUuNDUxIDE1LjEyMjUgMTA2LjczMiAxMy42NDY2QzEwOC4wMTMgMTIuMTcwOCAxMDkuNzkyIDExLjQzMyAxMTIuMDY4IDExLjQzM1pNMTExLjkyNSAxMy41MzE3QzExMC41NjYgMTMuNTMxNyAxMDkuNTM0IDE0LjA0OTIgMTA4LjgyNiAxNS4wODQxQzEwOC4xMzcgMTYuMDk5OSAxMDcuNzkzIDE3LjU3NTYgMTA3Ljc5MyAxOS41MTE0QzEwNy43OTMgMjEuNDA4OCAxMDguMTI4IDIyLjgyNzEgMTA4Ljc5OCAyMy43NjYxQzEwOS40NjcgMjQuNjg2MSAxMTAuNDQyIDI1LjE0NjEgMTExLjcyNCAyNS4xNDYxQzExMy4xMiAyNS4xNDYxIDExNC4xNzIgMjQuNjI4NiAxMTQuODc5IDIzLjU5MzZDMTE1LjU4NyAyMi41NTg3IDExNS45NDEgMjEuMTAyMSAxMTUuOTQxIDE5LjIyMzhDMTE1Ljk0MSAxNy4zMjY0IDExNS41OTcgMTUuOTA4MyAxMTQuOTA4IDE0Ljk2OTFDMTE0LjIyIDE0LjAxMDggMTEzLjIyNSAxMy41MzE3IDExMS45MjUgMTMuNTMxN1pNMTI3LjI4NiAyNi45NTczVjI1LjQzMzZMMTI5LjQwOSAyNC45NDQ5VjEzLjg0NzlMMTI3LjI4NiAxMy4zMzA0VjExLjgwNjdMMTMxLjY0NiAxMS42MDU1TDEzMS45NjIgMTMuOTM0MUMxMzIuNzY1IDEzLjE0ODQgMTMzLjU1OCAxMi41MzUgMTM0LjM0MyAxMi4wOTQyQzEzNS4xMjYgMTEuNjUzNCAxMzUuOTY4IDExLjQzMyAxMzYuODY4IDExLjQzM0MxMzcuNDc5IDExLjQzMyAxMzguMTMgMTEuNTI4OSAxMzguODE4IDExLjcyMDVMMTM4LjYxNyAxNi4yOTE1SDEzNi44NjhMMTM2LjU4MSAxMy43OTA0QzEzNi4zODkgMTMuNzUyIDEzNi4xODggMTMuNzMyOSAxMzUuOTc4IDEzLjczMjlDMTM1LjMwOSAxMy43MzI5IDEzNC42NTggMTMuOTE0OSAxMzQuMDI3IDE0LjI3OTFDMTMzLjQxNSAxNC42NDMyIDEzMi44MzIgMTUuMTMyIDEzMi4yNzcgMTUuNzQ1MlYyNC45NDQ5TDEzNC45NDUgMjUuNDMzNlYyNi45NTczSDEyNy4yODZaTTE1MS42MjYgMjcuMjQ0N0MxNTAuNTE3IDI3LjI0NDcgMTQ5LjY1NiAyNi45MDk0IDE0OS4wNDQgMjYuMjM4NUMxNDguNDUxIDI1LjU0ODUgMTQ4LjE1NSAyNC41MjMzIDE0OC4xNTUgMjMuMTYyNVYxMy42NzU0SDE0NS42ODdWMTIuMTIyOUwxNDguMTU1IDExLjY5MTdWOC4zMjgxNEwxNTEuMDI0IDcuODM5NDJWMTEuNzIwNUgxNTUuMTI2TDE1NS4wNCAxMy42NzU0SDE1MS4wMjRWMjIuNzU5OUMxNTEuMDI0IDIzLjU4NDEgMTUxLjE3NiAyNC4xNzgzIDE1MS40ODIgMjQuNTQyM0MxNTEuNzg5IDI0Ljg4NzQgMTUyLjIxOSAyNS4wNTk5IDE1Mi43NzQgMjUuMDU5OUMxNTMuNDA1IDI1LjA1OTkgMTU0LjE4OCAyNC44NDkxIDE1NS4xMjYgMjQuNDI3NEwxNTUuNyAyNi4wNjYxQzE1NC4yNDYgMjYuODUxOSAxNTIuODg4IDI3LjI0NDcgMTUxLjYyNiAyNy4yNDQ3Wk0xNjkuNzQzIDI1LjQzMzZWMjYuOTU3M0gxNjIuNlYyNS40MzM2TDE2NC43NTEgMjQuOTQ0OVY2LjkxOTQ2TDE2Mi42IDYuNDMwNzNWNC45MDcwNUwxNjcuNjIgNC43MDU4MVYyNC45NDQ5TDE2OS43NDMgMjUuNDMzNlpNMTg0LjY2OCAyNS40MzM2VjI2Ljk1NzNIMTc3LjUyNVYyNS40MzM2TDE3OS42NDggMjQuOTQ0OVYxMy44MTkxTDE3Ny41MjUgMTMuMzMwNFYxMS44MDY3TDE4Mi41MTcgMTEuNjM0M1YyNC45NDQ5TDE4NC42NjggMjUuNDMzNlpNMTgwLjkzOCA4LjgxNjg3QzE4MC40MjIgOC44MTY4NyAxNzkuOTkyIDguNjUzOTYgMTc5LjY0OCA4LjMyODE0QzE3OS4zMjMgOC4wMDIzMyAxNzkuMTYgNy41NDIzNSAxNzkuMTYgNi45NDgyMUMxNzkuMTYgNi4zMzQ4OSAxNzkuMzMyIDUuODc0OTIgMTc5LjY3NiA1LjU2ODI3QzE4MC4wMiA1LjI0MjQ1IDE4MC40NTEgNS4wNzk1NCAxODAuOTY4IDUuMDc5NTRDMTgxLjUwMyA1LjA3OTU0IDE4MS45MzQgNS4yNDI0NSAxODIuMjU4IDUuNTY4MjdDMTgyLjYwMiA1Ljg3NDkyIDE4Mi43NzUgNi4zMzQ4OSAxODIuNzc1IDYuOTQ4MjFDMTgyLjc3NSA3LjU2MTUxIDE4Mi42MDIgOC4wMzEwOCAxODIuMjU4IDguMzU2ODlDMTgxLjkxNCA4LjY2MzU0IDE4MS40NzUgOC44MTY4NyAxODAuOTM4IDguODE2ODdaTTE5NS44MjcgMTUuNDU3OEMxOTUuODI3IDE2LjAxMzcgMTk2LjAxOCAxNi40NTQ0IDE5Ni40MDEgMTYuNzgwM0MxOTYuNzgzIDE3LjA4NjkgMTk3LjI4IDE3LjM0NTYgMTk3Ljg5MyAxNy41NTY0QzE5OC41MjQgMTcuNzY3NCAxOTkuMTg0IDE3Ljk3ODEgMTk5Ljg3MiAxOC4xODg5QzIwMC41NjEgMTguMzk5OCAyMDEuMjExIDE4LjY2ODEgMjAxLjgyMyAxOC45OTM5QzIwMi40MzUgMTkuMzE5NyAyMDIuOTMxIDE5Ljc2MDYgMjAzLjMxNSAyMC4zMTY0QzIwMy43MTcgMjAuODUzIDIwMy45MTcgMjEuNTYyMiAyMDMuOTE3IDIyLjQ0MzdDMjAzLjkxNyAyMy40Nzg3IDIwMy42MyAyNC4zNjAzIDIwMy4wNTcgMjUuMDg4NkMyMDIuNTAyIDI1Ljc5NzggMjAxLjczNyAyNi4zMzQ0IDIwMC43NjEgMjYuNjk4NkMxOTkuNzg3IDI3LjA2MjcgMTk4LjY5NyAyNy4yNDQ3IDE5Ny40OTIgMjcuMjQ0N0MxOTYuNzY0IDI3LjI0NDcgMTk2LjAwOSAyNy4xODcyIDE5NS4yMjUgMjcuMDcyMkMxOTQuNDYgMjYuOTU3MyAxOTMuNjY2IDI2Ljc4NDggMTkyLjg0NCAyNi41NTQ4TDE5My4wNDUgMjIuNTAxMkgxOTQuODUyTDE5NS4xMzkgMjQuOTQ0OUMxOTYuMDE4IDI1LjE1NTggMTk2LjgzMSAyNS4yNjExIDE5Ny41NzcgMjUuMjYxMUMxOTguMTUxIDI1LjI2MTEgMTk4LjcwNiAyNS4xNzQ4IDE5OS4yNDEgMjUuMDAyNEMxOTkuNzc2IDI0LjgyOTkgMjAwLjIwNiAyNC41NzExIDIwMC41MzMgMjQuMjI2MUMyMDAuODc2IDIzLjg2MiAyMDEuMDQ4IDIzLjQyMTIgMjAxLjA0OCAyMi45MDM3QzIwMS4wNDggMjIuMzI4NyAyMDAuODQ4IDIxLjg3ODQgMjAwLjQ0NiAyMS41NTI1QzIwMC4wNjMgMjEuMjA3NiAxOTkuNTY2IDIwLjkyOTcgMTk4Ljk1NCAyMC43MTg4QzE5OC4zNjIgMjAuNTA4IDE5Ny43MjEgMjAuMjk3MiAxOTcuMDMyIDIwLjA4NjNDMTk2LjM0NCAxOS44NzU1IDE5NS42OTMgMTkuNjA3MyAxOTUuMDgyIDE5LjI4MTNDMTk0LjQ2OSAxOC45NTU2IDE5My45NzIgMTguNTI0NCAxOTMuNTkgMTcuOTg3N0MxOTMuMjA3IDE3LjQzMTkgMTkzLjAxNiAxNi43MTMyIDE5My4wMTYgMTUuODMxNkMxOTMuMDE2IDE0LjgxNTcgMTkzLjI3NCAxMy45ODIgMTkzLjc5MSAxMy4zMzA0QzE5NC4zMDcgMTIuNjc4OCAxOTQuOTg2IDEyLjE5OTYgMTk1LjgyNyAxMS44OTNDMTk2LjY4OCAxMS41ODYzIDE5Ny42MTYgMTEuNDMzIDE5OC42MSAxMS40MzNDMTk5LjI3OSAxMS40MzMgMjAwLjAxNiAxMS41MDAxIDIwMC44MTkgMTEuNjM0M0MyMDEuNjQxIDExLjc2ODQgMjAyLjQ4MyAxMS45Njk2IDIwMy4zNDMgMTIuMjM4TDIwMy4yMDEgMTUuNzE2NUgyMDEuMzY0TDIwMC45OTEgMTMuNzMyOUMyMDAuMTQ5IDEzLjUyMjEgMTk5LjM4NSAxMy40MTY3IDE5OC42OTcgMTMuNDE2N0MxOTcuODU0IDEzLjQxNjcgMTk3LjE2NiAxMy41OTg3IDE5Ni42MzEgMTMuOTYyOEMxOTYuMDk1IDE0LjMyNzEgMTk1LjgyNyAxNC44MjUzIDE5NS44MjcgMTUuNDU3OFpNMjE3LjUzOCAyNy4yNDQ3QzIxNi40MjggMjcuMjQ0NyAyMTUuNTY4IDI2LjkwOTQgMjE0Ljk1NiAyNi4yMzg1QzIxNC4zNjMgMjUuNTQ4NSAyMTQuMDY2IDI0LjUyMzMgMjE0LjA2NiAyMy4xNjI1VjEzLjY3NTRIMjExLjZWMTIuMTIyOUwyMTQuMDY2IDExLjY5MTdWOC4zMjgxNEwyMTYuOTM1IDcuODM5NDJWMTEuNzIwNUgyMjEuMDM4TDIyMC45NTIgMTMuNjc1NEgyMTYuOTM1VjIyLjc1OTlDMjE2LjkzNSAyMy41ODQxIDIxNy4wODggMjQuMTc4MyAyMTcuMzk0IDI0LjU0MjNDMjE3LjcwMSAyNC44ODc0IDIxOC4xMzEgMjUuMDU5OSAyMTguNjg1IDI1LjA1OTlDMjE5LjMxNiAyNS4wNTk5IDIyMC4xMDEgMjQuODQ5MSAyMjEuMDM4IDI0LjQyNzRMMjIxLjYxMSAyNi4wNjYxQzIyMC4xNTggMjYuODUxOSAyMTguOCAyNy4yNDQ3IDIxNy41MzggMjcuMjQ0N1oiIGZpbGw9IiNFREU4RTAiLz4KPC9nPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzE2XzEzOSI+CjxyZWN0IHdpZHRoPSIyMjIiIGhlaWdodD0iMzIiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==") no-repeat left center;mask:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIyIiBoZWlnaHQ9IjMyIiB2aWV3Qm94PSIwIDAgMjIyIDMyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTZfMTM5KSI+CjxtYXNrIGlkPSJtYXNrMF8xNl8xMzkiIHN0eWxlPSJtYXNrLXR5cGU6bHVtaW5hbmNlIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSIwIiB5PSIwIiB3aWR0aD0iNTAiIGhlaWdodD0iMzIiPgo8cGF0aCBkPSJNNDkuODU1OSAwSDBWMzJINDkuODU1OVYwWiIgZmlsbD0id2hpdGUiLz4KPC9tYXNrPgo8ZyBtYXNrPSJ1cmwoI21hc2swXzE2XzEzOSkiPgo8cGF0aCBkPSJNNDguODg2MiAwQzQ5LjY5NDMgMCA1MC4wOTg1IDAuOTcyMDg1IDQ5LjUyNjMgMS41Mzk2TDM0Ljk0NjIgMTZMNDkuNTI2MyAzMC40NjA0QzUwLjA5ODUgMzEuMDI4IDQ5LjY5NDMgMzIgNDguODg2MiAzMkgwLjkwNjQ3MUMwLjQwNTgyOSAzMiAwIDMxLjU5NjQgMCAzMS4wOTg2VjAuOTAxNDA4QzAgMC40MDM1NyAwLjQwNTg0NSAwIDAuOTA2NDcxIDBINDguODg2MlpNMTQuMDM5MSA3LjU4MTcxQzEzLjQzNDkgNy4yNDYxNCAxMi42OTA2IDcuNjgwNDggMTIuNjkwNiA4LjM2ODY5VjIzLjYzMTNDMTIuNjkwNiAyNC4zMTk1IDEzLjQzNDkgMjQuNzUzOSAxNC4wMzkxIDI0LjQxODNMMjcuNzc5NSAxNi43ODY5TDI3LjgzNTggMTYuNzUzM0MyOC4zODAxIDE2LjQwMDEgMjguMzgwMSAxNS41OTk5IDI3LjgzNTggMTUuMjQ2N0wyNy43Nzk1IDE1LjIxMzFMMTQuMDM5MSA3LjU4MTcxWiIgZmlsbD0iI0VERThFMCIvPgo8L2c+CjxtYXNrIGlkPSJtYXNrMV8xNl8xMzkiIHN0eWxlPSJtYXNrLXR5cGU6bHVtaW5hbmNlIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSI2MSIgeT0iNCIgd2lkdGg9IjE2MSIgaGVpZ2h0PSIyNCI+CjxwYXRoIGQ9Ik0yMjIgNC43MDU4MUg2MS4xNDRWMjcuMjk0SDIyMlY0LjcwNTgxWiIgZmlsbD0id2hpdGUiLz4KPC9tYXNrPgo8ZyBtYXNrPSJ1cmwoI21hc2sxXzE2XzEzOSkiPgo8cGF0aCBkPSJNNjQuMTI3MSAxNS40NTc4QzY0LjEyNzEgMTYuMDEzNyA2NC4zMTgzIDE2LjQ1NDQgNjQuNzAwOCAxNi43ODAzQzY1LjA4MzMgMTcuMDg2OSA2NS41ODA2IDE3LjM0NTYgNjYuMTkyNiAxNy41NTY0QzY2LjgyMzcgMTcuNzY3NCA2Ny40ODM1IDE3Ljk3ODEgNjguMTcyIDE4LjE4ODlDNjguODYwNiAxOC4zOTk4IDY5LjUxMDggMTguNjY4MSA3MC4xMjI4IDE4Ljk5MzlDNzAuNzM0OCAxOS4zMTk3IDcxLjIzMiAxOS43NjA2IDcxLjYxNDUgMjAuMzE2NEM3Mi4wMTYyIDIwLjg1MyA3Mi4yMTcgMjEuNTYyMiA3Mi4yMTcgMjIuNDQzN0M3Mi4yMTcgMjMuNDc4NyA3MS45MzAxIDI0LjM2MDMgNzEuMzU2NCAyNS4wODg2QzcwLjgwMTggMjUuNzk3OCA3MC4wMzY3IDI2LjMzNDQgNjkuMDYxMyAyNi42OTg2QzY4LjA4NiAyNy4wNjI3IDY2Ljk5NTkgMjcuMjQ0NyA2NS43OTEgMjcuMjQ0N0M2NS4wNjQyIDI3LjI0NDcgNjQuMzA4OCAyNy4xODcyIDYzLjUyNDYgMjcuMDcyMkM2Mi43NTk2IDI2Ljk1NzMgNjEuOTY2IDI2Ljc4NDggNjEuMTQzNiAyNi41NTQ4TDYxLjM0NDQgMjIuNTAxMkg2My4xNTE3TDYzLjQzODYgMjQuOTQ0OUM2NC4zMTgzIDI1LjE1NTggNjUuMTMxMiAyNS4yNjExIDY1Ljg3NzEgMjUuMjYxMUM2Ni40NTA4IDI1LjI2MTEgNjcuMDA1NCAyNS4xNzQ4IDY3LjU0MDkgMjUuMDAyNEM2OC4wNzY0IDI0LjgyOTkgNjguNTA2NyAyNC41NzExIDY4LjgzMTkgMjQuMjI2MUM2OS4xNzYxIDIzLjg2MiA2OS4zNDgyIDIzLjQyMTIgNjkuMzQ4MiAyMi45MDM3QzY5LjM0ODIgMjIuMzI4NyA2OS4xNDc0IDIxLjg3ODQgNjguNzQ1OCAyMS41NTI1QzY4LjM2MzMgMjEuMjA3NiA2Ny44NjYgMjAuOTI5NyA2Ny4yNTQgMjAuNzE4OEM2Ni42NjEyIDIwLjUwOCA2Ni4wMjA1IDIwLjI5NzIgNjUuMzMxOSAyMC4wODYzQzY0LjY0MzQgMTkuODc1NSA2My45OTMzIDE5LjYwNzMgNjMuMzgxMiAxOS4yODEzQzYyLjc2OTIgMTguOTU1NiA2Mi4yNzIgMTguNTI0NCA2MS44ODk0IDE3Ljk4NzdDNjEuNTA2OSAxNy40MzE5IDYxLjMxNTcgMTYuNzEzMiA2MS4zMTU3IDE1LjgzMTZDNjEuMzE1NyAxNC44MTU3IDYxLjU3MzkgMTMuOTgyIDYyLjA5MDMgMTMuMzMwNEM2Mi42MDY3IDEyLjY3ODggNjMuMjg1NiAxMi4xOTk2IDY0LjEyNzEgMTEuODkzQzY0Ljk4NzcgMTEuNTg2MyA2NS45MTUyIDExLjQzMyA2Ni45MDk4IDExLjQzM0M2Ny41NzkyIDExLjQzMyA2OC4zMTU1IDExLjUwMDEgNjkuMTE4NyAxMS42MzQzQzY5Ljk0MTIgMTEuNzY4NCA3MC43ODI2IDExLjk2OTYgNzEuNjQzMiAxMi4yMzhMNzEuNDk5OSAxNS43MTY1SDY5LjY2MzhMNjkuMjkwOSAxMy43MzI5QzY4LjQ0OTMgMTMuNTIyMSA2Ny42ODQ0IDEzLjQxNjcgNjYuOTk1OSAxMy40MTY3QzY2LjE1NDQgMTMuNDE2NyA2NS40NjU5IDEzLjU5ODcgNjQuOTMwNCAxMy45NjI4QzY0LjM5NDggMTQuMzI3MSA2NC4xMjcxIDE0LjgyNTMgNjQuMTI3MSAxNS40NTc4Wk04MC4xODY1IDI2Ljk1NzNWMjUuNDMzNkw4Mi4zMzgxIDI0LjkxNjFWNi45NDgyMUw4MC4xODY1IDYuNDMwNzNWNC45MDcwNUw4NS4yMDY4IDQuNzA1ODFWMTMuNjQ2NkM4Ni4wNjc0IDEyLjg5OTIgODYuOTU2NyAxMi4zNDM0IDg3Ljg3NDcgMTEuOTc5MkM4OC43OTI3IDExLjYxNTEgODkuNjYzIDExLjQzMyA5MC40ODUzIDExLjQzM0M5MS43NjY4IDExLjQzMyA5Mi44MjgyIDExLjgzNTUgOTMuNjY5NyAxMi42NDA0Qzk0LjUxMDggMTMuNDI2MyA5NC45MjI4IDE0LjYyNDEgOTQuOTAzMSAxNi4yMzRWMjQuOTE2MUw5Ny4wNTQ0IDI1LjQzMzZWMjYuOTU3M0g5MC4wMjYzVjI1LjQzMzZMOTIuMDM0NSAyNC45NzM2VjE2Ljg2NjVDOTIuMDUzNiAxNS43NzQgOTEuODA1IDE0Ljk2OTEgOTEuMjg4NiAxNC40NTE2QzkwLjc5MTQgMTMuOTE0OSA5MC4xMzE2IDEzLjY0NjYgODkuMzA5MSAxMy42NDY2Qzg4LjY5NzEgMTMuNjQ2NiA4OC4wMjc5IDEzLjgwOTUgODcuMzAxIDE0LjEzNTRDODYuNTkzNCAxNC40NDIgODUuODk1MyAxNC45MzA4IDg1LjIwNjggMTUuNjAxNVYyNC45NzM2TDg3LjIxNDkgMjUuNDMzNlYyNi45NTczSDgwLjE4NjVaTTExMi4wNjggMTEuNDMzQzExNC4yMSAxMS40MzMgMTE1Ljg5MyAxMi4xMDM4IDExNy4xMTcgMTMuNDQ1NEMxMTguMzQxIDE0Ljc2NzggMTE4Ljk1MyAxNi42NDYxIDExOC45NTMgMTkuMDgwMUMxMTguOTUzIDIwLjc0NzUgMTE4LjY1NyAyMi4xOTQ3IDExOC4wNjQgMjMuNDIxMkMxMTcuNDcxIDI0LjYyODYgMTE2LjYyIDI1LjU2NzcgMTE1LjUxMSAyNi4yMzg1QzExNC40MiAyNi45MDk0IDExMy4xIDI3LjI0NDcgMTExLjU1MiAyNy4yNDQ3QzEwOS40MjkgMjcuMjQ0NyAxMDcuNzc0IDI2LjU5MzIgMTA2LjU4OSAyNS4yODk4QzEwNS40MDMgMjMuOTY3NCAxMDQuODEgMjIuMDg5MiAxMDQuODEgMTkuNjU1MUMxMDQuODEgMTcuMTI1MiAxMDUuNDUxIDE1LjEyMjUgMTA2LjczMiAxMy42NDY2QzEwOC4wMTMgMTIuMTcwOCAxMDkuNzkyIDExLjQzMyAxMTIuMDY4IDExLjQzM1pNMTExLjkyNSAxMy41MzE3QzExMC41NjYgMTMuNTMxNyAxMDkuNTM0IDE0LjA0OTIgMTA4LjgyNiAxNS4wODQxQzEwOC4xMzcgMTYuMDk5OSAxMDcuNzkzIDE3LjU3NTYgMTA3Ljc5MyAxOS41MTE0QzEwNy43OTMgMjEuNDA4OCAxMDguMTI4IDIyLjgyNzEgMTA4Ljc5OCAyMy43NjYxQzEwOS40NjcgMjQuNjg2MSAxMTAuNDQyIDI1LjE0NjEgMTExLjcyNCAyNS4xNDYxQzExMy4xMiAyNS4xNDYxIDExNC4xNzIgMjQuNjI4NiAxMTQuODc5IDIzLjU5MzZDMTE1LjU4NyAyMi41NTg3IDExNS45NDEgMjEuMTAyMSAxMTUuOTQxIDE5LjIyMzhDMTE1Ljk0MSAxNy4zMjY0IDExNS41OTcgMTUuOTA4MyAxMTQuOTA4IDE0Ljk2OTFDMTE0LjIyIDE0LjAxMDggMTEzLjIyNSAxMy41MzE3IDExMS45MjUgMTMuNTMxN1pNMTI3LjI4NiAyNi45NTczVjI1LjQzMzZMMTI5LjQwOSAyNC45NDQ5VjEzLjg0NzlMMTI3LjI4NiAxMy4zMzA0VjExLjgwNjdMMTMxLjY0NiAxMS42MDU1TDEzMS45NjIgMTMuOTM0MUMxMzIuNzY1IDEzLjE0ODQgMTMzLjU1OCAxMi41MzUgMTM0LjM0MyAxMi4wOTQyQzEzNS4xMjYgMTEuNjUzNCAxMzUuOTY4IDExLjQzMyAxMzYuODY4IDExLjQzM0MxMzcuNDc5IDExLjQzMyAxMzguMTMgMTEuNTI4OSAxMzguODE4IDExLjcyMDVMMTM4LjYxNyAxNi4yOTE1SDEzNi44NjhMMTM2LjU4MSAxMy43OTA0QzEzNi4zODkgMTMuNzUyIDEzNi4xODggMTMuNzMyOSAxMzUuOTc4IDEzLjczMjlDMTM1LjMwOSAxMy43MzI5IDEzNC42NTggMTMuOTE0OSAxMzQuMDI3IDE0LjI3OTFDMTMzLjQxNSAxNC42NDMyIDEzMi44MzIgMTUuMTMyIDEzMi4yNzcgMTUuNzQ1MlYyNC45NDQ5TDEzNC45NDUgMjUuNDMzNlYyNi45NTczSDEyNy4yODZaTTE1MS42MjYgMjcuMjQ0N0MxNTAuNTE3IDI3LjI0NDcgMTQ5LjY1NiAyNi45MDk0IDE0OS4wNDQgMjYuMjM4NUMxNDguNDUxIDI1LjU0ODUgMTQ4LjE1NSAyNC41MjMzIDE0OC4xNTUgMjMuMTYyNVYxMy42NzU0SDE0NS42ODdWMTIuMTIyOUwxNDguMTU1IDExLjY5MTdWOC4zMjgxNEwxNTEuMDI0IDcuODM5NDJWMTEuNzIwNUgxNTUuMTI2TDE1NS4wNCAxMy42NzU0SDE1MS4wMjRWMjIuNzU5OUMxNTEuMDI0IDIzLjU4NDEgMTUxLjE3NiAyNC4xNzgzIDE1MS40ODIgMjQuNTQyM0MxNTEuNzg5IDI0Ljg4NzQgMTUyLjIxOSAyNS4wNTk5IDE1Mi43NzQgMjUuMDU5OUMxNTMuNDA1IDI1LjA1OTkgMTU0LjE4OCAyNC44NDkxIDE1NS4xMjYgMjQuNDI3NEwxNTUuNyAyNi4wNjYxQzE1NC4yNDYgMjYuODUxOSAxNTIuODg4IDI3LjI0NDcgMTUxLjYyNiAyNy4yNDQ3Wk0xNjkuNzQzIDI1LjQzMzZWMjYuOTU3M0gxNjIuNlYyNS40MzM2TDE2NC43NTEgMjQuOTQ0OVY2LjkxOTQ2TDE2Mi42IDYuNDMwNzNWNC45MDcwNUwxNjcuNjIgNC43MDU4MVYyNC45NDQ5TDE2OS43NDMgMjUuNDMzNlpNMTg0LjY2OCAyNS40MzM2VjI2Ljk1NzNIMTc3LjUyNVYyNS40MzM2TDE3OS42NDggMjQuOTQ0OVYxMy44MTkxTDE3Ny41MjUgMTMuMzMwNFYxMS44MDY3TDE4Mi41MTcgMTEuNjM0M1YyNC45NDQ5TDE4NC42NjggMjUuNDMzNlpNMTgwLjkzOCA4LjgxNjg3QzE4MC40MjIgOC44MTY4NyAxNzkuOTkyIDguNjUzOTYgMTc5LjY0OCA4LjMyODE0QzE3OS4zMjMgOC4wMDIzMyAxNzkuMTYgNy41NDIzNSAxNzkuMTYgNi45NDgyMUMxNzkuMTYgNi4zMzQ4OSAxNzkuMzMyIDUuODc0OTIgMTc5LjY3NiA1LjU2ODI3QzE4MC4wMiA1LjI0MjQ1IDE4MC40NTEgNS4wNzk1NCAxODAuOTY4IDUuMDc5NTRDMTgxLjUwMyA1LjA3OTU0IDE4MS45MzQgNS4yNDI0NSAxODIuMjU4IDUuNTY4MjdDMTgyLjYwMiA1Ljg3NDkyIDE4Mi43NzUgNi4zMzQ4OSAxODIuNzc1IDYuOTQ4MjFDMTgyLjc3NSA3LjU2MTUxIDE4Mi42MDIgOC4wMzEwOCAxODIuMjU4IDguMzU2ODlDMTgxLjkxNCA4LjY2MzU0IDE4MS40NzUgOC44MTY4NyAxODAuOTM4IDguODE2ODdaTTE5NS44MjcgMTUuNDU3OEMxOTUuODI3IDE2LjAxMzcgMTk2LjAxOCAxNi40NTQ0IDE5Ni40MDEgMTYuNzgwM0MxOTYuNzgzIDE3LjA4NjkgMTk3LjI4IDE3LjM0NTYgMTk3Ljg5MyAxNy41NTY0QzE5OC41MjQgMTcuNzY3NCAxOTkuMTg0IDE3Ljk3ODEgMTk5Ljg3MiAxOC4xODg5QzIwMC41NjEgMTguMzk5OCAyMDEuMjExIDE4LjY2ODEgMjAxLjgyMyAxOC45OTM5QzIwMi40MzUgMTkuMzE5NyAyMDIuOTMxIDE5Ljc2MDYgMjAzLjMxNSAyMC4zMTY0QzIwMy43MTcgMjAuODUzIDIwMy45MTcgMjEuNTYyMiAyMDMuOTE3IDIyLjQ0MzdDMjAzLjkxNyAyMy40Nzg3IDIwMy42MyAyNC4zNjAzIDIwMy4wNTcgMjUuMDg4NkMyMDIuNTAyIDI1Ljc5NzggMjAxLjczNyAyNi4zMzQ0IDIwMC43NjEgMjYuNjk4NkMxOTkuNzg3IDI3LjA2MjcgMTk4LjY5NyAyNy4yNDQ3IDE5Ny40OTIgMjcuMjQ0N0MxOTYuNzY0IDI3LjI0NDcgMTk2LjAwOSAyNy4xODcyIDE5NS4yMjUgMjcuMDcyMkMxOTQuNDYgMjYuOTU3MyAxOTMuNjY2IDI2Ljc4NDggMTkyLjg0NCAyNi41NTQ4TDE5My4wNDUgMjIuNTAxMkgxOTQuODUyTDE5NS4xMzkgMjQuOTQ0OUMxOTYuMDE4IDI1LjE1NTggMTk2LjgzMSAyNS4yNjExIDE5Ny41NzcgMjUuMjYxMUMxOTguMTUxIDI1LjI2MTEgMTk4LjcwNiAyNS4xNzQ4IDE5OS4yNDEgMjUuMDAyNEMxOTkuNzc2IDI0LjgyOTkgMjAwLjIwNiAyNC41NzExIDIwMC41MzMgMjQuMjI2MUMyMDAuODc2IDIzLjg2MiAyMDEuMDQ4IDIzLjQyMTIgMjAxLjA0OCAyMi45MDM3QzIwMS4wNDggMjIuMzI4NyAyMDAuODQ4IDIxLjg3ODQgMjAwLjQ0NiAyMS41NTI1QzIwMC4wNjMgMjEuMjA3NiAxOTkuNTY2IDIwLjkyOTcgMTk4Ljk1NCAyMC43MTg4QzE5OC4zNjIgMjAuNTA4IDE5Ny43MjEgMjAuMjk3MiAxOTcuMDMyIDIwLjA4NjNDMTk2LjM0NCAxOS44NzU1IDE5NS42OTMgMTkuNjA3MyAxOTUuMDgyIDE5LjI4MTNDMTk0LjQ2OSAxOC45NTU2IDE5My45NzIgMTguNTI0NCAxOTMuNTkgMTcuOTg3N0MxOTMuMjA3IDE3LjQzMTkgMTkzLjAxNiAxNi43MTMyIDE5My4wMTYgMTUuODMxNkMxOTMuMDE2IDE0LjgxNTcgMTkzLjI3NCAxMy45ODIgMTkzLjc5MSAxMy4zMzA0QzE5NC4zMDcgMTIuNjc4OCAxOTQuOTg2IDEyLjE5OTYgMTk1LjgyNyAxMS44OTNDMTk2LjY4OCAxMS41ODYzIDE5Ny42MTYgMTEuNDMzIDE5OC42MSAxMS40MzNDMTk5LjI3OSAxMS40MzMgMjAwLjAxNiAxMS41MDAxIDIwMC44MTkgMTEuNjM0M0MyMDEuNjQxIDExLjc2ODQgMjAyLjQ4MyAxMS45Njk2IDIwMy4zNDMgMTIuMjM4TDIwMy4yMDEgMTUuNzE2NUgyMDEuMzY0TDIwMC45OTEgMTMuNzMyOUMyMDAuMTQ5IDEzLjUyMjEgMTk5LjM4NSAxMy40MTY3IDE5OC42OTcgMTMuNDE2N0MxOTcuODU0IDEzLjQxNjcgMTk3LjE2NiAxMy41OTg3IDE5Ni42MzEgMTMuOTYyOEMxOTYuMDk1IDE0LjMyNzEgMTk1LjgyNyAxNC44MjUzIDE5NS44MjcgMTUuNDU3OFpNMjE3LjUzOCAyNy4yNDQ3QzIxNi40MjggMjcuMjQ0NyAyMTUuNTY4IDI2LjkwOTQgMjE0Ljk1NiAyNi4yMzg1QzIxNC4zNjMgMjUuNTQ4NSAyMTQuMDY2IDI0LjUyMzMgMjE0LjA2NiAyMy4xNjI1VjEzLjY3NTRIMjExLjZWMTIuMTIyOUwyMTQuMDY2IDExLjY5MTdWOC4zMjgxNEwyMTYuOTM1IDcuODM5NDJWMTEuNzIwNUgyMjEuMDM4TDIyMC45NTIgMTMuNjc1NEgyMTYuOTM1VjIyLjc1OTlDMjE2LjkzNSAyMy41ODQxIDIxNy4wODggMjQuMTc4MyAyMTcuMzk0IDI0LjU0MjNDMjE3LjcwMSAyNC44ODc0IDIxOC4xMzEgMjUuMDU5OSAyMTguNjg1IDI1LjA1OTlDMjE5LjMxNiAyNS4wNTk5IDIyMC4xMDEgMjQuODQ5MSAyMjEuMDM4IDI0LjQyNzRMMjIxLjYxMSAyNi4wNjYxQzIyMC4xNTggMjYuODUxOSAyMTguOCAyNy4yNDQ3IDIxNy41MzggMjcuMjQ0N1oiIGZpbGw9IiNFREU4RTAiLz4KPC9nPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzE2XzEzOSI+CjxyZWN0IHdpZHRoPSIyMjIiIGhlaWdodD0iMzIiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==") no-repeat left center;-webkit-mask-size:contain;mask-size:contain;}
+body{background:var(--color-bg-base);color:var(--color-text-primary);font-family:var(--font-sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:120px;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+/* Masthead */
+.masthead{padding:72px 0 48px;border-bottom:1px solid var(--color-border-hairline);background:radial-gradient(120% 100% at 0% 0%,rgba(224,120,64,0.08),transparent 60%);}
+.wordmark{font-family:var(--font-serif);font-weight:500;font-size:15px;letter-spacing:0.34em;text-transform:uppercase;color:var(--color-text-secondary);display:flex;align-items:center;gap:12px;}
+.wordmark .dot{width:9px;height:9px;border-radius:50%;background:var(--color-accent-primary);box-shadow:0 0 12px rgba(224,120,64,0.7);}
+.masthead h1{font-family:var(--font-serif);font-weight:600;font-size:clamp(40px,6vw,68px);line-height:1.02;margin:28px 0 18px;color:var(--color-text-strong);letter-spacing:-0.01em;}
+.masthead p{max-width:620px;color:var(--color-text-secondary);font-size:18px;line-height:1.6;}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.meta-tag{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-secondary);background:rgba(255,255,255,0.04);border:1px solid var(--color-border-hairline);padding:7px 13px;border-radius:var(--radius-pill);}
+
+/* Sections */
+section{padding:64px 0;border-bottom:1px solid var(--color-border-hairline);}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;}
+.sec-num{font-family:var(--font-serif);font-size:15px;color:var(--color-accent-primary);font-weight:600;}
+.sec-head h2{font-family:var(--font-serif);font-weight:600;font-size:30px;color:var(--color-text-strong);}
+.sec-sub{color:var(--color-text-secondary);font-size:16px;margin-bottom:36px;max-width:680px;}
+h3.block-title{font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-text-muted);margin:40px 0 18px;}
+
+/* Color swatches */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
+.swatch{background:var(--color-surface-base);border:1px solid var(--color-border-hairline);border-radius:var(--radius-md);overflow:hidden;}
+.swatch .chip{height:78px;}
+.swatch .info{padding:12px 14px;}
+.swatch .name{font-size:13px;font-weight:600;color:var(--color-text-primary);}
+.swatch .val{font-size:12px;color:var(--color-text-muted);font-family:ui-monospace,Menlo,monospace;margin-top:3px;}
+
+/* Type specimens */
+.type-table{display:flex;flex-direction:column;gap:2px;}
+.type-row{display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid var(--color-border-hairline);}
+.type-row .label{font-size:12px;color:var(--color-text-muted);font-family:ui-monospace,Menlo,monospace;}
+.type-row .spec{font-size:11px;color:var(--color-text-muted);margin-top:6px;}
+.t-display{font-family:var(--font-serif);font-weight:600;font-size:48px;line-height:1.05;color:var(--color-text-strong);}
+.t-title{font-family:var(--font-serif);font-weight:500;font-size:26px;}
+.t-body{font-family:var(--font-sans);font-weight:400;font-size:20px;color:var(--color-text-primary);}
+.t-body2{font-family:var(--font-sans);font-weight:400;font-size:16px;color:var(--color-text-secondary);}
+.t-label{font-family:var(--font-sans);font-weight:600;font-size:16px;}
+.t-caps{font-family:var(--font-sans);font-weight:700;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent-primary);}
+
+/* Scale / radius / spacing visual */
+.tk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;}
+.tk{background:var(--color-surface-base);border:1px solid var(--color-border-hairline);border-radius:var(--radius-md);padding:18px;}
+.tk .demo{display:flex;align-items:flex-end;gap:6px;height:60px;margin-bottom:14px;}
+.tk .bar{background:var(--color-accent-interactive);border-radius:3px;}
+.tk .rad{width:60px;height:60px;background:var(--color-accent-soft);border:1.5px solid var(--color-accent-primary);}
+.tk .nm{font-size:13px;font-weight:600;}
+.tk .vl{font-size:12px;color:var(--color-text-muted);font-family:ui-monospace,monospace;margin-top:2px;}
+
+/* Component canvas */
+.canvas{background:var(--color-surface-base);border:1px solid var(--color-border-hairline);border-radius:var(--radius-lg);padding:32px;margin-top:18px;position:relative;}
+.canvas.art{background:linear-gradient(155deg,#4a7a5c,#3a6048 40%,#2a4836 70%,#1e3428);}
+.canvas .cap{position:absolute;top:14px;right:18px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-text-muted);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+@media(max-width:820px){.two-col{grid-template-columns:1fr;}}
+.col-label{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-accent-primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.col-label::before{content:"";width:18px;height:1px;background:var(--color-accent-primary);}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+.stack{display:flex;flex-direction:column;gap:14px;}
+
+/* ---------- COMPONENT: Buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:9px;border:none;cursor:pointer;font-family:var(--font-sans);border-radius:var(--radius-pill);transition:transform var(--duration-fast),box-shadow var(--duration-normal);}
+.platform-tv .btn{height:52px;padding:0 28px;font-size:20px;font-weight:700;letter-spacing:0.04em;}
+.platform-mobile .btn{height:48px;padding:0 22px;font-size:15px;font-weight:700;}
+.btn-primary{background:var(--color-accent-interactive);color:#fff;box-shadow:var(--shadow-button);}
+.btn-secondary{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);color:rgba(240,235,226,0.9);backdrop-filter:blur(8px);}
+.btn:active{transform:scale(0.96);}
+.btn.is-focused{box-shadow:var(--shadow-button),0 0 0 3px var(--color-focus-outline);}
+.btn-secondary.is-focused{box-shadow:0 0 0 3px var(--color-focus-outline);}
+.btn .tri{width:0;height:0;border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent #fff;}
+
+/* ---------- COMPONENT: Filter pill ---------- */
+.fpill{border-radius:var(--radius-pill);border:2px solid rgba(255,255,255,0.25);background:rgba(18,14,11,0.55);color:var(--color-text-primary);font-family:var(--font-sans);font-weight:600;cursor:pointer;transition:border-color var(--duration-fast),background var(--duration-fast),color var(--duration-fast);}
+.platform-tv .fpill{padding:9px 20px;font-size:18px;}
+.platform-mobile .fpill{padding:8px 15px;font-size:13px;}
+.fpill.is-active{border-color:var(--color-accent-interactive);background:var(--color-accent-interactive);color:#fff;}
+.fpill.is-focused{border-color:var(--color-focus-outline);}
+.caps-label{font-weight:700;letter-spacing:var(--type-caps-tracking,0.14em);text-transform:uppercase;color:var(--color-text-secondary);font-size:var(--type-caps-size,13px);}
+
+/* ---------- COMPONENT: Subscription badge ---------- */
+.sub-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 7px;border-radius:var(--radius-pill);font-weight:600;background:rgba(106,170,82,0.14);border:1px solid rgba(106,170,82,0.35);color:var(--color-status-success);}
+.platform-tv .sub-badge{font-size:16px;}
+.platform-mobile .sub-badge{font-size:12px;}
+.sub-badge.req{background:rgba(224,120,64,0.14);border-color:rgba(224,120,64,0.4);color:var(--color-accent-primary);}
+.sub-badge .ic{width:13px;height:13px;}
+
+/* ---------- COMPONENT: Recommender chips ---------- */
+.avatars{display:flex;align-items:center;}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;border:2px solid var(--color-surface-base);box-shadow:0 1px 3px rgba(0,0,0,0.4);}
+.platform-tv .av{width:34px;height:34px;font-size:14px;margin-left:-7px;}
+.platform-mobile .av{width:28px;height:28px;font-size:11px;margin-left:-6px;}
+.av:first-child{margin-left:0;}
+.av-more{background:var(--color-surface-elevated);color:var(--color-note-rec);}
+.chip-solo{display:inline-flex;align-items:center;gap:9px;}
+.chip-solo .nm{color:var(--color-note-rec);font-weight:600;}
+.platform-tv .chip-solo .nm{font-size:19px;}.platform-mobile .chip-solo .nm{font-size:14px;}
+
+/* ---------- COMPONENT: Length indicator ---------- */
+.length-ind{display:inline-flex;align-items:center;gap:4px;}
+.length-ind .seg{width:13px;height:4.5px;border-radius:2px;background:rgba(168,160,152,0.25);}
+.length-ind .seg.on{background:var(--color-accent-primary);}
+
+/* ---------- COMPONENT: ShortlistCard (TV horizontal) ---------- */
+.tvcard{display:flex;gap:14px;padding:18px 22px 18px 18px;border-radius:var(--radius-md);border:1px solid transparent;background:transparent;position:relative;transition:background var(--duration-fast),border-color var(--duration-fast);max-width:520px;}
+.tvcard::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:0;background:var(--color-accent-primary);border-radius:0 2px 2px 0;transition:height var(--duration-normal) var(--easing-standard);}
+.tvcard.is-focused{background:var(--color-surface-raised);border-color:var(--color-border-hi);box-shadow:inset 0 0 0 2px rgba(240,235,226,0.7);}
+.tvcard.is-focused::before,.tvcard.is-selected::before{height:72%;}
+.tvcard.is-selected{background:var(--color-surface-elevated);border-color:rgba(224,120,64,0.3);}
+.tvcard .thumb{width:80px;aspect-ratio:2/3;border-radius:7px;box-shadow:var(--shadow-surface);flex-shrink:0;background-size:cover;background-position:center;}
+.tvcard .body{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.tvcard .ttl{font-family:var(--font-serif);font-weight:500;font-size:24px;color:var(--color-text-primary);line-height:1.2;}
+.tvcard .mt{font-size:18px;color:var(--color-text-secondary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tvcard .mt b{color:#d8d2c8;font-weight:600;}
+
+/* ---------- COMPONENT: ShortlistCard (Mobile vertical) ---------- */
+.mcard{width:160px;cursor:pointer;}
+.mcard .poster{width:100%;aspect-ratio:2/3;border-radius:var(--radius-md);box-shadow:var(--shadow-surface);background-size:cover;background-position:center;position:relative;overflow:hidden;}
+.mcard .poster .badge-fl{position:absolute;left:8px;top:8px;}
+.mcard .ttl{font-family:var(--font-serif);font-weight:500;font-size:17px;margin-top:10px;line-height:1.2;}
+.mcard .mt{font-size:13px;color:var(--color-text-secondary);margin-top:3px;display:flex;align-items:center;gap:7px;}
+
+/* poster art helpers */
+.pa-shrinking{background:linear-gradient(160deg,#4a7a5c,#3a6048 40%,#2a4836 70%,#1e3428);}
+.pa-severance{background:linear-gradient(180deg,#d8dde8,#b8c4d4 35%,#8898b0 70%,#3a4a60);}
+.pa-bear{background:linear-gradient(165deg,#caa97e,#a9866a 45%,#6f4f3f 100%);}
+.pa-wicked{background:radial-gradient(120% 90% at 30% 20%,#2f8f6b,#1f5a48 55%,#13322a);}
+.pa-dark{background:conic-gradient(from 210deg at 50% 50%,#1b2740,#0e1626,#243a5e,#0e1626,#1b2740);}
+.poster-label{position:absolute;inset:0;display:flex;align-items:flex-end;padding:10px;font-family:var(--font-serif);font-weight:600;font-size:15px;color:rgba(255,255,255,0.92);text-shadow:0 1px 8px rgba(0,0,0,0.5);}
+
+/* hero miniature */
+.hero-mini{position:relative;height:300px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-border-hairline);}
+.hero-mini .bg{position:absolute;inset:0;background:linear-gradient(155deg,#4a7a5c,#3a6048 45%,#1e3428);}
+.hero-mini .scrim{position:absolute;inset:0;background:var(--gradient-hero-h),var(--gradient-hero-v);}
+.hero-mini .glass{position:absolute;left:0;top:0;bottom:0;width:38%;background:var(--glass-panel-bg);-webkit-backdrop-filter:var(--glass-panel-blur);backdrop-filter:var(--glass-panel-blur);padding:22px 24px;display:flex;flex-direction:column;gap:14px;}
+.hero-mini .ov{position:absolute;right:0;bottom:0;width:62%;padding:24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;}
+.hero-mini .ov h4{font-family:var(--font-serif);font-weight:600;font-size:34px;color:#fdfaf5;line-height:1;text-shadow:0 2px 24px rgba(0,0,0,0.7);}
+.hero-mini .note{color:var(--color-note-rec);font-size:14px;line-height:1.5;border-left:2px solid rgba(212,172,132,0.35);padding-left:12px;max-width:320px;}
+
+/* token reference list */
+.ref-table{width:100%;border-collapse:collapse;font-size:13px;}
+.ref-table td{padding:9px 12px;border-bottom:1px solid var(--color-border-hairline);vertical-align:top;}
+.ref-table td:first-child{font-family:ui-monospace,monospace;color:var(--color-accent-primary);white-space:nowrap;}
+.ref-table td:nth-child(2){color:var(--color-text-secondary);}
+
+.usage{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;}
+@media(max-width:820px){.usage{grid-template-columns:1fr;}}
+.do,.dont{background:var(--color-surface-base);border:1px solid var(--color-border-hairline);border-radius:var(--radius-md);padding:18px 20px;}
+.do{border-left:3px solid var(--color-status-success);}
+.dont{border-left:3px solid var(--color-accent-primary);}
+.do h5,.dont h5{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;}
+.do h5{color:var(--color-status-success);}.dont h5{color:var(--color-accent-primary);}
+.do li,.dont li{margin-left:18px;margin-bottom:6px;color:var(--color-text-secondary);font-size:14px;}
+footer{padding:48px 0 80px;color:var(--color-text-muted);font-size:13px;}
+</style>
+</head>
+<body class="theme-tv-dark">
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="brand-logo" role="img" aria-label="Shortlist" style="height:26px;width:180px;"></span>
+    <h1>Design System</h1>
+    <p>One semantic token set, two platform modes. Everything your friends told you to watch — surfaced the moment you sit down, on the 10-foot TV and in your hand.</p>
+    <div class="meta-row">
+      <span class="meta-tag">Cross-platform</span>
+      <span class="meta-tag">TV · Dark</span>
+      <span class="meta-tag">Mobile · Light</span>
+      <span class="meta-tag">Bitter + DM Sans</span>
+      <span class="meta-tag">v1.0</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FOUNDATIONS: COLOR ============ -->
+<section><div class="wrap">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Color</h2></div>
+  <p class="sec-sub">A warm, dark “campfire” palette: sepia-blacks for surfaces, a single burnt-orange accent for everything interactive, sage-green for subscription success, and cream text. Colors are platform-agnostic — they never change between TV and Mobile.</p>
+
+  <h3 class="block-title">Surfaces · TV (dark)</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#080604"></div><div class="info"><div class="name">bg / base</div><div class="val">#080604</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#0f0d0b"></div><div class="info"><div class="name">surface / base</div><div class="val">#0f0d0b</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#1c1814"></div><div class="info"><div class="name">surface / raised</div><div class="val">#1c1814</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#241f1a"></div><div class="info"><div class="name">surface / elevated</div><div class="val">#241f1a</div></div></div>
+  </div>
+  <h3 class="block-title">Surfaces · Mobile (light)</h3>
+  <p class="sec-sub" style="margin-bottom:18px">The mobile app runs the same semantic tokens in a light theme: a soft paper background with every drawer, card and sheet unified to one creamy off-white. Accent, brand and the avatar palette are shared across both themes.</p>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#f3f0e9"></div><div class="info"><div class="name">bg / base</div><div class="val">#f3f0e9</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#fbf9f5"></div><div class="info"><div class="name">surface / base</div><div class="val">#fbf9f5</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#fbf9f5"></div><div class="info"><div class="name">surface / raised</div><div class="val">#fbf9f5</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#fbf9f5"></div><div class="info"><div class="name">surface / elevated</div><div class="val">#fbf9f5</div></div></div>
+  </div>
+  <h3 class="block-title">Text &amp; Status · Mobile (light)</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#1c140d"></div><div class="info"><div class="name">text / strong</div><div class="val">#1c140d</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#2a221a"></div><div class="info"><div class="name">text / primary</div><div class="val">#2a221a</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#5c4c3c"></div><div class="info"><div class="name">text / secondary</div><div class="val">#5c4c3c</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#8a7c6d"></div><div class="info"><div class="name">text / muted</div><div class="val">#8a7c6d</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#5a8f3c"></div><div class="info"><div class="name">status / success</div><div class="val">#5a8f3c</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#c0561f"></div><div class="info"><div class="name">status / required</div><div class="val">#c0561f</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#8a6a44"></div><div class="info"><div class="name">note / rec</div><div class="val">#8a6a44</div></div></div>
+  </div>
+
+  <h3 class="block-title">Brand &amp; Interactive</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#e07840"></div><div class="info"><div class="name">accent / primary</div><div class="val">#e07840</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#b05828"></div><div class="info"><div class="name">accent / interactive</div><div class="val">#b05828</div></div></div>
+    <div class="swatch"><div class="chip" style="background:rgba(224,120,64,0.14)"></div><div class="info"><div class="name">accent / soft</div><div class="val">rgba(224,120,64,.14)</div></div></div>
+  </div>
+
+  <h3 class="block-title">Status</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#6aaa52"></div><div class="info"><div class="name">status / success</div><div class="val">#6aaa52</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#e07840"></div><div class="info"><div class="name">status / required</div><div class="val">#e07840</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#d4ac84"></div><div class="info"><div class="name">note / rec</div><div class="val">#d4ac84</div></div></div>
+  </div>
+
+  <h3 class="block-title">Text</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#fdfaf5"></div><div class="info"><div class="name">text / strong</div><div class="val">#fdfaf5</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#f0ebe2"></div><div class="info"><div class="name">text / primary</div><div class="val">#f0ebe2</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#a8a098"></div><div class="info"><div class="name">text / secondary</div><div class="val">#a8a098</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#6a6258"></div><div class="info"><div class="name">text / muted</div><div class="val">#6a6258</div></div></div>
+  </div>
+
+  <h3 class="block-title">Recommender Avatars</h3>
+  <p class="sec-sub" style="margin-bottom:18px">Deterministic by name-hash — a person always gets the same color across both apps.</p>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#b05828"></div><div class="info"><div class="name">avatar 1 · rust</div><div class="val">#b05828</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4d7a3c"></div><div class="info"><div class="name">avatar 2 · olive</div><div class="val">#4d7a3c</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#5a4a80"></div><div class="info"><div class="name">avatar 3 · purple</div><div class="val">#5a4a80</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4f6a72"></div><div class="info"><div class="name">avatar 4 · slate</div><div class="val">#4f6a72</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#8a4530"></div><div class="info"><div class="name">avatar 5 · terracotta</div><div class="val">#8a4530</div></div></div>
+  </div>
+</div></section>
+
+<!-- ============ FOUNDATIONS: TYPOGRAPHY ============ -->
+<section><div class="wrap">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Typography</h2></div>
+  <p class="sec-sub"><strong>Bitter</strong> (serif) carries every title — it gives the product its editorial, hand-picked warmth. <strong>DM Sans</strong> handles body, metadata and all UI labels. Each role scales between TV and Mobile modes; the column below shows the TV size with the Mobile size noted.</p>
+  <div class="type-table">
+    <div class="type-row"><div><div class="label">display / hero</div><div class="spec">Bitter 600 · TV 80 / Mobile 32</div></div><div class="t-display">Severance</div></div>
+    <div class="type-row"><div><div class="label">title / list</div><div class="spec">Bitter 500 · TV 26 / Mobile 18</div></div><div class="t-title">The Bear · Season 3</div></div>
+    <div class="type-row"><div><div class="label">body / primary</div><div class="spec">DM Sans 400 · TV 26 / Mobile 16</div></div><div class="t-body">“You have to watch this one — it wrecked me in the best way.”</div></div>
+    <div class="type-row"><div><div class="label">body / secondary</div><div class="spec">DM Sans 400 · TV 20 / Mobile 14</div></div><div class="t-body2">Drama · Comedy · 41 min</div></div>
+    <div class="type-row"><div><div class="label">label / ui</div><div class="spec">DM Sans 600 · TV 18 / Mobile 13</div></div><div class="t-label">Watch on Apple TV+</div></div>
+    <div class="type-row"><div><div class="label">label / caps</div><div class="spec">DM Sans 700 · 0.14em · TV 16 / Mobile 12</div></div><div class="t-caps">Runtime</div></div>
+  </div>
+</div></section>
+
+<!-- ============ FOUNDATIONS: SPACE / RADIUS / ELEVATION / MOTION ============ -->
+<section><div class="wrap">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Space, Radius &amp; Elevation</h2></div>
+  <p class="sec-sub">Spacing and radius step up in TV mode for 10-foot legibility and down in Mobile mode for thumb-scale density. Values shown are TV / Mobile.</p>
+
+  <h3 class="block-title">Spacing Scale</h3>
+  <div class="tk-grid">
+    <div class="tk"><div class="demo"><div class="bar" style="width:4px;height:4px"></div></div><div class="nm">xs</div><div class="vl">4 / 4</div></div>
+    <div class="tk"><div class="demo"><div class="bar" style="width:8px;height:8px"></div></div><div class="nm">sm</div><div class="vl">8 / 8</div></div>
+    <div class="tk"><div class="demo"><div class="bar" style="width:14px;height:14px"></div></div><div class="nm">md</div><div class="vl">14 / 12</div></div>
+    <div class="tk"><div class="demo"><div class="bar" style="width:20px;height:20px"></div></div><div class="nm">lg</div><div class="vl">20 / 16</div></div>
+    <div class="tk"><div class="demo"><div class="bar" style="width:28px;height:28px"></div></div><div class="nm">xl</div><div class="vl">28 / 24</div></div>
+    <div class="tk"><div class="demo"><div class="bar" style="width:40px;height:40px"></div></div><div class="nm">xxl</div><div class="vl">40 / 32</div></div>
+  </div>
+
+  <h3 class="block-title">Radius</h3>
+  <div class="tk-grid">
+    <div class="tk"><div class="demo"><div class="rad" style="border-radius:8px"></div></div><div class="nm">sm — chips</div><div class="vl">8</div></div>
+    <div class="tk"><div class="demo"><div class="rad" style="border-radius:14px"></div></div><div class="nm">md — cards</div><div class="vl">14 / 12</div></div>
+    <div class="tk"><div class="demo"><div class="rad" style="border-radius:20px"></div></div><div class="nm">lg — panels</div><div class="vl">20 / 18</div></div>
+    <div class="tk"><div class="demo"><div class="rad" style="border-radius:999px"></div></div><div class="nm">pill — buttons</div><div class="vl">999</div></div>
+  </div>
+
+  <h3 class="block-title">Elevation &amp; Motion</h3>
+  <table class="ref-table">
+    <tr><td>--shadow-surface</td><td>Poster thumbnails</td><td style="color:var(--color-text-muted);font-family:ui-monospace,monospace">0 3px 10px rgba(0,0,0,.5)</td></tr>
+    <tr><td>--shadow-card-raised</td><td>Floating cards &amp; sheets</td><td style="color:var(--color-text-muted);font-family:ui-monospace,monospace">0 16px 48px rgba(0,0,0,.42)</td></tr>
+    <tr><td>--shadow-button</td><td>Primary CTA glow</td><td style="color:var(--color-text-muted);font-family:ui-monospace,monospace">0 4px 24px rgba(176,88,40,.45)</td></tr>
+    <tr><td>--duration-fast</td><td>Focus, pill toggles</td><td style="color:var(--color-text-muted);font-family:ui-monospace,monospace">120ms</td></tr>
+    <tr><td>--duration-normal</td><td>Screen / hero crossfade</td><td style="color:var(--color-text-muted);font-family:ui-monospace,monospace">220ms</td></tr>
+    <tr><td>--easing-standard</td><td>Default easing</td><td style="color:var(--color-text-muted);font-family:ui-monospace,monospace">cubic-bezier(.2,0,0,1)</td></tr>
+  </table>
+</div></section>
+
+<!-- ============ COMPONENTS ============ -->
+<section><div class="wrap">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Components</h2></div>
+  <p class="sec-sub">Each component shares one contract across platforms; only layout and density change. Left column is TV (remote focus, roomy); right column is Mobile (tap, dense).</p>
+
+  <!-- Buttons -->
+  <h3 class="block-title">Buttons</h3>
+  <div class="two-col">
+    <div class="platform-tv">
+      <div class="col-label">TV</div>
+      <div class="canvas"><div class="stack">
+        <div class="row"><button class="btn btn-primary"><span class="tri"></span>Watch on Apple TV+</button></div>
+        <div class="row"><button class="btn btn-primary is-focused"><span class="tri"></span>Watch now <span style="opacity:.7;font-weight:500">· focused</span></button></div>
+        <div class="row"><button class="btn btn-secondary">Subscribe on Max</button></div>
+      </div></div>
+    </div>
+    <div class="platform-mobile">
+      <div class="col-label">Mobile</div>
+      <div class="canvas"><div class="stack">
+        <div class="row"><button class="btn btn-primary" style="width:100%;justify-content:center"><span class="tri"></span>Watch on Apple TV+</button></div>
+        <div class="row"><button class="btn btn-secondary" style="width:100%;justify-content:center">Subscribe on Max</button></div>
+        <div style="font-size:12px;color:var(--color-text-muted)">Full-width, sticky to the bottom safe-area · min 48pt tall</div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- Runtime filter pills -->
+  <h3 class="block-title">Runtime Filter Pill</h3>
+  <div class="two-col">
+    <div class="platform-tv">
+      <div class="col-label">TV</div>
+      <div class="canvas"><div class="row" style="align-items:center">
+        <span class="caps-label">Runtime</span>
+        <button class="fpill">&lt; 35 min</button>
+        <button class="fpill is-focused">35–60 min</button>
+        <button class="fpill is-active">60+ min</button>
+      </div>
+      <div style="font-size:12px;color:var(--color-text-muted);margin-top:14px">2px border at all states — no layout shift. Focused = cream outline · Active = filled.</div></div>
+    </div>
+    <div class="platform-mobile">
+      <div class="col-label">Mobile</div>
+      <div class="canvas"><div class="row">
+        <button class="fpill">&lt; 35 min</button>
+        <button class="fpill is-active">35–60 min</button>
+        <button class="fpill">60+ min</button>
+      </div>
+      <div style="font-size:12px;color:var(--color-text-muted);margin-top:14px">Tappable segmented control — no focus state.</div></div>
+    </div>
+  </div>
+
+  <!-- Subscription badge -->
+  <h3 class="block-title">Subscription Badge</h3>
+  <div class="two-col">
+    <div class="platform-tv">
+      <div class="col-label">TV</div>
+      <div class="canvas"><div class="row">
+        <span class="sub-badge"><svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7.5" stroke="#6aaa52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Apple TV+</span>
+        <span class="sub-badge req"><svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#e07840" stroke-width="2" stroke-linecap="round"/></svg>Max</span>
+      </div></div>
+    </div>
+    <div class="platform-mobile">
+      <div class="col-label">Mobile</div>
+      <div class="canvas"><div class="row">
+        <span class="sub-badge"><svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7.5" stroke="#6aaa52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Hulu</span>
+        <span class="sub-badge req"><svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="#e07840" stroke-width="2" stroke-linecap="round"/></svg>Peacock</span>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- Recommender chips + length -->
+  <h3 class="block-title">Recommender Chips &amp; Length Indicator</h3>
+  <div class="two-col">
+    <div class="platform-tv">
+      <div class="col-label">TV</div>
+      <div class="canvas"><div class="stack">
+        <div class="row"><div class="avatars">
+          <div class="av" style="background:var(--avatar-1)">JD</div>
+          <div class="av" style="background:var(--avatar-3)">MR</div>
+          <div class="av" style="background:var(--avatar-4)">SK</div>
+          <div class="av av-more">+2</div>
+        </div></div>
+        <div class="row"><span class="chip-solo"><span class="av" style="background:var(--avatar-2);margin-left:0">AL</span><span class="nm">Alex liked this</span></span></div>
+        <div class="row" style="align-items:center"><span class="caps-label">Length</span>
+          <span class="length-ind"><span class="seg on"></span><span class="seg"></span><span class="seg"></span></span>
+          <span style="color:var(--color-text-secondary);font-size:16px">Short · ≤35 min</span></div>
+      </div></div>
+    </div>
+    <div class="platform-mobile">
+      <div class="col-label">Mobile</div>
+      <div class="canvas"><div class="stack">
+        <div class="row"><div class="avatars">
+          <div class="av" style="background:var(--avatar-1)">JD</div>
+          <div class="av" style="background:var(--avatar-3)">MR</div>
+          <div class="av av-more">+4</div>
+        </div></div>
+        <div class="row"><span class="chip-solo"><span class="av" style="background:var(--avatar-2);margin-left:0">AL</span><span class="nm">Alex liked this</span></span></div>
+        <div class="row" style="align-items:center">
+          <span class="length-ind"><span class="seg on"></span><span class="seg on"></span><span class="seg"></span></span>
+          <span style="color:var(--color-text-secondary);font-size:13px">Medium · 36–60 min</span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- ShortlistCard -->
+  <h3 class="block-title">Shortlist Card</h3>
+  <p class="sec-sub" style="margin:-8px 0 18px">The core list unit. TV: horizontal — poster left, text right, drives the hero on focus. Mobile: vertical — poster top, text below, whole card is a tap target to detail.</p>
+  <div class="two-col">
+    <div class="platform-tv">
+      <div class="col-label">TV · focused → selected</div>
+      <div class="canvas" style="background:var(--color-surface-base)"><div class="stack">
+        <div class="tvcard is-focused">
+          <div class="thumb pa-shrinking"></div>
+          <div class="body">
+            <div class="ttl">The Shrinking</div>
+            <div class="mt"><b>Comedy · Drama</b> · 32 min</div>
+            <div class="row" style="margin-top:4px"><span class="sub-badge"><svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7.5" stroke="#6aaa52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Apple TV+</span>
+              <div class="avatars"><div class="av" style="background:var(--avatar-2);width:24px;height:24px;font-size:11px">AL</div><div class="av" style="background:var(--avatar-4);width:24px;height:24px;font-size:11px">SK</div></div></div>
+          </div>
+        </div>
+        <div class="tvcard">
+          <div class="thumb pa-severance"></div>
+          <div class="body">
+            <div class="ttl">Severance</div>
+            <div class="mt"><b>Sci-Fi · Thriller</b> · 52 min</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <div class="platform-mobile">
+      <div class="col-label">Mobile · grid cell</div>
+      <div class="canvas"><div class="row" style="gap:18px">
+        <div class="mcard">
+          <div class="poster pa-shrinking"><span class="badge-fl"><span class="sub-badge" style="font-size:11px"><svg class="ic" viewBox="0 0 16 16" fill="none" style="width:11px;height:11px"><path d="M3 8.5l3 3 7-7.5" stroke="#6aaa52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Apple TV+</span></span><span class="poster-label">The Shrinking</span></div>
+          <div class="ttl">The Shrinking</div>
+          <div class="mt">Comedy · 32 min</div>
+        </div>
+        <div class="mcard">
+          <div class="poster pa-severance"><span class="poster-label" style="color:#1e2a3a;text-shadow:none">Severance</span></div>
+          <div class="ttl">Severance</div>
+          <div class="mt">Sci-Fi · 52 min</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ PATTERNS: HERO / DETAIL ============ -->
+<section><div class="wrap">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Hero &amp; Detail</h2></div>
+  <p class="sec-sub">Shared content model — title, meta, recommenders, the recommendation note, and a single primary action. On TV it’s a right-side overlay over a full-bleed backdrop with a frosted-glass list panel. On Mobile it’s a scrollable detail screen with a sticky action.</p>
+  <div class="platform-tv">
+    <div class="hero-mini">
+      <div class="bg"></div>
+      <div class="scrim"></div>
+      <div class="glass">
+        <div class="wordmark" style="font-size:12px">SHORTLIST</div>
+        <div class="row" style="gap:8px"><span class="caps-label" style="font-size:11px">Runtime</span><button class="fpill is-active" style="padding:5px 11px;font-size:12px">&lt; 35</button><button class="fpill" style="padding:5px 11px;font-size:12px">35–60</button></div>
+        <div class="tvcard is-selected" style="padding:11px 13px;max-width:none;background:var(--color-surface-elevated)"><div class="thumb pa-shrinking" style="width:42px"></div><div class="body"><div class="ttl" style="font-size:16px">The Shrinking</div><div class="mt" style="font-size:12px">Comedy · 32 min</div></div></div>
+        <div class="tvcard" style="padding:11px 13px;max-width:none"><div class="thumb pa-bear" style="width:42px"></div><div class="body"><div class="ttl" style="font-size:16px">The Bear</div><div class="mt" style="font-size:12px">Drama · 41 min</div></div></div>
+      </div>
+      <div class="ov">
+        <h4>The Shrinking</h4>
+        <div class="row" style="gap:8px"><span class="sub-badge"><svg class="ic" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7.5" stroke="#6aaa52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Apple TV+</span><span style="color:var(--color-text-secondary);font-size:13px">Comedy · 32 min · 89%</span></div>
+        <div class="note">“Funniest, most human thing I’ve seen all year — watch the first two and you’re hooked.” <span style="color:var(--color-text-secondary)">— Alex</span></div>
+        <button class="btn btn-primary" style="height:42px;font-size:16px"><span class="tri"></span>Watch on Apple TV+</button>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ USAGE PRINCIPLES ============ -->
+<section style="border-bottom:none"><div class="wrap">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Principles</h2></div>
+  <p class="sec-sub">The same rules govern both platforms — they keep the product feeling like one product.</p>
+  <div class="usage">
+    <div class="do"><h5>Do</h5><ul>
+      <li>Reserve burnt-orange for the one thing a person should do next.</li>
+      <li>Let Bitter carry titles; never set body or UI labels in serif.</li>
+      <li>Keep one primary action per screen — Watch or Subscribe, never both as primary.</li>
+      <li>Drive color from people: a recommender keeps their hashed avatar color everywhere.</li>
+    </ul></div>
+    <div class="dont"><h5>Don’t</h5><ul>
+      <li>Don’t add a second accent hue — the palette is intentionally single-accent.</li>
+      <li>Don’t shrink mobile tap targets below 48pt.</li>
+      <li>Don’t use the cream focus ring on Mobile — focus is a TV/remote affordance.</li>
+      <li>Don’t place text on backdrop art without the hero scrim beneath it.</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Shortlist Design System · v1.0 · Tokens in <span style="font-family:ui-monospace,monospace;color:var(--color-text-secondary)">shortlist-tokens.css</span> · Bitter + DM Sans</div></footer>
+
+</body>
+</html>

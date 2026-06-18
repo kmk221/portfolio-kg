@@ -21,6 +21,89 @@ export default function Bits() {
             Bits &amp; Pieces.
           </h1>
 
+          {/* ── JUST FOR FUN ── */}
+          <div className="section-spread" style={{ marginBottom: 16 }}>
+            <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>Just for Fun</span>
+            <span className="rule" />
+          </div>
+          <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.65, maxWidth: '56ch', margin: '0 0 32px' }}>
+            Passion projects, creative experiments, and things I build when I'm not solving enterprise problems  -  because design should be fun too.
+          </p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 80 }}>
+
+            {/* Vibe-Coded Experiments — Shortlist */}
+            <Link
+              to="/bits/shortlist"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                minHeight: 280,
+                padding: '32px 36px',
+                background: 'var(--ochre-deep)',
+                borderRadius: 'var(--r-3)',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'transform 180ms ease, box-shadow 180ms ease',
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.18)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
+            >
+              {/* Decorative code symbol  -  upper area */}
+              <div aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -70%)', fontFamily: 'var(--f-mono)', fontSize: 'clamp(64px, 8vw, 100px)', fontWeight: 300, color: 'rgba(245,232,211,0.12)', lineHeight: 1, whiteSpace: 'nowrap', userSelect: 'none' }}>
+                &lt;/&gt;
+              </div>
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Passion Project · Mobile + TV</p>
+                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Shortlist.</h3>
+                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>A mobile + Smart TV app for “what do we watch tonight?”  -  taken from research to a coded hi-fi prototype. My window into mobile and multi-device design.</p>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Read the mini case study →</span>
+              </div>
+            </Link>
+
+            {/* Line Illustration Work */}
+            <Link
+              to="/illustrations"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                minHeight: 280,
+                padding: '32px 36px',
+                background: 'var(--clay-tint)',
+                borderRadius: 'var(--r-3)',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'transform 180ms ease, box-shadow 180ms ease',
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.12)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
+            >
+              {/* Decorative SVG  -  upper area */}
+              <div aria-hidden="true" style={{ position: 'absolute', top: 32, left: 36, right: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.55 }}>
+                <svg viewBox="0 0 400 120" width="100%" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 90 Q80 20 160 60 Q240 100 320 30 Q370 5 395 40" stroke="var(--clay)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                  <path d="M40 70 Q110 110 200 50 Q280 0 360 60" stroke="var(--clay)" strokeWidth="1" strokeLinecap="round" strokeDasharray="5 8" fill="none" opacity="0.5" />
+                  <circle cx="160" cy="60" r="6" stroke="var(--clay)" strokeWidth="1.5" fill="none" />
+                  <circle cx="320" cy="30" r="4" stroke="var(--clay)" strokeWidth="1" fill="none" opacity="0.6" />
+                  <circle cx="80" cy="55" r="3" stroke="var(--clay)" strokeWidth="1" fill="none" opacity="0.4" />
+                </svg>
+              </div>
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay-ink)', margin: '0 0 14px', opacity: 0.7 }}>Illustration</p>
+                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'var(--ink)', margin: '0 0 14px' }}>Line Art & Characters.</h3>
+                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics  -  my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--clay-ink)', opacity: 0.6 }}>Explore →</span>
+              </div>
+            </Link>
+
+          </div>
+
           {/* ── CONTENT THAT SHAPES MY THINKING ── */}
           <div className="section-spread" style={{ marginBottom: 32 }}>
             <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>Content That Shapes My Thinking</span>
@@ -84,89 +167,6 @@ export default function Bits() {
                     }}>{tag}</span>
                   ))}
                 </div>
-              </div>
-            </Link>
-
-          </div>
-
-          {/* ── JUST FOR FUN ── */}
-          <div className="section-spread" style={{ marginBottom: 16 }}>
-            <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>Just for Fun</span>
-            <span className="rule" />
-          </div>
-          <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.65, maxWidth: '56ch', margin: '0 0 32px' }}>
-            Passion projects, creative experiments, and things I build when I'm not solving enterprise problems  -  because design should be fun too.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 80 }}>
-
-            {/* Line Illustration Work */}
-            <Link
-              to="/illustrations"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                minHeight: 280,
-                padding: '32px 36px',
-                background: 'var(--clay-tint)',
-                borderRadius: 'var(--r-3)',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'transform 180ms ease, box-shadow 180ms ease',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.12)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
-            >
-              {/* Decorative SVG  -  upper area */}
-              <div aria-hidden="true" style={{ position: 'absolute', top: 32, left: 36, right: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.55 }}>
-                <svg viewBox="0 0 400 120" width="100%" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 90 Q80 20 160 60 Q240 100 320 30 Q370 5 395 40" stroke="var(--clay)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                  <path d="M40 70 Q110 110 200 50 Q280 0 360 60" stroke="var(--clay)" strokeWidth="1" strokeLinecap="round" strokeDasharray="5 8" fill="none" opacity="0.5" />
-                  <circle cx="160" cy="60" r="6" stroke="var(--clay)" strokeWidth="1.5" fill="none" />
-                  <circle cx="320" cy="30" r="4" stroke="var(--clay)" strokeWidth="1" fill="none" opacity="0.6" />
-                  <circle cx="80" cy="55" r="3" stroke="var(--clay)" strokeWidth="1" fill="none" opacity="0.4" />
-                </svg>
-              </div>
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay-ink)', margin: '0 0 14px', opacity: 0.7 }}>Illustration</p>
-                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'var(--ink)', margin: '0 0 14px' }}>Line Art & Characters.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics  -  my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--clay-ink)', opacity: 0.6 }}>Explore →</span>
-              </div>
-            </Link>
-
-            {/* Vibe-Coded Experiments — Shortlist */}
-            <Link
-              to="/bits/shortlist"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                minHeight: 280,
-                padding: '32px 36px',
-                background: 'var(--ochre-deep)',
-                borderRadius: 'var(--r-3)',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'transform 180ms ease, box-shadow 180ms ease',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.18)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
-            >
-              {/* Decorative code symbol  -  upper area */}
-              <div aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -70%)', fontFamily: 'var(--f-mono)', fontSize: 'clamp(64px, 8vw, 100px)', fontWeight: 300, color: 'rgba(245,232,211,0.12)', lineHeight: 1, whiteSpace: 'nowrap', userSelect: 'none' }}>
-                &lt;/&gt;
-              </div>
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Passion Project · Mobile + TV</p>
-                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Shortlist.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>A mobile + Smart TV app for “what do we watch tonight?”  -  taken from research to a coded hi-fi prototype. My window into mobile and multi-device design.</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Read the mini case study →</span>
               </div>
             </Link>
 

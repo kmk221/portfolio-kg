@@ -23,7 +23,6 @@
   max-width: 1240px;
   margin: 0 auto;
   padding: 160px 64px 100px;
-  border-bottom: 1px solid var(--hairline);
   position: relative;
 }
 
@@ -61,7 +60,7 @@
 
 /* ── MY TAKE ── */
 .myTake {
-  background: #372B0B;
+  background: var(--surface);
   padding: 100px 0;
   position: relative;
 }
@@ -90,10 +89,11 @@
 
 .myTakeLabel {
   font-family: var(--f-mono);
-  font-size: 11px;
+  font-weight: 500;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--clay-deep);
+  color: var(--clay);
   margin: 0;
   white-space: nowrap;
 }
@@ -105,7 +105,7 @@
   font-size: clamp(22px, 2.8vw, 30px);
   line-height: 1.55;
   letter-spacing: -0.012em;
-  color: #F5E8D3;
+  color: var(--ink);
   border-left: 3px solid var(--clay-deep);
   padding-left: 32px;
   margin: 0;
@@ -116,7 +116,6 @@
   max-width: 1240px;
   margin: 0 auto;
   padding: 96px 64px;
-  border-bottom: 1px solid var(--hairline);
 }
 
 .sectionInner {
@@ -145,7 +144,7 @@
 .sectionLabel {
   font-family: var(--f-mono);
   font-weight: 500;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--clay);
@@ -205,8 +204,8 @@
 
 .quoteCard.wide {
   grid-column: 1 / -1;
-  background: var(--clay-tint);
-  border-color: var(--clay-edge);
+  background: var(--surface);
+  border-color: var(--hairline);
 }
 
 .quoteCardLabel {
@@ -248,7 +247,7 @@
   font-family: var(--f-mono);
   font-size: 11px;
   letter-spacing: 0.06em;
-  color: var(--clay-deep);
+  color: var(--ink-2);
   text-decoration: none;
   margin-top: auto;
   display: inline-flex;
@@ -338,7 +337,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--clay-deep);
+  color: var(--clay-ink);
   margin-top: 20px;
   display: inline-flex;
   align-items: center;

@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>kristin.garza — Design System v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Permanent+Marker&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ───────── TOKENS (mirrors tokens.css) ───────── */
+  :root {
+    --bg:              #FAF7F0;
+    --surface:         #FFFFFF;
+    --surface-2:       #F2EBDB;
+    --hairline:        #E6DCC6;
+    --hairline-strong: #C9BC9B;
+
+    --ink:        #1F1A0F;
+    --ink-2:      #372B0B;
+    --ink-3:      #6B5E45;
+    --ink-mute:   #8A7C5E;
+
+    --clay:       #9E644B;
+    --clay-deep:  #C47655;
+    --clay-ink:   #8E4A2E;
+    --clay-tint:  #F2DCD0;
+    --clay-edge:  #D9AC97;
+
+    --ochre:      #BF933F;
+    --ochre-deep: #BF933F;
+    --ochre-ink:  #7A5A1C;
+    --ochre-tint: #F4E5C0;
+    --ochre-edge: #D4A95C;
+
+    --slate:      #718C8F;
+    --slate-deep: #3E5F62;
+    --slate-tint: #A5BCBD;
+    --slate-edge: #8FAAAC;
+
+    --focus:     #2B4068;
+    --selection: rgba(183,113,83,0.22);
+
+    --r-1: 4px;  --r-2: 8px;  --r-3: 12px;  --r-4: 20px;  --r-pill: 999px;
+    --s-1: 4px;  --s-2: 8px;  --s-3: 12px;  --s-4: 16px;  --s-5: 24px;
+    --s-6: 32px; --s-7: 48px; --s-8: 64px;  --s-9: 96px;  --s-10: 128px;
+
+    --f-serif:         "Crimson Pro", Georgia, serif;
+    --f-display-serif: "Crimson Pro", Georgia, serif;
+    --f-slab:          "Crimson Pro", Georgia, serif;
+    --f-script:        "Permanent Marker", "Bradley Hand", cursive;
+    --f-sans:          "Plus Jakarta Sans", system-ui, sans-serif;
+    --f-mono:          "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --f-display:       var(--f-serif);
+    --f-editorial:     var(--f-serif);
+    --f-ui:            var(--f-sans);
+
+    --shadow-1: 0 1px 2px rgba(55,43,11,0.06), 0 1px 1px rgba(55,43,11,0.04);
+    --shadow-2: 0 6px 18px rgba(55,43,11,0.08), 0 2px 4px rgba(55,43,11,0.04);
+    --shadow-3: 0 20px 48px rgba(55,43,11,0.12), 0 4px 10px rgba(55,43,11,0.06);
+  }
+
+  /* ───────── RESET ───────── */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body { font-family: var(--f-ui); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background: var(--selection); }
+  h1, h2, h3, h4 { color: var(--ink); margin: 0; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ───────── LAYOUT ───────── */
+  .doc { max-width: 1240px; margin: 0 auto; padding: 96px 64px 160px; }
+  @media (max-width: 720px) { .doc { padding: 56px 24px 96px; } }
+
+  /* ───────── TYPE SCALE ───────── */
+  .eyebrow {
+    font-family: var(--f-mono); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay);
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::after { content: ""; width: 32px; height: 1px; background: var(--clay); opacity: 0.4; }
+  .eyebrow.no-rule::after { display: none; }
+  .eyebrow-line { display: flex; align-items: center; gap: 16px; }
+  .eyebrow-line .rule { flex: 1; height: 1px; background: var(--hairline); }
+
+  .h-display { font-family: var(--f-display-serif); font-weight: 200; font-style: normal; font-size: clamp(52px, 8vw, 96px); line-height: 1.04; letter-spacing: 0.04em; }
+  .h-script  { font-family: var(--f-script); font-weight: 400; font-size: clamp(52px, 7.5vw, 90px); line-height: 0.95; letter-spacing: -0.01em; color: var(--clay-ink); }
+  .h-1       { font-family: var(--f-slab); font-weight: 400; font-size: clamp(44px, 6vw, 80px); line-height: 1.05; letter-spacing: -0.01em; }
+  .h-2       { font-family: var(--f-serif); font-weight: 400; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; letter-spacing: -0.022em; }
+  .h-3       { font-family: var(--f-sans); font-weight: 600; font-size: 18px; line-height: 1.35; letter-spacing: -0.005em; }
+  .editorial { font-family: var(--f-serif); font-style: italic; font-weight: 300; letter-spacing: -0.012em; color: var(--ink-2); }
+  .body      { font-size: 16px; line-height: 1.65; color: var(--ink-2); }
+  .small     { font-size: 13px; line-height: 1.5; color: var(--ink-3); }
+  .caption   { font-size: 12px; line-height: 1.4; color: var(--ink-3); }
+  .mono      { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0; }
+
+  /* ───────── SECTION CHROME ───────── */
+  section { padding: 96px 0 32px; border-top: 1px solid var(--hairline); }
+  section:first-of-type { border-top: 0; padding-top: 0; }
+  .section-head { display: grid; grid-template-columns: 260px 1fr; gap: 64px; margin-bottom: 56px; align-items: start; }
+  .section-head .label .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-mute); margin-bottom: 16px; }
+  .section-head .label .title { font-family: var(--f-display); font-weight: 400; font-size: 32px; letter-spacing: -0.02em; line-height: 1; color: var(--ink); }
+  .section-head .lede { font-family: var(--f-editorial); font-style: italic; font-size: 22px; line-height: 1.38; color: var(--ink-2); max-width: 56ch; }
+  @media (max-width: 720px) { .section-head { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* ───────── COVER ───────── */
+  .cover { padding-top: 0; padding-bottom: 32px; border-top: 0; }
+  .cover .meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 88px; }
+  .cover .meta .wordmark { font-family: var(--f-mono); font-weight: 500; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+  .cover .meta .stamp { font-family: var(--f-mono); font-size: 12px; color: var(--ink-3); display: flex; gap: 24px; }
+  .cover h1 { font-family: var(--f-display-serif); font-weight: 200; font-style: normal; font-size: clamp(56px, 9vw, 104px); letter-spacing: 0.03em; line-height: 1.04; color: var(--ink); }
+  .cover h1 .punct { color: var(--clay); }
+  .cover .sub { margin-top: 32px; font-family: var(--f-editorial); font-style: italic; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.38; color: var(--ink-2); max-width: 30ch; }
+  .cover .lede { margin-top: 40px; font-size: 17px; line-height: 1.65; color: var(--ink-3); max-width: 60ch; }
+  .cover .principles { margin-top: 88px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding-top: 32px; border-top: 1px solid var(--hairline); }
+  .cover .principles .p .n { font-family: var(--f-mono); font-size: 12px; color: var(--clay); margin-bottom: 12px; }
+  .cover .principles .p .t { font-family: var(--f-display); font-weight: 500; font-size: 18px; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.005em; }
+  .cover .principles .p .d { font-size: 13px; line-height: 1.55; color: var(--ink-3); }
+  .cover-hero { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: end; }
+  .cover-portrait { margin: 0; width: 232px; flex: none; align-self: end; }
+  .cover-portrait img { display: block; width: 100%; height: auto; }
+  @media (max-width: 720px) { .cover .principles { grid-template-columns: 1fr 1fr; } .cover-hero { grid-template-columns: 1fr; } .cover-portrait { display: none; } }
+
+  /* ───────── COLOR SWATCHES ───────── */
+  .swatch-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .swatch { border: 1px solid var(--hairline); border-radius: var(--r-2); overflow: hidden; background: var(--surface); }
+  .swatch .swatch-chip { height: 140px; display: flex; align-items: flex-end; padding: 16px; position: relative; }
+  .swatch .swatch-chip .ratio { font-family: var(--f-mono); font-size: 11px; padding: 3px 8px; border-radius: var(--r-pill); background: rgba(255,255,255,0.85); color: var(--ink); }
+  .swatch .swatch-chip.dark .ratio { background: rgba(0,0,0,0.35); color: var(--bg); }
+  .swatch .meta { padding: 14px 16px 16px; border-top: 1px solid var(--hairline); }
+  .swatch .name { font-family: var(--f-display); font-weight: 500; font-size: 15px; color: var(--ink); margin-bottom: 2px; }
+  .swatch .var  { font-family: var(--f-mono); font-size: 11px; color: var(--ink-mute); margin-bottom: 6px; }
+  .swatch .hex  { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); }
+
+  .pair-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .pair { padding: 28px 24px; border-radius: var(--r-3); display: flex; flex-direction: column; gap: 12px; min-height: 180px; border: 1px solid transparent; }
+  .pair .label { font-family: var(--f-mono); font-size: 11px; opacity: 0.7; }
+  .pair .demo { font-family: var(--f-display); font-weight: 400; font-size: 24px; letter-spacing: -0.01em; line-height: 1.15; }
+  .pair .demo small { display: block; font-family: var(--f-editorial); font-style: italic; font-size: 14px; margin-top: 6px; opacity: 0.88; }
+  .pair .ratio { margin-top: auto; font-family: var(--f-mono); font-size: 11px; opacity: 0.8; }
+  .pair .pass { display: inline-block; padding: 2px 8px; border-radius: var(--r-pill); background: rgba(0,0,0,0.12); margin-right: 6px; }
+
+  /* ───────── TYPE SCALE TABLE ───────── */
+  .type-row { display: grid; grid-template-columns: 200px 1fr 260px; gap: 32px; align-items: baseline; padding: 24px 0; border-top: 1px solid var(--hairline); }
+  .type-row:first-child { border-top: 0; padding-top: 0; }
+  .type-row .name { font-family: var(--f-display); font-weight: 500; font-size: 14px; color: var(--ink); }
+  .type-row .name .id { display: block; font-family: var(--f-mono); font-size: 11px; color: var(--ink-mute); margin-top: 4px; font-weight: 400; }
+  .type-row .specs { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); line-height: 1.6; }
+  @media (max-width: 720px) { .type-row { grid-template-columns: 1fr; gap: 12px; } }
+
+  /* ───────── SPEC BLOCKS ───────── */
+  .spec-block { padding: 28px; background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-3); }
+  .spec-block .spec-title { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+  .spec-block .spec-title .t { font-family: var(--f-display); font-weight: 500; font-size: 16px; color: var(--ink); letter-spacing: -0.005em; }
+  .spec-block .spec-title .id { font-family: var(--f-mono); font-size: 11px; color: var(--ink-mute); }
+  .spec-block .demo-area { padding: 24px 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; min-height: 80px; border-top: 1px dashed var(--hairline); border-bottom: 1px dashed var(--hairline); }
+  .spec-block .notes { margin-top: 20px; font-size: 12px; line-height: 1.55; color: var(--ink-3); display: grid; grid-template-columns: 110px 1fr; gap: 6px 16px; }
+  .spec-block .notes dt { font-family: var(--f-mono); font-size: 11px; color: var(--ink-mute); }
+  .spec-block .notes dd { margin: 0; font-size: 12px; color: var(--ink-2); }
+
+  /* ───────── GRIDS ───────── */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* ───────── BUTTONS ───────── */
+  .btn {
+    --btn-fg: var(--bg); --btn-bg: var(--clay-ink); --btn-bd: var(--clay-ink);
+    --btn-bg-hover: #6e3720; --btn-bd-hover: #6e3720;
+    appearance: none; border: 1px solid var(--btn-bd); background: var(--btn-bg); color: var(--btn-fg);
+    font-family: var(--f-ui); font-weight: 600; font-size: 13px; letter-spacing: 0.02em;
+    padding: 10px 18px; border-radius: var(--r-2); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; line-height: 1.2;
+    text-decoration: none;
+    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 80ms ease;
+  }
+  .btn:hover { background: var(--btn-bg-hover); border-color: var(--btn-bd-hover); }
+  .btn:active { transform: translateY(1px); }
+  .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .btn--secondary { --btn-bg: transparent; --btn-fg: var(--clay-ink); --btn-bd: var(--clay); --btn-bg-hover: var(--surface-2); --btn-bd-hover: var(--clay-ink); }
+  .btn--secondary:hover { background: var(--surface-2); border-color: var(--clay-ink); color: var(--clay-ink); }
+  .btn--ghost { --btn-bg: transparent; --btn-fg: var(--ink-2); --btn-bd: transparent; --btn-bg-hover: rgba(55,43,11,0.06); --btn-bd-hover: transparent; padding: 8px 12px; }
+  .btn--ghost:hover { color: var(--ink); }
+  .btn--lg { font-size: 14px; padding: 14px 22px; }
+  .btn--sm { font-size: 12px; padding: 7px 12px; }
+  .btn[disabled] { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+  /* ───────── CHIPS ───────── */
+  .chip { display: inline-flex; white-space: nowrap; align-items: center; gap: 6px; font-family: var(--f-ui); font-weight: 500; font-size: 12px; padding: 5px 12px; border-radius: var(--r-pill); border: 1px solid transparent; line-height: 1.4; }
+  .chip--clay    { background: var(--clay-tint);  color: var(--clay-ink);   border-color: rgba(142,74,46,0.18); }
+  .chip--ochre   { background: var(--ochre-tint); color: var(--ochre-ink); border-color: rgba(122,90,28,0.20); }
+  .chip--slate   { background: var(--slate-tint); color: var(--slate-deep); border-color: rgba(113,140,143,0.30); }
+  .chip--neutral { background: var(--surface-2);  color: var(--ink-2);      border-color: var(--hairline); }
+  .chip--solid   { background: var(--ink);        color: var(--bg);         border-color: var(--ink); }
+
+  /* ───────── INPUTS ───────── */
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field label { font-family: var(--f-ui); font-weight: 600; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+  .input { appearance: none; background: var(--surface); border: 1px solid var(--hairline-strong); border-radius: var(--r-2); padding: 12px 14px; font-family: var(--f-ui); font-size: 14px; color: var(--ink); transition: border-color 120ms ease, box-shadow 120ms ease; width: 100%; }
+  .input::placeholder { color: var(--ink-mute); }
+  .input:hover  { border-color: var(--ink-3); }
+  .input:focus  { outline: 0; border-color: var(--slate); box-shadow: 0 0 0 3px rgba(113,140,143,0.18); }
+  textarea.input { min-height: 96px; resize: vertical; }
+
+  /* ───────── CARDS — case-card ───────── */
+  .case-card { border-radius: var(--r-3); border: 1px solid var(--hairline); background: var(--surface); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+  .case-card .hero { aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; padding: 28px; }
+  .case-card.clay  .hero { background: var(--clay-tint); }
+  .case-card.ochre .hero { background: var(--ochre-tint); }
+  .case-card.slate .hero { background: var(--slate-tint); }
+  .case-card.bold .hero { position: relative; }
+  .case-card.bold.clay  .hero { background: var(--clay-ink); }
+  .case-card.bold.ochre .hero { background: var(--ochre-deep); }
+  .case-card.bold.slate .hero { background: var(--slate-deep); }
+  .case-card.bold .hero .preview-stub { border-color: rgba(255,255,255,0.18); box-shadow: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08); }
+  .case-card .body-pad { padding: 24px 24px 20px; border-top: 1px solid var(--hairline); }
+  .case-card .body-pad .label { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); }
+  .case-card.ochre .body-pad .label { color: var(--ochre-ink); }
+  .case-card.slate .body-pad .label { color: var(--slate-deep); }
+  .case-card h3 { font-family: var(--f-display); font-weight: 500; font-size: 18px; letter-spacing: -0.005em; color: var(--ink); margin: 6px 0 8px; }
+  .case-card p  { font-size: 13px; line-height: 1.55; color: var(--ink-3); margin: 0 0 16px; }
+  .case-card .foot { border-top: 1px dashed var(--hairline); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-family: var(--f-ui); font-weight: 600; font-size: 12px; color: var(--clay); letter-spacing: 0.04em; }
+
+  /* case-card STACKED */
+  .case-card.stacked { display: grid; grid-template-columns: minmax(280px, 42%) 1fr; grid-template-rows: 1fr auto; }
+  .case-card.stacked .hero { grid-row: 1/3; grid-column: 1; aspect-ratio: auto; min-height: 240px; padding: 36px; border-right: 1px solid var(--hairline); }
+  .case-card.stacked.clay  .hero { border-right-color: var(--clay-edge); }
+  .case-card.stacked.ochre .hero { border-right-color: var(--ochre-edge); }
+  .case-card.stacked.slate .hero { border-right-color: var(--slate-edge); }
+  .case-card.stacked .preview-stub { max-width: 320px; margin: 0 auto; }
+  .case-card.stacked .body-pad { grid-column: 2; grid-row: 1; border-top: 0; padding: 32px 36px 12px; }
+  .case-card.stacked h3 { font-family: var(--f-display); font-weight: 400; font-size: 28px; letter-spacing: -0.015em; line-height: 1.15; margin: 8px 0 12px; max-width: 26ch; }
+  .case-card.stacked p  { font-size: 15px; line-height: 1.65; max-width: 60ch; }
+  .case-card.stacked .foot { grid-column: 2; grid-row: 2; padding: 14px 36px 22px; }
+  @media (max-width: 720px) {
+    .case-card.stacked { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+    .case-card.stacked .hero { grid-row: 1; grid-column: 1; aspect-ratio: 4/3; min-height: 0; border-right: 0; border-bottom: 1px solid var(--hairline); }
+    .case-card.stacked .body-pad { grid-row: 2; grid-column: 1; padding: 24px 24px 12px; }
+    .case-card.stacked .foot { grid-row: 3; grid-column: 1; padding: 12px 24px; }
+  }
+
+  /* ───────── EDITORIAL INDEX ───────── */
+  .index-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--hairline-strong); }
+  .index-col { display: flex; flex-direction: column; padding: 44px 48px 34px; border-left: 1px solid var(--hairline); min-height: 360px; text-decoration: none; color: inherit; transition: background 160ms ease; }
+  .index-col:first-child { border-left: 0; padding-left: 0; }
+  .index-col:last-child  { padding-right: 0; }
+  .index-col:hover { background: rgba(31,26,15,0.018); }
+  .index-col .cat { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin-bottom: 20px; }
+  .index-col.ochre .cat { color: var(--ochre-ink); }
+  .index-col.slate .cat { color: var(--slate-deep); }
+  .index-col .title { font-family: var(--f-serif); font-weight: 400; font-size: 27px; line-height: 1.18; letter-spacing: -0.018em; color: var(--ink); margin: 0 0 12px; max-width: 18ch; }
+  .index-col .meta  { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-mute); margin-bottom: 22px; }
+  .index-col .excerpt { font-family: var(--f-sans); font-size: 14px; line-height: 1.6; color: var(--ink-3); margin: 0; max-width: 34ch; }
+  .index-col .excerpt strong { color: var(--ink); font-weight: 600; }
+  .index-col .go { margin-top: auto; padding-top: 32px; font-size: 20px; line-height: 1; color: var(--clay); transition: transform 160ms ease; }
+  .index-col.ochre .go { color: var(--ochre-ink); }
+  .index-col.slate .go { color: var(--slate-deep); }
+  .index-col:hover .go { transform: translateX(6px); }
+  @media (max-width: 760px) {
+    .index-grid { grid-template-columns: 1fr; }
+    .index-col, .index-col:first-child { border-left: 0; border-top: 1px solid var(--hairline); padding: 30px 0; min-height: 0; }
+    .index-grid > .index-col:first-child { border-top: 0; padding-top: 6px; }
+  }
+
+  /* ───────── WORK CARD ───────── */
+  .work-card { background: var(--bg); border: 1.5px solid var(--hairline); border-radius: var(--r-3); padding: 18px; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
+  .work-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); border-color: var(--hairline-strong); }
+  .work-card.on-white { background: var(--surface); }
+  .work-card.clay  { border-color: var(--clay-edge); }
+  .work-card.ochre { border-color: var(--ochre-edge); }
+  .work-card.slate { border-color: var(--slate-edge); }
+  .work-card .shot { display: flex; align-items: center; justify-content: center; min-height: 188px; padding: 6px; }
+  .work-card .shot .preview-stub { box-shadow: var(--shadow-1); }
+  .work-card .body { padding: 16px 6px 4px; display: flex; flex-direction: column; flex: 1; }
+  .work-card .cat { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin-bottom: 12px; }
+  .work-card.ochre .cat, .work-card.ochre .cta { color: var(--ochre-ink); }
+  .work-card.slate .cat, .work-card.slate .cta { color: var(--slate-deep); }
+  .work-card h3 { font-family: var(--f-serif); font-weight: 400; font-size: 21px; line-height: 1.2; letter-spacing: -0.014em; color: var(--ink); margin: 0 0 10px; }
+  .work-card p  { font-family: var(--f-sans); font-size: 14px; line-height: 1.55; color: var(--ink-3); margin: 0; }
+  .work-card .cta { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(31,26,15,0.10); display: flex; justify-content: space-between; align-items: center; font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); }
+  .work-card .cta .arr { font-size: 15px; transition: transform 160ms ease; }
+  .work-card:hover .cta .arr { transform: translateX(5px); }
+  /* compact */
+  .work-card.compact .body { padding: 8px 8px 4px; }
+  .work-card.compact h3 { font-size: 19px; }
+  .work-card.compact .quote { font-family: var(--f-serif); font-style: italic; font-weight: 300; font-size: 19px; line-height: 1.35; letter-spacing: -0.01em; color: var(--ink-2); margin: 0 0 14px; max-width: 26ch; }
+  /* slot */
+  .work-card.slot { background: transparent; border-style: dashed; border-color: var(--hairline-strong); }
+  .work-card.slot:hover { transform: none; box-shadow: none; }
+  .work-card.slot .body { justify-content: center; }
+  /* feature */
+  .work-card.feature { display: grid; grid-template-columns: minmax(240px, 36%) 1fr; gap: 22px; align-items: stretch; }
+  .work-card.feature .shot { min-height: 0; height: 100%; }
+  .work-card.feature .body { padding: 12px 14px 6px 6px; }
+  .work-card.feature h3 { font-size: 27px; letter-spacing: -0.02em; margin-bottom: 12px; max-width: 22ch; }
+  .work-card.feature p  { font-size: 15px; line-height: 1.6; max-width: 56ch; }
+  .work-card.feature .cta { margin-top: auto; }
+  @media (max-width: 720px) { .work-card.feature { grid-template-columns: 1fr; } }
+
+  /* ───────── PREVIEW STUB ───────── */
+  .preview-stub { width: 100%; height: 100%; border-radius: var(--r-2); background: var(--surface); border: 1px solid var(--hairline); display: flex; flex-direction: column; box-shadow: var(--shadow-1); overflow: hidden; }
+  .preview-stub .h { padding: 8px 12px; border-bottom: 1px solid var(--hairline); font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute); display: flex; justify-content: space-between; }
+  .preview-stub .row { display: flex; justify-content: space-between; padding: 6px 12px; font-family: var(--f-mono); font-size: 10px; color: var(--ink-2); border-bottom: 1px dashed var(--hairline); }
+  .preview-stub .row:last-child { border-bottom: 0; }
+  .preview-stub .row .num { color: var(--ink); }
+  .preview-stub .row .pos { color: var(--clay); }
+  .preview-stub .row .neg { color: var(--slate); }
+
+  /* ───────── NAV DEMO ───────── */
+  .nav-demo { background: rgba(250,247,240,0.92); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border: 1px solid var(--hairline); border-radius: var(--r-3); padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-demo .left { font-family: var(--f-mono); font-weight: 500; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+  .nav-demo ul { display: flex; gap: 32px; margin: 0; padding: 0; list-style: none; align-items: center; }
+  .nav-demo a { font-size: 14px; color: var(--ink-2); text-decoration: none; font-weight: 500; }
+  .nav-demo a:hover { color: var(--ink); }
+
+  /* ───────── BANDS ───────── */
+  .band { border-radius: var(--r-3); padding: 48px; color: var(--bg); overflow: hidden; position: relative; }
+  .band.clay  { background: var(--clay-ink); }
+  .band.ochre { background: var(--ochre-deep); }
+  .band.slate { background: var(--slate-deep); }
+  .band .eyebrow { color: rgba(255,255,255,0.85); }
+  .band .eyebrow::after { background: rgba(255,255,255,0.45); }
+  .band h2 { font-family: var(--f-display); font-weight: 300; font-size: 40px; letter-spacing: -0.02em; line-height: 1.05; margin: 20px 0 16px; color: var(--bg); }
+  .band p  { color: rgba(250,247,240,0.85); max-width: 52ch; font-size: 15px; line-height: 1.6; }
+  .band .ratio-tag { position: absolute; top: 16px; right: 16px; font-family: var(--f-mono); font-size: 11px; background: rgba(0,0,0,0.25); padding: 4px 10px; border-radius: var(--r-pill); color: var(--bg); }
+
+  /* ───────── SPACING TABLE ───────── */
+  .spacing-row { display: grid; grid-template-columns: 80px 1fr 200px; gap: 24px; padding: 14px 0; align-items: center; border-bottom: 1px dashed var(--hairline); }
+  .spacing-row .token { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); }
+  .spacing-row .bar   { height: 10px; background: var(--clay-tint); border-radius: 2px; border: 1px solid var(--clay-edge); }
+  .spacing-row .px    { font-family: var(--f-mono); font-size: 11px; color: var(--ink-mute); text-align: right; }
+
+  /* ───────── RADIUS / SHADOW ───────── */
+  .radius-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  .radius-row .tile { width: 96px; height: 96px; background: var(--surface); border: 1px solid var(--hairline); display: flex; align-items: flex-end; padding: 8px; font-family: var(--f-mono); font-size: 10px; color: var(--ink-mute); }
+  .shadow-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .shadow-row .tile { height: 120px; background: var(--surface); border-radius: var(--r-3); display: flex; align-items: flex-end; padding: 14px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-2); }
+  .shadow-row .tile.s1 { box-shadow: var(--shadow-1); }
+  .shadow-row .tile.s2 { box-shadow: var(--shadow-2); }
+  .shadow-row .tile.s3 { box-shadow: var(--shadow-3); }
+
+  /* ───────── IMAGERY STUBS ───────── */
+  .img-stub { aspect-ratio: 16/10; background: repeating-linear-gradient(135deg, var(--surface-2) 0 8px, var(--bg) 8px 16px); border: 1px solid var(--hairline); border-radius: var(--r-3); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: var(--ink-3); }
+  .img-stub .lab { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; background: var(--bg); padding: 6px 14px; border-radius: var(--r-pill); border: 1px solid var(--hairline); }
+  .img-stub .dim { font-family: var(--f-mono); font-size: 10px; color: var(--ink-mute); }
+
+  /* ───────── EYEBROW GRID ───────── */
+  .eyebrow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; align-items: start; }
+  @media (max-width: 720px) { .eyebrow-grid { grid-template-columns: 1fr; } }
+
+  /* ───────── DOC FOOTER ───────── */
+  .doc-foot { margin-top: 96px; border-top: 1px solid var(--hairline); padding-top: 32px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--f-mono); font-size: 12px; color: var(--ink-3); }
+  .doc-foot .right { display: flex; gap: 24px; }
+
+  /* Inline helpers */
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+  .stack-24 > * + * { margin-top: 24px; }
+  .stack-48 > * + * { margin-top: 48px; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<main class="doc">
+
+  <!-- ───────── COVER ───────── -->
+  <section class="cover">
+    <div class="meta">
+      <span class="wordmark">kristin.garza</span>
+      <span class="stamp">
+        <span>DESIGN SYSTEM · V2</span>
+        <span>UPDATED 2026</span>
+      </span>
+    </div>
+
+    <div class="cover-hero">
+      <div>
+        <span class="eyebrow">Foundations · Components · Voice</span>
+        <h1>kristin garza<span class="punct">.</span></h1>
+        <div class="sub">A warm-editorial palette — Crimson Pro for all serif voices, Plus Jakarta Sans for body and UI.</div>
+      </div>
+      <figure class="cover-portrait">
+        <img src="public/kristin-illustration.svg" alt="Illustrated portrait of Kristin Garza" onerror="this.style.display='none'" />
+      </figure>
+    </div>
+    <p class="lede">A cream-ground editorial system for a UX portfolio specializing in institutional trading and enterprise platforms. Three categorical accents — clay, ochre, slate — serve as taxonomy for case studies, not decoration. All text pairings clear WCAG AA.</p>
+
+    <div class="principles">
+      <div class="p"><div class="n">01</div><div class="t">Earn the color.</div><div class="d">Saturation only on accent moments. Cream does the heavy lifting.</div></div>
+      <div class="p"><div class="n">02</div><div class="t">Editorial first.</div><div class="d">Crimson Pro for all serif voices. Plus Jakarta Sans for body. Permanent Marker earns the rare loud moment.</div></div>
+      <div class="p"><div class="n">03</div><div class="t">Categorical, not decorative.</div><div class="d">Clay, ochre, slate are taxonomy — they label work, they don't fill space.</div></div>
+      <div class="p"><div class="n">04</div><div class="t">Pass first, polish second.</div><div class="d">Every pairing labeled with its contrast ratio. Nothing ships under 4.5:1 for text.</div></div>
+    </div>
+  </section>
+
+  <!-- ───────── COLOR ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 01 — COLOR</div><div class="title">Palette</div></div>
+      <div class="lede">Three accents over a warm cream. Each accent ships in a deep / base / tint triplet so text, surface, and chip uses all share a single hue.</div>
+    </div>
+
+    <h3 class="h-3" style="margin-bottom:16px;">Surfaces &amp; Ink</h3>
+    <div class="swatch-row">
+      <div class="swatch"><div class="swatch-chip" style="background:#FAF7F0;"><span class="ratio">PAGE</span></div><div class="meta"><div class="name">Cream</div><div class="var">--bg</div><div class="hex">#FAF7F0</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#FFFFFF;"><span class="ratio">SURFACE</span></div><div class="meta"><div class="name">White</div><div class="var">--surface</div><div class="hex">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#F2EBDB;"><span class="ratio">MUTED</span></div><div class="meta"><div class="name">Parchment</div><div class="var">--surface-2</div><div class="hex">#F2EBDB</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#E6DCC6;"><span class="ratio">HAIRLINE</span></div><div class="meta"><div class="name">Sand</div><div class="var">--hairline</div><div class="hex">#E6DCC6</div></div></div>
+    </div>
+
+    <div class="swatch-row">
+      <div class="swatch"><div class="swatch-chip dark" style="background:#1F1A0F;"><span class="ratio">16.6 : 1</span></div><div class="meta"><div class="name">Ink</div><div class="var">--ink</div><div class="hex">#1F1A0F</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#372B0B;"><span class="ratio">13.0 : 1</span></div><div class="meta"><div class="name">Ink 2</div><div class="var">--ink-2</div><div class="hex">#372B0B</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#6B5E45;"><span class="ratio">5.6 : 1</span></div><div class="meta"><div class="name">Ink 3</div><div class="var">--ink-3</div><div class="hex">#6B5E45</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#8A7C5E;"><span class="ratio">4.6 : 1</span></div><div class="meta"><div class="name">Ink Mute</div><div class="var">--ink-mute</div><div class="hex">#8A7C5E</div></div></div>
+    </div>
+    <p class="small" style="margin-top:8px; max-width:64ch;"><strong>Ratios shown against Cream (#FAF7F0).</strong> Ink Mute (4.6:1) is captions-only — body copy uses Ink 3 or darker.</p>
+
+    <h3 class="h-3" style="margin-top:56px; margin-bottom:16px;">Accents — Clay · Ochre · Slate</h3>
+    <div class="swatch-row">
+      <div class="swatch"><div class="swatch-chip dark" style="background:#8E4A2E;"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Clay Ink</div><div class="var">--clay-ink</div><div class="hex">#8E4A2E</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#9E644B;"><span class="ratio">EYEBROWS</span></div><div class="meta"><div class="name">Clay</div><div class="var">--clay</div><div class="hex">#9E644B</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#C47655;"><span class="ratio">FILLS / UI</span></div><div class="meta"><div class="name">Clay Deep</div><div class="var">--clay-deep</div><div class="hex">#C47655</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#F2DCD0;"><span class="ratio">TINT</span></div><div class="meta"><div class="name">Clay Tint</div><div class="var">--clay-tint</div><div class="hex">#F2DCD0</div></div></div>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch"><div class="swatch-chip dark" style="background:#BF933F;"><span class="ratio">OCHRE</span></div><div class="meta"><div class="name">Ochre</div><div class="var">--ochre / --ochre-deep</div><div class="hex">#BF933F</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#7A5A1C;"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Ochre Ink</div><div class="var">--ochre-ink</div><div class="hex">#7A5A1C</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#F4E5C0;"><span class="ratio">FILL</span></div><div class="meta"><div class="name">Ochre Tint</div><div class="var">--ochre-tint</div><div class="hex">#F4E5C0</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#D4A95C;"><span class="ratio">EDGE</span></div><div class="meta"><div class="name">Ochre Edge</div><div class="var">--ochre-edge</div><div class="hex">#D4A95C</div></div></div>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch"><div class="swatch-chip dark" style="background:#718C8F;"><span class="ratio">SLATE</span></div><div class="meta"><div class="name">Slate</div><div class="var">--slate</div><div class="hex">#718C8F</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:#3E5F62;"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Slate Deep</div><div class="var">--slate-deep</div><div class="hex">#3E5F62</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#A5BCBD;"><span class="ratio">TINT</span></div><div class="meta"><div class="name">Slate Tint</div><div class="var">--slate-tint</div><div class="hex">#A5BCBD</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:#8FAAAC;"><span class="ratio">EDGE</span></div><div class="meta"><div class="name">Slate Edge</div><div class="var">--slate-edge</div><div class="hex">#8FAAAC</div></div></div>
+    </div>
+    <div class="swatch-row" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="swatch"><div class="swatch-chip dark" style="background:#2B4068;"><span class="ratio">FOCUS</span></div><div class="meta"><div class="name">Focus</div><div class="var">--focus</div><div class="hex">#2B4068</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:rgba(183,113,83,0.22); border:1px solid var(--hairline);"><span class="ratio">SELECT</span></div><div class="meta"><div class="name">Selection</div><div class="var">--selection</div><div class="hex">rgba(183,113,83,0.22)</div></div></div>
+    </div>
+
+    <h3 class="h-3" style="margin-top:56px; margin-bottom:16px;">Approved pairings</h3>
+    <div class="pair-grid">
+      <div class="pair" style="background:var(--bg); color:var(--ink);">
+        <span class="label">ink / cream</span>
+        <div class="demo">kristin garza.<small>— UX designer · product thinker</small></div>
+        <div class="ratio"><span class="pass" style="background:rgba(0,0,0,0.08);">AAA</span>16.6 : 1</div>
+      </div>
+      <div class="pair" style="background:var(--bg); color:var(--clay);">
+        <span class="label" style="color:var(--clay);">clay / cream</span>
+        <div class="demo" style="color:var(--clay);">Selected work<small style="color:var(--clay);">— eyebrows, section labels</small></div>
+        <div class="ratio" style="color:var(--clay);"><span class="pass" style="background:var(--clay-tint);color:var(--clay-ink);">AA</span>4.5 : 1 est.</div>
+      </div>
+      <div class="pair" style="background:var(--bg); color:var(--clay-ink);">
+        <span class="label" style="color:var(--clay-ink);">clay-ink / cream</span>
+        <div class="demo" style="color:var(--clay-ink);">Get in touch<small style="color:var(--clay-ink);">— buttons, links, CTAs</small></div>
+        <div class="ratio" style="color:var(--clay-ink);"><span class="pass" style="background:var(--clay-tint);color:var(--clay-ink);">AA</span>6.2 : 1</div>
+      </div>
+      <div class="pair" style="background:var(--clay-tint); color:var(--clay-ink);">
+        <span class="label" style="color:var(--clay-ink);">clay-ink / clay-tint</span>
+        <div class="demo" style="color:var(--clay-ink);">Order Management<small>— title-on-tint inside clay chips/cards</small></div>
+        <div class="ratio" style="color:var(--clay-ink);"><span class="pass" style="background:rgba(142,74,46,0.18);color:var(--clay-ink);">AA</span>5.0 : 1</div>
+      </div>
+      <div class="pair" style="background:var(--clay-ink); color:var(--bg);">
+        <span class="label" style="color:rgba(255,255,255,0.7);">cream / clay-ink</span>
+        <div class="demo" style="color:var(--bg);">Primary CTA<small style="color:rgba(250,247,240,0.85);">— buttons, footer, bands</small></div>
+        <div class="ratio" style="color:rgba(255,255,255,0.7);"><span class="pass" style="background:rgba(255,255,255,0.18);color:var(--bg);">AA</span>6.2 : 1</div>
+      </div>
+      <div class="pair" style="background:var(--surface); color:var(--ink); border:1px solid var(--hairline);">
+        <span class="label">ink / white</span>
+        <div class="demo">Card heading<small>— work cards over white</small></div>
+        <div class="ratio"><span class="pass" style="background:rgba(0,0,0,0.08);">AAA</span>17.4 : 1</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:16px;"><strong>Note on --clay-deep (#C47655).</strong> Used for fills and UI accents only — not for body text. Use --clay-ink (#8E4A2E) whenever clay needs to be readable text or a button label.</p>
+  </section>
+
+  <!-- ───────── TYPE ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 02 — TYPE</div><div class="title">Typography</div></div>
+      <div class="lede">One serif family (Crimson Pro) covers display, editorial, and lede. Plus Jakarta Sans handles body and UI. Permanent Marker earns the rare expressive accent. JetBrains Mono for labels and data.</div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-3); padding:48px; margin-bottom:48px;">
+      <div class="eyebrow" style="margin-bottom:24px;">Signature combination</div>
+      <div class="h-display">kristin garza<span style="color:var(--clay);">.</span></div>
+      <div style="font-family:var(--f-serif); font-style:italic; font-weight:300; font-size:30px; line-height:1.3; letter-spacing:-0.012em; color:var(--ink-2); margin-top:28px; max-width:32ch;">designing for clarity wherever the problem is complex.</div>
+      <div style="font-family:var(--f-sans); margin-top:24px; font-size:17px; line-height:1.65; color:var(--ink-3); max-width:60ch;">Turning data-dense workflows into intuitive, high-impact products — most recently for institutional trading platforms.</div>
+    </div>
+
+    <h3 class="h-3" style="margin-bottom:16px;">Scale</h3>
+    <div style="background:var(--surface); border:1px solid var(--hairline); border-radius:var(--r-3); padding:8px 28px;">
+
+      <div class="type-row">
+        <div class="name">Display<span class="id">.h-display · hero only</span></div>
+        <div style="font-family:var(--f-display-serif); font-weight:200; font-size:96px; line-height:1.0; letter-spacing:0.03em; color:var(--ink);">Clarity.</div>
+        <div class="specs">Crimson Pro · 200 ExtraLight<br>96 / 100 · +3%<br>Hero — once per page</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Script accent<span class="id">.h-script · expressive</span></div>
+        <div style="font-family:var(--f-script); font-weight:400; font-size:80px; line-height:0.95; letter-spacing:-0.01em; color:var(--clay-ink);">Humans</div>
+        <div class="specs">Permanent Marker · 400<br>80 · −1%<br>Brush accent · use sparingly</div>
+      </div>
+      <div class="type-row">
+        <div class="name">H1 / Serif<span class="id">.h-1 · section opener</span></div>
+        <div style="font-family:var(--f-slab); font-weight:400; font-size:72px; line-height:1.05; letter-spacing:-0.01em; color:var(--ink);">Focused.</div>
+        <div class="specs">Crimson Pro · 400<br>clamp(44–80px) / 105 · −1%</div>
+      </div>
+      <div class="type-row">
+        <div class="name">H2 / Serif<span class="id">.h-2 · card &amp; block titles</span></div>
+        <div style="font-family:var(--f-serif); font-weight:400; font-size:40px; line-height:1.15; letter-spacing:-0.022em; color:var(--ink);">Order management</div>
+        <div class="specs">Crimson Pro · 400<br>clamp(28–40px) / 115 · −2.2%</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Lede / Serif Light<span class="id">intro paragraph</span></div>
+        <div style="font-family:var(--f-serif); font-weight:300; font-size:24px; line-height:1.4; letter-spacing:-0.012em; color:var(--ink-2); max-width:42ch;">I design for clarity wherever the problem is complex — for traders, teams, and the people behind the screen.</div>
+        <div class="specs">Crimson Pro · 300<br>24 / 140 · −1.2%</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Editorial<span class="id">.editorial · italic voice</span></div>
+        <div style="font-family:var(--f-serif); font-style:italic; font-weight:300; font-size:28px; line-height:1.3; letter-spacing:-0.012em; color:var(--ink-2);">For when the page wants to whisper.</div>
+        <div class="specs">Crimson Pro Italic · 300<br>contextual · −1.2%<br>Pull quotes, accents</div>
+      </div>
+      <div class="type-row">
+        <div class="name">H3<span class="id">.h-3 · interface labels</span></div>
+        <div style="font-family:var(--f-sans); font-weight:600; font-size:18px; line-height:1.35; letter-spacing:-0.005em; color:var(--ink);">Building a reusable quote component</div>
+        <div class="specs">Plus Jakarta Sans · 600<br>18 / 135 · −0.5%</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Body<span class="id">.body · paragraph</span></div>
+        <div style="font-family:var(--f-sans); font-weight:400; font-size:16px; line-height:1.65; color:var(--ink-2); max-width:54ch;">I design for clarity wherever the problem is complex — turning data-dense workflows into intuitive, high-impact products that institutional traders actually trust.</div>
+        <div class="specs">Plus Jakarta Sans · 400<br>16 / 165<br>Color: ink-2</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Small<span class="id">.small · supporting</span></div>
+        <div style="font-family:var(--f-sans); font-weight:400; font-size:13px; line-height:1.5; color:var(--ink-3);">Compliance rule management redesigned — replacing tribal knowledge with guided workflows.</div>
+        <div class="specs">Plus Jakarta Sans · 400<br>13 / 150 · Color: ink-3</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Eyebrow / Mono<span class="id">.eyebrow · section labels</span></div>
+        <div style="font-family:var(--f-mono); font-weight:500; font-size:13px; letter-spacing:0.16em; text-transform:uppercase; color:var(--clay);">VOL. VII — SELECTED WORK</div>
+        <div class="specs">JetBrains Mono · 500<br>13 · +16% tracking · UPPER<br>Color: clay</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Caption<span class="id">.caption · metadata</span></div>
+        <div style="font-family:var(--f-sans); font-weight:400; font-size:12px; line-height:1.4; color:var(--ink-3);">UX RESEARCH · 2024 · NDA permitted</div>
+        <div class="specs">Plus Jakarta Sans · 400<br>12 / 140 · Color: ink-mute only</div>
+      </div>
+      <div class="type-row">
+        <div class="name">Mono<span class="id">.mono · UI / data</span></div>
+        <div style="font-family:var(--f-mono); font-size:13px; color:var(--ink-2);">AAPL · +0.45% · $221,340</div>
+        <div class="specs">JetBrains Mono · 400<br>12–13 · Tables, tickers</div>
+      </div>
+    </div>
+
+    <h3 class="h-3" style="margin-top:48px; margin-bottom:16px;">Eyebrow treatment</h3>
+    <div class="eyebrow-grid">
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Default</span><span class="id">.eyebrow</span></div>
+        <div class="demo-area"><span class="eyebrow">Selected work</span></div>
+        <dl class="notes">
+          <dt>color</dt><dd>--clay · 13px · JetBrains Mono 500</dd>
+          <dt>rule</dt><dd>32px after the label · 1px · 40% opacity</dd>
+          <dt>used in</dt><dd>section openers, before H1</dd>
+        </dl>
+      </div>
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">On dark band</span><span class="id">.band .eyebrow</span></div>
+        <div class="demo-area" style="background:var(--clay-ink); border-radius:var(--r-2); padding:24px; border:0;">
+          <span class="eyebrow" style="color:rgba(255,255,255,0.9);">About</span>
+        </div>
+        <dl class="notes">
+          <dt>color</dt><dd>cream @ 90%</dd>
+          <dt>rule</dt><dd>cream @ 45%</dd>
+          <dt>used in</dt><dd>any saturated band</dd>
+        </dl>
+      </div>
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">With full rule</span><span class="id">.eyebrow-line</span></div>
+        <div class="demo-area" style="flex-direction:column; align-items:stretch;">
+          <div class="eyebrow-line">
+            <span class="eyebrow no-rule">The Problem</span>
+            <span class="rule"></span>
+          </div>
+        </div>
+        <dl class="notes">
+          <dt>variant</dt><dd>rule stretches full width</dd>
+          <dt>used in</dt><dd>case study sections, before section headings</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── SPACING ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 03 — SPACING</div><div class="title">Spacing, radii &amp; elevation</div></div>
+      <div class="lede">4-point scale, named s-1 → s-10. Sections breathe at s-9 / s-10. Card padding sits at s-5 / s-6. No exceptions outside the scale.</div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 class="h-3" style="margin-bottom:12px;">Scale</h3>
+        <div class="spacing-row"><span class="token">--s-1</span><div class="bar" style="width:4px;"></div><span class="px">4px</span></div>
+        <div class="spacing-row"><span class="token">--s-2</span><div class="bar" style="width:8px;"></div><span class="px">8px</span></div>
+        <div class="spacing-row"><span class="token">--s-3</span><div class="bar" style="width:12px;"></div><span class="px">12px</span></div>
+        <div class="spacing-row"><span class="token">--s-4</span><div class="bar" style="width:16px;"></div><span class="px">16px</span></div>
+        <div class="spacing-row"><span class="token">--s-5</span><div class="bar" style="width:24px;"></div><span class="px">24px</span></div>
+        <div class="spacing-row"><span class="token">--s-6</span><div class="bar" style="width:32px;"></div><span class="px">32px</span></div>
+        <div class="spacing-row"><span class="token">--s-7</span><div class="bar" style="width:48px;"></div><span class="px">48px</span></div>
+        <div class="spacing-row"><span class="token">--s-8</span><div class="bar" style="width:64px;"></div><span class="px">64px</span></div>
+        <div class="spacing-row"><span class="token">--s-9</span><div class="bar" style="width:96px;"></div><span class="px">96px</span></div>
+        <div class="spacing-row"><span class="token">--s-10</span><div class="bar" style="width:128px;"></div><span class="px">128px</span></div>
+      </div>
+
+      <div class="stack-48">
+        <div>
+          <h3 class="h-3" style="margin-bottom:16px;">Radii</h3>
+          <div class="radius-row">
+            <div class="tile" style="border-radius:4px;">4 · r-1</div>
+            <div class="tile" style="border-radius:8px;">8 · r-2</div>
+            <div class="tile" style="border-radius:12px;">12 · r-3</div>
+            <div class="tile" style="border-radius:20px;">20 · r-4</div>
+            <div class="tile" style="border-radius:999px;">pill</div>
+          </div>
+          <p class="small" style="margin-top:12px;">Inputs &amp; buttons → r-2. Cards &amp; bands → r-3. Chips → pill. r-1 reserved for inset tags inside thumbnails.</p>
+        </div>
+
+        <div>
+          <h3 class="h-3" style="margin-bottom:16px;">Elevation</h3>
+          <div class="shadow-row">
+            <div class="tile s1">--shadow-1<br><span style="font-size:10px;opacity:0.6;">resting cards</span></div>
+            <div class="tile s2">--shadow-2<br><span style="font-size:10px;opacity:0.6;">hover state</span></div>
+            <div class="tile s3">--shadow-3<br><span style="font-size:10px;opacity:0.6;">modals only</span></div>
+          </div>
+          <p class="small" style="margin-top:12px;">All shadows are warm-tinted (rgba(55,43,11,…)). No cool greys — cool shadows look uncanny on cream.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── BUTTONS ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 04 — BUTTONS</div><div class="title">Buttons &amp; CTAs</div></div>
+      <div class="lede">Three button kinds. Primary is the only filled button. Secondary uses the clay outline. Ghost handles nav and toolbar density.</div>
+    </div>
+
+    <div class="grid-3">
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Primary</span><span class="id">.btn</span></div>
+        <div class="demo-area">
+          <button class="btn btn--lg">View work →</button>
+          <button class="btn">Save draft</button>
+          <button class="btn btn--sm">Run</button>
+        </div>
+        <div class="demo-area">
+          <button class="btn" disabled>Disabled</button>
+        </div>
+        <dl class="notes">
+          <dt>bg / fg</dt><dd>clay-ink (#8E4A2E) / cream · 6.2 : 1</dd>
+          <dt>hover</dt><dd>darker clay-ink</dd>
+          <dt>focus</dt><dd>3px slate ring, 2px offset</dd>
+          <dt>radius</dt><dd>r-2 (8px)</dd>
+        </dl>
+      </div>
+
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Secondary</span><span class="id">.btn--secondary</span></div>
+        <div class="demo-area">
+          <button class="btn btn--secondary btn--lg">Get in touch</button>
+          <button class="btn btn--secondary">Read case study</button>
+          <button class="btn btn--secondary btn--sm">More →</button>
+        </div>
+        <div class="demo-area">
+          <button class="btn btn--secondary" disabled>Disabled</button>
+        </div>
+        <dl class="notes">
+          <dt>border / fg</dt><dd>clay / clay-ink · transparent bg</dd>
+          <dt>hover</dt><dd>clay-tint fill + clay-ink ink</dd>
+          <dt>used for</dt><dd>"Get in touch", secondary CTAs</dd>
+        </dl>
+      </div>
+
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Ghost</span><span class="id">.btn--ghost</span></div>
+        <div class="demo-area">
+          <button class="btn btn--ghost btn--lg">Work</button>
+          <button class="btn btn--ghost">About</button>
+          <button class="btn btn--ghost btn--sm">Resume</button>
+        </div>
+        <div class="demo-area">
+          <button class="btn btn--ghost" disabled>Disabled</button>
+        </div>
+        <dl class="notes">
+          <dt>fg</dt><dd>ink-2 · no border</dd>
+          <dt>hover</dt><dd>6% ink wash + ink fg</dd>
+          <dt>used for</dt><dd>nav, toolbar actions</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── CHIPS ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 05 — CHIPS</div><div class="title">Tags &amp; pill chips</div></div>
+      <div class="lede">Categorical chips share the case-study taxonomy: clay, ochre, slate. Neutral handles everything else. Solid is reserved for active/selected state.</div>
+    </div>
+
+    <div class="spec-block">
+      <div class="demo-area" style="gap:8px;">
+        <span class="chip chip--clay">Product Strategy</span>
+        <span class="chip chip--ochre">Platform Ecosystems</span>
+        <span class="chip chip--slate">Systems Thinking</span>
+        <span class="chip chip--neutral">Enterprise UX</span>
+        <span class="chip chip--neutral">AI-Augmented Design</span>
+        <span class="chip chip--solid">Selected ✓</span>
+      </div>
+      <div class="demo-area" style="gap:8px;">
+        <span class="chip chip--clay"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--clay-ink);margin-right:2px;"></span>Active</span>
+        <span class="chip chip--ochre">2024 → 2026</span>
+        <span class="chip chip--slate">NDA</span>
+        <span class="chip chip--neutral">Coming soon</span>
+        <span class="chip chip--clay">Lead UX Designer</span>
+        <span class="chip chip--neutral">Shipped ✓</span>
+      </div>
+      <dl class="notes">
+        <dt>height</dt><dd>~24px · pill radius</dd>
+        <dt>border</dt><dd>1px of the matched accent at 18–20%</dd>
+        <dt>text</dt><dd>always --clay-ink / --ochre-deep / --slate-deep for AA on tinted backgrounds</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ───────── INPUTS ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 06 — INPUTS</div><div class="title">Form inputs</div></div>
+      <div class="lede">One input style. Focus ring is slate (a cool counterpoint to the warm canvas) chosen for visibility, not theme fit.</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Text field</span><span class="id">.input</span></div>
+        <div class="demo-area" style="flex-direction:column; align-items:stretch; gap:16px;">
+          <div class="field"><label>Your name</label><input class="input" placeholder="Sam Riley" /></div>
+          <div class="field"><label>Email</label><input class="input" value="hello@kristin.garza" /></div>
+        </div>
+        <dl class="notes">
+          <dt>padding</dt><dd>12 × 14px</dd>
+          <dt>border</dt><dd>hairline-strong → ink-3 hover → slate focus</dd>
+          <dt>focus ring</dt><dd>3px slate @ 18%</dd>
+          <dt>radius</dt><dd>r-2 (8px)</dd>
+        </dl>
+      </div>
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Textarea</span><span class="id">textarea.input</span></div>
+        <div class="demo-area" style="flex-direction:column; align-items:stretch;">
+          <div class="field">
+            <label>What's the problem?</label>
+            <textarea class="input" placeholder="Sketch the shape — I'll bring the questions."></textarea>
+          </div>
+        </div>
+        <dl class="notes">
+          <dt>min-height</dt><dd>96px · resize vertical</dd>
+          <dt>label</dt><dd>UPPERCASE · +0.04em · ink-2 · 600 weight</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── CARDS ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 07 — CARDS</div><div class="title">The work index</div></div>
+      <div class="lede">Two card families. The editorial index builds containers from whitespace and hairlines — no fills, no boxes. The work card carries a soft categorical tint as a single continuous surface with an inset screenshot stub.</div>
+    </div>
+
+    <h3 class="h-3" style="margin-bottom:6px;">Editorial index <span class="mono" style="color:var(--ink-mute); font-weight:400;">.index-grid</span></h3>
+    <p class="small" style="margin-bottom:28px; max-width:64ch;">The default for listing case studies. Three columns, one hairline between each, the arrow pinned to the baseline. No fills, no boxes — whitespace is the container.</p>
+
+    <div class="index-grid">
+      <a class="index-col ochre" href="#">
+        <span class="cat">Case study</span>
+        <h3 class="title">Redesigning order management</h3>
+        <div class="meta">Institutional trading · 2024</div>
+        <p class="excerpt"><strong>Pulled "build" and "submit" apart</strong> on the order ticket — simplifying the surface and cutting trade errors across the desk.</p>
+        <span class="go">→</span>
+      </a>
+      <a class="index-col slate" href="#">
+        <span class="cat">Case study</span>
+        <h3 class="title">Inside the rule engine</h3>
+        <div class="meta">Compliance tooling · 2023</div>
+        <p class="excerpt"><strong>Replaced tribal knowledge</strong> with guided workflows — so compliance teams could write and ship rules without an engineer in the loop.</p>
+        <span class="go">→</span>
+      </a>
+      <a class="index-col clay" href="#">
+        <span class="cat">Case study</span>
+        <h3 class="title">Simplifying positions info</h3>
+        <div class="meta">Portfolio surface · 2022</div>
+        <p class="excerpt"><strong>Re-architected how positions surface</strong> in trading workflows — one place to answer "what do I own, what's it worth."</p>
+        <span class="go">→</span>
+      </a>
+    </div>
+
+    <h3 class="h-3" style="margin-top:64px; margin-bottom:6px;">Work card — tinted <span class="mono" style="color:var(--ink-mute); font-weight:400;">.work-card</span></h3>
+    <p class="small" style="margin-bottom:28px; max-width:64ch;">Soft categorical tint fills the whole card as one continuous surface. The interface stub floats inset, framed against white — a screenshot pasted into a notebook, not a header block.</p>
+
+    <div class="grid-3">
+      <a class="work-card ochre" href="#">
+        <div class="shot">
+          <div class="preview-stub">
+            <div class="h">SAVED ORDERS</div>
+            <div class="row"><span>AAPL</span><span class="num">5,000</span></div>
+            <div class="row"><span>MSFT</span><span class="num">2,200</span></div>
+            <div class="row"><span>GOOGL</span><span class="num">600</span></div>
+            <div class="row" style="border-bottom:0; justify-content:flex-end; color:var(--clay);">SEND →</div>
+          </div>
+        </div>
+        <div class="body">
+          <span class="cat">Case study · 2024</span>
+          <h3>Redesigning order management</h3>
+          <p>The order ticket had grown into three modals stacked on top of each other.</p>
+          <div class="cta"><span>Read case study</span><span class="arr">→</span></div>
+        </div>
+      </a>
+      <a class="work-card slate" href="#">
+        <div class="shot">
+          <div class="preview-stub">
+            <div class="h"><span>REJECT HIGH-DOLLAR TSLA</span><span style="color:var(--clay);">ACTIVE</span></div>
+            <div class="row"><span>IF</span><span>Ticker is TSLA</span></div>
+            <div class="row"><span>AND</span><span>Value &gt; $100,000</span></div>
+            <div class="row" style="border-bottom:0;"><span>THEN</span><span class="pos">Reject</span></div>
+          </div>
+        </div>
+        <div class="body">
+          <span class="cat">Case study · 2023</span>
+          <h3>Inside the rule engine</h3>
+          <p>Compliance teams wrote rules in plain English and handed them to engineers to translate.</p>
+          <div class="cta"><span>Read case study</span><span class="arr">→</span></div>
+        </div>
+      </a>
+      <a class="work-card clay" href="#">
+        <div class="shot">
+          <div class="preview-stub">
+            <div class="h">POSITIONS</div>
+            <div class="row"><span>AAPL</span><span class="num">$21,340</span><span class="pos">+3.4%</span></div>
+            <div class="row"><span>MSFT</span><span class="num">$22,130</span><span class="pos">+1.1%</span></div>
+            <div class="row" style="border-bottom:0;"><span>GOOGL</span><span class="num">$8,200</span><span class="neg">−0.6%</span></div>
+          </div>
+        </div>
+        <div class="body">
+          <span class="cat">Case study · 2022</span>
+          <h3>Simplifying positions info</h3>
+          <p>Traders bounced between two tabs to answer "what do I own, what's it worth".</p>
+          <div class="cta"><span>Read case study</span><span class="arr">→</span></div>
+        </div>
+      </a>
+    </div>
+
+    <h3 class="h-3" style="margin-top:64px; margin-bottom:6px;">Feature card <span class="mono" style="color:var(--ink-mute); font-weight:400;">.work-card.feature</span></h3>
+    <p class="small" style="margin-bottom:20px; max-width:64ch;">Same card, full-width — screenshot inset on left, story on right. For one highlighted project that deserves room.</p>
+
+    <a class="work-card feature slate" href="#" style="margin-bottom:24px;">
+      <div class="shot">
+        <div class="preview-stub">
+          <div class="h"><span>REJECT HIGH-DOLLAR TSLA</span><span style="color:var(--clay);">ACTIVE</span></div>
+          <div class="row"><span>IF</span><span>Ticker is TSLA</span></div>
+          <div class="row"><span>AND</span><span>Value &gt; $100,000</span></div>
+          <div class="row" style="border-bottom:0;"><span>THEN</span><span class="pos">Reject the order</span></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="cat">Case study · 2023</span>
+        <h3>Inside the rule engine</h3>
+        <p>Compliance teams used to write trading rules in plain English and hand them to engineers to translate into code. I redesigned the rule builder so they can construct the logic themselves — closing a long-running cycle of bugs and misinterpretations.</p>
+        <div class="cta"><span>Read case study</span><span class="arr">→</span></div>
+      </div>
+    </a>
+
+    <h3 class="h-3" style="margin-top:64px; margin-bottom:6px;">Compact — bits &amp; pieces <span class="mono" style="color:var(--ink-mute); font-weight:400;">.work-card.compact</span></h3>
+    <p class="small" style="margin-bottom:20px; max-width:64ch;">Text-only sibling for short notes. A serif pull-quote can stand in for the visual. The empty state is a dashed .slot.</p>
+
+    <div class="grid-3">
+      <a class="work-card compact clay" href="#">
+        <div class="body">
+          <span class="cat">Design system</span>
+          <h3>Building a reusable quote component</h3>
+          <p>Designed and documented a unified market-quote component adopted across 4 trading surfaces.</p>
+        </div>
+      </a>
+      <a class="work-card compact slate" href="#">
+        <div class="body">
+          <span class="cat">Strategy</span>
+          <p class="quote">"the work the work didn't need"</p>
+          <h3>Killing a feature to protect the trader</h3>
+          <p>Used research to push back on a PM-driven feature that would have added friction.</p>
+        </div>
+      </a>
+      <div class="work-card compact slot">
+        <div class="body">
+          <span class="cat" style="color:var(--ink-mute);">+ more coming soon</span>
+          <p style="margin-top:8px; color:var(--ink-mute);">Empty-state slot. Dashed border, no title, no CTA.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── NAV ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 08 — NAV</div><div class="title">Navigation &amp; footer</div></div>
+      <div class="lede">Sticky top bar. Wordmark is the mono eyebrow treatment. Body links are ghost weight. "Get in touch" is the only outlined CTA in the nav.</div>
+    </div>
+
+    <div class="nav-demo">
+      <span class="left">kristin<span style="color:var(--clay);">.</span>garza</span>
+      <ul>
+        <li><a href="#">Work</a></li>
+        <li><a href="#">Bits &amp; Pieces</a></li>
+        <li><a href="#">About</a></li>
+        <li><button class="btn btn--secondary btn--sm">Get in touch</button></li>
+      </ul>
+    </div>
+    <p class="small" style="margin-top:12px;">Cream at 92% opacity + <span class="mono">backdrop-filter: blur(16px) saturate(140%)</span>. Sticky at top. Wordmark is 13px JetBrains Mono 500 uppercase — same treatment as eyebrow.</p>
+
+    <h3 class="h-3" style="margin-top:48px; margin-bottom:16px;">Footer</h3>
+    <div style="background:var(--clay-ink); border-radius:var(--r-3); padding:32px 48px; display:flex; justify-content:space-between; align-items:center; color:var(--bg);">
+      <span style="font-family:var(--f-ui); font-size:13px; letter-spacing:0.02em;">kristin<span style="opacity:0.6;">.garza</span> · UX Designer</span>
+      <span style="display:flex; gap:32px; font-family:var(--f-ui); font-size:13px;">
+        <a href="#" style="color:var(--bg); text-decoration:none; opacity:0.85;">LinkedIn</a>
+        <a href="#" style="color:var(--bg); text-decoration:none; opacity:0.85;">Email</a>
+        <a href="#" style="color:var(--bg); text-decoration:none; opacity:0.85;">Resume</a>
+      </span>
+    </div>
+    <p class="small" style="margin-top:12px;">Single-band footer in clay-ink (6.2:1 with cream). The band is the punctuation — no internal hairlines. Clay at full saturation appears only here and in the primary button.</p>
+  </section>
+
+  <!-- ───────── BANDS ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 09 — BANDS</div><div class="title">Section bands</div></div>
+      <div class="lede">Three accessible band variants for dark, full-bleed moments. Each maps to one accent. Don't stack two same-accent bands on one page.</div>
+    </div>
+
+    <div class="stack-24">
+      <div class="band ochre">
+        <span class="ratio-tag">cream on --ochre-deep · 2.6 : 1 base · use only for large text</span>
+        <span class="eyebrow">Beyond the work</span>
+        <h2>AI × Design.</h2>
+        <p>A running collection of ideas, talks, and articles shaping how I think about design in the age of AI — plus my own take on what's changing and where the real value lives.</p>
+        <div style="margin-top:24px; display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="chip" style="background:rgba(255,255,255,0.14); color:var(--bg); border:1px solid rgba(255,255,255,0.25);">AI &amp; Craft</span>
+          <span class="chip" style="background:rgba(255,255,255,0.14); color:var(--bg); border:1px solid rgba(255,255,255,0.25);">Design Process</span>
+        </div>
+      </div>
+      <div class="band slate">
+        <span class="ratio-tag">cream on --slate-deep · solid, quiet</span>
+        <span class="eyebrow">About</span>
+        <h2>Designing for complexity, without adding to it.</h2>
+        <p>The quieter band moment. Use slate when the section is reflective rather than promotional — about, process, philosophy.</p>
+      </div>
+      <div class="band clay">
+        <span class="ratio-tag">cream on --clay-ink · 6.2 : 1</span>
+        <span class="eyebrow">Let's talk</span>
+        <h2>Have a hard problem?</h2>
+        <p>Loudest band. Reserve for the page's single contact moment. Don't use clay in two band positions on one page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── IMAGERY ───────── -->
+  <section>
+    <div class="section-head">
+      <div class="label"><div class="num">§ 10 — IMAGERY</div><div class="title">Imagery &amp; placeholders</div></div>
+      <div class="lede">Case-study heroes are interface fragments — small slices of the real product — not stock illustrations or 3D abstracts. While building, use striped placeholders with a label and aspect ratio.</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="img-stub">
+        <span class="lab">CASE STUDY HERO</span>
+        <span class="dim">4 : 3 · drop on clay-tint</span>
+      </div>
+      <div class="img-stub" style="aspect-ratio:16/9;">
+        <span class="lab">BITS &amp; PIECES THUMB</span>
+        <span class="dim">16 : 9 · neutral surface-2</span>
+      </div>
+    </div>
+    <p class="small" style="margin-top:16px;">Never silhouette or vignette into cream. If a screenshot needs framing, use the categorical tint as a 28px inset — not an outline.</p>
+  </section>
+
+  <!-- ───────── DOC FOOTER ───────── -->
+  <div class="doc-foot">
+    <span>kristin.garza · design system v2 · 2026</span>
+    <span class="right">
+      <span>Crimson Pro · Plus Jakarta Sans · JetBrains Mono</span>
+      <span>10 sections · 0 inaccessible pairings</span>
+    </span>
+  </div>
+
+</main>
+</body>
+</html>

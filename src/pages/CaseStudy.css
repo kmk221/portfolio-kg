@@ -7,9 +7,8 @@
    global.css is not imported; alias here so all inline
    var(--steel-blue/cream/terracotta) resolve correctly.   */
 .positions-page {
+  /* TODO(tokens): no tokens.css equivalent — review for promotion */
   --steel-blue:  #3d4f63;          /* dark navy-slate — matches Key Design Decisions section bg */
-  --cream:       var(--bg);        /* warm off-white page surface */
-  --terracotta:  var(--clay);      /* clay is the tokens.css terracotta equivalent */
 }
 
 /* ── Hero ── */
@@ -91,7 +90,7 @@
 }
 .hero-pill--gold {
   background: var(--ochre-tint);
-  color: var(--ochre-deep);
+  color: var(--ochre-ink);
   border: 1px solid var(--ochre-edge);
 }
 .hero-pill--warm {

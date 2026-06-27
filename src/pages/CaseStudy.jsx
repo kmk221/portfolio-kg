@@ -342,7 +342,7 @@ function JourneyMap() {
       <div style={{
         borderRadius: 14, overflow: 'hidden',
         border: `1.5px solid ${stage.color}40`,
-        background: 'var(--cream)',
+        background: 'var(--bg)',
         transition: 'all 0.2s',
       }}>
         {/* Header */}
@@ -384,7 +384,7 @@ function JourneyMap() {
         </div>
       </div>
       {/* Stage counter hint */}
-      <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--ink-mute)', marginTop: 12 }}>Stage {active + 1} of {journeyStages.length}  -  click any stage to explore</p>
+      <p className="cs-caption" style={{textAlign:'center',marginTop:12}}>Stage {active + 1} of {journeyStages.length}  -  click any stage to explore</p>
     </div>
   )
 }
@@ -846,7 +846,7 @@ function ConceptCarousel() {
         {/* Text  -  right side */}
         <div style={{ padding: '36px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderLeft: '1px solid var(--hairline)', background: 'rgba(243,239,217,0.4)' }}>
           <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--ink-3)', background: 'transparent', border: '1px solid var(--hairline-strong)', padding: '4px 10px', borderRadius: 999, alignSelf: 'flex-start', marginBottom: 20 }}>Other Concepts Explored</span>
-          <h3 style={{ fontSize: 20, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 20 }}>{concept.name}</h3>
+          <h3 style={{ fontSize: 20, fontWeight: 700, color: 'var(--ink-2)', marginBottom: 20 }}>{concept.name}</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {concept.pros.map((p, i) => (
               <p key={"p"+i} className="concept-pro" style={{ margin: 0 }}><img src="/check.svg" alt="check" /><span>{p}</span></p>
@@ -871,7 +871,7 @@ function ConceptCarousel() {
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polyline points="6,3 11,8 6,13"/></svg>
         </button>
       </div>
-      <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--ink-mute)', marginTop: 8 }}>{idx + 1} of {concepts.length} concepts</p>
+      <p className="cs-caption" style={{textAlign:'center',marginTop:8}}>{idx + 1} of {concepts.length} concepts</p>
     </div>
   )
 }
@@ -981,7 +981,7 @@ export default function CaseStudy() {
           <div style={{ marginBottom: 32 }}>
             <span className="eyebrow">Case Study · Trading Platform · Design Systems · 2025</span>
           </div>
-          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: '#372B0B', margin: '0 0 20px' }}>Well-Positioned<span style={{ color: 'var(--clay)' }}>.</span></h1>
+          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: 'var(--ink-2)', margin: '0 0 20px' }}>Well-Positioned<span style={{ color: 'var(--clay)' }}>.</span></h1>
           <p style={{ fontFamily: 'var(--f-serif)', fontStyle: 'normal', fontWeight: 300, fontSize: 'clamp(17px, 1.5vw, 21px)', lineHeight: 1.55, color: 'var(--ink-2)', maxWidth: 560, margin: '0 0 36px' }}>Designing in-flow context for institutional investing workflows—bringing account and position data to the moment it matters most.</p>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {['Research', 'Strategy', 'Product Design', 'Design Systems'].map(tag => (
@@ -1099,8 +1099,8 @@ export default function CaseStudy() {
       <section id="ch-tldr" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)', display: 'flex', flexDirection: 'column', gap: 56 }}>
           <div>
-            <h2 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 300, color: '#372B0B', lineHeight: 1.1, marginBottom: 20 }}>tl;dr</h2>
-            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.75, color: '#372B0B', maxWidth: 820 }}>
+            <h2 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 300, color: 'var(--ink-2)', lineHeight: 1.1, marginBottom: 20 }}>tl;dr</h2>
+            <p className="cs-body" style={{maxWidth:820}}>
               Across 10 trading applications, portfolio positions data — the context every advisor needs to make a trade — was hidden in drawers, buried below the fold, or living in a separate app entirely. Advisors had independently built the same workaround: a second monitor just to see their own positions. The brief was to fix one order ticket. I reframed it to fix the platform. I designed a horizontal positions panel that surfaced essential context without competing with the primary workflow, then partnered with the design system team to formalize it as a reusable component requiring no custom work per application — and embedded a success measurement framework and event tracking into the engineering handoff from day one. The pattern shipped across 10+ applications with ~90% design system coverage, aligning 10+ product teams on a single layout standard for data-dense workflows.
             </p>
           </div>
@@ -1119,13 +1119,13 @@ export default function CaseStudy() {
             impact + scale {'>'} convenience + speed
           </h2>
           <div style={{ maxWidth: 961, padding: '28px 32px', borderLeft: '4px solid var(--clay)', background: 'rgba(184,103,87,0.04)', borderRadius: '0 12px 12px 0' }}>
-            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.7, color: 'var(--ink-2)', marginBottom: 16 }}>
+            <p className="cs-body" style={{marginBottom:16}}>
               This work was initially planned as a routine feature lift-and-shift; bringing an existing positions drawer pattern from another order ticket into a new trading application. While this approach optimized for speed, early design exploration revealed that simply integrating the existing drawer into the new app would perpetuate significant discoverability and workflow issues that existed on the platform.
             </p>
-            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>
+            <p className="cs-body" style={{margin:0}}>
               I led lightweight design explorations that reframed the problem from <em>how to integrate an existing component</em> to <em>how to design for efficient in-flow decision-making</em>. In partnership with product, design system, and development teams, we identified an opportunity to establish a simple yet impactful new solution that would scale beyond a single trade ticket and support a broader range of contextual utilities across the platform's data-dense workflows.
             </p>
-            <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.7, color: 'var(--ink-2)', marginTop: 16, marginBottom: 0 }}>
+            <p className="cs-body" style={{marginTop:16,marginBottom:0}}>
               The goal wasn't to solve one ticket — it was to establish a pattern that wouldn't require custom work each time a new application needed positions context.
             </p>
           </div>
@@ -1145,7 +1145,7 @@ export default function CaseStudy() {
               </svg>
               <p style={{ fontFamily: 'var(--f-mono)', fontSize: 13, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay)', margin: 0 }}>A note on measurement</p>
             </div>
-            <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)', margin: 0, paddingLeft: 32 }}>
+            <p className="cs-body" style={{margin:0,paddingLeft:32}}>
               This project was completed in an environment without mature analytics infrastructure or established KPI frameworks for UX work. Quantitative instrumentation wasn't yet standard practice on this platform. Rather than treat this as an inevitable constraint, I defined and proposed a comprehensive measurement approach to guide future implementation and product decisions. The plan included a detailed success framework and measurement plan  -  in the <strong>Measuring Success</strong> section below.
             </p>
           </div>
@@ -1167,7 +1167,7 @@ export default function CaseStudy() {
           <p className="cs-body">I conducted a comprehensive audit of all trading platform applications to document how positions data was currently surfaced across the ecosystem.</p>
           <div className="stats-row" style={{ marginTop: 40 }}>
             {[['10', 'Applications Identified'], ['5', 'Different Patterns'], ['12+', 'Usability Issues']].map(([n, l]) => (
-              <div key={l} className="stat-item" style={{ background: 'var(--cream)' }}>
+              <div key={l} className="stat-item" style={{ background: 'var(--bg)' }}>
                 <div className="stat-number">{n}</div>
                 <div className="stat-label">{l}</div>
               </div>
@@ -1184,7 +1184,7 @@ export default function CaseStudy() {
               <img src="/featuredexample.png" alt="Multi-Order Ticket featured example" style={{ width: '100%', display: 'block', borderRadius: 8 }} />
             </div>
             <div style={{ padding: '24px', background: 'white' }}>
-              <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 16 }}>Critical Issues Identified</p>
+              <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-2)', marginBottom: 16 }}>Critical Issues Identified</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 {[
                   { title: 'Low Discoverability', desc: 'Viewing positions data begins workflow, but the trigger to open the drawer is hidden at the bottom of the page' },
@@ -1193,8 +1193,8 @@ export default function CaseStudy() {
                   { title: 'Obscures Primary Interface', desc: 'Opening drawer covers trade entry form  -  forces toggle behavior between positions and order entry' },
                 ].map((issue, i) => (
                   <div key={i} style={{ background: 'rgba(184,103,87,0.05)', borderLeft: '3px solid var(--clay)', borderRadius: 4, padding: '14px 16px 14px 18px' }}>
-                    <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--warm-gray)', marginBottom: 6 }}>{issue.title}</p>
-                    <p style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--ink-2)', margin: 0 }}>{issue.desc}</p>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-2)', marginBottom: 6 }}>{issue.title}</p>
+                    <p className="cs-caption" style={{margin:0}}>{issue.desc}</p>
                   </div>
                 ))}
               </div>
@@ -1242,7 +1242,7 @@ export default function CaseStudy() {
           <p className="cs-body">Across these applications, a heuristic evaluation surfaced consistent violations that compounded into significant workflow friction for advisors.</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 40 }}>
             {heuristicItems.map(item => (
-              <div key={item.title} style={{ borderRadius: 12, border: '1px solid var(--hairline)', overflow: 'hidden', background: 'var(--cream)' }}>
+              <div key={item.title} style={{ borderRadius: 12, border: '1px solid var(--hairline)', overflow: 'hidden', background: 'var(--bg)' }}>
                 {/* Animation */}
                 <div style={{ padding: '20px 20px 16px' }}>
                   {item.animation}
@@ -1250,11 +1250,11 @@ export default function CaseStudy() {
                 {/* Info */}
                 <div style={{ padding: '0 20px 20px', borderTop: '1px solid var(--hairline)', paddingTop: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 }}>
-                    <h4 style={{ fontSize: 15, fontWeight: 700, color: 'var(--warm-gray)', margin: 0 }}>{item.title}</h4>
+                    <h4 style={{ fontSize: 15, fontWeight: 700, color: 'var(--ink-2)', margin: 0 }}>{item.title}</h4>
                     <span className={`issue-severity issue-severity--${item.severity.toLowerCase()}`} style={{ flexShrink: 0 }}>{item.severity}</span>
                   </div>
                   <span style={{ fontSize: 11, color: 'var(--clay)', fontWeight: 600, display: 'block', marginBottom: 10 }}>{item.heuristic}</span>
-                  <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--ink-2)', margin: 0 }}>{item.desc}</p>
+                  <p className="cs-caption" style={{margin:0}}>{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -1324,10 +1324,10 @@ export default function CaseStudy() {
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
           <h2 className="cs-h2">Problem: Validated &amp; Defined</h2>
           <div style={{ maxWidth: 820, padding: '28px 32px', borderLeft: '4px solid var(--clay)', background: 'rgba(184,103,87,0.04)', borderRadius: '0 12px 12px 0', marginTop: 32 }}>
-            <p style={{ fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, lineHeight: 1.6, color: '#372B0B', marginBottom: 16 }}>
+            <p style={{ fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, lineHeight: 1.6, color: 'var(--ink-2)', marginBottom: 16 }}>
               Portfolio positions data is prerequisite context for every trade decision  -  yet the current design treats it as supplementary, on-demand information. This structural mismatch forces advisors to choose between seeing their positions and entering a trade, two tasks that must happen simultaneously.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>
+            <p className="cs-body" style={{margin:0}}>
               The result: advisors interrupt their workflows, accept higher cognitive load, build manual workarounds, and make decisions with incomplete information  -  introducing friction, inefficiency, and risk at the highest-stakes moment of the trading process.
             </p>
           </div>
@@ -1341,11 +1341,11 @@ export default function CaseStudy() {
           <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
             <div style={{ background: 'transparent', borderRadius: 12, padding: '28px 32px', border: '1px solid var(--clay-edge)' }}>
               <p style={{ fontFamily: 'var(--f-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay)', marginBottom: 10 }}>Client Relationship Risk</p>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>Trading errors are among the most costly outcomes a firm can face. When advisors make decisions with incomplete position data, errors increase  -  damaging trust between our clients and the end investors they trade on behalf of. In an industry where reputation is everything, preventable errors are not a UX problem. They are a business problem.</p>
+              <p className="cs-body" style={{margin:0}}>Trading errors are among the most costly outcomes a firm can face. When advisors make decisions with incomplete position data, errors increase  -  damaging trust between our clients and the end investors they trade on behalf of. In an industry where reputation is everything, preventable errors are not a UX problem. They are a business problem.</p>
             </div>
             <div style={{ background: 'transparent', borderRadius: 12, padding: '28px 32px', border: '1px solid var(--clay-edge)' }}>
               <p style={{ fontFamily: 'var(--f-mono)', fontSize: 11, fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--clay)', marginBottom: 10 }}>Operational Cost</p>
-              <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--ink-2)', margin: 0 }}>Each trading error generates downstream work: service inquiries, manual corrections, and follow-up from our support teams. Reducing workflow friction isn't just about advisor experience  -  it directly reduces the volume of error-driven support load and the internal cost of remediation that follows.</p>
+              <p className="cs-body" style={{margin:0}}>Each trading error generates downstream work: service inquiries, manual corrections, and follow-up from our support teams. Reducing workflow friction isn't just about advisor experience  -  it directly reduces the volume of error-driven support load and the internal cost of remediation that follows.</p>
             </div>
           </div>
         </div>
@@ -1381,7 +1381,7 @@ export default function CaseStudy() {
           <p className="cs-body">I explored multiple approaches to organizing positions data alongside trade entry, each with different tradeoffs around visibility, interaction cost, and space efficiency.</p>
 
           {/* Selected Direction  -  promoted */}
-          <div className="concept-card-grid" style={{ marginTop: 40, border: '1.5px solid var(--terracotta)', borderRadius: 14, overflow: 'hidden', display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
+          <div className="concept-card-grid" style={{ marginTop: 40, border: '1.5px solid var(--clay)', borderRadius: 14, overflow: 'hidden', display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
             {/* Illustration  -  16:9 aspect ratio */}
             <div style={{ background: 'rgba(177,124,93,0.05)' }}>
               {getConceptIllustration("Horizontal Cards", 16)}
@@ -1389,7 +1389,7 @@ export default function CaseStudy() {
             {/* Text  -  right side */}
             <div style={{ padding: '36px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', borderLeft: '1px solid rgba(177,124,93,0.15)', background: 'rgba(177,124,93,0.03)' }}>
               <span className="selected-badge" style={{ alignSelf: 'flex-start', marginBottom: 20 }}>Selected Direction</span>
-              <h3 style={{ fontSize: 20, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 20 }}>Horizontal Cards</h3>
+              <h3 style={{ fontSize: 20, fontWeight: 700, color: 'var(--ink-2)', marginBottom: 20 }}>Horizontal Cards</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {['Optimal scannability, efficient use of space, no interaction cost', 'Scales to multiple positions simultaneously', 'Complements rather than competes with trade form'].map((p, i) => (
                   <p key={i} className="concept-pro" style={{ margin: 0 }}><img src="/check.svg" alt="check" /><span>{p}</span></p>
@@ -1462,18 +1462,18 @@ export default function CaseStudy() {
           <p className="cs-body">Any change to live trading workflows required careful, staged rollout. I structured a phased approach that prioritized learning and iteration at each stage before expanding.</p>
           <div className="app-grid" style={{ marginTop: 40 }}>
             {[
-              { phase: 'Phase 1', title: 'Pilot  -  Multi-Order Ticket', desc: 'Introduced the horizontal positions panel in the highest-traffic trading application. Collected feedback and iterated on column priority and display density.', status: 'Complete', sc: '#8E4A2E', sb: 'var(--clay)' },
-              { phase: 'Phase 2', title: 'Expand  -  Order Entry Tickets', desc: 'Applied the standardized component across the 6 individual order entry ticket applications, using the design system component to ensure consistency.', status: 'Complete', sc: '#8E4A2E', sb: 'var(--clay)' },
-              { phase: 'Phase 3', title: 'Scale  -  Platform-Wide', desc: 'Rolled out the pattern to all 10 identified applications and established it as the default layout standard for data-dense contexts.', status: 'In Progress', sc: '#6B5E45', sb: 'var(--hairline-strong)' },
-              { phase: 'Future', title: 'Generalize  -  Contextual Data Pattern', desc: 'Extend beyond positions to support account summaries, model benchmarks, compliance checks, and order history.', status: 'Planned', sc: '#6B5E45', sb: 'var(--hairline-strong)' },
+              { phase: 'Phase 1', title: 'Pilot  -  Multi-Order Ticket', desc: 'Introduced the horizontal positions panel in the highest-traffic trading application. Collected feedback and iterated on column priority and display density.', status: 'Complete', sc: 'var(--clay-ink)', sb: 'var(--clay)' },
+              { phase: 'Phase 2', title: 'Expand  -  Order Entry Tickets', desc: 'Applied the standardized component across the 6 individual order entry ticket applications, using the design system component to ensure consistency.', status: 'Complete', sc: 'var(--clay-ink)', sb: 'var(--clay)' },
+              { phase: 'Phase 3', title: 'Scale  -  Platform-Wide', desc: 'Rolled out the pattern to all 10 identified applications and established it as the default layout standard for data-dense contexts.', status: 'In Progress', sc: 'var(--ink-3)', sb: 'var(--hairline-strong)' },
+              { phase: 'Future', title: 'Generalize  -  Contextual Data Pattern', desc: 'Extend beyond positions to support account summaries, model benchmarks, compliance checks, and order history.', status: 'Planned', sc: 'var(--ink-3)', sb: 'var(--hairline-strong)' },
             ].map(item => (
               <div key={item.phase} style={{ padding: '28px 32px', border: '1px solid var(--hairline)', borderRadius: 12, background: 'white' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--terracotta)' }}>{item.phase}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--clay)' }}>{item.phase}</span>
                   <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 999, color: item.sc, background: 'transparent', border: `1px solid ${item.sb}` }}>{item.status}</span>
                 </div>
-                <h4 style={{ fontSize: 16, fontWeight: 700, color: 'var(--warm-gray)', marginBottom: 8 }}>{item.title}</h4>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-2)' }}>{item.desc}</p>
+                <h4 style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink-2)', marginBottom: 8 }}>{item.title}</h4>
+                <p className="cs-body">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -1484,14 +1484,14 @@ export default function CaseStudy() {
       <section style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)' }}>
           <h2 className="cs-h2">Measuring Success</h2>
-          <p style={{ fontSize: 16, lineHeight: 1.7, color: 'var(--ink-2)', maxWidth: 700, marginBottom: 56 }}>
+          <p className="cs-body" style={{maxWidth:700,marginBottom:56}}>
             One of the biggest challenges on this project was the absence of mature analytics infrastructure. Legacy tooling didn't support event-level tracking, and there were no established baseline metrics for this feature area. Rather than let this become a blind spot, I worked to define what rigorous measurement would look like  -  both as a design deliverable and as a foundation for future instrumentation.
           </p>
 
           {/* Constraint callout */}
           <div style={{ padding: '24px 32px', background: 'rgba(251,250,244,0.6)', border: '1px solid rgba(177,124,93,0.2)', borderRadius: 10, marginBottom: 56 }}>
-            <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--terracotta)', marginBottom: 10 }}>The constraint</p>
-            <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)', margin: 0 }}>
+            <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--clay)', marginBottom: 10 }}>The constraint</p>
+            <p className="cs-body" style={{margin:0}}>
               When I asked stakeholders "What would make this successful?", the answer was: "We don't have strong enough analytics tools to tell us what success looks like today." Rather than viewing this as a blocker, I treated it as an opportunity to establish a measurement framework from the ground up  -  one that could be implemented as the new platform launched.
             </p>
           </div>
@@ -1503,7 +1503,7 @@ export default function CaseStudy() {
               {
                 label: 'Task Completion Rate',
                 badge: 'Critical',
-                badgeColor: '#8E4A2E',
+                badgeColor: 'var(--clay-ink)',
                 what: '% of users who successfully complete an order entry with the new positions panel',
                 how: 'Event tracking: position_panel_task_completed',
                 target: 'Baseline TBD → Improve by 25%+ within 60 days',
@@ -1511,7 +1511,7 @@ export default function CaseStudy() {
               {
                 label: 'Time to Complete Order',
                 badge: 'Critical',
-                badgeColor: '#8E4A2E',
+                badgeColor: 'var(--clay-ink)',
                 what: 'Average time from opening order entry to submitting order',
                 how: 'Timestamp delta: start_order → complete_order',
                 target: 'Baseline TBD → Reduce by 30% (hypothesis: ~4min → ~2.5min)',
@@ -1519,7 +1519,7 @@ export default function CaseStudy() {
               {
                 label: 'Support Ticket Volume',
                 badge: 'High (Can measure now!)',
-                badgeColor: '#6B5E45',
+                badgeColor: 'var(--ink-3)',
                 what: '# of support tickets tagged "order entry" or "position tracking"',
                 how: 'Support system data (existing)',
                 target: 'Current baseline ~240/month → Reduce to <160/month (-30%)',
@@ -1527,7 +1527,7 @@ export default function CaseStudy() {
               {
                 label: 'Trading Efficiency (Orders/Hour)',
                 badge: 'Critical',
-                badgeColor: '#8E4A2E',
+                badgeColor: 'var(--clay-ink)',
                 what: 'Average orders completed per trading hour per user',
                 how: 'May be available in existing business systems',
                 target: 'Current unknown → Improve by 20%+',
@@ -1539,9 +1539,9 @@ export default function CaseStudy() {
                   <span style={{ fontSize: 11, fontWeight: 700, color: metric.badgeColor, background: 'transparent', border: `1px solid ${metric.badgeColor}`, padding: '3px 10px', borderRadius: 999, whiteSpace: 'nowrap', marginLeft: 12 }}>{metric.badge}</span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  <p style={{ fontSize: 13, color: 'var(--warm-gray)', margin: 0 }}><strong>What:</strong> {metric.what}</p>
-                  <p style={{ fontSize: 13, color: 'var(--warm-gray)', margin: 0 }}><strong>How:</strong> {metric.how}</p>
-                  <p style={{ fontSize: 13, color: '#8E4A2E', margin: 0 }}><strong>Target:</strong> {metric.target}</p>
+                  <p className="cs-caption" style={{margin:0}}><strong>What:</strong> {metric.what}</p>
+                  <p className="cs-caption" style={{margin:0}}><strong>How:</strong> {metric.how}</p>
+                  <p style={{ fontSize: 13, color: 'var(--clay-ink)', margin: 0 }}><strong>Target:</strong> {metric.target}</p>
                 </div>
               </div>
             ))}
@@ -1549,14 +1549,14 @@ export default function CaseStudy() {
 
           {/* Interim note */}
           <div style={{ padding: '20px 28px', background: 'rgba(184,103,87,0.05)', borderLeft: '3px solid var(--clay)', borderRadius: '0 8px 8px 0', marginBottom: 56 }}>
-            <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-2)', margin: 0, fontStyle: 'italic' }}>
+            <p className="cs-body" style={{margin:0,fontStyle:'italic'}}>
               In the interim, I tracked qualitative signals through user interviews and support ticket analysis to validate directional improvements while instrumentation was being built.
             </p>
           </div>
 
           {/* Instrumentation spec */}
           <h3 className="cs-h3" style={{ marginBottom: 16 }}>Instrumentation Plan</h3>
-          <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)', marginBottom: 28 }}>
+          <p className="cs-body" style={{marginBottom:28}}>
             I collaborated with engineering to ensure the redesign included proper event architecture from day one  -  so that when the analytics platform launched, tracking would already be in place with no retroactive instrumentation needed.
           </p>
           <div style={{ background: 'transparent', border: '1px solid var(--clay-edge)', borderRadius: 10, padding: '28px 32px', marginBottom: 28 }}>
@@ -1568,12 +1568,12 @@ export default function CaseStudy() {
             ].map(spec => (
               <div key={spec.event} style={{ marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--hairline)' }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--clay-ink)', margin: '0 0 6px', fontFamily: 'var(--f-mono)' }}>{spec.event}</p>
-                <p style={{ fontSize: 12, color: 'var(--ink-3)', margin: '0 0 4px' }}><span style={{ color: 'var(--ink-mute)' }}>Trigger:</span> {spec.trigger}</p>
-                <p style={{ fontSize: 12, color: 'var(--ink-3)', margin: 0 }}><span style={{ color: 'var(--ink-mute)' }}>Parameters:</span> {spec.params}</p>
+                <p className="cs-caption" style={{margin:'0 0 4px'}}><span style={{ color: 'var(--ink-mute)' }}>Trigger:</span> {spec.trigger}</p>
+                <p className="cs-caption" style={{margin:0}}><span style={{ color: 'var(--ink-mute)' }}>Parameters:</span> {spec.params}</p>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--warm-gray)', marginBottom: 0 }}>
+          <p className="cs-body" style={{marginBottom:0}}>
             This spec became part of our engineering handoff documentation and enabled the team to measure all critical metrics outlined in the success framework above.
           </p>
         </div>
@@ -1604,7 +1604,7 @@ export default function CaseStudy() {
               <div key={card.title} style={{ padding: '28px', background: 'transparent', border: '1px solid var(--clay-edge)', borderRadius: 12 }}>
                 <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'var(--clay-tint)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>{card.icon}</div>
                 <h4 style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink)', marginBottom: 8 }}>{card.title}</h4>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-3)' }}>{card.desc}</p>
+                <p className="cs-body">{card.desc}</p>
               </div>
             ))}
           </div>
@@ -1622,8 +1622,8 @@ export default function CaseStudy() {
                 { title: 'Visualizing platform-level impact unlocked stakeholder alignment:', desc: 'Showing how a single design decision could scale to 10+ applications in a single diagram was more persuasive than any usability metric. This framing transformed a single-feature discussion into a platform strategy conversation.' },
               ].map((item, i) => (
                 <div key={i}>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--terracotta)', marginBottom: 6 }}>{item.title}</p>
-                  <p style={{ fontSize: 15, lineHeight: 1.65, color: 'var(--ink-2)' }}>{item.desc}</p>
+                  <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--clay)', marginBottom: 6 }}>{item.title}</p>
+                  <p className="cs-body">{item.desc}</p>
                 </div>
               ))}
             </div>

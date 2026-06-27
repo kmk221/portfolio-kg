@@ -591,7 +591,7 @@ export default function OrderManagementCaseStudy() {
   ]
 
   return (
-    <div ref={pageRef} className="cs-page" style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+    <div ref={pageRef} className="cs-page" style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <Nav />
 
       {/* Sticky chapter nav  -  left rail at ≥1100px viewport. */}
@@ -669,7 +669,7 @@ export default function OrderManagementCaseStudy() {
               fontSize: 'clamp(36px, 5vw, 64px)',
               letterSpacing: '-0.01em',
               lineHeight: 1.1,
-              color: '#372B0B',
+              color: 'var(--ink-2)',
               margin: '0 0 20px',
             }}>
               Addition Through Subtraction<span style={{ color: 'var(--clay)' }}>.</span>
@@ -703,7 +703,7 @@ export default function OrderManagementCaseStudy() {
               muted
               playsInline
               poster="/om-assets/shipped-still.png"
-              style={{ width: '100%', borderRadius: 12, display: 'block' }}
+              style={{ width: '100%', borderRadius: 'var(--r-3)', display: 'block' }}
             />
           </div>
         </div>
@@ -717,6 +717,17 @@ export default function OrderManagementCaseStudy() {
             <span className="cs-case-nav-title">Inside the Rule Engine</span>
           </a>
         </nav>
+
+        <footer className="site-foot" id="contact" style={{ marginTop: 0 }}>
+          <div className="inner">
+          <span className="left">kristin<span style={{ opacity: 0.6 }}>.garza</span> · UX Designer</span>
+          <span className="right">
+            <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="mailto:kmkerney221@gmail.com">Email</a>
+            <a href="/KristinGarzaResume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          </span>
+        </div>
+        </footer>
       </div>
     </div>
   )

@@ -1,0 +1,10 @@
+/* tokens-orphaned.css
+   Values that appear in design-system.html but have NO matching token in tokens.css.
+   Review and decide whether to promote into tokens.css, then remove from here.
+   ----------------------------------------------------------------------------- */
+:root {
+  /* From design-system.html line ~170 — button hover fill/border in the DS button demo.
+     #6e3720 is a dark clay-brown with no equivalent in tokens.css.
+     (Nearest existing tokens: --clay-ink #8E4A2E, --clay #9E644B.) */
+  --btn-bg-hover: #6e3720; --btn-bd-hover: #6e3720;
+}

@@ -3,22 +3,18 @@
      styles.css instead of overriding them. OM-specific tokens remap to home
      palette values so the case study reads as the same brand. */
   .om-page {
-    --accent: var(--terracotta);                 /* was #8C8958 olive */
-    --accent-dark: #8F4638;                      /* deeper terracotta */
-    --accent-mid: rgba(184, 103, 87, 0.35);
-    --accent-light: rgba(144, 161, 185, 0.08);
-    --peach: var(--terracotta);                  /* was #B3866B */
-    --peach-light: rgba(144, 161, 185, 0.10);
-    --espresso: var(--deep-brown);               /* was #241D15 — uses home --deep-brown */
-    --deep-text: #372B0B;
+    /* TODO(tokens): no tokens.css equivalent — review for promotion */
     --page-bg: transparent;                      /* let the JSX radial gradient show through */
+    /* TODO(tokens): no tokens.css equivalent — review for promotion */
     --section-alt: rgba(196, 207, 223, 0.28);    /* soft steel-blue wash — echoes home's cool sections */
+    /* TODO(tokens): no tokens.css equivalent — review for promotion */
     --side-p: 64px;
+    /* TODO(tokens): no tokens.css equivalent — review for promotion */
     --content-w: 1240px;
 
     font-family: var(--f-sans);
     background: var(--page-bg);
-    color: var(--warm-gray);
+    color: var(--ink-2);
     -webkit-font-smoothing: antialiased;
   }
 
@@ -35,7 +31,7 @@
     font-family: var(--f-serif) !important;
     font-weight: 300 !important;
     font-size: clamp(26px, 3.2vw, 38px) !important;
-    color: #372B0B !important;
+    color: var(--ink-2) !important;
     letter-spacing: -0.01em !important;
     line-height: 1.2 !important;
     margin-bottom: 20px !important;
@@ -47,7 +43,7 @@
     color: var(--clay, #9E644B); display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
   }
   .om-page .step-label::after {
-    content: ''; flex: 1; height: 1px; background: var(--border-light);
+    content: ''; flex: 1; height: 1px; background: var(--hairline);
   }
   .om-page .step-label.light { color: rgba(247,245,240,0.7); }
   .om-page .step-label.light::after { background: rgba(255,255,255,0.15); }
@@ -71,9 +67,9 @@
   .om-page .tag {
     font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;
     display: inline-flex; align-items: center; gap: 6px;
-    background: var(--accent-light); border: 1px solid var(--accent-mid); color: var(--accent-dark);
+    background: var(--clay-tint); border: 1px solid var(--clay-edge); color: var(--clay-ink);
   }
-  .om-page .tag.shipped { background: rgba(184,103,87,0.15); border-color: rgba(184,103,87,0.35); color: var(--accent-dark); }
+  .om-page .tag.shipped { background: rgba(184,103,87,0.15); border-color: rgba(184,103,87,0.35); color: var(--clay-ink); }
 
   
   .om-page .placeholder {
@@ -81,7 +77,7 @@
     border: 1px dashed rgba(184,103,87,0.4);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    color: var(--peach); font-size: 12px; font-weight: 600;
+    color: var(--clay); font-size: 12px; font-weight: 600;
     letter-spacing: 0.05em; text-transform: uppercase; text-align: center; padding: 20px;
   }
   .om-page .placeholder.dark {
@@ -97,7 +93,7 @@
      and the dividers fall on the same vertical lines no matter how long
      each value is. */
   .om-page .meta-bar {
-    background: var(--accent-light); border: 1px solid var(--accent-mid); border-radius: 14px;
+    background: var(--clay-tint); border: 1px solid var(--clay-edge); border-radius: 14px;
     padding: 24px 0;
     display: grid;
     grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
@@ -106,40 +102,40 @@
   .om-page .meta-item { padding: 0 32px; min-width: 0; }
   .om-page .meta-item p.label {
     font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 6px;
+    color: var(--clay); margin-bottom: 6px;
   }
-  .om-page .meta-item p.value { font-size: 15px; font-weight: 600; color: var(--warm-gray); line-height: 1.4; }
-  .om-page .meta-divider { width: 1px; height: 36px; background: var(--accent-mid); }
+  .om-page .meta-item p.value { font-size: 15px; font-weight: 600; color: var(--ink-2); line-height: 1.4; }
+  .om-page .meta-divider { width: 1px; height: 36px; background: var(--clay-edge); }
 
   
   .om-page .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; }
   .om-page .principle-card {
-    padding: 24px; background: var(--cream); border: 1px solid var(--border-light); border-radius: 12px;
+    padding: 24px; background: var(--bg); border: 1px solid var(--hairline); border-radius: 12px;
   }
   .om-page .principle-card .num {
-    font-size: 11px; font-weight: 800; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 10px;
+    font-size: 11px; font-weight: 800; color: var(--clay); letter-spacing: 0.1em; margin-bottom: 10px;
   }
-  .om-page .principle-card h4 { font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px; }
-  .om-page .principle-card p { font-size: 13px; line-height: 1.6; color: var(--warm-gray); }
+  .om-page .principle-card h4 { font-size: 14px; font-weight: 700; color: var(--clay-ink); margin-bottom: 8px; }
+  .om-page .principle-card p { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
 
   
   .om-page .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
   .om-page .theme-card {
-    padding: 24px 28px; background: var(--cream); border: 1px solid var(--border-light); border-radius: 12px;
+    padding: 24px 28px; background: var(--bg); border: 1px solid var(--hairline); border-radius: 12px;
   }
-  .om-page .theme-card h4 { font-size: 14px; font-weight: 700; color: var(--accent-dark); margin-bottom: 8px; }
-  .om-page .theme-card p { font-size: 13px; line-height: 1.6; color: var(--warm-gray); }
+  .om-page .theme-card h4 { font-size: 14px; font-weight: 700; color: var(--clay-ink); margin-bottom: 8px; }
+  .om-page .theme-card p { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
 
   
   .om-page .quote-block {
-    padding: 28px 32px; background: var(--peach-light);
+    padding: 28px 32px; background: var(--clay-tint);
     border: 1px solid rgba(184,103,87,0.25); border-radius: 12px;
-    border-left: 4px solid var(--peach); margin-bottom: 32px;
+    border-left: 4px solid var(--clay); margin-bottom: 32px;
   }
   .om-page .quote-block blockquote {
-    font-size: 18px; font-style: italic; color: var(--warm-gray); line-height: 1.7; margin-bottom: 12px;
+    font-size: 18px; font-style: italic; color: var(--ink-2); line-height: 1.7; margin-bottom: 12px;
   }
-  .om-page .quote-block cite { font-size: 12px; font-weight: 600; color: var(--accent-dark); font-style: normal; }
+  .om-page .quote-block cite { font-size: 12px; font-weight: 600; color: var(--clay-ink); font-style: normal; }
 
   
   /* Plain callout — heading + body, no card frame */
@@ -148,7 +144,7 @@
     font-family: var(--f-serif) !important;
     font-weight: 300 !important;
     font-size: clamp(26px, 3.2vw, 38px) !important;
-    color: #372B0B !important;
+    color: var(--ink-2) !important;
     letter-spacing: -0.01em !important;
     line-height: 1.2 !important;
     margin-bottom: 16px !important;
@@ -156,7 +152,7 @@
   .om-page .callout-body {
     font-size: 15px !important;
     line-height: 1.75 !important;
-    color: var(--deep-text) !important;
+    color: var(--ink-3) !important;
     margin: 0 !important;
   }
 
@@ -173,7 +169,7 @@
     text-transform: uppercase !important; color: var(--clay) !important;
     margin-bottom: 12px !important;
   }
-  .om-page .feedback-item p { font-size: 14px; line-height: 1.65; color: var(--warm-gray); margin: 0; }
+  .om-page .feedback-item p { font-size: 14px; line-height: 1.65; color: var(--ink-2); margin: 0; }
   @media (max-width: 720px) {
     .om-page .feedback-list { grid-template-columns: 1fr; }
   }
@@ -194,7 +190,7 @@
   }
   .om-page .outcome-col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
   .om-page .outcome-col li {
-    font-size: 14px; line-height: 1.65; color: var(--warm-gray);
+    font-size: 14px; line-height: 1.65; color: var(--ink-2);
     padding-left: 20px; position: relative;
   }
   .om-page .outcome-col li::before {
@@ -243,8 +239,8 @@
      simple translucent cream tiles that sit cleanly on the mustard wash.
      Specificity matches the shared rule and OM's stylesheet loads after it,
      so this wins on equal-specificity tiebreak. */
-  .om-page .om-gold [style*="background: var(--accent-light)"],
-  .om-page .om-gold [style*="background: var(--peach-light)"] {
+  .om-page .om-gold [style*="background: var(--clay-tint)"],
+  .om-page .om-gold [style*="background: var(--clay-tint)"] {
     background: rgba(252, 246, 235, 0.42) !important;
     border: 0 !important;
     box-shadow: none !important;
@@ -335,7 +331,7 @@
     border-bottom: 1px solid rgba(55,43,11,0.18); background: #fff;
   }
   .om-page .lofi-tab { width: 88px; height: 5px; border-radius: 3px; background: rgba(55,43,11,0.22); }
-  .om-page .lofi-tab.active { background: var(--peach); box-shadow: 0 2px 0 var(--peach); }
+  .om-page .lofi-tab.active { background: var(--clay); box-shadow: 0 2px 0 var(--clay); }
 
   .om-page .lofi-body {
     display: flex; align-items: stretch;
@@ -360,7 +356,7 @@
     34%, 64% { flex-basis: 36px;  padding-left: 8px;  padding-right: 8px; }
     72%, 100%{ flex-basis: 180px; padding-left: 14px; padding-right: 14px; }
   }
-  .om-page .lofi-filter-title { width: 70px; height: 8px; border-radius: 4px; background: var(--accent); opacity: 0.7; }
+  .om-page .lofi-filter-title { width: 70px; height: 8px; border-radius: 4px; background: var(--clay); opacity: 0.7; }
   .om-page .lofi-filter-section { display: flex; flex-direction: column; gap: 6px; }
   .om-page .lofi-filter-label { width: 56px; height: 5px; border-radius: 3px; background: rgba(55,43,11,0.45); }
   .om-page .lofi-input {
@@ -384,7 +380,7 @@
   }
   .om-page .lofi-apply {
     margin-top: auto;
-    width: 100%; height: 22px; border-radius: 5px; background: var(--peach);
+    width: 100%; height: 22px; border-radius: 5px; background: var(--clay);
   }
 
   
@@ -412,7 +408,7 @@
   .om-page .lofi-row.sel { animation: rowHighlight 18s ease-in-out infinite; }
   @keyframes checkFill {
     0%, 60%  { background: #fff; border-color: rgba(55,43,11,0.45); }
-    66%, 82% { background: var(--peach); border-color: var(--peach); }
+    66%, 82% { background: var(--clay); border-color: var(--clay); }
     88%, 100%{ background: #fff; border-color: rgba(55,43,11,0.45); }
   }
   @keyframes rowHighlight {
@@ -444,7 +440,7 @@
     50%, 64% { flex-basis: 200px; padding: 14px 14px; opacity: 1; }
     72%, 100%{ flex-basis: 0;   padding: 0;        opacity: 0; }
   }
-  .om-page .lofi-detail-title { width: 90px; height: 8px; border-radius: 4px; background: var(--peach); }
+  .om-page .lofi-detail-title { width: 90px; height: 8px; border-radius: 4px; background: var(--clay); }
   .om-page .lofi-detail-row {
     display: flex; flex-direction: column; gap: 4px;
     padding-bottom: 8px; border-bottom: 1px solid rgba(55,43,11,0.12);
@@ -460,7 +456,7 @@
   }
   .om-page .lofi-footer-left { width: 90px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.18); }
   .om-page .lofi-send {
-    width: 92px; height: 20px; border-radius: 5px; background: var(--peach);
+    width: 92px; height: 20px; border-radius: 5px; background: var(--clay);
     animation: sendPulse 18s ease-in-out infinite;
   }
   @keyframes sendPulse {
@@ -509,7 +505,7 @@
     border: 1px solid rgba(55,43,11,0.20);
     padding: 6px 8px; display: flex; flex-direction: column; gap: 3px;
   }
-  .om-page .lofi-modal-tab.active { background: rgba(55,43,11,0.20); border-color: var(--accent); }
+  .om-page .lofi-modal-tab.active { background: rgba(55,43,11,0.20); border-color: var(--clay); }
   .om-page .lofi-modal-tab.warn { border-color: rgba(207,153,76,0.65); background: rgba(207,153,76,0.10); }
   .om-page .lofi-modal-tab.err { border-color: rgba(192,87,68,0.65);  background: rgba(192,87,68,0.10); }
   .om-page .lofi-modal-tab .l { width: 56px; height: 4px; border-radius: 2px; background: rgba(36,29,21,0.5); }
@@ -524,7 +520,7 @@
   .om-page .lofi-modal-row .total { height: 5px; border-radius: 3px; background: rgba(55,43,11,0.4); }
   .om-page .lofi-modal-ft { background: #fbfaf4; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 0 14px; border-top: 1px solid rgba(55,43,11,0.18); }
   .om-page .lofi-modal-cancel { width: 50px; height: 16px; border-radius: 4px; background: rgba(55,43,11,0.18); }
-  .om-page .lofi-modal-confirm { width: 100px; height: 16px; border-radius: 4px; background: var(--peach); }
+  .om-page .lofi-modal-confirm { width: 100px; height: 16px; border-radius: 4px; background: var(--clay); }
 
   
   .om-page .hero-anim-caption {
@@ -534,7 +530,7 @@
     font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
     color: rgba(55,43,11,0.72);
   }
-  .om-page .hero-anim-caption .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); display: inline-block; margin-right: 8px; vertical-align: middle; }
+  .om-page .hero-anim-caption .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay-deep); display: inline-block; margin-right: 8px; vertical-align: middle; }
 
   @media (prefers-reduced-motion: reduce) {
     .om-page .hero-anim-stage, .om-page .lofi-filter, .om-page .lofi-detail, .om-page .lofi-modal-overlay, .om-page .lofi-modal, .om-page .lofi-row.sel, .om-page .lofi-row.sel .lofi-check, .om-page .lofi-chip, .om-page .lofi-send {
@@ -559,8 +555,8 @@
     box-shadow: 0 2px 14px rgba(55,43,11,0.06), inset 0 1px 0 rgba(245,232,211,0.5);
   }
   .om-page .om-gold .principle-card .num { color: #B86757; }
-  .om-page .om-gold .principle-card h4 { color: #372B0B; }
-  .om-page .om-gold .principle-card p { color: rgba(55,43,11,0.75); }
+  .om-page .om-gold .principle-card h4 { color: var(--ink-2); }
+  .om-page .om-gold .principle-card p { color: var(--ink-2); }
 
   /* Workflow map image — sits edge-to-edge on the gold section, no card. */
   .om-page .om-gold-map-frame {

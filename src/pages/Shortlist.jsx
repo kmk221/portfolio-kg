@@ -97,6 +97,7 @@ export default function Shortlist() {
       {/* ── WHY + KEY INSIGHT ── */}
       <section style={section}>
         <div style={wrap}>
+          <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Context</span><span className="rule"></span></div>
           <h2 className="cs-h2">Why I built it</h2>
           <p className="cs-body">
             I wanted to explore a mobile–TV pairing I don’t usually get to design for, prototype
@@ -112,6 +113,7 @@ export default function Shortlist() {
       {/* ── DESIGN MOVE + WHAT EACH ITEM SURFACES ── */}
       <section style={{ ...section, paddingTop: 0 }}>
         <div style={wrap}>
+          <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Approach</span><span className="rule"></span></div>
           <h2 className="cs-h2">The design move</h2>
           <p className="cs-body">
             Instead of the usual hero-plus-carousels, the TV layout shows your whole short list on
@@ -131,6 +133,7 @@ export default function Shortlist() {
       {/* ── PLATFORMS & FLOW ── */}
       <section style={{ ...section, paddingTop: 0 }}>
         <div style={wrap}>
+          <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Structure</span><span className="rule"></span></div>
           <h2 className="cs-h2">Platforms &amp; flow</h2>
           <div className="sl-flow">
             <div className="sl-flow-item">
@@ -148,6 +151,7 @@ export default function Shortlist() {
       {/* ── VISUAL SYSTEM ── */}
       <section style={{ ...section, paddingTop: 0 }}>
         <div style={wrap}>
+          <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Craft</span><span className="rule"></span></div>
           <h2 className="cs-h2">Visual system</h2>
           <p className="cs-body">
             The mobile app uses a light, approachable theme to make building a list feel low-stakes
@@ -171,7 +175,14 @@ export default function Shortlist() {
         </div>
       </section>
 
-      <footer className="site-foot" id="contact">
+      <nav className="cs-case-nav" aria-label="Bits navigation">
+        <a href="/illustrations" className="cs-case-nav-item cs-case-nav-item--next" style={{ marginLeft: 'auto' }}>
+          <span className="cs-case-nav-dir">Next →</span>
+          <span className="cs-case-nav-title">Line Art & Characters</span>
+        </a>
+      </nav>
+
+      <footer className="site-foot" id="contact" style={{ marginTop: 0 }}>
         <div className="inner">
           <span className="left">kristin<span style={{ opacity: 0.6 }}>.garza</span> · UX Designer</span>
           <span className="right">

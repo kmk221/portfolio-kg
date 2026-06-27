@@ -37,14 +37,14 @@ const wideQuote = {
 }
 
 const contentPieces = [
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast  -  why the traditional linear design process doesn't hold up in the AI era, and what's replacing it.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
+  { type: 'Podcast', typeColor: 'var(--clay-ink)', barColor: 'var(--clay)', title: 'The Design Process Is Dead', tldr: "Jenny Wen on Lenny's Podcast  -  why the traditional linear design process doesn't hold up in the AI era, and what's replacing it.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/the-design-process-is-dead' },
   { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'Comprehension Debt', tldr: "Addy Osmani on the hidden cost of AI-generated code  -  the growing gap between what we produce and what we actually understand.", cta: 'Read →', url: 'https://addyosmani.com/blog/comprehension-debt/' },
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners  -  five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
+  { type: 'Podcast', typeColor: 'var(--clay-ink)', barColor: 'var(--clay)', title: 'Claude Cowork for Designers', tldr: 'Patricia Reiners  -  five concrete workflows that change how designers work day-to-day: research synthesis, competitive analysis, flow specs, design system docs, and portfolio case studies.', cta: 'Listen →', url: 'https://podcasts.apple.com/us/podcast/152-claude-cowork-for-designers-in-30-min-5-real-workflows/id1480706373?i=1000761766238' },
+  { type: 'Podcast', typeColor: 'var(--clay-ink)', barColor: 'var(--clay)', title: 'Taste Is Your Moat', tldr: "Figma CEO Dylan Field on why craft, taste, and judgment are the real differentiators as AI accelerates execution, and how designers become more essential, not less.", cta: 'Listen →', url: 'https://www.lennysnewsletter.com/p/why-ai-makes-design-craft-and-quality-the-new-moat' },
   { type: 'Article', typeColor: 'var(--slate-deep)', barColor: 'var(--slate)', title: 'A.I. Is Coming for Culture', tldr: 'Joshua Rothman in The New Yorker on what happens to meaning, taste, and shared cultural experience when machines can generate artifacts at scale.', cta: 'Read →', url: 'https://www.newyorker.com/magazine/2025/09/01/ai-is-coming-for-culture' },
-  { type: 'Podcast', typeColor: 'var(--clay-deep)', barColor: 'var(--clay)', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries  -  grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
-  { type: 'Talk', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight  -  and why "make people smile" is a valid design goal.', cta: 'Watch →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
-  { type: 'Substack', typeColor: 'var(--ochre-deep)', barColor: 'var(--ochre)', title: "Don't Trust the Process", tldr: "Jenny Wen on why rigid design process is holding teams back in the AI era  -  and why starting with a solution isn't heresy anymore.", cta: 'Read →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
+  { type: 'Podcast', typeColor: 'var(--clay-ink)', barColor: 'var(--clay)', title: 'Hard Fork', tldr: "Kevin Roose and Casey Newton on the real-world implications of AI across industries  -  grounding the conversation in what's actually happening, not theory.", cta: 'Listen →', url: 'https://www.nytimes.com/column/hard-fork' },
+  { type: 'Talk', typeColor: 'var(--ochre-ink)', barColor: 'var(--ochre)', title: 'Designing for Delight at Figma', tldr: 'Jenny Wen on how Figma\'s team approached moments of delight  -  and why "make people smile" is a valid design goal.', cta: 'Watch →', url: 'https://www.dive.club/deep-dives/jenny-wen' },
+  { type: 'Substack', typeColor: 'var(--ochre-ink)', barColor: 'var(--ochre)', title: "Don't Trust the Process", tldr: "Jenny Wen on why rigid design process is holding teams back in the AI era  -  and why starting with a solution isn't heresy anymore.", cta: 'Read →', url: 'https://jennywen.substack.com/p/dont-trust-the-design-process' },
 ]
 
 const voices = [
@@ -131,7 +131,7 @@ export default function AIDesign() {
       {/* ── MY TAKE ── */}
       <section className={styles.myTake}>
         <div className={styles.myTakeInner}>
-          <div className={`${styles.sectionLabelWrap} ${styles.light}`}>
+          <div className={styles.sectionLabelWrap}>
             <p className={styles.myTakeLabel}>My Take</p>
           </div>
           <blockquote className={styles.myTakeQuote}>
@@ -233,13 +233,20 @@ export default function AIDesign() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="site-foot">
+      <nav className="cs-case-nav" aria-label="Bits navigation">
+        <a href="/illustrations" className="cs-case-nav-item cs-case-nav-item--prev">
+          <span className="cs-case-nav-dir">← Previous</span>
+          <span className="cs-case-nav-title">Line Art & Characters</span>
+        </a>
+      </nav>
+
+      <footer className="site-foot" style={{ marginTop: 0 }}>
         <div className="inner">
           <p className="left">kristin.garza · UX Designer</p>
           <div className="right">
             <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">LinkedIn</a>
             <a href="mailto:kmkerney221@gmail.com">Email</a>
-            <a href="/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+            <a href="/KristinGarzaResume.pdf" target="_blank" rel="noreferrer">Resume</a>
           </div>
         </div>
       </footer>

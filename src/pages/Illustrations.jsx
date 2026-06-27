@@ -150,7 +150,7 @@ export default function Illustrations() {
         </section>
 
         {/* ── ABOUT THIS WORK ── */}
-        <section className="page-section" style={{ background: 'var(--surface)', paddingTop: 80, paddingBottom: 80, borderBottom: '1px solid var(--hairline)' }}>
+        <section className="page-section" style={{ background: 'var(--surface)', paddingTop: 80, paddingBottom: 80 }}>
           <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '0 var(--side-p)' }}>
             <div className="section-spread" style={{ marginBottom: 32 }}>
               <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>About This Work</span>
@@ -498,7 +498,18 @@ export default function Illustrations() {
       </main>
 
       {/* ── FOOTER ── */}
-      <footer className="site-foot" id="contact" style={{ background: 'var(--surface)', borderTop: '1px solid var(--hairline)' }}>
+      <nav className="cs-case-nav" aria-label="Bits navigation">
+        <a href="/bits/shortlist" className="cs-case-nav-item cs-case-nav-item--prev">
+          <span className="cs-case-nav-dir">← Previous</span>
+          <span className="cs-case-nav-title">Shortlist</span>
+        </a>
+        <a href="/ai-design" className="cs-case-nav-item cs-case-nav-item--next">
+          <span className="cs-case-nav-dir">Next →</span>
+          <span className="cs-case-nav-title">AI × Design</span>
+        </a>
+      </nav>
+
+      <footer className="site-foot" id="contact" style={{ marginTop: 0 }}>
         <div className="inner">
           <span className="left">kristin<span style={{ opacity: 0.6 }}>.garza</span> · UX Designer</span>
           <span className="right">

@@ -7,57 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Permanent+Marker&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="tokens-orphaned.css" />
 <style>
-  /* ───────── TOKENS (mirrors tokens.css) ───────── */
-  :root {
-    --bg:              #FAF7F0;
-    --surface:         #FFFFFF;
-    --surface-2:       #F2EBDB;
-    --hairline:        #E6DCC6;
-    --hairline-strong: #C9BC9B;
-
-    --ink:        #1F1A0F;
-    --ink-2:      #3D3322;
-    --ink-3:      #6B5E45;
-    --ink-mute:   #8A7C5E;
-
-    --clay:       #9E644B;
-    --clay-deep:  #C47655;
-    --clay-ink:   #8E4A2E;
-    --clay-tint:  #F2DCD0;
-    --clay-edge:  #D9AC97;
-
-    --ochre:      #BF933F;
-    --ochre-deep: #BF933F;
-    --ochre-tint: #F4E5C0;
-    --ochre-edge: #D4A95C;
-
-    --slate:      #718C8F;
-    --slate-deep: #718C8F;
-    --slate-tint: #A5BCBD;
-    --slate-edge: #718C8F;
-
-    --focus:     #2B4068;
-    --selection: rgba(183,113,83,0.22);
-
-    --r-1: 4px;  --r-2: 8px;  --r-3: 12px;  --r-4: 20px;  --r-pill: 999px;
-    --s-1: 4px;  --s-2: 8px;  --s-3: 12px;  --s-4: 16px;  --s-5: 24px;
-    --s-6: 32px; --s-7: 48px; --s-8: 64px;  --s-9: 96px;  --s-10: 128px;
-
-    --f-serif:         "Crimson Pro", Georgia, serif;
-    --f-display-serif: "Crimson Pro", Georgia, serif;
-    --f-slab:          "Crimson Pro", Georgia, serif;
-    --f-script:        "Permanent Marker", "Bradley Hand", cursive;
-    --f-sans:          "Plus Jakarta Sans", system-ui, sans-serif;
-    --f-mono:          "JetBrains Mono", ui-monospace, Menlo, monospace;
-    --f-display:       var(--f-serif);
-    --f-editorial:     var(--f-serif);
-    --f-ui:            var(--f-sans);
-
-    --shadow-1: 0 1px 2px rgba(55,43,11,0.06), 0 1px 1px rgba(55,43,11,0.04);
-    --shadow-2: 0 6px 18px rgba(55,43,11,0.08), 0 2px 4px rgba(55,43,11,0.04);
-    --shadow-3: 0 20px 48px rgba(55,43,11,0.12), 0 4px 10px rgba(55,43,11,0.06);
-  }
+  /* Tokens now come from the linked tokens.css — single source of truth. */
 
   /* ───────── RESET ───────── */
   *, *::before, *::after { box-sizing: border-box; }
@@ -90,7 +43,7 @@
   .editorial { font-family: var(--f-serif); font-style: italic; font-weight: 300; letter-spacing: -0.012em; color: var(--ink-2); }
   .body      { font-size: 16px; line-height: 1.65; color: var(--ink-2); }
   .small     { font-size: 13px; line-height: 1.5; color: var(--ink-3); }
-  .caption   { font-size: 12px; line-height: 1.4; color: var(--ink-mute); }
+  .caption   { font-size: 12px; line-height: 1.4; color: var(--ink-3); }
   .mono      { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0; }
 
   /* ───────── SECTION CHROME ───────── */
@@ -166,7 +119,7 @@
   /* ───────── BUTTONS ───────── */
   .btn {
     --btn-fg: var(--bg); --btn-bg: var(--clay-ink); --btn-bd: var(--clay-ink);
-    --btn-bg-hover: #6e3720; --btn-bd-hover: #6e3720;
+    /* MOVED to tokens-orphaned.css for review (no tokens.css match): --btn-bg-hover/--btn-bd-hover */
     appearance: none; border: 1px solid var(--btn-bd); background: var(--btn-bg); color: var(--btn-fg);
     font-family: var(--f-ui); font-weight: 600; font-size: 13px; letter-spacing: 0.02em;
     padding: 10px 18px; border-radius: var(--r-2); cursor: pointer;
@@ -177,8 +130,8 @@
   .btn:hover { background: var(--btn-bg-hover); border-color: var(--btn-bd-hover); }
   .btn:active { transform: translateY(1px); }
   .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-  .btn--secondary { --btn-bg: transparent; --btn-fg: var(--clay-ink); --btn-bd: var(--clay); --btn-bg-hover: var(--clay-tint); --btn-bd-hover: var(--clay-ink); }
-  .btn--secondary:hover { color: var(--clay-ink); }
+  .btn--secondary { --btn-bg: transparent; --btn-fg: var(--clay-ink); --btn-bd: var(--clay); --btn-bg-hover: var(--surface-2); --btn-bd-hover: var(--clay-ink); }
+  .btn--secondary:hover { background: var(--surface-2); border-color: var(--clay-ink); color: var(--clay-ink); }
   .btn--ghost { --btn-bg: transparent; --btn-fg: var(--ink-2); --btn-bd: transparent; --btn-bg-hover: rgba(55,43,11,0.06); --btn-bd-hover: transparent; padding: 8px 12px; }
   .btn--ghost:hover { color: var(--ink); }
   .btn--lg { font-size: 14px; padding: 14px 22px; }
@@ -188,7 +141,7 @@
   /* ───────── CHIPS ───────── */
   .chip { display: inline-flex; white-space: nowrap; align-items: center; gap: 6px; font-family: var(--f-ui); font-weight: 500; font-size: 12px; padding: 5px 12px; border-radius: var(--r-pill); border: 1px solid transparent; line-height: 1.4; }
   .chip--clay    { background: var(--clay-tint);  color: var(--clay-ink);   border-color: rgba(142,74,46,0.18); }
-  .chip--ochre   { background: var(--ochre-tint); color: var(--ochre-deep); border-color: rgba(122,90,28,0.20); }
+  .chip--ochre   { background: var(--ochre-tint); color: var(--ochre-ink); border-color: rgba(122,90,28,0.20); }
   .chip--slate   { background: var(--slate-tint); color: var(--slate-deep); border-color: rgba(113,140,143,0.30); }
   .chip--neutral { background: var(--surface-2);  color: var(--ink-2);      border-color: var(--hairline); }
   .chip--solid   { background: var(--ink);        color: var(--bg);         border-color: var(--ink); }
@@ -215,7 +168,7 @@
   .case-card.bold .hero .preview-stub { border-color: rgba(255,255,255,0.18); box-shadow: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08); }
   .case-card .body-pad { padding: 24px 24px 20px; border-top: 1px solid var(--hairline); }
   .case-card .body-pad .label { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); }
-  .case-card.ochre .body-pad .label { color: var(--ochre-deep); }
+  .case-card.ochre .body-pad .label { color: var(--ochre-ink); }
   .case-card.slate .body-pad .label { color: var(--slate-deep); }
   .case-card h3 { font-family: var(--f-display); font-weight: 500; font-size: 18px; letter-spacing: -0.005em; color: var(--ink); margin: 6px 0 8px; }
   .case-card p  { font-size: 13px; line-height: 1.55; color: var(--ink-3); margin: 0 0 16px; }
@@ -246,14 +199,14 @@
   .index-col:last-child  { padding-right: 0; }
   .index-col:hover { background: rgba(31,26,15,0.018); }
   .index-col .cat { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin-bottom: 20px; }
-  .index-col.ochre .cat { color: var(--ochre-deep); }
+  .index-col.ochre .cat { color: var(--ochre-ink); }
   .index-col.slate .cat { color: var(--slate-deep); }
   .index-col .title { font-family: var(--f-serif); font-weight: 400; font-size: 27px; line-height: 1.18; letter-spacing: -0.018em; color: var(--ink); margin: 0 0 12px; max-width: 18ch; }
   .index-col .meta  { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-mute); margin-bottom: 22px; }
   .index-col .excerpt { font-family: var(--f-sans); font-size: 14px; line-height: 1.6; color: var(--ink-3); margin: 0; max-width: 34ch; }
   .index-col .excerpt strong { color: var(--ink); font-weight: 600; }
   .index-col .go { margin-top: auto; padding-top: 32px; font-size: 20px; line-height: 1; color: var(--clay); transition: transform 160ms ease; }
-  .index-col.ochre .go { color: var(--ochre-deep); }
+  .index-col.ochre .go { color: var(--ochre-ink); }
   .index-col.slate .go { color: var(--slate-deep); }
   .index-col:hover .go { transform: translateX(6px); }
   @media (max-width: 760px) {
@@ -273,7 +226,7 @@
   .work-card .shot .preview-stub { box-shadow: var(--shadow-1); }
   .work-card .body { padding: 16px 6px 4px; display: flex; flex-direction: column; flex: 1; }
   .work-card .cat { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--clay); margin-bottom: 12px; }
-  .work-card.ochre .cat, .work-card.ochre .cta { color: var(--ochre-deep); }
+  .work-card.ochre .cat, .work-card.ochre .cta { color: var(--ochre-ink); }
   .work-card.slate .cat, .work-card.slate .cta { color: var(--slate-deep); }
   .work-card h3 { font-family: var(--f-serif); font-weight: 400; font-size: 21px; line-height: 1.2; letter-spacing: -0.014em; color: var(--ink); margin: 0 0 10px; }
   .work-card p  { font-family: var(--f-sans); font-size: 14px; line-height: 1.55; color: var(--ink-3); margin: 0; }
@@ -403,32 +356,44 @@
 
     <h3 class="h-3" style="margin-bottom:16px;">Surfaces &amp; Ink</h3>
     <div class="swatch-row">
-      <div class="swatch"><div class="swatch-chip" style="background:#FAF7F0;"><span class="ratio">PAGE</span></div><div class="meta"><div class="name">Cream</div><div class="var">--bg</div><div class="hex">#FAF7F0</div></div></div>
-      <div class="swatch"><div class="swatch-chip" style="background:#FFFFFF;"><span class="ratio">SURFACE</span></div><div class="meta"><div class="name">White</div><div class="var">--surface</div><div class="hex">#FFFFFF</div></div></div>
-      <div class="swatch"><div class="swatch-chip" style="background:#F2EBDB;"><span class="ratio">MUTED</span></div><div class="meta"><div class="name">Parchment</div><div class="var">--surface-2</div><div class="hex">#F2EBDB</div></div></div>
-      <div class="swatch"><div class="swatch-chip" style="background:#E6DCC6;"><span class="ratio">HAIRLINE</span></div><div class="meta"><div class="name">Sand</div><div class="var">--hairline</div><div class="hex">#E6DCC6</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--bg);"><span class="ratio">PAGE</span></div><div class="meta"><div class="name">Cream</div><div class="var">--bg</div><div class="hex">#FAF7F0</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--surface);"><span class="ratio">SURFACE</span></div><div class="meta"><div class="name">White</div><div class="var">--surface</div><div class="hex">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--surface-2);"><span class="ratio">MUTED</span></div><div class="meta"><div class="name">Parchment</div><div class="var">--surface-2</div><div class="hex">#F2EBDB</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--hairline);"><span class="ratio">HAIRLINE</span></div><div class="meta"><div class="name">Sand</div><div class="var">--hairline</div><div class="hex">#E6DCC6</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--hairline-strong);"><span class="ratio">HAIRLINE+</span></div><div class="meta"><div class="name">Sand Deep</div><div class="var">--hairline-strong</div><div class="hex">#C9BC9B</div></div></div>
     </div>
 
     <div class="swatch-row">
-      <div class="swatch"><div class="swatch-chip dark" style="background:#1F1A0F;"><span class="ratio">16.6 : 1</span></div><div class="meta"><div class="name">Ink</div><div class="var">--ink</div><div class="hex">#1F1A0F</div></div></div>
-      <div class="swatch"><div class="swatch-chip dark" style="background:#3D3322;"><span class="ratio">11.0 : 1</span></div><div class="meta"><div class="name">Ink 2</div><div class="var">--ink-2</div><div class="hex">#3D3322</div></div></div>
-      <div class="swatch"><div class="swatch-chip dark" style="background:#6B5E45;"><span class="ratio">5.6 : 1</span></div><div class="meta"><div class="name">Ink 3</div><div class="var">--ink-3</div><div class="hex">#6B5E45</div></div></div>
-      <div class="swatch"><div class="swatch-chip dark" style="background:#8A7C5E;"><span class="ratio">4.6 : 1</span></div><div class="meta"><div class="name">Ink Mute</div><div class="var">--ink-mute</div><div class="hex">#8A7C5E</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--ink);"><span class="ratio">16.6 : 1</span></div><div class="meta"><div class="name">Ink</div><div class="var">--ink</div><div class="hex">#1F1A0F</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--ink-2);"><span class="ratio">13.0 : 1</span></div><div class="meta"><div class="name">Ink 2</div><div class="var">--ink-2</div><div class="hex">#372B0B</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--ink-3);"><span class="ratio">5.6 : 1</span></div><div class="meta"><div class="name">Ink 3</div><div class="var">--ink-3</div><div class="hex">#6B5E45</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--ink-mute);"><span class="ratio">4.6 : 1</span></div><div class="meta"><div class="name">Ink Mute</div><div class="var">--ink-mute</div><div class="hex">#8A7C5E</div></div></div>
     </div>
-    <p class="small" style="margin-top:8px; max-width:64ch;"><strong>Ratios shown against Cream (#FAF7F0).</strong> Ink Mute (4.6:1) is captions-only — body copy uses Ink 3 or darker.</p>
+    <p class="small" style="margin-top:8px; max-width:64ch;"><strong>Ratios shown against Cream (var(--bg)).</strong> Ink Mute (4.6:1) is captions-only — body copy uses Ink 3 or darker.</p>
 
     <h3 class="h-3" style="margin-top:56px; margin-bottom:16px;">Accents — Clay · Ochre · Slate</h3>
     <div class="swatch-row">
-      <div class="swatch"><div class="swatch-chip dark" style="background:#8E4A2E;"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Clay Ink</div><div class="var">--clay-ink</div><div class="hex">#8E4A2E</div></div></div>
-      <div class="swatch"><div class="swatch-chip dark" style="background:#9E644B;"><span class="ratio">EYEBROWS</span></div><div class="meta"><div class="name">Clay</div><div class="var">--clay</div><div class="hex">#9E644B</div></div></div>
-      <div class="swatch"><div class="swatch-chip dark" style="background:#C47655;"><span class="ratio">FILLS / UI</span></div><div class="meta"><div class="name">Clay Deep</div><div class="var">--clay-deep</div><div class="hex">#C47655</div></div></div>
-      <div class="swatch"><div class="swatch-chip" style="background:#F2DCD0;"><span class="ratio">TINT</span></div><div class="meta"><div class="name">Clay Tint</div><div class="var">--clay-tint</div><div class="hex">#F2DCD0</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--clay-ink);"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Clay Ink</div><div class="var">--clay-ink</div><div class="hex">#8E4A2E</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--clay);"><span class="ratio">EYEBROWS</span></div><div class="meta"><div class="name">Clay</div><div class="var">--clay</div><div class="hex">#9E644B</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--clay-deep);"><span class="ratio">FILLS / UI</span></div><div class="meta"><div class="name">Clay Deep</div><div class="var">--clay-deep</div><div class="hex">#C47655</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--clay-tint);"><span class="ratio">TINT</span></div><div class="meta"><div class="name">Clay Tint</div><div class="var">--clay-tint</div><div class="hex">#F2DCD0</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--clay-edge);"><span class="ratio">EDGE</span></div><div class="meta"><div class="name">Clay Edge</div><div class="var">--clay-edge</div><div class="hex">#D9AC97</div></div></div>
     </div>
     <div class="swatch-row">
-      <div class="swatch"><div class="swatch-chip dark" style="background:#BF933F;"><span class="ratio">OCHRE</span></div><div class="meta"><div class="name">Ochre</div><div class="var">--ochre / --ochre-deep</div><div class="hex">#BF933F</div></div></div>
-      <div class="swatch"><div class="swatch-chip" style="background:#F4E5C0;"><span class="ratio">FILL</span></div><div class="meta"><div class="name">Ochre Tint</div><div class="var">--ochre-tint</div><div class="hex">#F4E5C0</div></div></div>
-      <div class="swatch"><div class="swatch-chip dark" style="background:#718C8F;"><span class="ratio">SLATE</span></div><div class="meta"><div class="name">Slate</div><div class="var">--slate / --slate-deep</div><div class="hex">#718C8F</div></div></div>
-      <div class="swatch"><div class="swatch-chip" style="background:#A5BCBD;"><span class="ratio">TINT</span></div><div class="meta"><div class="name">Slate Tint</div><div class="var">--slate-tint</div><div class="hex">#A5BCBD</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--ochre);"><span class="ratio">OCHRE</span></div><div class="meta"><div class="name">Ochre</div><div class="var">--ochre / --ochre-deep</div><div class="hex">#BF933F</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--ochre-ink);"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Ochre Ink</div><div class="var">--ochre-ink</div><div class="hex">#7A5A1C</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--ochre-tint);"><span class="ratio">FILL</span></div><div class="meta"><div class="name">Ochre Tint</div><div class="var">--ochre-tint</div><div class="hex">#F4E5C0</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--ochre-edge);"><span class="ratio">EDGE</span></div><div class="meta"><div class="name">Ochre Edge</div><div class="var">--ochre-edge</div><div class="hex">#D4A95C</div></div></div>
+    </div>
+    <div class="swatch-row">
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--slate);"><span class="ratio">SLATE</span></div><div class="meta"><div class="name">Slate</div><div class="var">--slate</div><div class="hex">#718C8F</div></div></div>
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--slate-deep);"><span class="ratio">TEXT</span></div><div class="meta"><div class="name">Slate Deep</div><div class="var">--slate-deep</div><div class="hex">#3E5F62</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--slate-tint);"><span class="ratio">TINT</span></div><div class="meta"><div class="name">Slate Tint</div><div class="var">--slate-tint</div><div class="hex">#A5BCBD</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--slate-edge);"><span class="ratio">EDGE</span></div><div class="meta"><div class="name">Slate Edge</div><div class="var">--slate-edge</div><div class="hex">#8FAAAC</div></div></div>
+    </div>
+    <div class="swatch-row" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="swatch"><div class="swatch-chip dark" style="background:var(--focus);"><span class="ratio">FOCUS</span></div><div class="meta"><div class="name">Focus</div><div class="var">--focus</div><div class="hex">#2B4068</div></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background:var(--selection); border:1px solid var(--hairline);"><span class="ratio">SELECT</span></div><div class="meta"><div class="name">Selection</div><div class="var">--selection</div><div class="hex">rgba(183,113,83,0.22)</div></div></div>
     </div>
 
     <h3 class="h-3" style="margin-top:56px; margin-bottom:16px;">Approved pairings</h3>
@@ -464,7 +429,7 @@
         <div class="ratio"><span class="pass" style="background:rgba(0,0,0,0.08);">AAA</span>17.4 : 1</div>
       </div>
     </div>
-    <p class="small" style="margin-top:16px;"><strong>Note on --clay-deep (#C47655).</strong> Used for fills and UI accents only — not for body text. Use --clay-ink (#8E4A2E) whenever clay needs to be readable text or a button label.</p>
+    <p class="small" style="margin-top:16px;"><strong>Note on --clay-deep (var(--clay-deep)).</strong> Backgrounds, fills, and decorative elements only — <strong>never as a text color</strong> (it fails contrast on cream, ≈3.2:1). Use --clay-ink (var(--clay-ink)) whenever clay needs to be readable text, a heading, or a button label.</p>
   </section>
 
   <!-- ───────── TYPE ───────── -->
@@ -536,7 +501,7 @@
       </div>
       <div class="type-row">
         <div class="name">Caption<span class="id">.caption · metadata</span></div>
-        <div style="font-family:var(--f-sans); font-weight:400; font-size:12px; line-height:1.4; color:var(--ink-mute);">UX RESEARCH · 2024 · NDA permitted</div>
+        <div style="font-family:var(--f-sans); font-weight:400; font-size:12px; line-height:1.4; color:var(--ink-3);">UX RESEARCH · 2024 · NDA permitted</div>
         <div class="specs">Plus Jakarta Sans · 400<br>12 / 140 · Color: ink-mute only</div>
       </div>
       <div class="type-row">
@@ -552,9 +517,9 @@
         <div class="spec-title"><span class="t">Default</span><span class="id">.eyebrow</span></div>
         <div class="demo-area"><span class="eyebrow">Selected work</span></div>
         <dl class="notes">
-          <dt>color</dt><dd>--clay · 13px · JetBrains Mono 500</dd>
-          <dt>rule</dt><dd>32px after the label · 1px · 40% opacity</dd>
-          <dt>used in</dt><dd>section openers, before H1</dd>
+          <dt>type</dt><dd>--clay · 13px · JetBrains Mono 500 · 0.16em uppercase</dd>
+          <dt>rule</dt><dd>label only — no rule (pair with a full-width rule for section openers)</dd>
+          <dt>used in</dt><dd>standalone labels, hero kickers</dd>
         </dl>
       </div>
       <div class="spec-block">
@@ -577,8 +542,33 @@
           </div>
         </div>
         <dl class="notes">
-          <dt>variant</dt><dd>rule stretches full width</dd>
-          <dt>used in</dt><dd>case study sections, before section headings</dd>
+          <dt>standard</dt><dd>13px label + full-width 1px --hairline rule</dd>
+          <dt>used in</dt><dd>the section-opener standard — every case study and page (Order Management is the reference)</dd>
+        </dl>
+      </div>
+    </div>
+    <h3 class="h-3" style="margin-top:48px; margin-bottom:16px;">Body &amp; caption — Case Study</h3>
+    <div class="eyebrow-grid">
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Body</span><span class="id">.cs-body</span></div>
+        <div class="demo-area" style="display:block; padding:24px;">
+          <p style="font-size:16px; line-height:1.7; font-weight:400; color:var(--ink-2); margin:0; max-width:60ch;">The canonical paragraph for every case study. Research, narrative, and reflection copy all use this one style so body text reads consistently across Order Management, Rules, and Positions.</p>
+        </div>
+        <dl class="notes">
+          <dt>spec</dt><dd>16px · 1.7 · 400 · --ink-2</dd>
+          <dt>defined in</dt><dd>case-study-shared.css</dd>
+          <dt>used in</dt><dd>all case-study paragraph copy</dd>
+        </dl>
+      </div>
+      <div class="spec-block">
+        <div class="spec-title"><span class="t">Caption</span><span class="id">.cs-caption</span></div>
+        <div class="demo-area" style="display:block; padding:24px;">
+          <p style="font-size:13px; line-height:1.65; font-weight:400; color:var(--ink-2); margin:0; max-width:60ch;">Figure caption — small supporting labels, annotations, and notes. Anything 13px and below uses this rather than a one-off inline style.</p>
+        </div>
+        <dl class="notes">
+          <dt>spec</dt><dd>13px · 1.65 · 400 · --ink-2</dd>
+          <dt>defined in</dt><dd>case-study-shared.css</dd>
+          <dt>used in</dt><dd>figure captions, small labels, annotations</dd>
         </dl>
       </div>
     </div>
@@ -610,13 +600,14 @@
         <div>
           <h3 class="h-3" style="margin-bottom:16px;">Radii</h3>
           <div class="radius-row">
-            <div class="tile" style="border-radius:4px;">4 · r-1</div>
-            <div class="tile" style="border-radius:8px;">8 · r-2</div>
-            <div class="tile" style="border-radius:12px;">12 · r-3</div>
-            <div class="tile" style="border-radius:20px;">20 · r-4</div>
-            <div class="tile" style="border-radius:999px;">pill</div>
+            <div class="tile" style="border-radius:var(--r-1);">4 · r-1</div>
+            <div class="tile" style="border-radius:var(--r-2);">8 · r-2</div>
+            <div class="tile" style="border-radius:var(--r-3);">12 · r-3</div>
+            <div class="tile" style="border-radius:var(--r-4);">20 · r-4</div>
+            <div class="tile" style="border-radius:var(--r-pill);">pill</div>
           </div>
           <p class="small" style="margin-top:12px;">Inputs &amp; buttons → r-2. Cards &amp; bands → r-3. Chips → pill. r-1 reserved for inset tags inside thumbnails.</p>
+          <p class="small" style="margin-top:8px;"><strong>Type aliases:</strong> <code>--f-display</code> and <code>--f-editorial</code> both resolve to <code>--f-serif</code> (back-compat names used by existing pages) — no separate sample needed.</p>
         </div>
 
         <div>
@@ -651,7 +642,7 @@
           <button class="btn" disabled>Disabled</button>
         </div>
         <dl class="notes">
-          <dt>bg / fg</dt><dd>clay-ink (#8E4A2E) / cream · 6.2 : 1</dd>
+          <dt>bg / fg</dt><dd>clay-ink (var(--clay-ink)) / cream · 6.2 : 1</dd>
           <dt>hover</dt><dd>darker clay-ink</dd>
           <dt>focus</dt><dd>3px slate ring, 2px offset</dd>
           <dt>radius</dt><dd>r-2 (8px)</dd>
@@ -993,5 +984,22 @@
   </div>
 
 </main>
+
+<script>
+  /* Keep the hex labels in sync with the linked tokens.css: read each chip's
+     computed background and write it into the label, so changing a token value
+     in tokens.css updates both the swatch AND its hex label automatically. */
+  document.querySelectorAll('.swatch').forEach(function (sw) {
+    var chip = sw.querySelector('.swatch-chip'), label = sw.querySelector('.hex');
+    if (!chip || !label) return;
+    var m = getComputedStyle(chip).backgroundColor.match(/[\d.]+/g);
+    if (!m) return;
+    var hx = function (n) { return (+n).toString(16).padStart(2, '0'); };
+    var a = m[3] === undefined ? 1 : parseFloat(m[3]);
+    label.textContent = a === 1
+      ? ('#' + hx(m[0]) + hx(m[1]) + hx(m[2])).toUpperCase()
+      : 'rgba(' + m[0] + ',' + m[1] + ',' + m[2] + ',' + a + ')';
+  });
+</script>
 </body>
 </html>

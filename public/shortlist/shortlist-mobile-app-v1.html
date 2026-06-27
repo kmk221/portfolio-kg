@@ -75,6 +75,41 @@ body{background:#FAF7F0;min-height:100vh;display:flex;flex-direction:column;alig
 .empty-text{font-size:14px;line-height:1.6;color:var(--color-text-faint);}
 .manual-add{color:var(--color-accent-primary);font-weight:600;}
 
+/* ---------- Recent searches ---------- */
+.recent-head{display:flex;align-items:center;justify-content:space-between;margin:2px 2px 6px;}
+.recent-head .results-label{margin:0;}
+.recent-clear{background:none;border:none;color:var(--color-text-faint);font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:0.01em;cursor:pointer;padding:2px 0;}
+.recent-clear:active{color:var(--color-accent-primary);}
+.recent-item{display:flex;align-items:center;gap:12px;padding:11px 2px;cursor:pointer;transition:background var(--duration-fast);}
+.recent-item + .recent-item{border-top:1px solid var(--color-border-hairline);}
+.recent-item:active{background:var(--color-surface-raised);}
+.recent-ic{width:17px;height:17px;flex-shrink:0;color:var(--color-text-faint);}
+.recent-term{flex:1;font-size:15px;font-weight:500;color:var(--color-text-secondary);}
+.recent-x{width:26px;height:26px;margin-right:-4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--color-text-faint);font-size:13px;border-radius:50%;}
+.recent-x:active{color:var(--color-text-primary);background:var(--color-surface-raised);}
+
+/* ---------- iOS keyboard ---------- */
+.ios-kb{position:absolute;left:0;right:0;bottom:0;z-index:56;background:#d1d4db;padding:8px 4px 4px;font-family:-apple-system,"SF Pro Text","DM Sans",sans-serif;transform:translateY(118%);transition:transform .3s cubic-bezier(.22,1,.36,1);user-select:none;-webkit-user-select:none;}
+.ios-kb.show{transform:none;}
+.ios-kb-sugg{display:flex;height:44px;margin:-2px -4px 8px;}
+.ios-sugg{flex:1;display:flex;align-items:center;justify-content:center;font-size:16px;color:#1c1c1e;padding:0 8px;white-space:nowrap;overflow:hidden;cursor:pointer;}
+.ios-sugg.mid{font-weight:600;}
+.ios-sugg + .ios-sugg{border-left:1px solid rgba(60,60,67,0.18);}
+.kb-row{display:flex;gap:6px;margin-bottom:11px;}
+.kb-row:last-child{margin-bottom:0;}
+.kb-row.indent{padding:0 19px;}
+.kb-key{flex:1;height:43px;background:#fff;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:400;color:#1c1c1e;box-shadow:0 1px 0 rgba(0,0,0,0.32);cursor:pointer;}
+.kb-key:active{filter:brightness(0.88);}
+.kb-key.fn,.kb-key.switch{background:#aeb3bd;color:#1c1c1e;font-size:15px;font-weight:500;}
+.kb-key.shift.on{background:#fff;}
+.kb-key svg{width:21px;height:21px;}
+.kb-key.space{flex:5;font-size:15px;color:#3a3a3c;}
+.kb-key.go{flex:2.2;background:#0a84ff;color:#fff;font-size:15px;font-weight:600;}
+.kb-row.r2 .fn,.kb-row.r2 .switch{flex:1.5;}
+.kb-row.r3 .switch{flex:1.5;}
+.kb-home-ind{height:5px;width:135px;background:#1c1c1e;border-radius:3px;margin:9px auto 4px;opacity:.9;}
+#m-add.kb-up .scroll{padding-bottom:300px;}
+
 /* ---------- My List ---------- */
 .list-count-row{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 12px;}
 #listcount{font-size:12px;font-weight:600;color:var(--color-text-faint);letter-spacing:0.02em;}
@@ -533,6 +568,13 @@ body{background:#FAF7F0;min-height:100vh;display:flex;flex-direction:column;alig
       <span id="tab-list-label">My List</span>
     </div>
   </div>
+  <!-- ========= iOS KEYBOARD ========= -->
+  <div class="ios-kb" id="ios-kb">
+    <div class="ios-kb-sugg" id="kb-sugg"></div>
+    <div id="kb-keys"></div>
+    <div class="kb-home-ind"></div>
+  </div>
+
   <div class="ios-home" id="ios-home">
   <div class="ios-bg"></div>
   <div class="ios-sb">
@@ -625,6 +667,14 @@ let detailIdx = null;       // index into saved for the open detail sheet
 let hideWatched = true; // simple show/hide-watched toggle
 let detailMode = "view";    // "view" | "edit" (inside the detail drawer)
 let justAddedTitle = null;
+let recent = ["Project Hail Mary", "Severance", "Hacks"];   // recent search history (most recent first)
+function pushRecent(term) {
+  term = (term || "").trim();
+  if (!term) return;
+  recent = recent.filter(r => r.toLowerCase() !== term.toLowerCase());
+  recent.unshift(term);
+  recent = recent.slice(0, 5);
+}
 
 /* ================= HELPERS ================= */
 const $ = (s) => document.querySelector(s);
@@ -707,10 +757,40 @@ function showToast(text, action) {
 /* ================= SEARCH ================= */
 const EMPTY_RESULTS = `<div class="empty-state"><div class="empty-icon">+</div><div class="empty-text">Results appear as you type.</div></div>`;
 
+const CLOCK_SVG = `<svg class="recent-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+function renderRecent() {
+  if (!recent.length) return EMPTY_RESULTS;
+  return `<div class="recent-head"><div class="results-label">Recent</div><button class="recent-clear" id="recent-clear">Clear</button></div>`
+    + recent.map((t, i) => `
+      <div class="recent-item" data-term="${esc(t)}">
+        ${CLOCK_SVG}
+        <span class="recent-term">${t}</span>
+        <span class="recent-x" data-i="${i}" aria-label="Remove">✕</span>
+      </div>`).join("");
+}
+function wireRecent() {
+  const clear = $("#recent-clear");
+  if (clear) clear.addEventListener("click", () => { recent = []; onQueryChanged(); });
+  $("#results").querySelectorAll(".recent-item").forEach(el => {
+    el.addEventListener("click", () => {
+      $("#searchinput").value = el.dataset.term;
+      $("#searchinput").focus();
+      onQueryChanged();
+    });
+  });
+  $("#results").querySelectorAll(".recent-x").forEach(x => {
+    x.addEventListener("click", (e) => {
+      e.stopPropagation();
+      recent.splice(parseInt(x.dataset.i), 1);
+      onQueryChanged();
+    });
+  });
+}
+
 function renderResults() {
   const q = $("#searchinput").value.trim().toLowerCase();
   const results = $("#results");
-  if (!q) { results.innerHTML = EMPTY_RESULTS; return; }
+  if (!q) { results.innerHTML = renderRecent(); wireRecent(); return; }
   const hits = DB.filter(s => { const t = s.title.toLowerCase(); return t.startsWith(q) || t.split(/\s+/).some(w => w.startsWith(q)); });
   if (!hits.length) {
     results.innerHTML = `<div class="empty-state"><div class="empty-text">No matches for "${$("#searchinput").value}".<br><br><span class="manual-add">+ Save it anyway as a manual entry</span></div></div>`;
@@ -734,6 +814,7 @@ function renderResults() {
 
 /* ================= SAVE-FIRST CAPTURE ================= */
 function quickSave(title) {
+  pushRecent(title);
   const dbItem = DB.find(s => s.title === title);
   const existing = findSaved(title);
   if (existing) { openSheet(existing, "existing"); return; }
@@ -775,16 +856,18 @@ function openSheet(item, mode) {
     $("#sheet-skip").style.display = "none";
   }
   setNoteCollapsed(null);
+  hideKeyboard();
   $("#scrim").classList.add("show");
   $("#sheet").classList.add("show");
 }
 function closeSheet() {
+  hideKeyboard();
   $("#scrim").classList.remove("show");
   $("#sheet").classList.remove("show");
   pendingItem = null;
   // Reset Add screen to a clean state.
   $("#searchinput").value = "";
-  $("#results").innerHTML = EMPTY_RESULTS;
+  renderResults();
   $("#searchbar").classList.remove("active");
   cameFromList = false;
   // Post-add return flow: a new save always lands on My List with the new item highlighted.
@@ -980,7 +1063,7 @@ function goAdd(focusSearch, fromList) {
   showScreen("m-add");
   setTab("add");
   $("#searchinput").value = "";
-  $("#results").innerHTML = EMPTY_RESULTS;
+  renderResults();
   if (focusSearch) setTimeout(() => $("#searchinput").focus(), 60);
 }
 function goList() { closeDetail(); cameFromList = false; listFilter = "active"; renderList(); showScreen("m-list"); setTab("list"); }
@@ -1057,9 +1140,118 @@ function openRuntimeSheet() {
 }
 function closeRuntimeSheet() { $("#rt-scrim").classList.remove("show"); $("#rt-sheet").classList.remove("show"); }
 
-$("#searchinput").addEventListener("focus", () => $("#searchbar").classList.add("active"));
-$("#searchinput").addEventListener("blur", () => { if (!$("#searchinput").value) $("#searchbar").classList.remove("active"); });
-$("#searchinput").addEventListener("input", renderResults);
+$("#searchinput").addEventListener("focus", () => { $("#searchbar").classList.add("active"); showKeyboard($("#searchinput")); });
+$("#searchinput").addEventListener("blur", () => { if (!$("#searchinput").value) $("#searchbar").classList.remove("active"); requestHideKeyboard(); });
+$("#searchinput").addEventListener("input", onQueryChanged);
+
+/* Sheet inputs share the same keyboard, but lift the sheet above it instead of padding the scroll. */
+["#sheet-who", "#sheet-note"].forEach(sel => {
+  $(sel).addEventListener("focus", () => showKeyboard($(sel), "#sheet"));
+  $(sel).addEventListener("blur", () => requestHideKeyboard());
+  $(sel).addEventListener("input", renderKbSugg);
+});
+
+/* ================= iOS KEYBOARD ================= */
+const KB = {
+  letters: [["q","w","e","r","t","y","u","i","o","p"],["a","s","d","f","g","h","j","k","l"],["shift","z","x","c","v","b","n","m","del"],["123","space","go"]],
+  numbers: [["1","2","3","4","5","6","7","8","9","0"],["-","/",":",";","(",")","$","&","@","\""],["sym",".",",","?","!","'","del"],["abc","space","go"]],
+  symbols: [["[","]","{","}","#","%","^","*","+","="],["_","\\","|","~","<",">","€","£","¥","•"],["num",".",",","?","!","'","del"],["abc","space","go"]]
+};
+const SWITCH_LABEL = { "123": "123", "abc": "ABC", "sym": "#+=", "num": "123" };
+const SHIFT_SVG = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.2 21 13h-4.5v6h-9v-6H3z"/></svg>`;
+const DEL_SVG = `<svg viewBox="0 0 24 24" fill="none"><path d="M21 5H8.6L3 12l5.6 7H21a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1Z" stroke="currentColor" stroke-width="1.6"/><path d="m11.5 9.5 4 5m0-5-4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+let kbLayout = "letters";
+let kbShift = false;
+let kbTarget = null;       // the input/textarea the keyboard is currently typing into
+let kbLifted = null;       // element pushed up to sit above the keyboard (the sheet), or null
+let kbHideTimer = null;
+
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+function keyHtml(k) {
+  if (k === "shift") return `<div class="kb-key fn shift ${kbShift ? "on" : ""}" data-key="shift">${SHIFT_SVG}</div>`;
+  if (k === "del") return `<div class="kb-key fn del" data-key="del">${DEL_SVG}</div>`;
+  if (k in SWITCH_LABEL) return `<div class="kb-key switch" data-key="${k}">${SWITCH_LABEL[k]}</div>`;
+  if (k === "space") return `<div class="kb-key space" data-key="space">space</div>`;
+  if (k === "go") return `<div class="kb-key go" data-key="go">search</div>`;
+  const disp = (kbLayout === "letters" && kbShift) ? k.toUpperCase() : k;
+  return `<div class="kb-key char" data-key="${esc(k)}">${esc(disp)}</div>`;
+}
+function buildKeyboard() {
+  $("#kb-keys").innerHTML = KB[kbLayout].map((row, ri) =>
+    `<div class="kb-row r${ri} ${row.length === 9 ? "indent" : ""}">${row.map(keyHtml).join("")}</div>`
+  ).join("");
+}
+function renderKbSugg() {
+  const inp = kbTarget || $("#searchinput");
+  const raw = inp.value.trim();
+  let items;
+  if (inp === $("#searchinput")) {
+    if (raw) {
+      const q = raw.toLowerCase();
+      const hits = DB.filter(s => { const t = s.title.toLowerCase(); return t.startsWith(q) || t.split(/\s+/).some(w => w.startsWith(q)); }).map(s => s.title).filter(t => t.toLowerCase() !== q);
+      items = [{ t: "“" + raw + "”", term: raw }, ...hits.slice(0, 2).map(h => ({ t: h, term: h }))];
+    } else {
+      items = recent.slice(0, 3).map(r => ({ t: r, term: r }));
+    }
+  } else {
+    // Name / note fields: no catalog autocomplete — just echo the typed word, iOS-style.
+    items = raw ? [{ t: "“" + raw + "”", term: raw }] : [];
+  }
+  $("#kb-sugg").innerHTML = items.slice(0, 3).map((it, i) =>
+    `<div class="ios-sugg ${i === 1 ? "mid" : ""}" data-term="${esc(it.term)}">${esc(it.t)}</div>`
+  ).join("");
+}
+function onQueryChanged() { if ((kbTarget || $("#searchinput")) === $("#searchinput")) renderResults(); renderKbSugg(); }
+function showKeyboard(target, liftSel) {
+  cancelHideKeyboard();
+  kbTarget = target || $("#searchinput");
+  kbLayout = "letters"; kbShift = false;
+  buildKeyboard(); renderKbSugg();
+  $("#ios-kb").classList.add("show");
+  if (liftSel) {                                   // push the sheet up so it sits above the keyboard
+    const h = $("#ios-kb").offsetHeight;
+    kbLifted = $(liftSel);
+    kbLifted.style.transform = `translateY(-${h}px)`;
+    $("#m-add").classList.remove("kb-up");
+  } else {                                         // search screen: pad the scroll so results clear the keyboard
+    $("#m-add").classList.add("kb-up");
+  }
+}
+function hideKeyboard() {
+  cancelHideKeyboard();
+  $("#ios-kb").classList.remove("show");
+  $("#m-add").classList.remove("kb-up");
+  if (kbLifted) { kbLifted.style.transform = ""; kbLifted = null; }
+  kbTarget = null;
+}
+function requestHideKeyboard() { cancelHideKeyboard(); kbHideTimer = setTimeout(hideKeyboard, 130); }  // debounce so moving between fields doesn't bounce the keyboard
+function cancelHideKeyboard() { if (kbHideTimer) { clearTimeout(kbHideTimer); kbHideTimer = null; } }
+
+$("#ios-kb").addEventListener("mousedown", (e) => e.preventDefault());   // keep the search input focused when tapping keys
+$("#kb-keys").addEventListener("click", (e) => {
+  const key = e.target.closest(".kb-key");
+  if (!key) return;
+  const k = key.dataset.key;
+  const inp = kbTarget || $("#searchinput");
+  if (k === "shift") { kbShift = !kbShift; buildKeyboard(); return; }
+  if (k === "del") { inp.value = inp.value.slice(0, -1); onQueryChanged(); return; }
+  if (k === "123" || k === "num") { kbLayout = "numbers"; buildKeyboard(); return; }
+  if (k === "abc") { kbLayout = "letters"; kbShift = false; buildKeyboard(); return; }
+  if (k === "sym") { kbLayout = "symbols"; buildKeyboard(); return; }
+  if (k === "space") { inp.value += " "; onQueryChanged(); return; }
+  if (k === "go") { inp.blur(); return; }
+  let ch = k;
+  if (kbLayout === "letters" && kbShift) { ch = ch.toUpperCase(); kbShift = false; buildKeyboard(); }
+  inp.value += ch;
+  onQueryChanged();
+});
+$("#kb-sugg").addEventListener("click", (e) => {
+  const s = e.target.closest(".ios-sugg");
+  if (!s) return;
+  (kbTarget || $("#searchinput")).value = s.dataset.term;
+  onQueryChanged();
+});
 
 function updateCounts() { $("#tab-list-label").textContent = "My List"; }
 
@@ -1075,7 +1267,7 @@ function setTheme(mode) {
 setTheme("mobile-light");
 
 /* ================= INIT ================= */
-$("#results").innerHTML = EMPTY_RESULTS;
+renderResults();
 renderList();
 updateCounts();
 

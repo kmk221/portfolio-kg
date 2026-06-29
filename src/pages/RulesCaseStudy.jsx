@@ -1327,17 +1327,29 @@ export default function RulesCaseStudy(){
         <div style={{maxWidth:820}}>
           <div style={{marginBottom:36}}>
             <StepLabel>Context</StepLabel>
-            <p className="cs-body" style={{marginTop:16,marginBottom:0}}>The rules engine sits upstream of every trade — governing which orders are permitted to execute across a platform serving &gt;3,300 institutional firms. One misconfigured rule could silently block or pass thousands of trades firm-wide — resulting in millions of dollars of trade errors to the business on a daily basis. The system that managed these rules was held together with tribal knowledge and Excel workarounds.</p>
+            <ul className="cs-body" style={{marginTop:16,marginBottom:0,paddingLeft:'1.2em'}}>
+              <li style={{marginBottom:8}}>Rules engine: upstream of every trade, governs which orders can execute</li>
+              <li style={{marginBottom:8}}>Platform serving 3,300+ institutional firms; misconfigured rules can lead to millions in trade errors</li>
+              <li>System held together by tribal knowledge and Excel workarounds</li>
+            </ul>
           </div>
 
           <div style={{marginBottom:36}}>
             <StepLabel>Approach</StepLabel>
-            <p className="cs-body" style={{marginTop:16,marginBottom:0}}>I led discovery and a design sprint to identify the highest-leverage slice of the ecosystem before designing anything — landing on rule management and rule creation as the two workflows with the most friction and the highest risk of error. We were initially convinced a standalone list manager would be the biggest win, but an infrastructure constraint forced us to look harder at what users actually needed. What we found: they didn't need a separate system — they needed crisp, approachable, and transparent bulk value entry and clause-building directly within the rule. Making those two things simple gave compliance teams something they'd never had: the ability to know exactly what a rule would do as they built or reviewed it, without relying on anyone else to verify it.</p>
+            <ul className="cs-body" style={{marginTop:16,marginBottom:0,paddingLeft:'1.2em'}}>
+              <li style={{marginBottom:8}}>Led discovery and a design sprint to find the highest-leverage slice</li>
+              <li style={{marginBottom:8}}>Scoped to rule management and rule creation as the most feasible, high-impact workflows</li>
+              <li>Pivoted from standalone list manager to in-rule list creation and plain-language logic</li>
+            </ul>
           </div>
 
           <div style={{marginBottom:48}}>
             <StepLabel>Outcome</StepLabel>
-            <p className="cs-body" style={{marginTop:16,marginBottom:0}}>7 of 7 usability participants responded positively — unusually strong signal from a user group that typically resists new tooling. The plain-language rule preview was called out unprompted as the feature that most improved their confidence building rules. Both workflows shipped and were adopted without the resistance that typically accompanies enterprise tool changes, replacing Ctrl+F and Excel workarounds and establishing the interaction patterns the rest of the compliance suite would build on.</p>
+            <ul className="cs-body" style={{marginTop:16,marginBottom:0,paddingLeft:'1.2em'}}>
+              <li style={{marginBottom:8}}>7/7 usability participants responded positively, unusually strong signal</li>
+              <li style={{marginBottom:8}}>Plain-language rule preview called out as the biggest confidence booster</li>
+              <li>Replaced Ctrl+F / Excel workarounds and set interaction patterns for the broader compliance suite</li>
+            </ul>
           </div>
         </div>
 

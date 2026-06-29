@@ -1099,10 +1099,33 @@ export default function CaseStudy() {
       <section id="ch-tldr" style={{ background: 'transparent', padding: 'var(--section-padding) 0' }}>
         <div style={{ maxWidth: 'var(--content-width)', width: '100%', margin: '0 auto', padding: '0 var(--side-padding)', display: 'flex', flexDirection: 'column', gap: 56 }}>
           <div>
-            <h2 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 300, color: 'var(--ink-2)', lineHeight: 1.1, marginBottom: 20 }}>tl;dr</h2>
-            <p className="cs-body" style={{maxWidth:820}}>
-              Across 10 trading applications, portfolio positions data — the context every advisor needs to make a trade — was hidden in drawers, buried below the fold, or living in a separate app entirely. Advisors had independently built the same workaround: a second monitor just to see their own positions. The brief was to fix one order ticket. I reframed it to fix the platform. I designed a horizontal positions panel that surfaced essential context without competing with the primary workflow, then partnered with the design system team to formalize it as a reusable component requiring no custom work per application — and embedded a success measurement framework and event tracking into the engineering handoff from day one. The pattern shipped across 10+ applications with ~90% design system coverage, aligning 10+ product teams on a single layout standard for data-dense workflows.
-            </p>
+            <h2 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 300, color: 'var(--ink-2)', lineHeight: 1.1, marginBottom: 40 }}>tl;dr</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 36, maxWidth: 820 }}>
+              <div>
+                <div className="section-spread" style={{ marginBottom: 12 }}><span className="eyebrow">Context</span><span className="rule"></span></div>
+                <ul className="cs-body" style={{ margin: 0, paddingLeft: '1.2em' }}>
+                  <li style={{ marginBottom: 8 }}>Across 10 trading apps, essential positions data was buried or in separate tools</li>
+                  <li style={{ marginBottom: 8 }}>Advisors relied on a second monitor just to see their own positions</li>
+                  <li>Brief: fix one order ticket; I reframed it to fix the platform</li>
+                </ul>
+              </div>
+              <div>
+                <div className="section-spread" style={{ marginBottom: 12 }}><span className="eyebrow">Approach</span><span className="rule"></span></div>
+                <ul className="cs-body" style={{ margin: 0, paddingLeft: '1.2em' }}>
+                  <li style={{ marginBottom: 8 }}>Designed a horizontal positions panel that surfaced context without competing with the workflow</li>
+                  <li style={{ marginBottom: 8 }}>Partnered with design system to formalize it as a reusable component, no per-app custom work</li>
+                  <li>Embedded success measurement and event tracking from day one</li>
+                </ul>
+              </div>
+              <div>
+                <div className="section-spread" style={{ marginBottom: 12 }}><span className="eyebrow">Outcome</span><span className="rule"></span></div>
+                <ul className="cs-body" style={{ margin: 0, paddingLeft: '1.2em' }}>
+                  <li style={{ marginBottom: 8 }}>Pattern shipped across 10+ applications with ~90% design system coverage</li>
+                  <li style={{ marginBottom: 8 }}>Aligned 10+ product teams on a single layout standard for dense workflows</li>
+                  <li>Gave advisors reliable, in-flow positions context where they needed it most</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <div className="meta-pills">
             <span className="chip chip--neutral">Lead UX Designer  -  Trading</span>

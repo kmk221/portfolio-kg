@@ -98,15 +98,25 @@ export default function Shortlist() {
           <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Context</span><span className="rule"></span></div>
           <h2 className="cs-h2">Why I built it</h2>
           <p className="cs-body">
-            I wanted to explore devices and contexts that I don’t typically design for, practice
-            prototyping in code, and solve a real annoyance in my own weeknight viewing.
+            I wanted to explore devices and contexts I don’t usually design for, practice
+            prototyping directly in code, and solve a small but real annoyance in my own weeknight
+            viewing — the time and effort it takes to decide what to watch next.
           </p>
           <div className="sl-insight-card">
-            <p className="sl-insight-label">What I learned from user research</p>
-            <p className="sl-insight-quote">
-              People don’t need more options; they need a smaller list of things they already
-              trust — and a faster way to decide.
-            </p>
+            <div className="sl-insight-callout">
+              <p className="cs-body">
+                <strong>What I learned from user research</strong> — People don’t need more
+                options; they need a smaller list of things they already trust, and a faster
+                way to decide. They also need one place to save and easily reference all the
+                recommendations they’ve heard.
+              </p>
+            </div>
+            <figure className="sl-sketch">
+              <img
+                src="/shortlist/shortlist-illustration.svg"
+                alt="Storyboard from endless scrolling to a trusted shortlist: a viewer overwhelmed by an endless wall of TV tiles, trying to remember a friend's recommendation, beside a calmer personal Shortlist on the TV."
+              />
+            </figure>
           </div>
         </div>
       </section>
@@ -117,16 +127,17 @@ export default function Shortlist() {
           <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Approach</span><span className="rule"></span></div>
           <h2 className="cs-h2">The design move</h2>
           <p className="cs-body">
-            Instead of the usual hero-plus-carousels, the TV layout shows your whole short list on
-            the left and one “tonight’s pick” expanded on the right. The constraint — a tiny,
-            intentional list — becomes the main affordance for low-effort choosing.
+            Most streaming interfaces drown you in a sea of tiles and never-ending horizontal
+            carousels — endless scrolling that makes deciding harder, not easier. Shortlist
+            deliberately moves the other way: the TV shows your whole short list on the left and
+            one “tonight’s pick” expanded on the right. A tiny, intentional list — not an infinite
+            grid — becomes the main affordance for low-effort choosing.
           </p>
           <p className="cs-body" style={{ marginTop: 18 }}>
-            Each saved item surfaces three details people said they rely on most when matching a
-            pick to their mood and the time they have:
+            Each saved item surfaces three details people said they rely on most:
           </p>
           <ul className="sl-surfaces">
-            {surfaces.map((s) => <li key={s}>{s}</li>)}
+            {surfaces.map((s) => <li key={s} className="chip chip--neutral">{s}</li>)}
           </ul>
         </div>
       </section>
@@ -136,14 +147,46 @@ export default function Shortlist() {
         <div style={wrap}>
           <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Structure</span><span className="rule"></span></div>
           <h2 className="cs-h2">Platforms &amp; flow</h2>
-          <div className="sl-flow">
-            <div className="sl-flow-item">
-              <p className="k">Mobile</p>
-              <p>Search, tap, and save a rec — plus who told you and why — in under 10 seconds.</p>
+          <p className="cs-body sl-tl-intro">
+            Designed around two different moments: saving a recommendation when it comes up,
+            then returning later when it’s actually time to watch.
+          </p>
+          <div className="sl-timeline">
+            <div className="sl-tl-step">
+              <div className="sl-tl-rail">
+                <span className="sl-tl-dot" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="7" y="2" width="10" height="20" rx="2.5" />
+                    <line x1="10.5" y1="18.5" x2="13.5" y2="18.5" />
+                  </svg>
+                </span>
+              </div>
+              <div className="sl-tl-card">
+                <p className="sl-tl-label"><span className="sl-tl-when">Friday Night</span> @ Happy Hour</p>
+                <p className="sl-tl-body">When someone mentions a show, the phone is the quickest place to save it — plus who recommended it and why.</p>
+                <figure className="sl-platform-media" style={{ aspectRatio: '972 / 595' }}>
+                  <img src="/shortlist/platform-mobile.svg" alt="Two friends talking — one says they're binging Severance, the other saves the rec on their phone." />
+                </figure>
+              </div>
             </div>
-            <div className="sl-flow-item">
-              <p className="k">Smart TV</p>
-              <p>Browse a short, personal list, filter by runtime, and hit play.</p>
+
+            <div className="sl-tl-step">
+              <div className="sl-tl-rail">
+                <span className="sl-tl-dot" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="13" rx="2" />
+                    <path d="M8 21h8" />
+                    <path d="M12 17v4" />
+                  </svg>
+                </span>
+              </div>
+              <div className="sl-tl-card">
+                <p className="sl-tl-label"><span className="sl-tl-when">Sunday Night</span> @ the Couch</p>
+                <p className="sl-tl-body">Later, on the couch, the TV experience brings that refined list back with the details users need to make a quick easy decision: recommender, runtime, and genre.</p>
+                <figure className="sl-platform-media" style={{ aspectRatio: '1070 / 508' }}>
+                  <img src="/shortlist/platform-tv.svg" alt="Someone on the couch with a remote, browsing their personal Shortlist on a Smart TV." />
+                </figure>
+              </div>
             </div>
           </div>
         </div>
@@ -159,19 +202,84 @@ export default function Shortlist() {
             and casual. The TV experience shifts to a dark, cinema-friendly palette for comfort and
             legibility on a large screen.
           </p>
+
+          {/* One design system, two themed variants — shared foundation up top,
+              the light/dark palettes + a shared component rendered in each below. */}
+          <div className="sl-ds">
+            <div className="sl-ds-shared">
+              <span className="sl-ds-cap">One shared foundation</span>
+              <div className="sl-ds-shared-grid">
+                <div className="sl-ds-found">
+                  <span className="sl-ds-sw" style={{ background: '#E07840' }} />
+                  <span className="sl-ds-found-label">Brand accent<br /><b>#E07840</b></span>
+                </div>
+                <div className="sl-ds-found">
+                  <span className="sl-ds-dots">
+                    {['#b05828', '#4d7a3c', '#5a4a80', '#4f6a72', '#8a4530'].map((c) => (
+                      <i key={c} style={{ background: c }} />
+                    ))}
+                  </span>
+                  <span className="sl-ds-found-label">Recommender<br /><b>avatars</b></span>
+                </div>
+                <div className="sl-ds-found">
+                  <span className="sl-ds-type">Aa</span>
+                  <span className="sl-ds-found-label">Type<br /><b>Bitter · DM Sans</b></span>
+                </div>
+                <div className="sl-ds-found">
+                  <span className="sl-ds-logo-icon" role="img" aria-label="Shortlist logo" />
+                  <span className="sl-ds-found-label">Logo<br /><b>Shortlist</b></span>
+                </div>
+              </div>
+            </div>
+
+            <div className="sl-ds-variants">
+              <article className="sl-ds-variant sl-ds-variant--light">
+                <span className="sl-ds-cap">Mobile · Light</span>
+                <div className="sl-ds-swatches">
+                  {[['Background', '#F3F0E9'], ['Surface', '#FBF9F5'], ['Text', '#2A221A'], ['Accent', '#E07840']].map(([role, hex]) => (
+                    <div className="sl-ds-swatch" key={role}>
+                      <span className="sl-ds-sw" style={{ background: hex }} />
+                      <span className="sl-ds-swatch-role">{role}</span>
+                      <span className="sl-ds-swatch-hex">{hex}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="sl-ds-demo" style={{ background: '#FBF9F5', borderColor: 'rgba(42,34,26,0.12)' }}>
+                  <span className="sl-ds-demo-av" style={{ background: '#5a4a80' }}>TW</span>
+                  <span className="sl-ds-demo-title" style={{ color: '#1c140d' }}>Severance</span>
+                  <span className="sl-ds-demo-btn">Save</span>
+                </div>
+              </article>
+
+              <article className="sl-ds-variant sl-ds-variant--dark">
+                <span className="sl-ds-cap">Smart TV · Dark</span>
+                <div className="sl-ds-swatches">
+                  {[['Background', '#080604'], ['Surface', '#1C1814'], ['Text', '#F0EBE2'], ['Accent', '#E07840']].map(([role, hex]) => (
+                    <div className="sl-ds-swatch" key={role}>
+                      <span className="sl-ds-sw" style={{ background: hex }} />
+                      <span className="sl-ds-swatch-role">{role}</span>
+                      <span className="sl-ds-swatch-hex">{hex}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="sl-ds-demo sl-ds-demo--rail" style={{ background: '#1C1814', borderColor: 'rgba(255,255,255,0.10)' }}>
+                  <span className="sl-ds-demo-av" style={{ background: '#5a4a80' }}>TW</span>
+                  <span className="sl-ds-demo-title" style={{ color: '#f0ebe2' }}>Severance</span>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── FOOTNOTE + live prototypes ── */}
+      {/* ── LIVE PROTOTYPES ── */}
       <section style={{ ...section, paddingTop: 0 }}>
         <div style={wrap}>
-          <p className="sl-footnote">
-            A self-initiated project — built to explore designing across phone and TV, and
-            prototyped directly in code.
-          </p>
+          <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Prototypes</span><span className="rule"></span></div>
+          <h2 className="cs-h2">Try it yourself</h2>
           <div className="sl-links">
-            <a href="/shortlist/shortlist-mobile-app-v1.html" target="_blank" rel="noreferrer">Live mobile ↗</a>
-            <a href="/shortlist/shortlist-tv-concept-a-v2.html" target="_blank" rel="noreferrer">Live TV ↗</a>
+            <a href="/shortlist/shortlist-mobile-app-v1.html" target="_blank" rel="noreferrer">Mobile prototype ↗</a>
+            <a href="/shortlist/shortlist-tv-concept-a-v2.html" target="_blank" rel="noreferrer">TV prototype ↗</a>
           </div>
         </div>
       </section>

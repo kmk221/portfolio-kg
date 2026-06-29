@@ -87,35 +87,26 @@
 }
 
 /* ── Key-insight pull quote ── */
-/* Key-insight presented as a research-finding card. */
+/* Key-insight block — text above, hand-drawn storyboard below. No card frame. */
 .shortlist-page .sl-insight-card {
-  background: var(--surface-2);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-4);
-  padding: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 30px);
   box-sizing: border-box;
-  max-width: 534px;
+  max-width: 730px;
   margin: 26px 0 0;
 }
-.shortlist-page .sl-insight-label {
-  font-family: var(--f-mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--clay);
-  line-height: 1.3;
-  margin: 0 0 14px;
+.shortlist-page .sl-sketch { margin: 20px 0 0; width: 100%; }
+.shortlist-page .sl-sketch img { display: block; width: 100%; height: auto; }
+/* Bordered clay callout — bold lead-in + body, matching the OM tradeoff cards. */
+.shortlist-page .sl-insight-callout {
+  padding: 16px 24px;
+  background: transparent;
+  border: 1px solid var(--clay-edge);
+  border-radius: 10px;
 }
-.shortlist-page .sl-insight-quote {
-  font-family: var(--f-serif);
-  font-weight: 300;
-  font-size: clamp(19px, 2vw, 25px);
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin: 0;
-}
+.shortlist-page .sl-insight-callout .cs-body { margin: 0; }
+.shortlist-page .sl-insight-callout strong { color: var(--clay-ink); font-weight: 600; }
 
 /* ── Annotated hero composition: phone + TV loops with handwritten notes
    and two hand-drawn arrows, à la a marked-up storyboard. ──
@@ -151,10 +142,10 @@
 .shortlist-page .sl-anno-phone { grid-column: 5 / 9;   grid-row: 1;     justify-self: center; align-self: start; }
 .shortlist-page .sl-anno-mid   { grid-column: 9 / 13;  grid-row: 1;     align-self: start;
                                  display: flex; flex-direction: column; align-items: flex-end;
-                                 transform: translateY(505px); }
-.shortlist-page .sl-anno-tv    { grid-column: 1 / 13;  grid-row: 2;     justify-self: center; transform: translateY(50px); }
+                                 transform: translateY(605px); }
+.shortlist-page .sl-anno-tv    { grid-column: 1 / 13;  grid-row: 2;     justify-self: center; align-self: start; margin-top: 170px; }
 .shortlist-page .sl-anno-bot   { grid-column: 1 / 13;  grid-row: 3;     justify-self: center;
-                                 display: flex; align-items: center; gap: 18px; transform: translateY(80px); }
+                                 display: flex; align-items: center; gap: 18px; margin-top: 15px; }
 
 /* Handwritten annotations. */
 .shortlist-page .sl-note {
@@ -203,8 +194,8 @@
   .shortlist-page .sl-note-3 { max-width: 34ch; white-space: normal; transform: none; }
   .shortlist-page .sl-anno-left { align-items: center; }
   .shortlist-page .sl-anno-mid { flex-direction: column; align-items: center; transform: none; }
-  .shortlist-page .sl-anno-tv { transform: none; }
-  .shortlist-page .sl-anno-bot { transform: none; }
+  .shortlist-page .sl-anno-tv { margin-top: 0; }
+  .shortlist-page .sl-anno-bot { margin-top: 0; }
   .shortlist-page .sl-show-mobile { max-width: 340px; }
   .shortlist-page .sl-show-tv { max-width: 100%; }
   .shortlist-page .sl-arrow { display: none; }
@@ -282,44 +273,175 @@
   padding: 0;
   margin: 18px 0 0;
 }
-.shortlist-page .sl-surfaces li {
+/* Pills use the shared .chip .chip--neutral component (set in the markup). */
+
+/* ── Platforms & flow — editorial two-moment timeline ── */
+.shortlist-page .sl-tl-intro {
+  max-width: 56ch;
+  margin: 14px 0 clamp(28px, 4vw, 40px);
+}
+.shortlist-page .sl-timeline {
+  max-width: 600px;
+  --tl-gap: clamp(36px, 5vw, 56px);
+}
+.shortlist-page .sl-tl-step {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  column-gap: clamp(16px, 2vw, 24px);
+  padding-bottom: var(--tl-gap);
+}
+.shortlist-page .sl-tl-step:last-child { padding-bottom: 0; }
+/* Subtle rail line — emerges below each marker and runs through the gap to the next. */
+.shortlist-page .sl-tl-rail { position: relative; }
+.shortlist-page .sl-tl-rail::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 40px;
+  bottom: calc(-1 * var(--tl-gap));
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--hairline);
+}
+.shortlist-page .sl-tl-step:last-child .sl-tl-rail::before { display: none; }
+.shortlist-page .sl-tl-dot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  color: var(--clay-ink);
+}
+.shortlist-page .sl-tl-dot svg { width: 19px; height: 19px; }
+/* Editorial entry — text leads, illustration supports. Marker centers on the label. */
+.shortlist-page .sl-tl-card { padding-top: 12px; }
+.shortlist-page .sl-tl-label {
   font-family: var(--f-mono);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 10px;
+}
+.shortlist-page .sl-tl-when { color: var(--clay-ink); }
+.shortlist-page .sl-tl-body {
+  font-family: var(--f-sans);
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--ink-2);
-  background: var(--bg);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-pill);
-  padding: 7px 16px;
+  max-width: 46ch;
+  margin: 0 0 clamp(16px, 2vw, 22px);
+}
+.shortlist-page .sl-platform-media {
+  max-width: 320px;
+  overflow: hidden;
+  background: transparent;
+  border-radius: var(--r-3);
+}
+.shortlist-page .sl-platform-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+@media (max-width: 560px) {
+  .shortlist-page .sl-tl-step { grid-template-columns: 34px 1fr; column-gap: 14px; }
+  .shortlist-page .sl-tl-dot { width: 34px; height: 34px; }
+  .shortlist-page .sl-tl-dot svg { width: 17px; height: 17px; }
+  .shortlist-page .sl-tl-rail::before { left: 17px; top: 34px; }
+  .shortlist-page .sl-tl-card { padding-top: 8px; }
 }
 
-/* ── Platforms & flow — two compact labeled blocks ── */
-.shortlist-page .sl-flow {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(20px, 3vw, 40px);
-  max-width: 760px;
+/* ── Visual system — one design system, two themed variants ── */
+.shortlist-page .sl-ds { margin: clamp(24px, 3.5vw, 36px) 0 0; max-width: 720px; }
+/* Logo mark (icon only) as a foundation item, recoloured to the brand accent. */
+.shortlist-page .sl-ds-logo-icon {
+  display: block;
+  width: 44px;
+  height: 28px;
+  flex: none;
+  background-color: #E07840;
+  -webkit-mask: url("/shortlist/shortlist-logo-icon.svg") no-repeat center / contain;
+  mask: url("/shortlist/shortlist-logo-icon.svg") no-repeat center / contain;
 }
-.shortlist-page .sl-flow-item .k {
+.shortlist-page .sl-ds-cap {
+  display: block;
   font-family: var(--f-mono);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--clay-ink);
-  margin: 0 0 8px;
+  margin: 0 0 14px;
 }
-.shortlist-page .sl-flow-item p:not(.k) {
-  font-family: var(--f-sans);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--ink-2);
-  margin: 0;
+/* Shared foundation strip (filled — reads as the common base). */
+.shortlist-page .sl-ds-shared {
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-4);
+  padding: clamp(16px, 2.2vw, 22px) clamp(18px, 2.5vw, 26px);
+  background: transparent;
 }
-@media (max-width: 640px) {
-  .shortlist-page .sl-flow { grid-template-columns: 1fr; gap: 24px; }
+.shortlist-page .sl-ds-shared-grid { display: flex; flex-wrap: wrap; gap: clamp(16px, 3vw, 36px); }
+.shortlist-page .sl-ds-found { display: flex; align-items: center; gap: 10px; }
+.shortlist-page .sl-ds-found-label { font-family: var(--f-sans); font-size: 12px; line-height: 1.35; color: var(--ink-mute); }
+.shortlist-page .sl-ds-found-label b { color: var(--ink-2); font-weight: 600; }
+.shortlist-page .sl-ds-sw { width: 30px; height: 30px; flex: none; border-radius: var(--r-2); border: 1px solid rgba(0,0,0,0.08); }
+.shortlist-page .sl-ds-dots { display: inline-flex; }
+.shortlist-page .sl-ds-dots i { width: 17px; height: 17px; border-radius: 50%; margin-left: -5px; border: 1.5px solid var(--bg); }
+.shortlist-page .sl-ds-dots i:first-child { margin-left: 0; }
+.shortlist-page .sl-ds-type {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; flex: none;
+  font-family: var(--f-serif); font-size: 17px; color: var(--clay-ink);
+  border: 1px solid var(--hairline); border-radius: var(--r-2); background: var(--bg);
+}
+/* Two variant panels (outlined — derived from the shared base). */
+.shortlist-page .sl-ds-variants { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(14px, 2vw, 20px); margin-top: clamp(14px, 2vw, 18px); }
+.shortlist-page .sl-ds-variant { border: 1px solid var(--hairline); border-radius: var(--r-4); padding: clamp(16px, 2.2vw, 22px); }
+/* Mobile variant rendered on the actual mobile-app background (#F3F0E9). */
+.shortlist-page .sl-ds-variant--light { background: #F3F0E9; }
+.shortlist-page .sl-ds-variant--light .sl-ds-sw { border-color: rgba(0,0,0,0.12); }
+/* TV variant rendered on the actual TV-app background (#080604). */
+.shortlist-page .sl-ds-variant--dark { background: #080604; border-color: rgba(255,255,255,0.10); }
+.shortlist-page .sl-ds-variant--dark .sl-ds-cap { color: #F0EBE2; }
+.shortlist-page .sl-ds-variant--dark .sl-ds-sw { border-color: rgba(255,255,255,0.14); }
+.shortlist-page .sl-ds-variant--dark .sl-ds-swatch-role { color: #cfc8bd; }
+.shortlist-page .sl-ds-variant--dark .sl-ds-swatch-hex { color: #8f877b; }
+.shortlist-page .sl-ds-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0 16px; }
+.shortlist-page .sl-ds-swatch { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.shortlist-page .sl-ds-swatch .sl-ds-sw { width: 100%; height: 34px; }
+.shortlist-page .sl-ds-swatch-role { font-family: var(--f-sans); font-size: 11px; color: var(--ink-2); line-height: 1; }
+.shortlist-page .sl-ds-swatch-hex { font-family: var(--f-mono); font-size: 10px; color: var(--ink-mute); line-height: 1; }
+/* Same component, rendered in each theme. */
+.shortlist-page .sl-ds-demo { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid; border-radius: var(--r-3); }
+/* Accent indicator to the LEFT of the card, with a gap (matches the real TV-app list). */
+.shortlist-page .sl-ds-demo--rail { position: relative; }
+.shortlist-page .sl-ds-demo--rail::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 25%;
+  bottom: 25%;
+  width: 3px;
+  background: #E07840;
+  border-radius: 999px;
+}
+.shortlist-page .sl-ds-demo-av {
+  width: 26px; height: 26px; flex: none; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--f-sans); font-size: 10px; font-weight: 600; color: #fff;
+}
+.shortlist-page .sl-ds-demo-title { flex: 1; min-width: 0; font-family: var(--f-serif); font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shortlist-page .sl-ds-demo-btn { flex: none; font-family: var(--f-sans); font-size: 12px; font-weight: 700; color: #fff; background: #E07840; padding: 7px 18px; border-radius: var(--r-pill); }
+@media (max-width: 560px) {
+  .shortlist-page .sl-ds-variants { grid-template-columns: 1fr; }
 }
 
 /* ── Footnote + live-prototype links ── */

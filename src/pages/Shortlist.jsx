@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import Nav from '../components/Nav.jsx'
 import './case-study-shared.css'
 import './Shortlist.css'
@@ -12,7 +10,6 @@ const section = { background: 'transparent', padding: 'var(--section-padding) 0'
 const surfaces = ['Who recommended it', 'Runtime', 'Genre']
 
 export default function Shortlist() {
-  const [view, setView] = useState('mobile')
   return (
     <div className="cs-page shortlist-page">
       <Nav />
@@ -20,9 +17,8 @@ export default function Shortlist() {
       {/* ── HERO ── */}
       <section style={{ ...section, paddingBottom: 0 }}>
         <div style={wrap}>
-          <Link to="/bits" className="sl-back">← Bits &amp; Pieces</Link>
           <div style={{ marginBottom: 24 }}>
-            <span className="eyebrow">Self-initiated · Mobile + Smart TV</span>
+            <span className="eyebrow">Just For Fun · Mobile + Smart TV</span>
           </div>
           <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: 'var(--ink)', margin: '0 0 22px' }}>
             Shortlist
@@ -31,65 +27,67 @@ export default function Shortlist() {
             A mobile + Smart TV pair that answers “What should we watch tonight?” with a
             small, intentional list of saves.
           </p>
-          <p className="cs-body" style={{ marginTop: 18 }}>
-            Shortlist lets you capture TV recommendations on your phone in the moment, then open
-            your TV to a focused list of only the things you actually added. No wall of tiles —
-            just your saved picks, ready for a quick yes or no.
-          </p>
         </div>
       </section>
 
-      {/* ── MEDIA: looping demos (Mobile / Smart TV toggle) ──
-           Each view is a muted, autoplaying loop in public/shortlist/.
-           Swap a clip by changing the <video src>. */}
-      <section style={{ ...section, paddingTop: 'clamp(40px, 6vw, 72px)' }}>
+      {/* ── HERO MEDIA: annotated composition ──
+           Phone + TV loops with handwritten (Permanent Marker) annotations and
+           the two hand-drawn arrows. Arrow + caption positions are driven by
+           the --a1-* / --a2-* and grid placements in Shortlist.css so they can
+           be nudged without touching markup. Arrows are decorative (aria-hidden);
+           the captions carry the narrative copy. */}
+      <section style={{ ...section, paddingTop: 'clamp(28px, 4vw, 48px)' }}>
         <div style={wrap}>
-          <p className="sl-frame-label">Prototype demos</p>
-          <div className="sl-stage">
-            <div className="sl-toggle" role="tablist" aria-label="Prototype demo">
-              <button
-                role="tab"
-                aria-selected={view === 'mobile'}
-                className={view === 'mobile' ? 'active' : ''}
-                onClick={() => setView('mobile')}
-              >
-                Mobile
-              </button>
-              <button
-                role="tab"
-                aria-selected={view === 'tv'}
-                className={view === 'tv' ? 'active' : ''}
-                onClick={() => setView('tv')}
-              >
-                Smart TV
-              </button>
+          <div className="sl-annotated">
+            {/* Caption 1 + arrow 1 as one group, so its top can align with
+                the phone's top. */}
+            <div className="sl-anno-left">
+              <p className="sl-note sl-note-1">
+                Quickly capture TV and movie recs in the moment in Shortlist
+              </p>
+              <img className="sl-arrow sl-arrow-1" src="/shortlist/arrow-1.svg" alt="" aria-hidden="true" />
             </div>
 
-            {view === 'mobile' ? (
-              <figure className="sl-media-item sl-show-mobile">
-                <div className="sl-frame sl-frame-mobile">
-                  <video
-                    className="sl-frame-media"
-                    src="/shortlist/shortlist-demo-new.mp4"
-                    autoPlay loop muted playsInline
-                    aria-label="Mobile prototype demo loop"
-                  />
-                </div>
-                <figcaption className="sl-cap">Mobile · saving a rec in the moment.</figcaption>
-              </figure>
-            ) : (
-              <figure className="sl-media-item sl-show-tv">
-                <div className="sl-frame sl-frame-tv">
-                  <video
-                    className="sl-frame-media"
-                    src="/shortlist/shortlist-tv-demo.mp4"
-                    autoPlay loop muted playsInline
-                    aria-label="Smart TV prototype demo loop"
-                  />
-                </div>
-                <figcaption className="sl-cap">Smart TV · browsing the short list and filtering by runtime.</figcaption>
-              </figure>
-            )}
+            {/* Phone loop */}
+            <figure className="sl-media-item sl-show-mobile sl-anno-phone">
+              <div className="sl-frame sl-frame-mobile">
+                <video
+                  className="sl-frame-media"
+                  src="/shortlist/shortlist-demo-new.mp4"
+                  autoPlay loop muted playsInline
+                  aria-label="Mobile prototype demo loop"
+                />
+              </div>
+            </figure>
+
+            {/* Caption 2 + arrow 2 — one line, arrow top-aligned to the
+                text's top-right, flowing down to the TV. */}
+            <div className="sl-anno-mid">
+              <p className="sl-note sl-note-2">
+                Then view your Shortlist on mobile or TV
+              </p>
+              <img className="sl-arrow sl-arrow-2" src="/shortlist/arrow-2.svg" alt="" aria-hidden="true" />
+            </div>
+
+            {/* TV loop */}
+            <figure className="sl-media-item sl-show-tv sl-anno-tv">
+              <div className="sl-frame sl-frame-tv">
+                <video
+                  className="sl-frame-media"
+                  src="/shortlist/shortlist-tv-demo.mp4"
+                  autoPlay loop muted playsInline
+                  aria-label="Smart TV prototype demo loop"
+                />
+              </div>
+            </figure>
+
+            {/* Caption 3 — closing statement with arrow 3 to its left. */}
+            <div className="sl-anno-bot">
+              <img className="sl-arrow sl-arrow-3" src="/shortlist/arrow-3.svg" alt="" aria-hidden="true" />
+              <p className="sl-note sl-note-3">
+                No walls of tiles, just your Shortlist for an effortless decision
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -100,13 +98,16 @@ export default function Shortlist() {
           <div className="section-spread" style={{ marginBottom: 14 }}><span className="eyebrow">Context</span><span className="rule"></span></div>
           <h2 className="cs-h2">Why I built it</h2>
           <p className="cs-body">
-            I wanted to explore a mobile–TV pairing I don’t usually get to design for, prototype
-            directly in code, and solve a real annoyance in my own weeknight viewing.
+            I wanted to explore devices and contexts that I don’t typically design for, practice
+            prototyping in code, and solve a real annoyance in my own weeknight viewing.
           </p>
-          <p className="sl-insight">
-            People don’t need more options; they need a smaller list of things they already
-            trust — and a faster way to decide.
-          </p>
+          <div className="sl-insight-card">
+            <p className="sl-insight-label">What I learned from user research</p>
+            <p className="sl-insight-quote">
+              People don’t need more options; they need a smaller list of things they already
+              trust — and a faster way to decide.
+            </p>
+          </div>
         </div>
       </section>
 

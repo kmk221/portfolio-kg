@@ -22,7 +22,22 @@ The two preview pages that used to link these copies were repointed to the canon
 - `src/pages/design-system.html` → now links `../tokens.css` (and its previously broken
   `tokens-orphaned.css` link was fixed to `../../tokens-orphaned.css`)
 
-## To undo
+## Unused alternate homepage (archived 2026-06-29)
+
+`Home.jsx` + `Home.module.css` were an **unused alternate home design** (project-card grid,
+dark About panel, gold stats). The live `/` route renders `src/App.jsx`, which uses global
+classNames from `tokens.css`/`styles.css` — it never imported these. `Home.jsx` was routed
+and imported **nowhere**; its only relationship was importing its own `Home.module.css`, so
+the two were moved together and the import stays co-located (no build reference).
+
+| Archived file        | Came from              | Notes |
+|----------------------|------------------------|-------|
+| `Home.jsx`           | `./src/pages/Home.jsx`        | Orphaned — not imported or routed anywhere. |
+| `Home.module.css`    | `./src/pages/Home.module.css` | Only consumed by `Home.jsx`. (Tokenized this session before archiving; safe to revive.) |
+
+To undo: `git mv OLD/Home.jsx src/pages/Home.jsx` and `git mv OLD/Home.module.css src/pages/Home.module.css`.
+
+## To undo (token files)
 
 `git mv OLD/tokens.root.css tokens.css` and `git mv OLD/tokens.pages.css src/pages/tokens.css`,
 then revert the two `design-system.html` link edits.

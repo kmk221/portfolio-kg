@@ -69,12 +69,12 @@
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--clay-tint); border: 1px solid var(--clay-edge); color: var(--clay-ink);
   }
-  .om-page .tag.shipped { background: rgba(184,103,87,0.15); border-color: rgba(184,103,87,0.35); color: var(--clay-ink); }
+  .om-page .tag.shipped { background: color-mix(in srgb, var(--clay) 15%, transparent); border-color: color-mix(in srgb, var(--clay) 35%, transparent); color: var(--clay-ink); }
 
   
   .om-page .placeholder {
     background: linear-gradient(135deg, #f0ebe3, #e8dfd5);
-    border: 1px dashed rgba(184,103,87,0.4);
+    border: 1px dashed color-mix(in srgb, var(--clay) 40%, transparent);
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     color: var(--clay); font-size: 12px; font-weight: 600;
@@ -83,7 +83,7 @@
   .om-page .placeholder.dark {
     background: linear-gradient(135deg, #2a231b, #1e1812);
     border-color: rgba(255,255,255,0.1);
-    color: rgba(184,103,87,0.6);
+    color: color-mix(in srgb, var(--clay) 60%, transparent);
   }
 
   
@@ -129,7 +129,7 @@
   
   .om-page .quote-block {
     padding: 28px 32px; background: var(--clay-tint);
-    border: 1px solid rgba(184,103,87,0.25); border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--clay) 25%, transparent); border-radius: 12px;
     border-left: 4px solid var(--clay); margin-bottom: 32px;
   }
   .om-page .quote-block blockquote {
@@ -260,12 +260,12 @@
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     border: 0;
-    border-top: 1px solid rgba(184, 103, 87, 0.22);
+    border-top: 1px solid color-mix(in srgb, var(--clay) 22%, transparent);
     box-shadow: none;
   }
   .om-page .om-gold .om-expand-card:hover,
   .om-page .om-gold .om-expand-card[data-open="true"] {
-    border-top-color: rgba(184, 103, 87, 0.5);
+    border-top-color: color-mix(in srgb, var(--clay) 50%, transparent);
   }
   .om-page .om-gold .om-section-expand-trigger,
   .om-page .om-gold .om-section-expand[data-open="true"] .om-section-expand-trigger {
@@ -554,7 +554,7 @@
     border: 1px solid rgba(55,43,11,0.12);
     box-shadow: 0 2px 14px rgba(55,43,11,0.06), inset 0 1px 0 rgba(245,232,211,0.5);
   }
-  .om-page .om-gold .principle-card .num { color: #B86757; }
+  .om-page .om-gold .principle-card .num { color: var(--clay); }
   .om-page .om-gold .principle-card h4 { color: var(--ink-2); }
   .om-page .om-gold .principle-card p { color: var(--ink-2); }
 

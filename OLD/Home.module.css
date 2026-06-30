@@ -3,7 +3,7 @@
    ============================================ */
 
 .page {
-  background: #F5E8D3;
+  background: var(--bg-warm);
   min-height: 100vh;
 }
 
@@ -14,7 +14,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: #B86757;
+  background: var(--clay);
   z-index: 200;
 }
 
@@ -48,7 +48,7 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #B86757;
+  color: var(--clay);
   margin-bottom: 28px;
   animation: fadeUp 0.7s ease 0.1s both;
 }
@@ -59,7 +59,7 @@
   font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.01em;
-  color: #372B0B;
+  color: var(--ink-2);
   margin-bottom: 28px;
   animation: fadeUp 0.7s ease 0.2s both;
 }
@@ -68,7 +68,7 @@
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  color: #B86757;
+  color: var(--clay);
 }
 
 .heroSub {
@@ -93,7 +93,7 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #B86757;
+  color: var(--clay);
 }
 
 .projectGrid {
@@ -152,8 +152,8 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #B86757;
-  background: rgba(184, 103, 87, 0.12);
+  color: var(--clay);
+  background: color-mix(in srgb, var(--clay) 12%, transparent);
   padding: 5px 12px;
   border-radius: 100px;
 }
@@ -173,7 +173,7 @@
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: #372B0B;
+  color: var(--ink-2);
   margin-bottom: 12px;
 }
 
@@ -210,14 +210,14 @@
 
 .dot {
   opacity: 0.5;
-  color: #B86757;
+  color: var(--clay);
 }
 
 .projectArrow {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: #B86757;
+  color: var(--clay);
   transition: gap 0.2s ease;
 }
 
@@ -226,7 +226,7 @@
 }
 
 .projectImageArea {
-  background: linear-gradient(135deg, rgba(221, 179, 101, 0.18) 0%, rgba(245, 232, 211, 0.6) 100%);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--ochre-edge) 18%, transparent) 0%, color-mix(in srgb, var(--bg-warm) 60%, transparent) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -255,7 +255,7 @@
 
 /* ── ABOUT ── */
 .about {
-  background: #372B0B;
+  background: var(--ink-2);
   padding: 120px 238px;
   position: relative;
 }
@@ -287,7 +287,7 @@
   font-size: clamp(32px, 3.5vw, 48px);
   font-weight: 400;
   line-height: 1.18;
-  color: #F5E8D3;
+  color: var(--ink-inverse);
   margin-top: 24px;
   letter-spacing: -0.01em;
 }
@@ -296,7 +296,7 @@
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  color: #DDB365;
+  color: var(--ochre-edge);
 }
 
 .aboutRight {
@@ -307,7 +307,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
-  color: #F5E8D3;
+  color: var(--ink-inverse);
   margin-bottom: 20px;
 }
 
@@ -317,7 +317,7 @@
   gap: 24px;
   margin-top: 48px;
   padding-top: 40px;
-  border-top: 1px solid rgba(221, 179, 101, 0.28);
+  border-top: 1px solid color-mix(in srgb, var(--ochre-edge) 28%, transparent);
 }
 
 .stat {}
@@ -326,7 +326,7 @@
   display: block;
   font-size: 32px;
   font-weight: 800;
-  color: #DDB365;
+  color: var(--ochre-edge);
   letter-spacing: -0.02em;
   margin-bottom: 6px;
 }
@@ -334,7 +334,7 @@
 .statLabel {
   font-size: 13px;
   font-weight: 500;
-  color: #F5E8D3;
+  color: var(--ink-inverse);
   opacity: 0.65;
   letter-spacing: 0.02em;
 }
@@ -343,7 +343,7 @@
 .footer {
   background: #2A1F08;
   padding: 48px 238px;
-  border-top: 1px solid rgba(221, 179, 101, 0.15);
+  border-top: 1px solid color-mix(in srgb, var(--ochre-edge) 15%, transparent);
 }
 
 .footerInner {
@@ -357,7 +357,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #DDB365;
+  color: var(--ochre-edge);
 }
 
 .footerLinks {
@@ -368,19 +368,19 @@
 .footerLinks a {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(245, 232, 211, 0.6);
+  color: color-mix(in srgb, var(--ink-inverse) 60%, transparent);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   transition: color 0.2s ease;
 }
 
 .footerLinks a:hover {
-  color: #B86757;
+  color: var(--clay);
 }
 
 .footerCopy {
   font-size: 13px;
-  color: rgba(245, 232, 211, 0.4);
+  color: color-mix(in srgb, var(--ink-inverse) 40%, transparent);
 }
 
 /* ── ANIMATIONS ── */

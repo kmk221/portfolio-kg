@@ -1109,7 +1109,7 @@ function SynthesisSection(){
                 onClick={()=>setActive(i)}
                 style={{
                   background: isActive ? 'var(--clay-tint)' : 'rgba(242,220,208,0.4)',
-                  border: isActive ? '1px solid #D9AC97' : '1px solid rgba(217,172,151,0.35)',
+                  border: isActive ? '1px solid var(--clay-edge)' : '1px solid rgba(217,172,151,0.35)',
                   borderRadius:12,
                   padding:'18px 20px',
                   cursor:'pointer',
@@ -1146,7 +1146,7 @@ function SynthesisSection(){
 
         {/* Right: sticky visual panel */}
         <div style={{position:'sticky',top:100}}>
-          <div style={{background:'var(--clay-tint)',border:'1px solid #D9AC97',borderRadius:14,overflow:'hidden',boxShadow:'0 2px 14px rgba(55,43,11,0.07)'}}>
+          <div style={{background:'var(--clay-tint)',border:'1px solid var(--clay-edge)',borderRadius:14,overflow:'hidden',boxShadow:'0 2px 14px rgba(55,43,11,0.07)'}}>
             <div style={{background:'radial-gradient(rgba(55,43,11,0.08) 1px,transparent 1px) 0 0/22px 22px, rgba(238,229,211,0.5)',padding:'36px 28px',display:'flex',alignItems:'center',justifyContent:'center',minHeight:240,overflow:'hidden',position:'relative'}}>
               {c.visual}
               <div style={{position:'absolute',bottom:16,left:'50%',transform:'translateX(-50%)',background:'white',border:'1px solid rgba(158,100,75,0.3)',borderRadius:8,padding:'7px 14px',fontSize:10,fontFamily:'Inter,sans-serif',color:'var(--clay-ink)',fontWeight:600,whiteSpace:'nowrap',boxShadow:'0 2px 8px rgba(158,100,75,0.1)'}}>{c.callout}</div>

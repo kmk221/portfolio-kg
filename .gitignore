@@ -5,3 +5,8 @@ dist/
 .env
 generate-resume.cjs
 public/KristinGarzaResume_v2.pdf
+
+# build output + generated/junk (added during repo cleanup)
+dist-test/
+vite.config.js.timestamp-*.mjs
+*.tmp

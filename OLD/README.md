@@ -37,6 +37,26 @@ the two were moved together and the import stays co-located (no build reference)
 
 To undo: `git mv OLD/Home.jsx src/pages/Home.jsx` and `git mv OLD/Home.module.css src/pages/Home.module.css`.
 
+## Repo structure cleanup — archived 2026-06-29 (Phase 2)
+
+Moved here via `git mv` (history preserved). None are referenced by the live app or build.
+
+| Archived (in OLD/) | Came from | Why |
+|---|---|---|
+| `src-broken/`, `src-broken.zip` | repo root | Broken experiment dump (full of `X 2/3/4/5` dupes) + its zip. |
+| `src - old/` | repo root | Previous `src/` snapshot. |
+| `latest artifacts compliance/` | repo root | Old case-study HTML + sketches + photos (research/source material). |
+| `illustrations-root/` | root `illustrations/` | **Duplicate** of `public/illustrations/` (identical files). App serves `/illustrations/` from `public/`, so the root copy was unused. |
+| `permanent-marker.ttf`, `permanent-marker 2.ttf` | repo root | Unused — fonts load via Google `@import` in `tokens.css`; no `@font-face` referenced these. |
+| `gen-paths.mjs`, `gen-paths 2.mjs` | repo root | One-off generator (reads the .ttf → SVG glyph paths). Not in `package.json` scripts; not an active workflow. |
+| `design-system.src.html` | `src/design-system.html` | Stale variant (inlined its own tokens). |
+| `design-system.pages.html` | `src/pages/design-system.html` | Duplicate of canonical root `design-system.html`. |
+| `CaseStudyOM.jsx` | `src/pages/CaseStudyOM.jsx` | Orphaned — imported in `main.jsx` but never routed. Dead import removed from `main.jsx`. |
+
+Canonical design-system reference kept at repo-root `design-system.html`; `public/shortlist/design-system.html` kept (Shortlist product). `tokens-orphaned.css` deliberately left in place (deferred decision).
+
+To undo any: `git mv OLD/<name> <original path>` (and for CaseStudyOM, re-add its import line to `src/main.jsx`).
+
 ## To undo (token files)
 
 `git mv OLD/tokens.root.css tokens.css` and `git mv OLD/tokens.pages.css src/pages/tokens.css`,

@@ -29,12 +29,12 @@
   --clay-edge:  #AFC2F2;
   --accent-tint: color-mix(in srgb, var(--clay) 20%, var(--bg)); /* subtle ~20% accent hover fill */
 
-  /* MICRO-ACCENT — mustard (was ochre) */
-  --ochre:      #C6BB20;
-  --ochre-deep: #A39A18;
-  --ochre-ink:  #817A1E;            /* canonical eyebrow / section-label text */
-  --ochre-tint: #F4F1C5;
-  --ochre-edge: #DAD06A;
+  /* MICRO-ACCENT — mustard (was ochre); base retuned to #DDCC33 */
+  --ochre:      #DDCC33;            /* canonical micro-accent — eyebrow rules, dots */
+  --ochre-deep: #AB9D21;
+  --ochre-ink:  #877D1C;            /* canonical eyebrow / section-label text */
+  --ochre-tint: #F8F4D3;
+  --ochre-edge: #E0D467;
 
   /* MUTED — blue-grey (was slate/teal) */
   --slate:      #6E84B0;
@@ -49,6 +49,8 @@
 
   --s-1: 4px;  --s-2: 8px;  --s-3: 12px;  --s-4: 16px;  --s-5: 24px;
   --s-6: 32px; --s-7: 48px; --s-8: 64px;  --s-9: 96px;  --s-10: 128px;
+
+  --nav-h: 57px;  /* fallback; Nav.jsx publishes the measured height at runtime */
 
   /* Type families — WIV type system */
   --f-serif:         "IBM Plex Sans", system-ui, sans-serif;   /* headings (theme-experiment) */
@@ -299,19 +301,31 @@ strong { font-weight: 600; color: var(--ink); }
   color: var(--ink);
   text-decoration: none;
 }
-.wordmark-dot { color: var(--clay); }
+.wordmark-dot { color: var(--ochre); }
 
-/* Homepage: blue nav continuous with the blue hero band (theme-experiment) */
+/* Homepage nav (theme-experiment): on landing it's 80% of the hero colour, so
+   it blends seamlessly into the blue hero band. It only reads as a distinct bar
+   once it passes the hero and the cream body scrolls behind it — at which point
+   the .nav--scrolled edge + soft shadow fade in. Restrained backdrop blur keeps
+   it modern over the cream, never a hard opaque header. */
 .nav--home {
-  background: var(--clay);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom: none;
+  background: color-mix(in srgb, var(--clay) 80%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+.nav--home.nav--scrolled {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 6px 20px rgba(46, 84, 184, 0.13);
 }
 .nav--home .wordmark { color: var(--bg); }
-.nav--home .wordmark-dot { color: var(--bg); }
-.nav--home a:not(.wordmark):not(.btn) { color: var(--bg); opacity: 0.88; }
-.nav--home a:not(.wordmark):not(.btn):hover { opacity: 1; }
+.nav--home .wordmark-dot { color: var(--ochre); }
+/* nav.nav--home raises specificity above the generic `.nav a` rule below, so
+   the homepage nav links stay white (cream) in every state, not just at rest. */
+nav.nav--home a:not(.wordmark):not(.btn) { color: var(--bg); opacity: 0.9; }
+nav.nav--home a:not(.wordmark):not(.btn):hover { color: var(--bg); opacity: 1; }
 .nav--home .nav-hamburger-bar { background: var(--bg); }
 .nav--home .btn--secondary { --btn-fg: var(--bg); --btn-bd: rgba(255,254,245,0.55); }
 .nav--home .btn--secondary:hover { background: var(--bg); border-color: var(--bg); color: var(--clay); }

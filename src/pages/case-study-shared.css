@@ -106,7 +106,7 @@
    Canonical eyebrow system (matches the sitewide .eyebrow primitive):
    mono / uppercase / tracked at var(--fs-eyebrow); text in the SECONDARY
    ink var(--ink-3) (#554B2E); trailing rule in the mustard micro-accent
-   var(--ochre) (#C6BB20). The .light variant inverts for dark sections.
+   var(--ochre) (#DDCC33). The .light variant inverts for dark sections.
    Pair with .cs-h2 (styles.css) for the title.
    -------------------------------------------------------------------------- */
 .cs-page .step-label {
@@ -993,3 +993,58 @@
   .cs-h2 { font-size: clamp(22px, 5vw, 32px) !important; }
   .cs-page h1 { font-size: clamp(28px, 7vw, 48px) !important; line-height: 1.2 !important; }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   CASE-STUDY SUB-NAV
+   A sticky secondary navigation layer that docks flush beneath the main Nav
+   (top: var(--nav-h)) with "← All Work" + "Next Case Study →". Translucent
+   cream + restrained blur + a single hairline so it reads as an integrated
+   second tier over the cream body, never a heavy separate bar.
+   ────────────────────────────────────────────────────────────────────────── */
+/* Dual-nav behavior: the main site nav is NOT sticky on case-study pages, so it
+   scrolls out of view. The sub-nav then sticks to the very top of the screen as
+   the sole fixed bar (both are visible together only at the very top). */
+.cs-page .nav { position: static; }
+
+.cs-subnav {
+  position: sticky;
+  top: 0;
+  z-index: 45;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--hairline);
+}
+.cs-subnav-inner {
+  max-width: var(--content-width, 1240px);
+  margin: 0 auto;
+  padding: 14px var(--side-padding, 64px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+/* All Work / Next Case Study are text links, not buttons */
+.cs-subnav-link {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--clay);
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 140ms ease;
+}
+.cs-subnav-link:hover { color: var(--clay-deep); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 720px) {
+  .cs-subnav-inner { padding: 12px 24px; }
+  .cs-subnav-link { font-size: 13px; }
+}
+
+/* "What's Inside" chapter nav removed from all case studies (markup + scrollspy
+   left in place but hidden, so it's trivially reversible). */
+.om-chapter-nav,
+.om-chapter-bar { display: none !important; }

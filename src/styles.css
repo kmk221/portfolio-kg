@@ -6,26 +6,37 @@
 .page-hero {
   background: var(--clay);
   color: var(--bg);
+  /* pull the blue band up under the sticky nav so it sits over the hero (not
+     the cream page bg) at the very top — the translucent nav then blends */
+  margin-top: calc(-1 * var(--nav-h, 57px));
 }
 .page-hero-inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 96px 64px 112px;
-  min-height: clamp(640px, 86vh, 840px);
+  /* +nav-h compensates the .page-hero pull-up so content position is unchanged.
+     Generous top/bottom padding gives the band more vertical negative space. */
+  padding: calc(112px + var(--nav-h, 57px)) 64px 100px;
+  min-height: clamp(800px, 90vh, 1000px);
+  display: flex;
+  flex-direction: column;
+}
+/* headline + illustration read as one vertically-centered unit; CTAs sit lower */
+.hero-top {
+  flex: 1;
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 340px;
   gap: 64px;
   align-items: center;
 }
-.page-hero .lockup { display: flex; flex-direction: column; }
+/* Hero-only display type — tightened leading, not shared with any other heading */
 .hero-headline {
   font-family: var(--f-sans);
   font-weight: 500;
-  font-size: clamp(40px, 5.4vw, 76px);
-  line-height: 1.05;
+  font-size: clamp(50px, 5.9vw, 84px);
+  line-height: 0.90;
   letter-spacing: -0.02em;
   color: var(--bg);
-  max-width: 15ch;
+  max-width: calc(14ch - 20px);
   margin: 0;
 }
 .hero-headline span { font-size: inherit; }
@@ -48,18 +59,18 @@
 }
 .page-hero .illus img {
   width: 100%;
-  max-width: 380px;
+  max-width: 340px;
   display: block;
 }
 @media (max-width: 860px) {
   .page-hero-inner {
-    grid-template-columns: 1fr;
-    padding: 56px 24px 64px;
+    padding: calc(56px + var(--nav-h, 57px)) 24px 64px;
     min-height: 0;
     gap: 32px;
   }
+  .hero-top { grid-template-columns: 1fr; }
   .page-hero .illus { display: none; }
-  .page-hero .ctas { margin-top: 32px; }
+  .page-hero .ctas { margin-top: 0; }
 }
 @media (max-width: 540px) {
 
@@ -331,6 +342,35 @@
   gap: 48px;
   align-items: start;
 }
+/* keep the bio to a comfortable reading measure, matching the Work/Bits intros */
+.home-about-text p { max-width: 62ch; }
+
+/* ───────── BITS FEATURE TILES — inverse work-card treatment ─────────
+   Cream surface + blue accent outline, filling solid blue on hover (mirrors
+   the homepage .work-card.clay). Colours are CSS-driven so the hover swap
+   works; the AI × Design tile keeps its own solid-blue styling. */
+.bits-tile {
+  background: var(--bg);
+  border: 1.5px solid var(--clay-edge);
+  border-radius: var(--r-3);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+.bits-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+  background: var(--clay);
+  border-color: var(--clay);
+}
+.bits-tile-visual  { color: var(--clay); }
+.bits-tile-eyebrow { color: var(--clay-ink); }
+.bits-tile-title   { color: var(--ink-2); }
+.bits-tile-body    { color: var(--ink-3); }
+.bits-tile-cta     { color: var(--clay-ink); }
+.bits-tile:hover .bits-tile-visual,
+.bits-tile:hover .bits-tile-eyebrow,
+.bits-tile:hover .bits-tile-title,
+.bits-tile:hover .bits-tile-body,
+.bits-tile:hover .bits-tile-cta { color: var(--bg); }
 .home-about-chips {
   display: flex;
   flex-direction: column;

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import Nav from '../components/Nav.jsx'
+import CaseStudyNav from '../components/CaseStudyNav.jsx'
 import './case-study-shared.css'
 import './CaseStudy.css'
 
@@ -934,6 +935,7 @@ export default function CaseStudy() {
   return (
     <div className="cs-page positions-page">
       <Nav />
+      <CaseStudyNav />
 
       {/* Sticky chapter nav  -  left rail at ≥1100px viewport */}
       <aside
@@ -981,7 +983,7 @@ export default function CaseStudy() {
           <div style={{ marginBottom: 32 }}>
             <span className="eyebrow">Case Study · Trading Platform · Design Systems · 2025</span>
           </div>
-          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: 'var(--ink-2)', margin: '0 0 20px' }}>Well-Positioned<span style={{ color: 'var(--clay)' }}>.</span></h1>
+          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: 'var(--ink-2)', margin: '0 0 20px' }}>Well-Positioned</h1>
           <p style={{ fontFamily: 'var(--f-serif)', fontStyle: 'normal', fontWeight: 300, fontSize: 'clamp(17px, 1.5vw, 21px)', lineHeight: 1.55, color: 'var(--ink-2)', maxWidth: 560, margin: '0 0 36px' }}>Designing in-flow context for institutional investing workflows—bringing account and position data to the moment it matters most.</p>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {['Research', 'Strategy', 'Product Design', 'Design Systems'].map(tag => (

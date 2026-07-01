@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Nav from '../components/Nav.jsx'
+import CaseStudyNav from '../components/CaseStudyNav.jsx'
 import './case-study-shared.css'
 
 // Palette matches the Order Management case study (the reference): terracotta
@@ -1232,8 +1233,9 @@ export default function RulesCaseStudy(){
     })
   }
 
-  return(<div className="rules-cs-page cs-page rules-page" style={{fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'hidden'}}>
+  return(<div className="rules-cs-page cs-page rules-page" style={{fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'clip'}}>
     <Nav/>
+    <CaseStudyNav />
     {/* Sticky chapter nav  -  left rail at ≥1100px viewport */}
     <aside
       className={`om-chapter-nav${navVisible ? ' is-visible' : ''}${navCollapsed ? ' is-collapsed' : ''}`}
@@ -1301,7 +1303,7 @@ export default function RulesCaseStudy(){
         <div style={{marginBottom:32,opacity:0,animation:'fadeUp 0.7s ease 0.1s forwards'}}>
           <span className="eyebrow">Case Study · Rule Engine · 2025</span>
         </div>
-        <h1 style={{fontFamily:'var(--f-serif)',fontWeight:300,fontSize:'clamp(36px, 5vw, 64px)',letterSpacing:'-0.01em',lineHeight:1.1,color:'var(--ink-2)',margin:'0 0 20px',opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine<span style={{color:'var(--clay)'}}>.</span></h1>
+        <h1 style={{fontFamily:'var(--f-serif)',fontWeight:300,fontSize:'clamp(36px, 5vw, 64px)',letterSpacing:'-0.01em',lineHeight:1.1,color:'var(--ink-2)',margin:'0 0 20px',opacity:0,animation:'fadeUp 0.7s ease 0.25s forwards'}}>Inside the Rule Engine</h1>
         <p style={{fontFamily:'var(--f-serif)',fontStyle:'normal',fontWeight:300,fontSize:'clamp(17px, 1.5vw, 21px)',lineHeight:1.55,color:'var(--ink-2)',maxWidth:560,margin:'0 0 36px',opacity:0,animation:'fadeUp 0.7s ease 0.4s forwards'}}>From research landscape to shipped product—designing a rules engine that replaces programmatic jargon and Excel workarounds with plain-English readbacks, revealing logic in clear, discernible chunks so compliance teams can trust what a rule will do as they build it.</p>
         <div style={{display:'flex',gap:8,flexWrap:'wrap',opacity:0,animation:'fadeUp 0.7s ease 0.5s forwards'}}>
           {['Research','Strategy','Product Design','Testing','Shipped ✓'].map(tag=>(<span key={tag} className="chip chip--neutral">{tag}</span>))}

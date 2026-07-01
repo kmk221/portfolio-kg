@@ -9,23 +9,25 @@ export default function Home() {
       {/* ── HERO — full-bleed blue band ── */}
       <section className="page-hero">
         <div className="page-hero-inner">
-          <div className="lockup">
+          {/* headline + illustration are one vertically-centered unit */}
+          <div className="hero-top">
             <h1 className="hero-headline">
-              Design that feels simple, useful, and <span style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', letterSpacing: '-0.01em', color: 'var(--bg)', display: 'inline-block', lineHeight: '1', verticalAlign: '0.02em' }}>human</span>.
+              Design that feels simple, useful, and <span style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', letterSpacing: '-0.01em', color: 'var(--bg)', display: 'inline-block', lineHeight: '1', verticalAlign: '0.02em' }}>human</span><span style={{ color: 'var(--ochre)' }}>.</span>
             </h1>
-            <div className="ctas">
-              <a href="#work" className="btn btn--lg">View work ↓</a>
-              <a href="mailto:kmkerney221@gmail.com" className="btn btn--secondary btn--lg">
-                Get in touch
-              </a>
-            </div>
-            {/* Illustration shown below buttons on mobile only */}
-            <div className="illus-mobile">
+            <div className="illus">
               <img src="/kristin-circle.svg" alt="Kristin Garza illustration" />
             </div>
           </div>
 
-          <div className="illus">
+          <div className="ctas">
+            <a href="#work" className="btn btn--lg">View work <span style={{ display: 'inline-block', transform: 'rotate(-90deg)', fontSize: '1.5em', lineHeight: 0, verticalAlign: '-0.08em' }}>←</span></a>
+            <a href="mailto:kmkerney221@gmail.com" className="btn btn--secondary btn--lg">
+              Get in touch
+            </a>
+          </div>
+
+          {/* Illustration shown below buttons on mobile only */}
+          <div className="illus-mobile">
             <img src="/kristin-circle.svg" alt="Kristin Garza illustration" />
           </div>
         </div>

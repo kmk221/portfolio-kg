@@ -30,75 +30,65 @@ export default function Bits() {
             Passion projects, creative experiments, and things I build when I'm not solving enterprise problems  -  because design should be fun too.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 80 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16, marginBottom: 80 }}>
 
             {/* Vibe-Coded Experiments — Shortlist */}
             <Link
               to="/bits/shortlist"
+              className="bits-tile"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
-                minHeight: 280,
+                justifyContent: 'flex-start',
+                minHeight: 260,
                 padding: '32px 36px',
-                background: 'var(--ochre-deep)',
-                borderRadius: 'var(--r-3)',
                 position: 'relative',
                 overflow: 'hidden',
-                transition: 'transform 180ms ease, box-shadow 180ms ease',
                 textDecoration: 'none',
-                color: 'inherit',
               }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.18)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
             >
-              {/* Decorative code symbol  -  upper area */}
-              <div aria-hidden="true" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -70%)', fontFamily: 'var(--f-mono)', fontSize: 'clamp(64px, 8vw, 100px)', fontWeight: 300, color: 'rgba(245,232,211,0.12)', lineHeight: 1, whiteSpace: 'nowrap', userSelect: 'none' }}>
+              {/* Small code-symbol visual, above the content */}
+              <div aria-hidden="true" className="bits-tile-visual" style={{ fontFamily: 'var(--f-mono)', fontSize: 46, fontWeight: 300, lineHeight: 1, margin: '0 0 22px', userSelect: 'none' }}>
                 &lt;/&gt;
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Passion Project · Mobile + TV</p>
-                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Shortlist.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>A mobile + Smart TV app for “what do we watch tonight?”  -  taken from research to a coded hi-fi prototype. My window into mobile and multi-device design.</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Read the mini case study →</span>
+                <p className="bits-tile-eyebrow" style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', margin: '0 0 14px' }}>Passion Project · Mobile + TV</p>
+                <h3 className="bits-tile-title" style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', margin: '0 0 14px' }}>Shortlist.</h3>
+                <p className="bits-tile-body" style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, maxWidth: '46ch', margin: '0 0 20px' }}>A mobile + Smart TV app for “what do we watch tonight?”  -  taken from research to a coded hi-fi prototype. My window into mobile and multi-device design.</p>
+                <span className="bits-tile-cta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase' }}>Read the mini case study →</span>
               </div>
             </Link>
 
             {/* Line Illustration Work */}
             <Link
               to="/illustrations"
+              className="bits-tile"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
-                minHeight: 280,
+                justifyContent: 'flex-start',
+                minHeight: 260,
                 padding: '32px 36px',
-                background: 'var(--slate-deep)',
-                borderRadius: 'var(--r-3)',
                 position: 'relative',
                 overflow: 'hidden',
-                transition: 'transform 180ms ease, box-shadow 180ms ease',
                 textDecoration: 'none',
-                color: 'inherit',
               }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(55,43,11,0.12)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
             >
-              {/* Decorative SVG  -  upper area */}
-              <div aria-hidden="true" style={{ position: 'absolute', top: 32, left: 36, right: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.55 }}>
-                <svg viewBox="0 0 400 120" width="100%" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 90 Q80 20 160 60 Q240 100 320 30 Q370 5 395 40" stroke="rgba(245,232,211,0.7)" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-                  <path d="M40 70 Q110 110 200 50 Q280 0 360 60" stroke="rgba(245,232,211,0.7)" strokeWidth="1" strokeLinecap="round" strokeDasharray="5 8" fill="none" opacity="0.5" />
-                  <circle cx="160" cy="60" r="6" stroke="rgba(245,232,211,0.7)" strokeWidth="1.5" fill="none" />
-                  <circle cx="320" cy="30" r="4" stroke="rgba(245,232,211,0.7)" strokeWidth="1" fill="none" opacity="0.6" />
-                  <circle cx="80" cy="55" r="3" stroke="rgba(245,232,211,0.7)" strokeWidth="1" fill="none" opacity="0.4" />
+              {/* Small line-art visual, above the content */}
+              <div aria-hidden="true" className="bits-tile-visual" style={{ margin: '0 0 22px' }}>
+                <svg viewBox="0 0 400 120" width="200" height="60" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 90 Q80 20 160 60 Q240 100 320 30 Q370 5 395 40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                  <path d="M40 70 Q110 110 200 50 Q280 0 360 60" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="6 9" fill="none" opacity="0.5" />
+                  <circle cx="160" cy="60" r="7" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                  <circle cx="320" cy="30" r="5" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.6" />
+                  <circle cx="80" cy="55" r="4" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.4" />
                 </svg>
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <p style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.6)', margin: '0 0 14px' }}>Illustration</p>
-                <h3 style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', color: 'rgba(245,232,211,0.96)', margin: '0 0 14px' }}>Line Art & Characters.</h3>
-                <p style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, color: 'rgba(245,232,211,0.72)', maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics  -  my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(245,232,211,0.5)' }}>Explore →</span>
+                <p className="bits-tile-eyebrow" style={{ fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', margin: '0 0 14px' }}>Illustration</p>
+                <h3 className="bits-tile-title" style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.018em', margin: '0 0 14px' }}>Line Art & Characters.</h3>
+                <p className="bits-tile-body" style={{ fontFamily: 'var(--f-sans)', fontSize: 14, lineHeight: 1.65, maxWidth: '46ch', margin: '0 0 20px' }}>A collection of line illustrations, character designs, and custom graphics  -  my creative outlet when I'm not designing products. Minimal strokes, playful compositions.</p>
+                <span className="bits-tile-cta" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase' }}>Explore →</span>
               </div>
             </Link>
 
@@ -116,12 +106,13 @@ export default function Bits() {
             <Link
               to="/ai-design"
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                gap: 40,
+                alignItems: 'center',
                 minHeight: 280,
-                padding: '32px 36px',
-                background: 'var(--clay-ink)',
+                padding: '36px 40px',
+                background: 'var(--clay)',
                 borderRadius: 'var(--r-3)',
                 textDecoration: 'none',
                 color: 'inherit',
@@ -138,7 +129,7 @@ export default function Bits() {
                   fontFamily: 'var(--f-serif)',
                   fontSize: 'clamp(28px, 4vw, 40px)',
                   fontWeight: 300,
-                  color: 'rgba(245,232,211,0.96)',
+                  color: 'rgba(255,252,240,1)',
                   lineHeight: 1.15,
                   letterSpacing: '-0.02em',
                   margin: '0 0 20px',
@@ -148,7 +139,7 @@ export default function Bits() {
                 <p style={{
                   fontFamily: 'var(--f-sans)',
                   fontSize: 14, lineHeight: 1.65,
-                  color: 'rgba(245,232,211,0.75)',
+                  color: 'rgba(255,252,240,0.97)',
                   maxWidth: '46ch',
                   margin: '0 0 24px',
                 }}>
@@ -162,11 +153,18 @@ export default function Bits() {
                       padding: '6px 14px',
                       borderRadius: 'var(--r-pill)',
                       background: 'rgba(245,232,211,0.12)',
-                      color: 'rgba(245,232,211,0.85)',
+                      color: 'rgba(255,252,240,0.97)',
                       border: '1px solid rgba(245,232,211,0.22)',
                     }}>{tag}</span>
                   ))}
                 </div>
+              </div>
+
+              {/* Takeaway pull-quote — right column */}
+              <div style={{ position: 'relative', zIndex: 1, borderLeft: '2px solid var(--ochre)', paddingLeft: 24 }}>
+                <p style={{ fontFamily: 'var(--f-serif)', fontStyle: 'italic', fontWeight: 300, fontSize: 'clamp(18px, 1.9vw, 24px)', lineHeight: 1.4, letterSpacing: '-0.01em', color: 'rgba(255,252,240,0.97)', margin: 0 }}>
+                  “AI used correctly serves as a multiplier, but used carelessly is just a faster way to produce the wrong thing.”
+                </p>
               </div>
             </Link>
 
@@ -199,7 +197,7 @@ export default function Bits() {
                   position: 'absolute', top: 12, right: 14,
                   fontFamily: 'var(--f-mono)', fontSize: 10, fontWeight: 600,
                   letterSpacing: '0.12em', textTransform: 'uppercase',
-                  color: 'rgba(245,232,211,0.5)',
+                  color: 'rgba(255,252,240,0.92)',
                 }}>Coming Soon</span>
 
                 {/* Mock quote widget */}

@@ -150,7 +150,7 @@
 /* Handwritten annotations. */
 .shortlist-page .sl-note {
   font-family: var(--f-script);
-  color: #925641;
+  color: var(--clay);
   font-size: clamp(15px, 1.5vw, 20px);
   line-height: 1.5;
   letter-spacing: 0.01em;

@@ -23,10 +23,24 @@ if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
 // Scrolls to the top of the page whenever the pathname changes.
 // Must live inside <BrowserRouter> because it uses useLocation().
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   useEffect(() => {
+    // Honor an anchor hash (e.g. "/#work" from a case study's "All Work" link):
+    // wait for the destination route to mount, then jump to that section.
+    if (hash) {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(hash.slice(1))
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY
+          window.scrollTo({ top, left: 0, behavior: 'instant' })
+        } else {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+        }
+      })
+      return
+    }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-  }, [pathname])
+  }, [pathname, hash])
   return null
 }
 

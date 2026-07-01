@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 
@@ -7,6 +7,8 @@ export default function Nav() {
   const isHome = pathname === '/'
   const [open, setOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const navRef = useRef(null)
 
   // Detect mobile viewport
   useEffect(() => {
@@ -15,6 +17,40 @@ export default function Nav() {
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
+
+  // Publish the real nav height as --nav-h so sticky sub-navs (case studies)
+  // can dock flush beneath it regardless of viewport / content height.
+  useEffect(() => {
+    const setH = () => {
+      if (navRef.current) {
+        document.documentElement.style.setProperty('--nav-h', `${navRef.current.offsetHeight}px`)
+      }
+    }
+    setH()
+    window.addEventListener('resize', setH)
+    return () => window.removeEventListener('resize', setH)
+  }, [isMobile])
+
+  // Home only: the nav blends into the hero on landing and becomes a distinct
+  // bar once it passes the hero band and sits over the cream body.
+  useEffect(() => {
+    if (!isHome) { setScrolled(false); return }
+    const threshold = () => {
+      const hero = document.querySelector('.page-hero')
+      const navH = navRef.current ? navRef.current.offsetHeight : 56
+      return hero ? hero.offsetHeight - navH : 480
+    }
+    let t = threshold()
+    const onScroll = () => setScrolled(window.scrollY > t)
+    const onResize = () => { t = threshold(); onScroll() }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [isHome, pathname])
 
   // Close menu on route change
   useEffect(() => { setOpen(false) }, [pathname])
@@ -43,7 +79,10 @@ export default function Nav() {
 
   return (
     <>
-      <nav className={`nav ${isHome ? 'nav--home' : ''}`}>
+      <nav
+        ref={navRef}
+        className={`nav ${isHome ? 'nav--home' : ''} ${isHome && scrolled ? 'nav--scrolled' : ''}`}
+      >
         <div className="nav-inner">
           <Link to="/" className="wordmark" aria-label="kristin.garza">
             kristin<span className="wordmark-dot">.</span>garza

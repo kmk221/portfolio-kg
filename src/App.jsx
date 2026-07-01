@@ -6,18 +6,12 @@ export default function Home() {
     <div>
       <Nav />
 
-      <main className="page">
-
-        {/* ── HERO ── */}
-        <section className="page-hero">
+      {/* ── HERO — full-bleed blue band ── */}
+      <section className="page-hero">
+        <div className="page-hero-inner">
           <div className="lockup">
-            <span className="eyebrow with-rule eyebrow--hero">
-              <span className="eyebrow-name" style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal' }}>Kristin Garza</span>
-              <span className="eyebrow-sep"> · </span>
-              <span className="eyebrow-title">UX Designer · Product Thinker</span>
-            </span>
             <h1 className="hero-headline">
-              Crafting simple, thoughtful, and delightful experiences for <span style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', letterSpacing: '-0.01em', color: 'var(--slate-deep)', display: 'inline-block', lineHeight: '1', verticalAlign: '0.05em' }}>humans</span> in a complex digital world.
+              Design that feels simple, useful, and <span style={{ fontFamily: 'var(--f-script)', fontStyle: 'normal', letterSpacing: '-0.01em', color: 'var(--bg)', display: 'inline-block', lineHeight: '1', verticalAlign: '0.02em' }}>human</span>.
             </h1>
             <div className="ctas">
               <a href="#work" className="btn btn--lg">View work ↓</a>
@@ -27,15 +21,17 @@ export default function Home() {
             </div>
             {/* Illustration shown below buttons on mobile only */}
             <div className="illus-mobile">
-              <img src="/kristin-illustration.svg" alt="Kristin Garza illustration" />
+              <img src="/kristin-circle.svg" alt="Kristin Garza illustration" />
             </div>
           </div>
 
           <div className="illus">
-            <img src="/kristin-illustration.svg" alt="Kristin Garza illustration" />
+            <img src="/kristin-circle.svg" alt="Kristin Garza illustration" />
           </div>
+        </div>
+      </section>
 
-        </section>
+      <main className="page">
 
         {/* ── ABOUT ── */}
         <section id="about" className="page-section page-section--secondary">
@@ -111,7 +107,7 @@ export default function Home() {
             </Link>
 
             {/* Rule Engine  -  ochre */}
-            <Link to="/case-study/rules" className="work-card ochre">
+            <Link to="/case-study/rules" className="work-card clay">
               <div className="shot">
                 <div className="preview-stub">
                   <div className="h">
@@ -136,12 +132,12 @@ export default function Home() {
                 <div className="cat">Compliance · Rules Engine</div>
                 <h3>Inside the Rule Engine</h3>
                 <p>A conditional logic engine that automates which trades reach the market  -  redesigned to replace tribal knowledge with approachable, intuitive workflows compliance teams can move through confidently.</p>
-                <div className="cta"><span /><span className="arr" style={{ color: 'var(--ochre-ink)' }}>→</span></div>
+                <div className="cta"><span /><span className="arr" style={{ color: 'var(--clay-ink)' }}>→</span></div>
               </div>
             </Link>
 
             {/* Positions  -  slate/agave */}
-            <Link to="/case-study/positions" className="work-card slate">
+            <Link to="/case-study/positions" className="work-card clay">
               <div className="shot">
                 <div className="preview-stub">
                   <div className="h">
@@ -169,7 +165,7 @@ export default function Home() {
                 <div className="cat">Trading Platform · Design Systems</div>
                 <h3>Well-Positioned</h3>
                 <p>Surfacing critical portfolio data next to trading workflows  -  eliminating context switching, reducing reliance on memorization, and scaling as a reusable platform-wide component.</p>
-                <div className="cta"><span /><span className="arr" style={{ color: 'var(--slate-deep)' }}>→</span></div>
+                <div className="cta"><span /><span className="arr" style={{ color: 'var(--clay-ink)' }}>→</span></div>
               </div>
             </Link>
 

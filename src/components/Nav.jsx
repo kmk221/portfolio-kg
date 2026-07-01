@@ -43,10 +43,10 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="nav">
+      <nav className={`nav ${isHome ? 'nav--home' : ''}`}>
         <div className="nav-inner">
           <Link to="/" className="wordmark" aria-label="kristin.garza">
-            kristin<span style={{ color: 'var(--clay)' }}>.</span>garza
+            kristin<span className="wordmark-dot">.</span>garza
           </Link>
 
           {/* Desktop nav  -  only rendered when not mobile */}

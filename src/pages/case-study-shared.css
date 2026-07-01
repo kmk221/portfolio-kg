@@ -85,11 +85,11 @@
 .cs-page .om-gold-glow-b { display: none; }
 .cs-page .om-gold-eyebrow {
   font-family: var(--f-mono);
-  font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--clay, #9E644B); margin-bottom: 20px;
+  font-size: var(--fs-eyebrow); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 20px;
   display: flex; align-items: center; gap: 12px;
 }
-.cs-page .om-gold-rule { flex: 1; height: 1px; background: rgba(184,103,87,0.3); }
+.cs-page .om-gold-rule { flex: 1; height: 1px; background: var(--ochre); }
 .cs-page .om-gold-title {
   font-family: var(--f-serif); font-size: clamp(26px, 3.2vw, 38px); font-weight: 300; line-height: 1.2;
   color: var(--ink-2); margin-bottom: 20px; letter-spacing: -0.01em;
@@ -101,31 +101,24 @@
 
 /* --------------------------------------------------------------------------
    Section header — eyebrow + title pair used to open every section across
-   the case studies. Lifted from OM's old per-page `.om-page .step-label`
-   rule so OM, Rules, and Positions all pull from one definition.
+   the case studies (OM, Rules, Positions all pull from this one definition).
 
-   Spacing: eyebrow is 11px uppercase with a trailing horizontal rule,
-   sits 40px above the title. Title is 28px / 800 / warm-gray, sits 28px
-   above whatever body content follows. These two values (40 / 28) are
-   the consistent vertical rhythm across all three case studies.
-
-   Color: locked to terracotta (not var(--clay)) so the eyebrow reads
-   the same on Rules (which has a steel-blue --accent) as it does on OM.
-   The trailing rule uses a terracotta-tinted line for the same reason.
-   Pair with the .cs-h2 rule in styles.css for the title. The title's
-   own style is kept inline / on .cs-h2 rather than in here so that
-   per-case adjustments stay loose.
+   Canonical eyebrow system (matches the sitewide .eyebrow primitive):
+   mono / uppercase / tracked at var(--fs-eyebrow); text in the SECONDARY
+   ink var(--ink-3) (#554B2E); trailing rule in the mustard micro-accent
+   var(--ochre) (#C6BB20). The .light variant inverts for dark sections.
+   Pair with .cs-h2 (styles.css) for the title.
    -------------------------------------------------------------------------- */
 .cs-page .step-label {
   font-family: var(--f-mono);
-  font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--clay, #9E644B);
+  font-size: var(--fs-eyebrow); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-3);
   display: flex; align-items: center; gap: 10px;
   margin-bottom: 40px;
 }
 .cs-page .step-label::after {
   content: ''; flex: 1; height: 1px;
-  background: rgba(184, 103, 87, 0.28);
+  background: var(--ochre);
 }
 /* Light variant for steel-blue / dark sections — keeps eyebrow legible
    without flipping the warm accent. */

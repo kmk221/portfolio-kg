@@ -202,7 +202,10 @@ strong { font-weight: 600; color: var(--ink); }
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   border-bottom: 1px solid var(--hairline);
+  transition: transform 260ms ease;
 }
+/* auto-hide on scroll-down, reveal on scroll-up (all pages; see Nav.jsx) */
+.nav--hidden { transform: translateY(-100%); }
 .nav-inner {
   max-width: 1240px;
   margin: 0 auto;
@@ -309,12 +312,12 @@ strong { font-weight: 600; color: var(--ink); }
    the .nav--scrolled edge + soft shadow fade in. Restrained backdrop blur keeps
    it modern over the cream, never a hard opaque header. */
 .nav--home {
-  background: color-mix(in srgb, var(--clay) 80%, transparent);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  background: var(--clay);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom: 1px solid transparent;
   box-shadow: none;
-  transition: border-color 220ms ease, box-shadow 220ms ease;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 260ms ease;
 }
 .nav--home.nav--scrolled {
   border-bottom-color: rgba(255, 255, 255, 0.16);

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the Rule Engine — Kristin Garza</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Permanent+Marker&display=swap");
+
+:root{
+  --bg:#FFFEF5; --surface:#FFFFFF; --surface-2:#FBF6DD;
+  --hairline:#E7DFC4; --hairline-strong:#CDBF96;
+  --ink:#1F1A0F; --ink-2:#372B0B; --ink-3:#554B2E; --ink-mute:#8A7C5E; --ink-inverse:#FFFEF5;
+  --clay:#3F6CE0; --clay-deep:#2E54B8; --clay-ink:#2A4AA0; --clay-tint:#E5EBFB; --clay-edge:#AFC2F2;
+  --ochre:#DDCC33; --ochre-ink:#877D1C; --ochre-tint:#F8F4D3;
+  --slate:#6E84B0; --slate-deep:#3F5378; --slate-tint:#DCE3F0;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-script:"Permanent Marker",cursive;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--f-sans);color:var(--ink-2);background:#E7E0CC;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+/* ---------- deck / slide (16:9, content-first: min-height not fixed so text never clips) ---------- */
+.deck{display:flex;flex-direction:column;align-items:center;gap:26px;padding:32px 0;}
+.slide{position:relative;width:13.333in;min-height:7.5in;background:var(--bg);
+  padding:0.72in 0.9in 0.62in;display:flex;flex-direction:column;overflow:hidden;}
+.slide,.slide *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media screen{ .slide{box-shadow:0 14px 44px rgba(31,26,15,0.20);border-radius:6px;} }
+@page{ size:13.333in 7.5in; margin:0; }
+@media print{ body{background:#fff;} .deck{gap:0;padding:0;} .slide{box-shadow:none;border-radius:0;break-after:page;} .slide:last-child{break-after:auto;} }
+
+/* ---------- eyebrow / titles ---------- */
+.eyebrow{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:14px;}
+.eyebrow::after{content:"";width:64px;height:1px;background:var(--ochre);opacity:0.75;}
+.slide-title{font-family:var(--f-sans);font-weight:300;font-size:42px;line-height:1.08;letter-spacing:-0.015em;color:var(--ink-2);margin:16px 0 0;max-width:26ch;}
+.slide-kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay-ink);margin-top:10px;}
+
+/* ---------- archival copy (verbatim text) ---------- */
+.copy{margin-top:22px;max-width:94ch;}
+.copy h3{font-family:var(--f-sans);font-weight:600;font-size:23px;line-height:1.3;color:var(--ink-2);margin:26px 0 6px;letter-spacing:-0.01em;}
+.copy h4{font-family:var(--f-mono);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay-ink);margin:22px 0 6px;}
+.copy p{font-size:17px;line-height:1.62;color:var(--ink-2);margin:12px 0;}
+.copy p.lede{font-family:var(--f-sans);font-weight:300;font-size:21px;line-height:1.5;color:var(--ink-3);}
+.copy ul,.copy ol{margin:12px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.copy li{position:relative;padding-left:26px;font-size:17px;line-height:1.5;color:var(--ink-2);}
+.copy li::before{content:"";position:absolute;left:0;top:0.55em;width:8px;height:8px;background:var(--clay);border-radius:2px;}
+.copy ol{counter-reset:c;}
+.copy ol li{counter-increment:c;}
+.copy ol li::before{content:counter(c);top:0;width:auto;height:auto;background:none;color:var(--clay);font-family:var(--f-mono);font-weight:600;font-size:14px;}
+.copy strong{font-weight:600;color:var(--ink);}
+.copy blockquote{margin:18px 0;padding:6px 0 6px 20px;border-left:3px solid var(--clay);
+  font-family:var(--f-sans);font-style:italic;font-weight:300;font-size:20px;line-height:1.45;color:var(--ink-2);}
+.copy blockquote cite{display:block;font-style:normal;font-family:var(--f-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-mute);margin-top:8px;}
+.copy .callout{background:var(--surface-2);border:1px solid var(--hairline);border-left:3px solid var(--ochre);border-radius:0 8px 8px 0;padding:12px 18px;margin:14px 0;font-size:15px;color:var(--ink-3);}
+.copy .stat-row{display:flex;gap:40px;flex-wrap:wrap;margin:18px 0;}
+.copy .stat .n{font-weight:300;font-size:44px;line-height:1;color:var(--clay-deep);letter-spacing:-0.02em;}
+.copy .stat .l{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:8px;max-width:22ch;}
+
+/* ---------- figures (embedded stills) ---------- */
+.figures{margin-top:24px;display:flex;flex-direction:column;gap:20px;}
+.fig{break-inside:avoid;}
+.fig img{display:block;width:100%;height:auto;border:1px solid var(--hairline);border-radius:8px;background:var(--surface);box-shadow:0 6px 18px rgba(55,43,11,0.06);}
+.fig figcaption{font-family:var(--f-mono);font-size:11px;letter-spacing:0.06em;color:var(--ink-mute);margin-top:8px;}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.figrow.three{grid-template-columns:1fr 1fr 1fr;}
+/* placeholder for code-drawn / interactive components with no image file */
+.stub{break-inside:avoid;border:1px dashed var(--clay-edge);background:var(--clay-tint);border-radius:8px;
+  padding:22px 24px;color:var(--clay-ink);}
+.stub .k{font-family:var(--f-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay-ink);opacity:0.8;}
+.stub .t{font-family:var(--f-sans);font-weight:500;font-size:18px;margin-top:6px;color:var(--ink-2);}
+.stub .d{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:6px;}
+/* video-still badge */
+.fig.video figcaption::before{content:"▶ video still · ";color:var(--clay);}
+
+/* ---------- visuals list ---------- */
+.visuals{margin-top:24px;border-top:1px solid var(--hairline);padding-top:12px;font-size:13px;line-height:1.5;color:var(--ink-3);}
+.visuals b{font-family:var(--f-mono);font-weight:600;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--clay-ink);margin-right:10px;}
+.visuals code{font-family:var(--f-mono);font-size:12px;background:rgba(63,108,224,0.08);color:var(--clay-ink);padding:1px 6px;border-radius:4px;}
+
+/* ---------- footer ---------- */
+.slide-foot{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--hairline);font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);}
+.slide-foot .name{color:var(--ink-3);}
+
+/* ---------- title slide ---------- */
+.slide--title{background:var(--clay);color:var(--ink-inverse);justify-content:center;padding-top:0.9in;}
+.slide--title .eyebrow{color:rgba(255,254,245,0.85);}
+.slide--title .eyebrow::after{background:rgba(255,254,245,0.5);opacity:1;}
+.deck-h1{font-family:var(--f-sans);font-weight:300;font-size:72px;line-height:1.0;letter-spacing:-0.025em;color:var(--ink-inverse);margin:22px 0 0;}
+.deck-lede{font-family:var(--f-sans);font-weight:300;font-size:22px;line-height:1.45;color:rgba(255,254,245,0.92);margin:22px 0 0;max-width:64ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
+.meta span{font-family:var(--f-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,254,245,0.42);color:var(--ink-inverse);}
+.slide--title .slide-foot{border-top-color:rgba(255,254,245,0.28);color:rgba(255,254,245,0.72);}
+.slide--title .slide-foot .name{color:rgba(255,254,245,0.92);}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- ========== SLIDE 1 — TITLE ========== -->
+  <section class="slide slide--title">
+    <div class="eyebrow">Case Study · Rule Engine · 2025</div>
+    <h1 class="deck-h1">Inside the Rule Engine</h1>
+    <p class="deck-lede">From research landscape to shipped product—designing a rules engine that replaces programmatic jargon and Excel workarounds with plain-English readbacks, revealing logic in clear, discernible chunks so compliance teams can trust what a rule will do as they build it.</p>
+    <div class="meta"><span>Research</span><span>Strategy</span><span>Product Design</span><span>Testing</span><span>Shipped ✓</span></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>01 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 2 — tl;dr ========== -->
+  <section class="slide">
+    <div class="eyebrow">Context</div>
+    <h2 class="slide-title">tl;dr</h2>
+    <div class="copy">
+      <h4>Context</h4>
+      <ul>
+        <li>Rules engine: upstream of every trade, governs which orders can execute</li>
+        <li>Platform serving 3,300+ institutional firms; misconfigured rules can lead to millions in trade errors</li>
+        <li>System held together by tribal knowledge and Excel workarounds</li>
+      </ul>
+      <h4>Approach</h4>
+      <ul>
+        <li>Led discovery and a design sprint to find the highest-leverage slice</li>
+        <li>Scoped to rule management and rule creation as the most feasible, high-impact workflows</li>
+        <li>Pivoted from standalone list manager to in-rule list creation and plain-language logic</li>
+      </ul>
+      <h4>Outcome</h4>
+      <ul>
+        <li>7/7 usability participants responded positively, unusually strong signal</li>
+        <li>Plain-language rule preview called out as the biggest confidence booster</li>
+        <li>Replaced Ctrl+F / Excel workarounds and set interaction patterns for the broader compliance suite</li>
+      </ul>
+      <div class="callout">My Role: Lead UX Designer &nbsp;·&nbsp; ~9–12 months &nbsp;·&nbsp; Team: Design · Product · Engineering · Business · UXR &nbsp;·&nbsp; Shipped ✓</div>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>02 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 3 — FRAMING ========== -->
+  <section class="slide">
+    <div class="eyebrow">Framing</div>
+    <h2 class="slide-title">finding the right problem before designing the right solution</h2>
+    <div class="copy">
+      <p>This wasn't a project that arrived as a neat design brief. It started with two questions: inside a sprawling ecosystem of aging compliance tools, where should we intervene first—and how could design actually reduce risk rather than just re-skin old workflows?</p>
+      <p>I led a structured discovery and sprint process, pulling together existing interviews that had never been acted on, synthesizing research with product and engineering, and facilitating design workshops before a single pixel was drawn. The decision about what to design was as deliberate as the design itself.</p>
+      <p>The plain-language preview, the guided creation flow, the structured value input — these weren't just solutions to individual problems. They became the interaction patterns the rest of the compliance suite would build on.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>03 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 4 — DISCOVERY intro ========== -->
+  <section class="slide">
+    <div class="eyebrow">Discovery</div>
+    <h2 class="slide-title">Surveying the Compliance Landscape</h2>
+    <div class="copy">
+      <p>I surfaced and re-read prior compliance interviews that had stalled out, then brought product, engineering, and business into the same room to synthesize themes. That work aligned us on the rules engine as the highest‑leverage slice of the ecosystem—where a better experience would immediately change how compliance teams find, create, and maintain rules.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>04 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 5 — The existing experience ========== -->
+  <section class="slide">
+    <div class="eyebrow">The existing experience</div>
+    <h2 class="slide-title">What users were working with</h2>
+    <div class="copy">
+      <p>A rendered legacy rules table — matching the actual legacy UI — is shown on the live site. Header: <strong>Rules</strong>. Columns: Rule Id · Rule Name · Active · Investment Professional · Managed Account Advisor · Investor · Super Trader · Detail. Example rows (verbatim):</p>
+      <ul>
+        <li>U010 — Restricted Symbol Watch List — Active No — REVIEW, If Action =[ S], If Position Source =[ A], If Symbol / CUSIP / SEDOL =[ AAPL, MSFT, AMZN, CAKE, TSLA, META, QQQ, SPY, SPF, AA, BBB, NVDA, … ]</li>
+        <li>U011 — Rep Account Number Monitor — Active Yes — REVIEW, If Accepting Rep =[ 123, 456], If Account Number =[ 033000086]</li>
+        <li>U012 — Low Dollar Order Cap — Active No — REVIEW, If Account Number =[ 033370983], If Order Value &gt;= [ CAP 70.00]</li>
+        <li>U013 — Multi-Account Hold Flag — Active Yes — REVIEW, If Account Number =[ 033000256, 044000123, 044000456, 044000789, 055000111, 055000222, 055000333, … ]</li>
+        <li>U014 — Commission Variance Threshold — Active No — REVIEW, If Commission Variance &gt; 2.50 %</li>
+        <li>U015 — Rep Code Restriction — Active No — REVIEW, If Accepting Rep =[ B[]]</li>
+        <li>U016 — Multi-Branch Activity Review — Active No — REVIEW, If Branch =[ 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, … ]</li>
+        <li>U017 — Penny Stock Block — Active Yes — REJECT, If Order Type =[ MKT], If Symbol Price &lt; [ 1.00], If Exchange =[ OTC, PINK, … ]</li>
+        <li>U018 — Options Level Enforcement — Active Yes — REVIEW, If Instrument Type =[ OPT], If Options Level &lt; [ 3], If Strategy =[ SPREAD, NAKED, STRADDLE, … ]</li>
+        <li>U019 — Concentration Limit  -  Equity — Active No — REVIEW, If Position Concentration &gt; [ 20.00 %], If Asset Class =[ EQ], If Account Type =[ IRA, ROTH, … ]</li>
+        <li>U020 — Short Sale Locate Check — Active Yes — REJECT, If Action =[ SS], If Locate Status =[ NOT_CONFIRMED], If Symbol / CUSIP =[ … ]</li>
+        <li>U021 — Day Trade Buying Power — Active Yes — REVIEW, If Day Trade Count &gt;= [ 4], If Account Buying Power &lt; [ ORDER_VALUE], If Period =[ ROLLING_5D]</li>
+        <li>U022 — Foreign Issuer Disclosure — Active No — REVIEW, If Issuer Country !=[ US], If Market Cap &lt; [ 500000000], If Action =[ B, S, … ]</li>
+        <li>U023 — Margin Call Override Block — Active Yes — REJECT, If Margin Status =[ CALL_OUTSTANDING], If Action =[ B], If Account Number =[ … ]</li>
+      </ul>
+      <p><strong>Link:</strong> Meet the legacy system ↗ (<code>/legacy-rules-annotated.html</code>)</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn component</div><div class="t">Legacy "Rules" table</div><div class="d">A rendered HTML table reproducing the legacy rules list UI; no backing image asset. Live site links out to the annotated legacy screen.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Legacy Rules table</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>05 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 6 — Synthesis intro ========== -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis</div>
+    <h2 class="slide-title">Five problem areas emerged</h2>
+    <div class="copy">
+      <p>Bringing interviews, screenshots, and support stories together surfaced five patterns I could design against.</p>
+      <p><strong>Link:</strong> Explore synthesis board in FigJam ↗</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">SynthesisSection</div><div class="d">A tabbed panel: five stacked problem-area cards on the left drive a sticky visual panel on the right (code-drawn legacy mockups + pull quote). Detailed slide-by-slide below.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>SynthesisSection</code> (interactive).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>06 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 7 — Synthesis 01 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis · 01</div>
+    <h2 class="slide-title">Rules list lacks searchability</h2>
+    <div class="copy">
+      <p class="lede">Rules are only findable with Ctrl+F and truncated text; compliance teams keep spreadsheets just to locate the right one.</p>
+      <p>Rules lived in a dense grid that could only be searched with Ctrl+F—and even that broke once text was truncated—so compliance officers kept parallel spreadsheets just to track down the rule they needed.</p>
+      <h4>What this looked like</h4>
+      <blockquote>"Have to use ctrl+F to find rules and some cutoff logic is unsearchable so I have to keep a separate spreadsheet to simply track down a rule"</blockquote>
+      <div class="callout">Only searchable with Ctrl+F which cannot locate data in truncated portion</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">Legacy "Rules" grid</div><div class="d">Miniature rendered rules grid with a highlighted "Equity Watch List" row and "… 55 more rules" — no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Legacy Rules grid</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>07 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 8 — Synthesis 02 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis · 02</div>
+    <h2 class="slide-title">Keyword selection is opaque and error-prone</h2>
+    <div class="copy">
+      <p class="lede">Over a hundred keywords with no definitions—users pick by trial and error, clicking next to discover what each one does.</p>
+      <p>Keyword selection was a blind trial-and-error process: over a hundred options with no descriptions, forcing users to select one, click next, and backtrack repeatedly just to understand what each keyword did.</p>
+      <h4>What this looked like</h4>
+      <blockquote>"Only know what a keyword means by trial and error  —  select it and click next, then go back and search again for another keyword"</blockquote>
+      <div class="callout">100+ keywords — no descriptions or context provided</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">"Rule Keywords — Select 1 to 4"</div><div class="d">Rendered keyword-selection dialog (Account Related: Rep Type, Rep Status, Rep Credentials, Rep Production Level; Cancel / Next &gt;&gt;) — no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Rule Keywords dialog</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>08 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 9 — Synthesis 03 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis · 03</div>
+    <h2 class="slide-title">The system expects expertise it never provides</h2>
+    <div class="copy">
+      <p class="lede">Free-text inputs and no guidance assume expertise the platform never teaches; new users can take years to build confidence.</p>
+      <p>Core inputs assumed deep institutional knowledge—a single free‑text field for hundreds of ticker symbols with no structure, preview, or validation—turning everyday rule updates into error‑prone chores.</p>
+      <h4>What this looked like</h4>
+      <blockquote>"One-line box for 600 ticker symbols — impossible to jump to the end of that list"</blockquote>
+      <div class="callout">Free text — up to 20,000 comma-separated values</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">"Rule Details" form</div><div class="d">Rendered legacy form: CUSIP/Symbol/SEDOL free-text field "AAPL, TSLA, AMZN, MSFT, GOOGL…", Action = BUY, Cancel / Save Rule — no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Rule Details form</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>09 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 10 — Synthesis 04 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis · 04</div>
+    <h2 class="slide-title">Insufficient documentation and audit tracking</h2>
+    <div class="copy">
+      <p class="lede">Rule rationales and change history live in external spreadsheets; if those fall out of sync, there's no authoritative record inside the platform.</p>
+      <p>Rule rationales, change history, and scope lived in a separate Excel tracker that had to be updated manually; if the spreadsheet and the system disagreed, there was no obvious source of truth in high‑stakes situations.</p>
+      <h4>What this looked like</h4>
+      <blockquote>"Jumping back and forth loses my place — and if I forget to update the spreadsheet, it's hard to know the single source of truth. In compliance, that gap can mean a costly trading error."</blockquote>
+      <div class="callout">Manual copy &amp; paste between systems</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">"Platform — Rules" ⇄ "rules_tracker.xlsx"</div><div class="d">Two rendered panels showing the in-platform rules list beside an external Excel tracker (+ 58 more rows) — no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Platform ⇄ Excel tracker</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>10 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 11 — Synthesis 05 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Synthesis · 05</div>
+    <h2 class="slide-title">Help content not accessible</h2>
+    <div class="copy">
+      <p class="lede">The only in-product help is buried in a top-nav link most users have never found—never surfaced at the moment of need.</p>
+      <p>The only in‑product help lived in a generic help center link buried in the top nav—technically present, practically invisible, and never surfaced at the moment someone was configuring a rule.</p>
+      <h4>What this looked like</h4>
+      <blockquote>"Didn't know that was here, that's cool"</blockquote>
+      <div class="callout">Help buried in top-right nav — rarely discovered</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">"ABC Investing" top nav</div><div class="d">Rendered header with a hard-to-find help "?" icon in the top-right nav — no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>ABC Investing nav</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>11 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 12 — Design Sprint ========== -->
+  <section class="slide">
+    <div class="eyebrow">Design Sprint</div>
+    <h2 class="slide-title">From research insights to → "How Might We" prompts → concept sketches</h2>
+    <div class="copy">
+      <p>With five problem areas defined, I brought key partners from product and engineering into a focused design sprint—framing each problem as a "How might we" prompt and sketching concepts across six opportunity areas with constraints and business logic in the room. The sprint produced the concept set behind everything that shipped, and its key decision: anchor the work in plain-language rule logic, starting with the rules list and a guided creation flow.</p>
+      <p><strong>Link:</strong> View Original Sketches in FigJam ↗</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>12 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 13 — Ideation Reel 1–4 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Sprint Highlights · Seven Concepts</div>
+    <h2 class="slide-title">Sprint Highlights — Seven Concepts</h2>
+    <div class="copy">
+      <h4>HMW 01 — Find &amp; understand rules</h4>
+      <p>Real search across names and metadata, with plain-language rule detail right in the list  -  no more Ctrl+F.</p>
+      <div class="callout">↑ search on metadata  -  rule detail without leaving the list</div>
+      <h4>HMW 02 — Keywords, explained</h4>
+      <p>Definitions and accepted values surfaced at the moment of selection  -  ending the trial-and-error loop.</p>
+      <div class="callout">↑ definition and values before committing to a keyword</div>
+      <h4>HMW 03 — Help where it's needed</h4>
+      <p>Contextual guidance inside the create-rule flow  -  not buried in a help center nobody finds.</p>
+      <div class="callout">↑ keyword-specific guidance directly in the flow</div>
+      <h4>HMW 04 — Structured value entry</h4>
+      <p>Bulk upload with validation instead of one comma-separated text box for thousands of values.</p>
+      <div class="callout">↑ input type matches the data  -  no more comma-separated guesswork</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">IdeationReel (cards 1–4)</div><div class="d">A horizontally scrolling reel of code-drawn concept cards pairing each HMW prompt with a mini mockup; no image assets.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>IdeationReel</code> (interactive, code-drawn cards).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>13 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 14 — Ideation Reel 5–7 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Sprint Highlights · Seven Concepts</div>
+    <h2 class="slide-title">Sprint Highlights — Seven Concepts (cont.)</h2>
+    <div class="copy">
+      <h4>HMW 04 — List manager</h4>
+      <p>Define a list once, reuse it across rules  -  the concept an infrastructure constraint deferred (see The Pivot).</p>
+      <div class="callout">↑ define once, reuse across many rules</div>
+      <h4>HMW 05 — Confidence before go-live</h4>
+      <p>A plain-language preview that builds as the rule is built  -  the concept users later called out as the standout. Builds as you go: If Account No. is one of… / and Action is Buy / → then REJECTED</p>
+      <div class="callout">↑ plain-language preview builds as you go</div>
+      <h4>HMW 06 — Audit trail, in-platform</h4>
+      <p>Rule change history inside the product  -  retiring the shadow spreadsheet as the source of truth. Timeline: Modified by K.D. Today 9:41am / Activated by S.R. Mar 2, 2:15pm / Created by K.D. Feb 28, 10:00am</p>
+      <div class="callout">↑ rule-level or all-rules timeline  -  no more Excel</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">IdeationReel (cards 5–7)</div><div class="d">Continuation of the concept reel: List manager, plain-language preview, and in-platform audit trail cards; no image assets.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>IdeationReel</code> (interactive, code-drawn cards).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>14 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 15 — Prioritization matrix ========== -->
+  <section class="slide">
+    <div class="eyebrow">Prioritization</div>
+    <h2 class="slide-title">Deciding Where to Start</h2>
+    <div class="copy">
+      <p>With 6 HMW areas and related concepts generated, the team assessed impact vs. effort  -  keeping in mind business, tech, and other environmental constraints.</p>
+      <p class="lede">Effort vs Impact Matrix — axes: ↓ LOWER IMPACT · HIGHER IMPACT ↑ &nbsp;/&nbsp; ← LOWER EFFORT · HIGHER EFFORT →</p>
+      <h4>High Impact · Low Effort</h4>
+      <ul>
+        <li>HMW 04 — More intuitive form controls — → Phase 2</li>
+        <li>HMW 03 — Surface help where it's needed  -  contextual guidance — → Phase 2</li>
+        <li>HMW 01 — Find &amp; manage rules  -  search and filter on metadata + plain language rule preview — ✓ Phase 1</li>
+        <li>HMW 05 — Intuitive rule builder  -  split panel, plain language preview builds as details are added — → Phase 2</li>
+      </ul>
+      <h4>High Impact · High Effort</h4>
+      <ul>
+        <li>HMW 02 — Keyword assistant  -  view keyword descriptions on selection surface — → Phase 2</li>
+        <li>HMW 06 — Documentation &amp; audit trail  -  change history — → Phase 3</li>
+        <li>HMW 04 — List Manager  -  bulk editing, inheritance, validation — → Deferred</li>
+      </ul>
+      <h4>Low Impact · Low Effort</h4>
+      <ul>
+        <li>HMW 01 — Bulk actions — → Deprioritized</li>
+        <li>HMW 01 — Custom rule description — → Deprioritized</li>
+      </ul>
+      <h4>Low Impact · High Effort</h4>
+      <ul>
+        <li>HMW 04 — Rule Wizard — → Deprioritized</li>
+      </ul>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn diagram</div><div class="t">Effort vs Impact matrix</div><div class="d">A four-quadrant matrix rendered in code placing each HMW/concept card by impact and effort; no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Effort/Impact matrix</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>15 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 16 — Phased approach ========== -->
+  <section class="slide">
+    <div class="eyebrow">Prioritization</div>
+    <h2 class="slide-title">The resulting phased approach</h2>
+    <div class="copy">
+      <h4>✓ Phase 1 — Rules List</h4>
+      <p>Users need to find and understand existing rules before anything else. Real search, filtering, and a plain language rule preview accomplish this. The layout of this page  -  and getting users familiar with the plain language format  -  made it easier to build rules in Phase 2, which reused the same pattern.</p>
+      <h4>→ Phase 2 — Rule Creation</h4>
+      <p>Getting new rules into the system cleanly  -  with guided input, contextual keyword help, and confidence before going live  -  was the most consequential workflow. It also laid the groundwork for edit rule, which could follow the same pattern with minimal additional mapping.</p>
+      <h4>→ Phase 3 — Edit Rule + Change History</h4>
+      <p>Editing and viewing change history depends on users having a solid mental model of rules first. Sequencing this after creation and list work made the later problem easier to solve.</p>
+      <h4>→ Deferred — List Manager</h4>
+      <p>The most exciting concept from the sprint  -  and the most complex. Sprint edge-case analysis revealed significant downstream complexity. Deferred, not abandoned.</p>
+      <div class="callout">↓ See The Pivot, directly below</div>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>16 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 17 — The Pivot intro ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot</div>
+    <h2 class="slide-title">The Pivot</h2>
+    <div class="copy">
+      <p class="slide-kicker">When infrastructure ruled out the strongest concept</p>
+      <p>With priorities set, I zoomed in on the fine details that would make or break the experience. The most significant was the input mechanism for keywords and clauses  -  how compliance teams actually get values into a rule. During the HMW sprint, one of the strongest concepts was a dedicated List Manager  -  a way to define, store, and reuse named value sets across multiple rules. But a hard infrastructure constraint forced a pivot. To understand why this detail mattered so much, it helps to see what the legacy process actually looked like.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>17 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 18 — Legacy workflow step 1 ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot · Legacy workflow</div>
+    <h2 class="slide-title">Uploading a securities list to a rule — Step 1</h2>
+    <div class="copy">
+      <h4>Step 1</h4>
+      <p><strong>Leave rule creation  -  navigate to a separate import page via main nav.</strong></p>
+      <p>Rendered "Data Import" screen — Step 1: Type the file name below or use the Browse button to locate the file on your desktop. [Choose File] No file chosen. Step 2: Data Validation Display: (•) All Records ( ) Errors Only. Step 3: Click Submit to initiate Import Process. [Submit]</p>
+      <div class="callout">This page lives in main nav  -  not linked to or from rule creation. No obvious path here if you don't already know it exists.</div>
+      <p>Excel file shown: "blacklisted securities 2025" — row 1: Securities Upload, AAPL, AMZN, AAA, MSFT, TSLA, FB, NFLX, NVDA, INTC.</p>
+      <div class="callout">⚠️ And the master lists themselves? Always managed <em>outside</em> the platform entirely  -  in Excel or shared drives  -  because the system couldn't store them. Two potential sources of truth, with no reconciliation mechanism.</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">Legacy "Data Import" screen + Excel</div><div class="d">Rendered legacy import dialog beside a mocked "blacklisted securities 2025" spreadsheet; no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Data Import + Excel</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>18 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 19 — Legacy workflow step 2 ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot · Legacy workflow</div>
+    <h2 class="slide-title">Uploading a securities list to a rule — Step 2</h2>
+    <div class="copy">
+      <h4>Step 2</h4>
+      <p><strong>Back in rule creation  -  set keyword to "Securities Upload," then match rule name exactly to the CSV filename.</strong></p>
+      <p>Rendered "Rule Management  -  Edit Rule" screen: rule 0000001; Rule Name: blacklisted securities 2025; Keyword: Securities Upload; Action: REVIEW ▾; Applies To: * Junior Trader ✓, Advisor, Investor ✓, Senior Trader ✓; buttons: Choose Keywords · Save Rule · Save as New Rule · Delete Rule · Cancel.</p>
+      <div class="callout">Rule name has to match the .csv filename exactly. No in-product guidance tells you this. Unclear how they're linked.</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockup</div><div class="t">"Rule Management  -  Edit Rule"</div><div class="d">Rendered legacy edit-rule screen highlighting the rule name that must match the CSV filename; no image asset.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>Rule Management – Edit Rule</code> (code-drawn, no image).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>19 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 20 — Concept vs Shipped ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot · Concept vs. Shipped</div>
+    <h2 class="slide-title">From standalone List Manager to bulk upload within the rule</h2>
+    <div class="copy">
+      <h4>HMW Concept  -  Standalone List Manager</h4>
+      <p>Saved lists  -  reusable across rules: High-risk securities · 42 items · 3 rules; Exempt accounts · 18 items · 1 rule; Licensed reps  -  Series 7 · 134 items · 2 rules; Restricted entities · 27 items · 4 rules; Emerging market issuers · 61 items · 1 rule. + Create new list. ↑ define once, reuse across many rules</p>
+      <h4>Pivoted Direction  -  Bulk Upload Within the Rule</h4>
+      <p><em>within clause builder.</em> Add List of Values modal, tabs Enter Values / Review List. "Add values to your list by uploading a local file and/or pasting directly into the second box below. Once you've entered all values, click next to review and edit the list as needed." Upload File: Drag and drop file here or browse local files. Enter or Paste Values (?): Manually enter or paste values here. Separate multiple values using commas, semicolons, or new lines. [Cancel] [Next →]</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn mockups</div><div class="t">List Manager concept · Add List of Values modal</div><div class="d">Two side-by-side code-drawn UI mockups (ImgFrame) contrasting the deferred concept with the shipped in-rule upload; no image assets.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>List Manager concept</code>, <code>Add List of Values modal</code> (code-drawn, no images).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>20 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 21 — The Pivot narrative ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot</div>
+    <h2 class="slide-title">The pivot, as one decisive narrative</h2>
+    <div class="copy">
+      <p>The List Manager was the strongest concept to come out of the HMW sprint: define a named value set once  -  blacklisted securities, licensed reps  -  and every rule referencing it stays current. But during the sprint I identified a hard constraint: the existing data architecture couldn't store list-level entities separate from rules, and the infrastructure work to support them wasn't resourced for this cycle. I pushed hard to understand exactly where the wall was, and once I confirmed the constraint was real, I stopped designing around it and started designing within it. A rule could still store its own value set  -  just not as a reusable, named list  -  so I redirected the design toward making the in-rule input experience dramatically better: structured input with bulk upload via CSV, paste, or manual entry, plus real-time validation. No more comma-separated text box. No more filename-matching ritual. It's not the List Manager, but it solves the most acute version of the problem and lays the foundation for when full list management becomes feasible.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>21 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 22 — Lofi Exploration ========== -->
+  <section class="slide">
+    <div class="eyebrow">Lofi Exploration</div>
+    <h2 class="slide-title">Mapping the End-to-End Workflow</h2>
+    <div class="copy">
+      <p>With the direction set, I mapped the full workflow in low fidelity  -  how screens connect, where users enter and exit, and the overall shape of the experience before sweating any details. These wireframes anchored a cross-functional review with engineering and product, aligning us on feasibility and edge cases before zooming in.</p>
+      <h4>Six-step lofi flow</h4>
+      <p>Rule Management → Keywords → Rule Logic → Order Placed By → Rule Outcome → Review &amp; Confirm</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">LofiFlow / LofiFlowStrip</div><div class="d">A code-drawn horizontal strip of six low-fidelity wireframe cards with an expand-to-fullscreen lightbox; no image assets.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>LofiFlow</code> (interactive wireframe strip, code-drawn).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>22 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 23 — Design intro ========== -->
+  <section class="slide">
+    <div class="eyebrow">Design</div>
+    <h2 class="slide-title">The Redesign</h2>
+    <div class="copy">
+      <p>With the structure validated in lofi and cross-functional alignment in place, I refined the wireframes into a mid-high fidelity prototype  -  two interconnected workflows designed as a coherent system:</p>
+      <ul>
+        <li><strong>Rules list</strong>  -  find, scan, and understand rules with real search and plain-language previews</li>
+        <li><strong>Rule creation</strong>  -  a guided stepped flow replacing the blank, expert-only form</li>
+        <li>Plain-language logic introduced in the list carries directly into creation  -  familiarity built intentionally</li>
+      </ul>
+      <p>Explore both end to end in the prototype, or read the breakdown below.</p>
+      <p><strong>Link:</strong> Meet the redesign ↗ (<code>/rule-management-prototype-v1.html</code>)</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">PrototypeEmbed</div><div class="d">A button opening the full interactive Rule Management prototype (v1) in an overlay iframe; no still image.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>PrototypeEmbed</code> (interactive prototype link).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>23 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 24 — Part A before/after ========== -->
+  <section class="slide">
+    <div class="eyebrow">Part A</div>
+    <h2 class="slide-title">Rules List</h2>
+    <div class="copy">
+      <p>The legacy rules list had one job  -  display all rules  -  and did so, but without any ability to navigate, filter, or understand. The redesign turned a static table into a usable decision-making surface  -  with filtering, persistent rule detail, and plain-language logic all accessible from one view.</p>
+      <h4>Before  -  Legacy Rules List &nbsp;/&nbsp; After  -  Redesigned Rule Management</h4>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig"><img src="assets/rules/rule-management-v1-screenshot.png" alt="Redesigned rule management screen"><figcaption>rule-management-v1-screenshot.png — After: redesigned Rule Management</figcaption></figure>
+        <figure class="fig"><img src="assets/rules/legacy-rules-screenshot.png" alt="Legacy rules list screen"><figcaption>legacy-rules-screenshot.png — Before: legacy Rules List</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>rule-management-v1-screenshot.png</code>, <code>legacy-rules-screenshot.png</code> — <code>BeforeAfterWipe</code> (interactive compare).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>24 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 25 — Part A three features ========== -->
+  <section class="slide">
+    <div class="eyebrow">Part A · Rules List</div>
+    <h2 class="slide-title">A usable decision-making surface</h2>
+    <div class="copy">
+      <h3>01 — Two-panel layout with plain-language rule logic</h3>
+      <p>A rules list alongside a persistent right detail panel  -  showing rule logic rendered as human-readable sentences, not raw conditional strings. Status, applies-to scope, and a timeline summary are all visible without ever leaving the list. Compliance officers can field trader calls without digging through opaque syntax.</p>
+      <h3>02 — Find the right rule fast  -  filtering and inline preview</h3>
+      <p>Real search across rule names and metadata, combined with active/inactive status filtering and keyword filtering, replaced the old Ctrl+F workflow. Selecting any rule instantly surfaces its full logic in the detail panel  -  no navigation required, no losing your place in the list.</p>
+      <h3>03 — Rule details and quick actions, without leaving the list</h3>
+      <p>The detail panel surfaces everything you'd otherwise have to dig for  -  rule logic, applies-to scope, and modification history  -  alongside a Quick Edit shortcut and a direct link to full change history. No more navigating into a rule just to check a value or make a small correction.</p>
+    </div>
+    <div class="figures">
+      <figure class="fig"><img src="assets/rules/rule-management-v1-screenshot.png" alt="Redesigned rule management two-panel layout"><figcaption>rule-management-v1-screenshot.png — redesigned two-panel Rules List</figcaption></figure>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>rule-management-v1-screenshot.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>25 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 26 — Part B intro + feature 01 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Part B</div>
+    <h2 class="slide-title">Rule Creation</h2>
+    <div class="copy">
+      <p>The legacy creation experience assumed expert knowledge. The redesign built that knowledge into the flow  -  replacing a blank form with a guided workflow. Core structural shift: from a single overwhelming page to a stepped flow.</p>
+      <h3>01 — Search, preview, and select clauses</h3>
+      <p>The Add Clauses modal became a three-column layout: searchable clause list on the left, a preview panel in the center showing each clause's name, value type, and examples, and a selected clauses summary on the right. Users can preview a clause before committing  -  eliminating the trial-and-error loop.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/rules/v2-clause-preview-readonly.png" alt="Redesigned clause preview"><figcaption>design-vid-b1.mov — still (After / Redesign)</figcaption></figure>
+        <figure class="fig video"><img src="assets/rules/v1-clause-preview.png" alt="Legacy clause preview"><figcaption>legacy-vid-b1a.mov — still (Before / Legacy)</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>design-vid-b1.mov</code> (still <code>v2-clause-preview-readonly.png</code>), <code>legacy-vid-b1a.mov</code> (still <code>v1-clause-preview.png</code>) — <code>PartBFeatureTabs</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>26 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 27 — Part B features 02 & 03 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Part B · Rule Creation</div>
+    <h2 class="slide-title">Structured input and a live plain-language preview</h2>
+    <div class="copy">
+      <h3>02 — Structured value input with inline validation</h3>
+      <p>The single free-text box for thousands of comma-separated values was replaced with a two-step flow: upload a CSV or paste values, then review the imported list row by row with inline editing and per-row removal. Users know before saving whether their values are correctly formed.</p>
+      <h3>03 — Live plain-language rule preview throughout</h3>
+      <p>As users add clauses, the Rule Logic panel builds up a plain-English summary in real time  -  keyword, operator, and values rendered as a readable sentence. By the time they reach Review &amp; Confirm, the full rule is visible in human-readable form, giving confidence before going live.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/rules/v2-upload-modal.png" alt="Structured value upload modal"><figcaption>design-vid-b2.mov — still (After / Redesign)</figcaption></figure>
+        <figure class="fig video"><img src="assets/rules/v1-values-input-cropped.png" alt="Legacy flat value input"><figcaption>legacy-vid-b2.mov — still (Before / Legacy)</figcaption></figure>
+      </div>
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/rules/v2-rule-logic.png" alt="Live plain-language rule preview"><figcaption>design-vid-b3.mov — still (After / Redesign)</figcaption></figure>
+        <figure class="fig"><img src="assets/rules/legacy-rule-creation.png" alt="Legacy rule creation form"><figcaption>legacy-rule-creation.png — Before / Legacy</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>design-vid-b2.mov</code> (still <code>v2-upload-modal.png</code>), <code>legacy-vid-b2.mov</code> (still <code>v1-values-input-cropped.png</code>), <code>design-vid-b3.mov</code> (still <code>v2-rule-logic.png</code>), <code>legacy-rule-creation.png</code> — <code>PartBFeatureTabs</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>27 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 28 — Validate intro + what worked well ========== -->
+  <section class="slide">
+    <div class="eyebrow">Validate</div>
+    <h2 class="slide-title">What Changed After Testing</h2>
+    <div class="copy">
+      <p>With the mid-high fidelity prototype in hand, I brought it to user testing sessions with compliance officers. Each workflow step was mapped to a specific research question, with areas of highest uncertainty  -  clause selection, value input, and the add list flow  -  as the focus. Here's what I heard, and what changed as a result. You can also explore the updated v2 prototype with all post-testing changes applied.</p>
+      <h4>What worked well</h4>
+      <ul>
+        <li>Plain language rule preview that builds throughout the flow was a standout  -  users specifically called it out</li>
+        <li>General workflow described as intuitive, smooth, comfortable</li>
+        <li>Add Clause step: users liked the search, additional info, and flexibility of quick add vs. preview first</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>28 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 29 — Iteration 1 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Validate · What I iterated on</div>
+    <h2 class="slide-title">Iteration 1 of 4</h2>
+    <div class="copy">
+      <h4>Feedback</h4>
+      <p>Clause preview felt editable  -  users tried to interact with the form fields in the preview panel. In v2, I removed the form representation entirely and replaced it with a read-only summary, making the distinction between preview and configuration unambiguous.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/rules/v1-clause-preview.png" alt="V1 form fields in preview"><figcaption>iter-1v1.mov — still · V1  -  Form fields in preview</figcaption></figure>
+        <figure class="fig video"><img src="assets/rules/v2-clause-preview-readonly.png" alt="V2 read-only summary"><figcaption>iter-1v2.mov — still · V2  -  Read-only summary</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>iter-1v1.mov</code> (still <code>v1-clause-preview.png</code>), <code>iter-1v2.mov</code> (still <code>v2-clause-preview-readonly.png</code>) — <code>IterationCards</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>29 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 30 — Iteration 2 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Validate · What I iterated on</div>
+    <h2 class="slide-title">Iteration 2 of 4</h2>
+    <div class="copy">
+      <h4>Feedback</h4>
+      <p>Bulk value entry surface was not intuitive  -  users were thrown off by the basic text input with "Add Value" and "Add List of Values" options side by side. There was no structure, no validation feedback, and no format guidance for file uploads.</p>
+      <h4>What changed</h4>
+      <p>Replaced the flat input with a structured values grid showing each entry with inline validation status. Added a dedicated "Upload a List" action with format guidance and a sample template.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/rules/v1-values-input-cropped.png" alt="V1 flat input"><figcaption>iter-2v1.mov — still · V1  -  Flat input with no structure</figcaption></figure>
+        <figure class="fig video"><img src="assets/rules/v2-upload-modal.png" alt="V2 structured values grid + upload"><figcaption>iter-2v2.mov — still · V2  -  Structured values grid + upload</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>iter-2v1.mov</code> (still <code>v1-values-input-cropped.png</code>), <code>iter-2v2.mov</code> (still <code>v2-upload-modal.png</code>) — <code>IterationCards</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>30 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 31 — Iteration 3 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Validate · What I iterated on</div>
+    <h2 class="slide-title">Iteration 3 of 4</h2>
+    <div class="copy">
+      <h4>Feedback</h4>
+      <p>Users wondered what would happen if an invalid value was added  -  a validation gap I hadn't fully considered. This led to the editable review grid with per-row validation icons and counts, so users can catch and fix errors before saving.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/rules/v1-clause-detail.png" alt="V1 no inline validation"><figcaption>iter-3v1.mov — still · V1  -  No inline validation</figcaption></figure>
+        <figure class="fig video"><img src="assets/rules/v2-validation-grid.png" alt="V2 inline validation per row"><figcaption>iter-3v2.mov — still · V2  -  Inline validation per row</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>iter-3v1.mov</code> (still <code>v1-clause-detail.png</code>), <code>iter-3v2.mov</code> (still <code>v2-validation-grid.png</code>) — <code>IterationCards</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>31 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 32 — Iteration 4 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Validate · What I iterated on</div>
+    <h2 class="slide-title">Iteration 4 of 4</h2>
+    <div class="copy">
+      <h4>Feedback</h4>
+      <p>Order Placed By step lacked the contextual definitions users loved on Order Outcome  -  an inconsistency they noticed immediately. V2 added role descriptions to match the pattern established elsewhere in the flow.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig"><img src="assets/rules/v1-opb-fullpage.png" alt="V1 no role descriptions"><figcaption>v1-opb-fullpage.png — V1  -  No role descriptions</figcaption></figure>
+        <figure class="fig"><img src="assets/rules/v2-opb-fullpage.png" alt="V2 contextual role definitions"><figcaption>v2-opb-fullpage.png — V2  -  Contextual role definitions added</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>v1-opb-fullpage.png</code>, <code>v2-opb-fullpage.png</code> — <code>IterationCards</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>32 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 33 — Outcomes ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcomes</div>
+    <h2 class="slide-title">From shipped to what's next</h2>
+    <div class="copy">
+      <p>Both the rule management redesign and the rule creation workflow were user tested, iterated, and shipped. The work established patterns and groundwork for the next phase  -  edit rule, change history, and eventually the full List Manager.</p>
+      <h3>Guided creation over blank forms</h3>
+      <p>A guided workflow with clause preview replaced a single overwhelming page  -  reducing expert knowledge required to create a rule correctly.</p>
+      <h3>Findable, scannable rules list</h3>
+      <p>Real search, active/inactive filtering, keyword filtering, and plain-English rule preview replaced Ctrl+F and Excel workarounds.</p>
+      <h3>Confidence before going live</h3>
+      <p>Live rule preview, inline value validation, and structured clause details give users assurance their rule will do what they intended.</p>
+      <h4>What's next  -  Phase 2</h4>
+      <ul>
+        <li>Edit Rule flow  -  building on the creation patterns established in Phase 1</li>
+        <li>Rule Change History  -  surfacing the audit trail users currently track in Excel</li>
+        <li>List Manager  -  the most complex and most requested capability, now better scoped</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Code-drawn icon cards — no image assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>33 / 34</span></div>
+  </section>
+
+  <!-- ========== SLIDE 34 — Reflection ========== -->
+  <section class="slide">
+    <div class="eyebrow">Reflection</div>
+    <h2 class="slide-title">What I carried forward</h2>
+    <div class="copy">
+      <h4>Measuring what shipped</h4>
+      <p>The usability signal was unusually strong  -  7 of 7 participants responded positively, which for this user group was genuinely surprising. But usability testing measures confidence before launch, not outcomes after. I still don't know if error rates dropped, if support tickets decreased, or if time-to-create-a-rule improved. That's the real gap: I didn't establish success metrics before launch, and it's something I now build into every project from the start  -  define the measurement plan during discovery, not after ship.</p>
+      <h4>Starting simple was the better strategy</h4>
+      <p>The List Manager was the concept we were most attached to—a powerful way to define lists once and reuse them across rules. But when we tested the simpler "add values within the rule" flow, compliance users were more excited by how much it reduced fragility with almost no extra learning curve. It made me more skeptical of big, system‑heavy ideas when a lighter, MVP solution solves the sharpest pain: start with the smallest thing that reduces risk and complexity, then earn your way to more ambitious patterns only if users actually need them.</p>
+      <h4>Designing patterns, not just screens</h4>
+      <p>The plain-language rule preview, the stepped creation flow, the structured value input  -  these weren't just solutions to individual problems. They became the interaction patterns that the rest of the compliance suite would build on. But I didn't make that explicit enough during the project. I should have documented the emerging pattern language more deliberately  -  creating shared artifacts that the broader team could reference as the product expanded. I've learned that at a certain level of complexity, the system you leave behind matters as much as the feature you ship.</p>
+      <div class="callout">Case study navigation — ← Previous: Addition Through Subtraction &nbsp;·&nbsp; Next →: Well-Positioned</div>
+    </div>
+    <div class="visuals"><b>Visuals</b>Text section — no assets.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>34 / 34</span></div>
+  </section>
+
+  <!-- ========== APPENDIX A — AffinityMap synthesis board (UN-RENDERED source data; not a numbered slide) ========== -->
+  <section class="slide">
+    <div class="eyebrow">Appendix A</div>
+    <h2 class="slide-title">AffinityMap synthesis board — un-rendered source data</h2>
+    <div class="copy">
+      <div class="callout"><strong>Archival note — NOT a numbered slide, not live-page content.</strong> The <code>AffinityMap</code> component and its <code>fullClusters</code> array exist in <code>src/pages/RulesCaseStudy.jsx</code> (approx. lines 305–383) but are <strong>never mounted</strong> in the render tree — the synthesis section that actually renders on <code>/case-study/rules</code> is <code>&lt;SynthesisSection/&gt;</code> (Slides 6–11). This sticky text therefore does not appear on the live page; it is preserved verbatim below for completeness and deliberately kept out of the 34 numbered mirror slides. On the live page the equivalent is the "Explore synthesis board in FigJam ↗" link. 6 clusters, 29 sticky notes.</div>
+      <h4>Cluster 01 — Rules list lacks searchability</h4>
+      <ul>
+        <li>inactive rules take up space  -  nice to filter off ones you don't need</li>
+        <li>finding rule use ctrl + F  -  use separate Excel to track changes</li>
+        <li>search on rules list could be better  -  do ctrl+F for rules with a criteria</li>
+        <li>smart search for keywords  -  on metadata like a book catalog</li>
+      </ul>
+      <h4>Cluster 02 — Keyword selection is opaque and error-prone</h4>
+      <ul>
+        <li>would be helpful to have keyword definition info where you are selecting it</li>
+        <li>only know what keyword means by trial and error  -  select and click next</li>
+        <li>cumbersome to figure out what keywords apply  -  call NFS, trial and error</li>
+        <li>today email CSM to ask what a keyword does if not familiar with it</li>
+      </ul>
+      <h4>Cluster 03 — Difficult to build a rule without tribal knowledge</h4>
+      <ul>
+        <li>linear box for long entries  -  not easy to enter or jump to end of 60 entries</li>
+        <li>hard to know where to find help  -  not intuitive to click the question mark</li>
+        <li>formatting long list of symbols to put in the system</li>
+        <li>took a couple years to really understand who this would impact</li>
+      </ul>
+      <h4>Cluster 04 — Insufficient documentation and audit tracking</h4>
+      <ul>
+        <li>rule creation free form  -  put the list into Excel and concatenate</li>
+        <li>list of rules  -  have to go into each rule, copy to Excel to search</li>
+        <li>track in SharePoint  -  reason for creating the rule, rationale when trader calls</li>
+        <li>rules change log would be helpful  -  in platform, not a separate Excel</li>
+        <li>hard to see what changed  -  which column to look at</li>
+        <li>jumping back and forth  -  lose my place, creates room for error</li>
+        <li>free form personal notes  -  tracking why rule was created, changed</li>
+        <li>ask for a reason when someone makes a change  -  optional or required</li>
+      </ul>
+      <h4>Cluster 05 — Help content not accessible</h4>
+      <ul>
+        <li>never seen help content  -  too far away</li>
+        <li>apply to managed acct advisor and super trader  -  not super descriptive</li>
+        <li>doesn't know help content exists  -  didn't know that was here, that's cool</li>
+        <li>hover to see keyword meaning would be too much  -  needs a dedicated button</li>
+      </ul>
+      <h4>Cluster 06 — Triggered rules lack visibility</h4>
+      <ul>
+        <li>no plain-language explanation of why a rule blocked a trade  -  just the rule name</li>
+        <li>rule conditions may have changed since it triggered  -  no way to know without digging</li>
+        <li>no paper trail connecting a triggered rule to what the conditions were at that moment</li>
+        <li>compliance user has to manually reconstruct what happened when a trader calls</li>
+        <li>rule name alone is not enough context  -  need to see what criteria matched</li>
+      </ul>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Un-rendered source component</div><div class="t">AffinityMap / fullClusters</div><div class="d">FigJam affinity-board visual defined in the JSX but not mounted on the live page. Sticky text transcribed verbatim above.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>AffinityMap</code> / <code>fullClusters</code> (un-rendered source; verbatim sticky text above).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>Appendix A</span></div>
+  </section>
+
+</div>
+</body>
+</html>

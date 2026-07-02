@@ -9,7 +9,6 @@ import bodyHtml from './OrderManagementCaseStudy.body.html?raw'
 const HERO_ANIM_END = bodyHtml.indexOf('</section>') + '</section>'.length
 const HERO_ANIM_HTML = bodyHtml.slice(0, HERO_ANIM_END)
 const REST_BODY_HTML = bodyHtml.slice(HERO_ANIM_END)
-import CaseStudyNav from '../components/CaseStudyNav.jsx'
 import './case-study-shared.css'
 import './OrderManagementCaseStudy.css'
 
@@ -594,7 +593,6 @@ export default function OrderManagementCaseStudy() {
   return (
     <div ref={pageRef} className="cs-page" style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <Nav />
-      <CaseStudyNav />
 
       {/* Sticky chapter nav  -  left rail at ≥1100px viewport. */}
       <aside

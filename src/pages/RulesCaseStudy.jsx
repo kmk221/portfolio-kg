@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import Nav from '../components/Nav.jsx'
-import CaseStudyNav from '../components/CaseStudyNav.jsx'
 import './case-study-shared.css'
 
 // Palette matches the Order Management case study (the reference): terracotta
@@ -1235,7 +1234,6 @@ export default function RulesCaseStudy(){
 
   return(<div className="rules-cs-page cs-page rules-page" style={{fontSize:16,lineHeight:1.5,color:accentDark,background:cream,overflowX:'clip'}}>
     <Nav/>
-    <CaseStudyNav />
     {/* Sticky chapter nav  -  left rail at ≥1100px viewport */}
     <aside
       className={`om-chapter-nav${navVisible ? ' is-visible' : ''}${navCollapsed ? ' is-collapsed' : ''}`}

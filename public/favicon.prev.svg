@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Cream rounded-square base -->
+  <rect width="64" height="64" rx="13" fill="#F9F5EE"/>
+
+  <!-- Three horizontal lines in the palette: coral, gold, soft blue.
+       Bold strokes with rounded caps so they stay legible at favicon size. -->
+  <g stroke-linecap="round" fill="none">
+    <line x1="18" y1="18" x2="46" y2="18" stroke="#B86757" stroke-width="8"/>
+    <line x1="18" y1="32" x2="46" y2="32" stroke="#DDB365" stroke-width="8"/>
+    <line x1="18" y1="46" x2="46" y2="46" stroke="#C4CFDF" stroke-width="8"/>
+  </g>
+</svg>

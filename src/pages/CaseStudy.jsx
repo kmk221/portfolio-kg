@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
 import Nav from '../components/Nav.jsx'
-import CaseStudyNav from '../components/CaseStudyNav.jsx'
 import './case-study-shared.css'
 import './CaseStudy.css'
 
@@ -935,7 +934,6 @@ export default function CaseStudy() {
   return (
     <div className="cs-page positions-page">
       <Nav />
-      <CaseStudyNav />
 
       {/* Sticky chapter nav  -  left rail at ≥1100px viewport */}
       <aside

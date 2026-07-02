@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the Rule Engine — Kristin Garza</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Permanent+Marker&display=swap");
+
+:root{
+  --bg:#FFFEF5; --surface:#FFFFFF; --surface-2:#FBF6DD;
+  --hairline:#E7DFC4; --hairline-strong:#CDBF96;
+  --ink:#1F1A0F; --ink-2:#372B0B; --ink-3:#554B2E; --ink-mute:#8A7C5E; --ink-inverse:#FFFEF5;
+  --clay:#3F6CE0; --clay-deep:#2E54B8; --clay-ink:#2A4AA0; --clay-tint:#E5EBFB; --clay-edge:#AFC2F2;
+  --ochre:#DDCC33; --ochre-ink:#877D1C; --ochre-tint:#F8F4D3;
+  --slate:#6E84B0; --slate-deep:#3F5378; --slate-tint:#DCE3F0;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-script:"Permanent Marker",cursive;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--f-sans);color:var(--ink-2);background:#E7E0CC;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+.deck{display:flex;flex-direction:column;align-items:center;gap:26px;padding:32px 0;}
+.slide{position:relative;width:13.333in;height:7.5in;background:var(--bg);padding:0.72in 0.9in 1in;display:flex;flex-direction:column;overflow:hidden;}
+.slide,.slide *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media screen{ .slide{box-shadow:0 14px 44px rgba(31,26,15,0.20);border-radius:6px;} }
+@page{ size:13.333in 7.5in; margin:0; }
+@media print{ body{background:#fff;} .deck{gap:0;padding:0;} .slide{box-shadow:none;border-radius:0;break-after:page;} .slide:last-child{break-after:auto;} }
+
+.eyebrow{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:14px;}
+.eyebrow::after{content:"";width:64px;height:1px;background:var(--ochre);opacity:0.75;}
+
+.slide-title{font-family:var(--f-sans);font-weight:300;font-size:50px;line-height:1.06;letter-spacing:-0.015em;color:var(--ink-2);margin:20px 0 0;max-width:24ch;}
+.slide-body{flex:1;display:flex;flex-direction:column;justify-content:flex-start;min-height:0;}
+
+.bullets{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-direction:column;gap:15px;max-width:66ch;}
+.bullets li{position:relative;padding-left:28px;font-size:21px;line-height:1.4;color:var(--ink-2);}
+.bullets li::before{content:"";position:absolute;left:0;top:0.5em;width:9px;height:9px;background:var(--clay);border-radius:2px;}
+.bullets li strong{color:var(--clay-ink);font-weight:600;}
+
+.visuals{margin-top:22px;border-left:3px solid var(--clay);background:var(--surface-2);border-radius:0 8px 8px 0;padding:13px 20px;font-size:15px;line-height:1.5;color:var(--ink-3);max-width:88ch;}
+.visuals b{font-family:var(--f-mono);font-weight:600;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--clay-ink);margin-right:12px;}
+.visuals code{font-family:var(--f-mono);font-size:13px;background:rgba(63,108,224,0.08);color:var(--clay-ink);padding:1px 6px;border-radius:4px;}
+
+.slide-foot{position:absolute;left:0.9in;right:0.9in;bottom:0.5in;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--hairline);padding-top:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);}
+.slide-foot .name{color:var(--ink-3);}
+
+.slide--title{background:var(--clay);color:var(--ink-inverse);justify-content:center;padding-top:0.9in;}
+.slide--title .eyebrow{color:rgba(255,254,245,0.85);}
+.slide--title .eyebrow::after{background:rgba(255,254,245,0.5);opacity:1;}
+.deck-h1{font-family:var(--f-sans);font-weight:300;font-size:78px;line-height:1.0;letter-spacing:-0.025em;color:var(--ink-inverse);margin:22px 0 0;}
+.deck-lede{font-family:var(--f-sans);font-weight:300;font-size:22px;line-height:1.45;color:rgba(255,254,245,0.92);margin:22px 0 0;max-width:62ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
+.meta span{font-family:var(--f-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,254,245,0.42);color:var(--ink-inverse);}
+.slide--title .slide-foot{border-top-color:rgba(255,254,245,0.28);color:rgba(255,254,245,0.72);}
+.slide--title .slide-foot .name{color:rgba(255,254,245,0.92);}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:28px;}
+.compare .col{border:1px solid var(--hairline);border-radius:10px;padding:22px 24px;background:var(--surface);}
+.compare .col.after{border-color:var(--clay-edge);background:var(--clay-tint);}
+.compare h4{font-family:var(--f-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;margin:0 0 14px;}
+.compare .before h4{color:var(--ink-mute);}
+.compare .after h4{color:var(--clay-ink);}
+.compare ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
+.compare li{position:relative;padding-left:20px;font-size:17px;line-height:1.4;color:var(--ink-2);}
+.compare li::before{content:"";position:absolute;left:0;top:0.55em;width:7px;height:7px;border-radius:50%;}
+.compare .before li::before{background:var(--ink-mute);}
+.compare .after li::before{background:var(--clay);}
+
+.stats{display:flex;gap:44px;margin-top:30px;flex-wrap:wrap;}
+.stat .n{font-family:var(--f-sans);font-weight:300;font-size:56px;line-height:1;color:var(--clay-deep);letter-spacing:-0.02em;}
+.stat .l{font-family:var(--f-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);margin-top:10px;max-width:22ch;}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 -->
+  <section class="slide slide--title">
+    <div class="eyebrow">Case Study · Rules</div>
+    <h1 class="deck-h1">Inside the Rule&nbsp;Engine</h1>
+    <p class="deck-lede">Replacing programmatic jargon and Excel workarounds with plain-English readbacks — so compliance teams can trust what a rule will do as they build it.</p>
+    <div class="meta">
+      <span>Lead UX Designer</span>
+      <span>~9–12 Months · Shipped ✓</span>
+      <span>Compliance Rule Engine</span>
+      <span>Research · Strategy · Product Design · Testing</span>
+    </div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>01 / 12</span></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="eyebrow">Context &amp; Problem</div>
+    <h2 class="slide-title">Upstream of every trade</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>The rule engine governs which orders can execute</li>
+        <li>It serves <strong>3,300+ institutional firms</strong></li>
+        <li>Misconfigured rules can cause <strong>millions in trade errors</strong></li>
+        <li>The system ran on tribal knowledge and Excel workarounds</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-rules-screenshot.png</code>; "upstream of every trade" ecosystem framing.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>02 / 12</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="eyebrow">Role &amp; Scope</div>
+    <h2 class="slide-title">My role &amp; scope</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Led discovery, synthesis, and a cross-functional design sprint</li>
+        <li>Revived stalled interviews no one had acted on</li>
+        <li>Chose the highest-leverage slice before designing a pixel</li>
+        <li>Partnered with product, engineering, business, and UXR</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>AffinityMap</code> synthesis board; design-sprint framing.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>03 / 12</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="eyebrow">Existing Experience</div>
+    <h2 class="slide-title">What users were working with</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Dense grid table; text truncated, unsearchable beyond Ctrl+F</li>
+        <li><strong>100+ keywords</strong> with no definitions — pure trial and error</li>
+        <li>One text box for up to <strong>20,000 comma-separated values</strong></li>
+        <li>Rule rationale and history lived in outside spreadsheets</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-rules-annotated.html</code>; <code>legacy-rule-creation.png</code>; <code>legacy-vid-b1.mov</code>, <code>legacy-vid-b2.mov</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>04 / 12</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="eyebrow">Discovery &amp; Insights</div>
+    <h2 class="slide-title">Five problems, clearly named</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>The rules list isn't searchable</li>
+        <li>Keyword selection is opaque and error-prone</li>
+        <li>The system expects expertise it never teaches</li>
+        <li>Documentation, audit trail, and help are missing or buried</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>SynthesisSection</code> (5 problem areas + user quotes); affinity clusters.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>05 / 12</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="eyebrow">Concept Directions</div>
+    <h2 class="slide-title">Sprint: from problems to concepts</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Framed each problem as a "How might we"</li>
+        <li>Sketched <strong>7 concepts</strong> across six opportunity areas</li>
+        <li>Kept constraints and business logic in the room</li>
+        <li>Anchored everything in plain-language rule logic</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>IdeationReel</code> (7 HMW concept cards); sprint sketches.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>06 / 12</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot</div>
+    <h2 class="slide-title">Design within the wall</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>The strongest concept was a reusable List Manager</li>
+        <li>Infrastructure couldn't store lists apart from rules</li>
+        <li>I confirmed the constraint, then designed within it</li>
+        <li>Made in-rule input far better: CSV upload + real-time validation</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Legacy multi-step import ritual; structured value-input concept.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>07 / 12</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="eyebrow">Prioritization</div>
+    <h2 class="slide-title">Deciding where to start</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Mapped impact vs. effort against real constraints</li>
+        <li><strong>Phase 1:</strong> a findable list with plain-language preview</li>
+        <li><strong>Phases 2–3:</strong> guided creation, edit, and change history</li>
+        <li>Deferred List Manager — most complex, better scoped later</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>LofiFlow</code> (6-step wireframe journey); prioritization matrix.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>08 / 12</span></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="eyebrow">Final Solution</div>
+    <h2 class="slide-title">The solution: list + creation</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Two-panel list: rules beside plain-English logic</li>
+        <li>Real search plus status and keyword filters — no more Ctrl+F</li>
+        <li>A guided stepped flow replaces the expert-only form</li>
+        <li>Live preview builds a readable sentence as you build the rule</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>PartBFeatureTabs</code>; <code>design-vid-b1/b2/b3.mov</code>; rule-logic preview panel.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>09 / 12</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="eyebrow">Validation &amp; Iteration</div>
+    <h2 class="slide-title">What changed after testing</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Tested with compliance officers; each step mapped to a question</li>
+        <li>Preview panel felt editable → made it clearly read-only</li>
+        <li>Flat value box confused → structured grid + upload + validation</li>
+        <li>Added per-row validation and the missing role definitions</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>IterationCards</code> (4 v1/v2 comparisons); <code>v1-rule-logic.png</code> vs <code>v2-rule-logic.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>10 / 12</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="eyebrow">Outcomes</div>
+    <h2 class="slide-title">What shipped &amp; what it changed</h2>
+    <div class="slide-body">
+      <div class="stats">
+        <div class="stat"><div class="n">7/7</div><div class="l">Usability participants responded positively</div></div>
+        <div class="stat"><div class="n">0</div><div class="l">Ctrl+F &amp; Excel workarounds remaining</div></div>
+      </div>
+      <ul class="bullets">
+        <li>Plain-language preview named the biggest confidence booster</li>
+        <li>Set the interaction patterns for the broader compliance suite</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>BeforeAfterWipe</code>; outcome trio — guided creation / findable list / confidence before go-live.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>11 / 12</span></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="eyebrow">Reflection</div>
+    <h2 class="slide-title">What I carried forward</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Define success metrics during discovery, not after ship</li>
+        <li>Starting simple beat the system-heavy List Manager</li>
+        <li>Design patterns, not just screens — and document them</li>
+        <li>What you leave behind matters as much as what you ship</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Emerging pattern-language artifacts; Phase 2 roadmap (edit, history, List Manager).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>12 / 12</span></div>
+  </section>
+
+</div>
+</body>
+</html>

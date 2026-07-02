@@ -597,7 +597,7 @@
 
 /* ── Footer (case study internal) ── */
 .positions-page .footer {
-  background: var(--clay-ink);
+  background: var(--clay);
   color: var(--bg);
   display: flex;
   justify-content: space-between;

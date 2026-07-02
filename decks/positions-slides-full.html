@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Well-Positioned — Kristin Garza</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Permanent+Marker&display=swap");
+
+:root{
+  --bg:#FFFEF5; --surface:#FFFFFF; --surface-2:#FBF6DD;
+  --hairline:#E7DFC4; --hairline-strong:#CDBF96;
+  --ink:#1F1A0F; --ink-2:#372B0B; --ink-3:#554B2E; --ink-mute:#8A7C5E; --ink-inverse:#FFFEF5;
+  --clay:#3F6CE0; --clay-deep:#2E54B8; --clay-ink:#2A4AA0; --clay-tint:#E5EBFB; --clay-edge:#AFC2F2;
+  --ochre:#DDCC33; --ochre-ink:#877D1C; --ochre-tint:#F8F4D3;
+  --slate:#6E84B0; --slate-deep:#3F5378; --slate-tint:#DCE3F0;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-script:"Permanent Marker",cursive;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--f-sans);color:var(--ink-2);background:#E7E0CC;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+/* ---------- deck / slide (16:9, content-first: min-height not fixed so text never clips) ---------- */
+.deck{display:flex;flex-direction:column;align-items:center;gap:26px;padding:32px 0;}
+.slide{position:relative;width:13.333in;min-height:7.5in;background:var(--bg);
+  padding:0.72in 0.9in 0.62in;display:flex;flex-direction:column;overflow:hidden;}
+.slide,.slide *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media screen{ .slide{box-shadow:0 14px 44px rgba(31,26,15,0.20);border-radius:6px;} }
+@page{ size:13.333in 7.5in; margin:0; }
+@media print{ body{background:#fff;} .deck{gap:0;padding:0;} .slide{box-shadow:none;border-radius:0;break-after:page;} .slide:last-child{break-after:auto;} }
+
+/* ---------- eyebrow / titles ---------- */
+.eyebrow{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:14px;}
+.eyebrow::after{content:"";width:64px;height:1px;background:var(--ochre);opacity:0.75;}
+.slide-title{font-family:var(--f-sans);font-weight:300;font-size:42px;line-height:1.08;letter-spacing:-0.015em;color:var(--ink-2);margin:16px 0 0;max-width:26ch;}
+.slide-kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay-ink);margin-top:10px;}
+
+/* ---------- archival copy (verbatim text) ---------- */
+.copy{margin-top:22px;max-width:94ch;}
+.copy h3{font-family:var(--f-sans);font-weight:600;font-size:23px;line-height:1.3;color:var(--ink-2);margin:26px 0 6px;letter-spacing:-0.01em;}
+.copy h4{font-family:var(--f-mono);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay-ink);margin:22px 0 6px;}
+.copy p{font-size:17px;line-height:1.62;color:var(--ink-2);margin:12px 0;}
+.copy p.lede{font-family:var(--f-sans);font-weight:300;font-size:21px;line-height:1.5;color:var(--ink-3);}
+.copy ul,.copy ol{margin:12px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.copy li{position:relative;padding-left:26px;font-size:17px;line-height:1.5;color:var(--ink-2);}
+.copy li::before{content:"";position:absolute;left:0;top:0.55em;width:8px;height:8px;background:var(--clay);border-radius:2px;}
+.copy ol{counter-reset:c;}
+.copy ol li{counter-increment:c;}
+.copy ol li::before{content:counter(c);top:0;width:auto;height:auto;background:none;color:var(--clay);font-family:var(--f-mono);font-weight:600;font-size:14px;}
+.copy strong{font-weight:600;color:var(--ink);}
+.copy blockquote{margin:18px 0;padding:6px 0 6px 20px;border-left:3px solid var(--clay);
+  font-family:var(--f-sans);font-style:italic;font-weight:300;font-size:20px;line-height:1.45;color:var(--ink-2);}
+.copy blockquote cite{display:block;font-style:normal;font-family:var(--f-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-mute);margin-top:8px;}
+.copy .callout{background:var(--surface-2);border:1px solid var(--hairline);border-left:3px solid var(--ochre);border-radius:0 8px 8px 0;padding:12px 18px;margin:14px 0;font-size:15px;color:var(--ink-3);}
+.copy .stat-row{display:flex;gap:40px;flex-wrap:wrap;margin:18px 0;}
+.copy .stat .n{font-weight:300;font-size:44px;line-height:1;color:var(--clay-deep);letter-spacing:-0.02em;}
+.copy .stat .l{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:8px;max-width:22ch;}
+
+/* ---------- figures (embedded stills) ---------- */
+.figures{margin-top:24px;display:flex;flex-direction:column;gap:20px;}
+.fig{break-inside:avoid;}
+.fig img{display:block;width:100%;height:auto;border:1px solid var(--hairline);border-radius:8px;background:var(--surface);box-shadow:0 6px 18px rgba(55,43,11,0.06);}
+.fig figcaption{font-family:var(--f-mono);font-size:11px;letter-spacing:0.06em;color:var(--ink-mute);margin-top:8px;}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.figrow.three{grid-template-columns:1fr 1fr 1fr;}
+/* placeholder for code-drawn / interactive components with no image file */
+.stub{break-inside:avoid;border:1px dashed var(--clay-edge);background:var(--clay-tint);border-radius:8px;
+  padding:22px 24px;color:var(--clay-ink);}
+.stub .k{font-family:var(--f-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay-ink);opacity:0.8;}
+.stub .t{font-family:var(--f-sans);font-weight:500;font-size:18px;margin-top:6px;color:var(--ink-2);}
+.stub .d{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:6px;}
+/* video-still badge */
+.fig.video figcaption::before{content:"▶ video still · ";color:var(--clay);}
+
+/* ---------- visuals list ---------- */
+.visuals{margin-top:24px;border-top:1px solid var(--hairline);padding-top:12px;font-size:13px;line-height:1.5;color:var(--ink-3);}
+.visuals b{font-family:var(--f-mono);font-weight:600;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--clay-ink);margin-right:10px;}
+.visuals code{font-family:var(--f-mono);font-size:12px;background:rgba(63,108,224,0.08);color:var(--clay-ink);padding:1px 6px;border-radius:4px;}
+
+/* ---------- footer ---------- */
+.slide-foot{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--hairline);font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);}
+.slide-foot .name{color:var(--ink-3);}
+
+/* ---------- title slide ---------- */
+.slide--title{background:var(--clay);color:var(--ink-inverse);justify-content:center;padding-top:0.9in;}
+.slide--title .eyebrow{color:rgba(255,254,245,0.85);}
+.slide--title .eyebrow::after{background:rgba(255,254,245,0.5);opacity:1;}
+.deck-h1{font-family:var(--f-sans);font-weight:300;font-size:72px;line-height:1.0;letter-spacing:-0.025em;color:var(--ink-inverse);margin:22px 0 0;}
+.deck-lede{font-family:var(--f-sans);font-weight:300;font-size:22px;line-height:1.45;color:rgba(255,254,245,0.92);margin:22px 0 0;max-width:64ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
+.meta span{font-family:var(--f-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,254,245,0.42);color:var(--ink-inverse);}
+.slide--title .slide-foot{border-top-color:rgba(255,254,245,0.28);color:rgba(255,254,245,0.72);}
+.slide--title .slide-foot .name{color:rgba(255,254,245,0.92);}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- ========== 1. TITLE ========== -->
+  <section class="slide slide--title">
+    <div class="eyebrow">Case Study · Trading Platform · Design Systems · 2025</div>
+    <h1 class="deck-h1">Well-Positioned</h1>
+    <p class="deck-lede">Designing in-flow context for institutional investing workflows—bringing account and position data to the moment it matters most.</p>
+    <div class="meta"><span>Research</span><span>Strategy</span><span>Product Design</span><span>Design Systems</span></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>01 / 25</span></div>
+  </section>
+
+  <!-- ========== 2. tl;dr ========== -->
+  <section class="slide">
+    <div class="eyebrow">tl;dr</div>
+    <h2 class="slide-title">tl;dr</h2>
+    <div class="copy">
+      <h4>Context</h4>
+      <ul>
+        <li>Across 10 trading apps, essential positions data was buried or in separate tools</li>
+        <li>Advisors relied on a second monitor just to see their own positions</li>
+        <li>Brief: fix one order ticket; I reframed it to fix the platform</li>
+      </ul>
+      <h4>Approach</h4>
+      <ul>
+        <li>Designed a horizontal positions panel that surfaced context without competing with the workflow</li>
+        <li>Partnered with design system to formalize it as a reusable component, no per-app custom work</li>
+        <li>Embedded success measurement and event tracking from day one</li>
+      </ul>
+      <h4>Outcome</h4>
+      <ul>
+        <li>Pattern shipped across 10+ applications with ~90% design system coverage</li>
+        <li>Aligned 10+ product teams on a single layout standard for dense workflows</li>
+        <li>Gave advisors reliable, in-flow positions context where they needed it most</li>
+      </ul>
+      <div class="callout">Lead UX Designer — Trading &nbsp;·&nbsp; 8 weeks (Q4 2025) &nbsp;·&nbsp; Product Design · Engineering · Product Management</div>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — text section.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>02 / 25</span></div>
+  </section>
+
+  <!-- ========== 3. FRAMING ========== -->
+  <section class="slide">
+    <div class="eyebrow">Framing</div>
+    <h2 class="slide-title">impact + scale &gt; convenience + speed</h2>
+    <div class="copy">
+      <p>This work was initially planned as a routine feature lift-and-shift; bringing an existing positions drawer pattern from another order ticket into a new trading application. While this approach optimized for speed, early design exploration revealed that simply integrating the existing drawer into the new app would perpetuate significant discoverability and workflow issues that existed on the platform.</p>
+      <p>I led lightweight design explorations that reframed the problem from <em>how to integrate an existing component</em> to <em>how to design for efficient in-flow decision-making</em>. In partnership with product, design system, and development teams, we identified an opportunity to establish a simple yet impactful new solution that would scale beyond a single trade ticket and support a broader range of contextual utilities across the platform's data-dense workflows.</p>
+      <p>The goal wasn't to solve one ticket — it was to establish a pattern that wouldn't require custom work each time a new application needed positions context.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — warm callout block.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>03 / 25</span></div>
+  </section>
+
+  <!-- ========== 4. MEASUREMENT NOTE ========== -->
+  <section class="slide">
+    <div class="eyebrow">Project Details</div>
+    <h2 class="slide-title">A note on measurement</h2>
+    <div class="copy">
+      <p>This project was completed in an environment without mature analytics infrastructure or established KPI frameworks for UX work. Quantitative instrumentation wasn't yet standard practice on this platform. Rather than treat this as an inevitable constraint, I defined and proposed a comprehensive measurement approach to guide future implementation and product decisions. The plan included a detailed success framework and measurement plan — in the <strong>Measuring Success</strong> section below.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — warning-icon callout.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>04 / 25</span></div>
+  </section>
+
+  <!-- ========== 5. PROBLEM HYPOTHESIS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Hypothesis</div>
+    <h2 class="slide-title">Initial Problem Hypothesis</h2>
+    <div class="copy">
+      <p class="lede"><strong>The initial hypothesis was clear: positions data is critical to every trade decision, yet it remained hidden, secondary, or spatially competitive with the primary task.</strong></p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — text section.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>05 / 25</span></div>
+  </section>
+
+  <!-- ========== 6. PLATFORM AUDIT — FEATURED ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Platform Audit</h2>
+    <div class="copy">
+      <p>I conducted a comprehensive audit of all trading platform applications to document how positions data was currently surfaced across the ecosystem.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="n">10</div><div class="l">Applications Identified</div></div>
+        <div class="stat"><div class="n">5</div><div class="l">Different Patterns</div></div>
+        <div class="stat"><div class="n">12+</div><div class="l">Usability Issues</div></div>
+      </div>
+      <h3>Multi-Order Ticket — Featured Example · Bottom Drawer Pattern</h3>
+      <h4>Critical Issues Identified</h4>
+      <ul>
+        <li><strong>Low Discoverability:</strong> Viewing positions data begins workflow, but the trigger to open the drawer is hidden at the bottom of the page</li>
+        <li><strong>Inefficient Use of Screen Space:</strong> Drawer's shape allowed for viewing many details on a few positions when users actually needed a few key details on many positions</li>
+        <li><strong>Unclear Trigger Component &amp; Label:</strong> Ambiguous trigger placement and text suggests navigation rather than in-page context</li>
+        <li><strong>Obscures Primary Interface:</strong> Opening drawer covers trade entry form — forces toggle behavior between positions and order entry</li>
+      </ul>
+    </div>
+    <div class="figures">
+      <figure class="fig"><img src="assets/positions/featuredexample.png" alt="Multi-Order Ticket featured example"><figcaption>featuredexample.png — Multi-Order Ticket, bottom drawer pattern</figcaption></figure>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>featuredexample.png</code></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>06 / 25</span></div>
+  </section>
+
+  <!-- ========== 7. PLATFORM AUDIT — PER-APP ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Platform Audit — Pattern Breakdown</h2>
+    <div class="copy">
+      <h3>Positions App — Opened/Unrealized <span style="font-weight:400;color:var(--ink-mute);font-size:16px;">· Full Page Application</span></h3>
+      <ul>
+        <li>Separate application — no in-context viewing</li>
+        <li>12+ columns create information overload</li>
+        <li>Horizontal scrolling required</li>
+        <li>Poor scanability — all data equal weight</li>
+      </ul>
+      <h3>Order Entry Tickets (6 apps) <span style="font-weight:400;color:var(--ink-mute);font-size:16px;">· Bottom Drawer</span></h3>
+      <ul>
+        <li>Low discoverability</li>
+        <li>Unclear trigger component &amp; label</li>
+        <li>Competes with primary interface</li>
+        <li>Can only see a few positions — vertical scrolling required</li>
+      </ul>
+      <h3>OneView Monitor <span style="font-weight:400;color:var(--ink-mute);font-size:16px;">· Small Tile</span></h3>
+      <ul>
+        <li>Competes with other widgets for attention</li>
+        <li>Size constraints limit breadth and depth of data shown</li>
+        <li>Not contextual to certain decisions, yet widget is fixed in open state</li>
+      </ul>
+      <h3>Held Orders Manager <span style="font-weight:400;color:var(--ink-mute);font-size:16px;">· Fixed Side Panel</span></h3>
+      <ul>
+        <li>Limited horizontal space reduces data density</li>
+        <li>Always open — occupying key screen real-estate even when not needed</li>
+      </ul>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig"><img src="assets/positions/positions.svg" alt="Positions App"><figcaption>positions.svg — Positions App (full page)</figcaption></figure>
+        <figure class="fig"><img src="assets/positions/orderentry.svg" alt="Order Entry Tickets"><figcaption>orderentry.svg — Order Entry Tickets (bottom drawer)</figcaption></figure>
+      </div>
+      <div class="figrow">
+        <figure class="fig"><img src="assets/positions/oneview.svg" alt="OneView Monitor"><figcaption>oneview.svg — OneView Monitor (small tile)</figcaption></figure>
+        <figure class="fig"><img src="assets/positions/HOM.svg" alt="Held Orders Manager"><figcaption>HOM.svg — Held Orders Manager (fixed side panel)</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>positions.svg</code>, <code>orderentry.svg</code>, <code>oneview.svg</code>, <code>HOM.svg</code></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>07 / 25</span></div>
+  </section>
+
+  <!-- ========== 8. PLATFORM AUDIT — FINDINGS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Platform Audit — Findings</h2>
+    <div class="copy">
+      <h4>Summary</h4>
+      <p>Positions data had been architecturally positioned as supplementary, on-demand content — but was behaviorally used as essential, always-on context. The recurring theme across every application: vertical orientation, spatial competition, and hidden triggers.</p>
+      <h4>Behavioral Insight</h4>
+      <p>The most telling signal wasn't in any interview — it was behavioral: the majority of advisors had independently developed the same workaround: open positions in a separate window, position on a second monitor, and manually reference while entering trades. When users invent the same workaround independently, the design has already told them the answer. The solution needed to give users simultaneous access to both positions and the trade entry form — without the second monitor.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — finding callouts.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>08 / 25</span></div>
+  </section>
+
+  <!-- ========== 9. HEURISTIC INSPECTION ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Heuristic Inspection</h2>
+    <div class="copy">
+      <p>Across these applications, a heuristic evaluation surfaced consistent violations that compounded into significant workflow friction for advisors.</p>
+      <h3>Forced Context Switching <span style="font-weight:400;color:var(--clay);font-size:15px;">· Critical · Recognition Rather than Recall</span></h3>
+      <p>Advisors needed to remember positions data while navigating to and from the positions drawer, placing unnecessary load on working memory during complex trading tasks.</p>
+      <h3>Hidden Positions Information <span style="font-weight:400;color:var(--clay);font-size:15px;">· High · Visibility of System Status</span></h3>
+      <p>Positions data was buried in collapsed drawers with minimal affordance. Users had no indication of what data was available or how to access it without prior knowledge.</p>
+      <h3>Competing Interface Elements <span style="font-weight:400;color:var(--clay);font-size:15px;">· High · User Control and Freedom</span></h3>
+      <p>Bottom drawer competed with trade entry form for visual focus and screen space, creating an either/or choice when both were needed simultaneously.</p>
+      <div class="callout"><strong>Key Finding:</strong> The core issue was the structural model being used. Positions data had been treated as supplementary information accessed on demand, when it was actually prerequisite context for every trade. The design forced a choice between seeing positions and entering trades — two fundamentally interdependent tasks.</div>
+    </div>
+    <div class="figures">
+      <div class="figrow three">
+        <div class="stub"><div class="k">Code-drawn animation</div><div class="t">AnimContextSwitch</div><div class="d">Order Entry Ticket where the Shares field is typed, then a Positions drawer opens to check shares before returning — illustrating forced context switching.</div></div>
+        <div class="stub"><div class="k">Code-drawn animation</div><div class="t">AnimHiddenInfo</div><div class="d">Order ticket with a collapsed Positions drawer at the bottom whose pulsing "!" badge signals hidden, low-affordance information.</div></div>
+        <div class="stub"><div class="k">Code-drawn animation</div><div class="t">AnimCompeting</div><div class="d">A Positions drawer slides up from the bottom and dims the order-entry form fields, showing the two elements competing for space.</div></div>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>AnimContextSwitch</code>, <code>AnimHiddenInfo</code>, <code>AnimCompeting</code> (code-drawn animations).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>09 / 25</span></div>
+  </section>
+
+  <!-- ========== 10. SME INSIGHTS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">SME Insights &amp; Analytics</h2>
+    <div class="copy">
+      <p>Quantitative analytics and qualitative SME interviews validated the findings from the platform audit and heuristic evaluation.</p>
+      <blockquote>"I always have positions open in a second monitor. There's no way I can trade without seeing what I already own."<cite>— Senior Trading Advisor, SME Interview</cite></blockquote>
+      <blockquote>"Every time I open that drawer I lose my place in the ticket. By the time I close it I've forgotten half of what I needed to check."<cite>— Advisor, Internal User Research</cite></blockquote>
+      <blockquote>"Most of our clients mention that they didn't even realize there was a way to view positions within the ticket itself until we show it to them."<cite>— Technology Consultant, Internal SME Interview</cite></blockquote>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — quote blocks.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>10 / 25</span></div>
+  </section>
+
+  <!-- ========== 11. JOURNEY MAP 1–3 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Journey Mapping</h2>
+    <div class="copy">
+      <h3>Stage 1 — Pre-Trade Research <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· Emotion: Neutral</span></h3>
+      <h4>Actions</h4>
+      <ul><li>Review client portfolio</li><li>Check current positions</li><li>Identify needs</li></ul>
+      <h4>Pain Points</h4>
+      <ul><li>Positions in separate app</li><li>No integration with research tools</li></ul>
+      <h3>Stage 2 — Decision Making <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· Emotion: Concerned</span></h3>
+      <h4>Actions</h4>
+      <ul><li>Calculate target allocations</li><li>Determine trades needed</li><li>Reference holdings</li></ul>
+      <h4>Pain Points</h4>
+      <ul><li>Context switching between apps</li><li>Manual calculations</li></ul>
+      <h3>Stage 3 — Orders Drafting <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· Emotion: Frustrated</span></h3>
+      <h4>Actions</h4>
+      <ul><li>Open trade ticket</li><li>Enter order details</li><li>Verify against positions</li></ul>
+      <h4>Pain Points</h4>
+      <ul><li>Positions hidden in drawer</li><li>Can't see both simultaneously</li><li>Repeated toggling</li></ul>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">JourneyMap</div><div class="d">A clickable 5-stage journey with per-stage emoji faces, an emotion arc plotting each stage's emotional score, and a detail panel listing Actions and Pain Points. Caption: "Stage X of 5 — click any stage to explore."</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>JourneyMap</code> (interactive, code-drawn).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>11 / 25</span></div>
+  </section>
+
+  <!-- ========== 12. JOURNEY MAP 4–5 ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Journey Mapping (continued)</h2>
+    <div class="copy">
+      <h3>Stage 4 — Validation <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· Emotion: Anxious</span></h3>
+      <h4>Actions</h4>
+      <ul><li>Double-check order accuracy</li><li>Verify position impact</li><li>Confirm allocation</li></ul>
+      <h4>Pain Points</h4>
+      <ul><li>Drawer obscures order form</li><li>Increased error risk</li></ul>
+      <h3>Stage 5 — Execution <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· Emotion: Relieved &amp; Exhausted</span></h3>
+      <h4>Actions</h4>
+      <ul><li>Submit orders</li><li>Monitor confirmation</li><li>Update records</li></ul>
+      <h4>Pain Points</h4>
+      <ul><li>Uncertainty during submission</li><li>Post-trade verification needed</li></ul>
+      <div class="callout">Stage X of 5 — click any stage to explore</div>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Interactive component</div><div class="t">JourneyMap</div><div class="d">Same interactive journey map — stages 4 and 5 detail views (Validation, Execution).</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>JourneyMap</code> (interactive, code-drawn — continued).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>12 / 25</span></div>
+  </section>
+
+  <!-- ========== 13. INSIGHT SYNTHESIS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Research</div>
+    <h2 class="slide-title">Insight Synthesis</h2>
+    <div class="copy">
+      <p>Across four research methods, three critical themes emerged consistently.</p>
+      <h3>Low Visibility</h3>
+      <ul>
+        <li>Low affordance — triggers appeared to navigate away rather than reveal content</li>
+        <li>Positions buried below fold or behind interaction layers</li>
+        <li>No persistent visual indicator that positions data was available</li>
+        <li>Users unaware of the full scope of accessible data</li>
+      </ul>
+      <h3>Cognitive Overload</h3>
+      <ul>
+        <li>Context switching created memory load at critical decision moments</li>
+        <li>Users mentally juggling positions data while entering trade details</li>
+        <li>Repeated toggling between views broke workflow momentum</li>
+        <li>Flat data hierarchy made it hard to identify the most relevant positions</li>
+      </ul>
+      <h3>Structural Conflict</h3>
+      <ul>
+        <li>Positions and trade entry competed for screen space</li>
+        <li>Vertical orientation limited number of positions visible simultaneously</li>
+        <li>Design treated positions as on-demand rather than in-flow information</li>
+        <li>No single layout standard existed across the platform for this pattern</li>
+      </ul>
+      <div class="callout"><strong>Critical Insight:</strong> The issues weren't isolated — they compounded. What appeared to be a simple discoverability problem was a structural mismatch. Fixing the drawer wouldn't solve it. The mental model needed to change: positions as essential, always-on context — not supplementary, on-demand content.</div>
+    </div>
+    <div class="figures">
+      <div class="figrow three">
+        <figure class="fig"><img src="assets/positions/visibility.svg" alt="Low Visibility"><figcaption>visibility.svg — Low Visibility</figcaption></figure>
+        <figure class="fig"><img src="assets/positions/cognitiveover.svg" alt="Cognitive Overload"><figcaption>cognitiveover.svg — Cognitive Overload</figcaption></figure>
+        <figure class="fig"><img src="assets/positions/structural.svg" alt="Structural Conflict"><figcaption>structural.svg — Structural Conflict</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>visibility.svg</code>, <code>cognitiveover.svg</code>, <code>structural.svg</code></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>13 / 25</span></div>
+  </section>
+
+  <!-- ========== 14. PROBLEM DEFINED ========== -->
+  <section class="slide">
+    <div class="eyebrow">Problem</div>
+    <h2 class="slide-title">Problem: Validated &amp; Defined</h2>
+    <div class="copy">
+      <p class="lede">Portfolio positions data is prerequisite context for every trade decision — yet the current design treats it as supplementary, on-demand information. This structural mismatch forces advisors to choose between seeing their positions and entering a trade, two tasks that must happen simultaneously.</p>
+      <p>The result: advisors interrupt their workflows, accept higher cognitive load, build manual workarounds, and make decisions with incomplete information — introducing friction, inefficiency, and risk at the highest-stakes moment of the trading process.</p>
+      <blockquote>"The positions drawer isn't just a UX issue — it's a compliance risk. Advisors are making decisions without complete information because the tool makes it too hard to have both visible at once."<cite>— Compliance Officer, Internal SME Interview</cite></blockquote>
+      <h4>Client Relationship Risk</h4>
+      <p>Trading errors are among the most costly outcomes a firm can face. When advisors make decisions with incomplete position data, errors increase — damaging trust between our clients and the end investors they trade on behalf of. In an industry where reputation is everything, preventable errors are not a UX problem. They are a business problem.</p>
+      <h4>Operational Cost</h4>
+      <p>Each trading error generates downstream work: service inquiries, manual corrections, and follow-up from our support teams. Reducing workflow friction isn't just about advisor experience — it directly reduces the volume of error-driven support load and the internal cost of remediation that follows.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — callout, quote, and two impact cards.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>14 / 25</span></div>
+  </section>
+
+  <!-- ========== 15. SOLUTION PARAMETERS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Redesign</div>
+    <h2 class="slide-title">Defining Solution Parameters</h2>
+    <div class="copy">
+      <h3>Solution Principles</h3>
+      <ul>
+        <li><strong>In-Flow, Not On-Demand:</strong> Persistent in-context element, not a triggered overlay</li>
+        <li><strong>Scan Over Dive:</strong> Quick reference across multiple positions, not exhaustive detail on one</li>
+        <li><strong>Horizontal Over Vertical:</strong> Leverage horizontal real estate to maximize positions visible simultaneously</li>
+        <li><strong>Hierarchy Over Density:</strong> Surface critical fields prominently; deprioritize secondary data</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — principle rows.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>15 / 25</span></div>
+  </section>
+
+  <!-- ========== 16. IDEATION — SELECTED ========== -->
+  <section class="slide">
+    <div class="eyebrow">Redesign</div>
+    <h2 class="slide-title">Ideation &amp; Lo-Fi Exploration</h2>
+    <div class="copy">
+      <p>I explored multiple approaches to organizing positions data alongside trade entry, each with different tradeoffs around visibility, interaction cost, and space efficiency.</p>
+      <h3>Selected Direction — Horizontal Cards</h3>
+      <ul>
+        <li>Optimal scannability, efficient use of space, no interaction cost</li>
+        <li>Scales to multiple positions simultaneously</li>
+        <li>Complements rather than competes with trade form</li>
+      </ul>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn lo-fi</div><div class="t">LoFiHorizontal</div><div class="d">Order Entry Ticket beside a collapsible horizontal Positions card listing AAPL, MSFT, GOOGL, NVDA, AMZN, JPM, TSLA, V, BRK, HD, PG, MA — with Cancel / Verify Order buttons.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>LoFiHorizontal</code> (code-drawn lo-fi).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>16 / 25</span></div>
+  </section>
+
+  <!-- ========== 17. IDEATION — OTHER CONCEPTS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Redesign</div>
+    <h2 class="slide-title">Other Concepts Explored</h2>
+    <div class="copy">
+      <h3>Modal Layer</h3>
+      <ul><li>Pro: Clean interface, doesn't consume layout space</li><li>Con: Requires click to access — breaks workflow</li></ul>
+      <h3>Floating Widget</h3>
+      <ul><li>Pro: Flexible positioning</li><li>Con: Can obstruct content, adds window management</li></ul>
+      <h3>Vertical Cards</h3>
+      <ul><li>Pro: Always visible</li><li>Con: Vertical scrolling required, consumes horizontal space</li></ul>
+      <h3>Overlay Panel</h3>
+      <ul><li>Pro: Hides when not needed</li><li>Con: Requires toggle, can feel disruptive</li></ul>
+      <div class="callout">X of 4 concepts (carousel)</div>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <div class="stub"><div class="k">Code-drawn lo-fi</div><div class="t">LoFiModal</div><div class="d">Dimmed order form with a centered Positions modal overlay (AAPL, MSFT, GOOGL, NVDA).</div></div>
+        <div class="stub"><div class="k">Code-drawn lo-fi</div><div class="t">LoFiFloating</div><div class="d">Full order form with a draggable floating Positions widget (AAPL, MSFT, GOOGL).</div></div>
+      </div>
+      <div class="figrow">
+        <div class="stub"><div class="k">Code-drawn lo-fi</div><div class="t">LoFiVertical</div><div class="d">Order ticket stacked above a vertical Positions strip (AAPL, MSFT, GOOGL).</div></div>
+        <div class="stub"><div class="k">Code-drawn lo-fi</div><div class="t">LoFiOverlay</div><div class="d">Full-bleed order ticket with a right-edge sliding Positions overlay panel (AAPL–V).</div></div>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>LoFiModal</code>, <code>LoFiFloating</code>, <code>LoFiVertical</code>, <code>LoFiOverlay</code> (code-drawn lo-fi). Repo static equivalents: <code>concept-modal.svg</code>, <code>concept-floating.svg</code>, <code>concept-vertical.svg</code>, <code>concept-overlay.svg</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>17 / 25</span></div>
+  </section>
+
+  <!-- ========== 18. KEY DESIGN DECISIONS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Redesign</div>
+    <h2 class="slide-title">Key Design Decisions</h2>
+    <div class="copy">
+      <ul>
+        <li><strong>Eliminated Context Switching:</strong> By making positions persistently visible alongside the trade form — not behind a toggle — advisors could reference and enter data simultaneously for the first time.</li>
+        <li><strong>Prioritized Breadth over Depth:</strong> The horizontal card layout maximizes the number of positions visible at once. I surfaced the 4-5 most relevant fields — ticker, shares, current value, unrealized gain/loss — not all 12+ columns.</li>
+        <li><strong>Built in the Spirit of the Design System:</strong> Designed to align with the existing visual language, spacing tokens, and interaction patterns. Worked directly with the design system team during development to formalize the component spec.</li>
+        <li><strong>Scalable Across All Trading Use Cases:</strong> Designed as a context-agnostic "horizontal contextual data panel" — applicable not just to positions, but to any data-dense workflow across the platform requiring secondary reference data.</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>check.svg</code> (decision check icons).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>18 / 25</span></div>
+  </section>
+
+  <!-- ========== 19. DESIGN SYSTEM ========== -->
+  <section class="slide">
+    <div class="eyebrow">Redesign</div>
+    <h2 class="slide-title">Contribution to Design System</h2>
+    <div class="copy">
+      <p>I partnered with the design system team to formalize the horizontal positions panel as an official design system component — enabling platform-wide adoption with minimal custom work per application.</p>
+      <h3>Component Specs</h3>
+      <ul>
+        <li>Anatomy diagrams with spacing and sizing tokens</li>
+        <li>Column configuration options and defaults</li>
+        <li>Responsive breakpoint behavior</li>
+        <li>State variations (default, hover, selected, loading, empty)</li>
+      </ul>
+      <h3>Usage Guidelines</h3>
+      <ul>
+        <li>When to use horizontal vs. vertical layouts</li>
+        <li>Best practices for column prioritization</li>
+        <li>Accessibility requirements and keyboard navigation</li>
+        <li>Proper and improper usage examples</li>
+      </ul>
+      <h3>Design Tokens</h3>
+      <ul>
+        <li>Color tokens for data states (positive, negative, neutral)</li>
+        <li>Typography scale for data density contexts</li>
+        <li>Spacing tokens for compact and standard densities</li>
+        <li>Border and shadow tokens for panel elevation</li>
+      </ul>
+      <div class="stat-row">
+        <div class="stat"><div class="n">10+</div><div class="l">Applications using pattern</div></div>
+        <div class="stat"><div class="n">~90%</div><div class="l">Design system coverage</div></div>
+        <div class="stat"><div class="n">10+</div><div class="l">Product teams aligned</div></div>
+      </div>
+    </div>
+    <div class="figures">
+      <div class="figrow three">
+        <figure class="fig"><img src="assets/positions/specs.svg" alt="Component Specs"><figcaption>specs.svg — Component Specs</figcaption></figure>
+        <figure class="fig"><img src="assets/positions/usage.svg" alt="Usage Guidelines"><figcaption>usage.svg — Usage Guidelines</figcaption></figure>
+        <figure class="fig"><img src="assets/positions/design.svg" alt="Design Tokens"><figcaption>design.svg — Design Tokens</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b> <code>specs.svg</code>, <code>usage.svg</code>, <code>design.svg</code></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>19 / 25</span></div>
+  </section>
+
+  <!-- ========== 20. ROLLOUT ========== -->
+  <section class="slide">
+    <div class="eyebrow">Redesign</div>
+    <h2 class="slide-title">Scaling &amp; Rollout</h2>
+    <div class="copy">
+      <p>Any change to live trading workflows required careful, staged rollout. I structured a phased approach that prioritized learning and iteration at each stage before expanding.</p>
+      <h3>Phase 1 — Pilot — Multi-Order Ticket <span style="font-weight:400;color:var(--clay);font-size:15px;">· Complete</span></h3>
+      <p>Introduced the horizontal positions panel in the highest-traffic trading application. Collected feedback and iterated on column priority and display density.</p>
+      <h3>Phase 2 — Expand — Order Entry Tickets <span style="font-weight:400;color:var(--clay);font-size:15px;">· Complete</span></h3>
+      <p>Applied the standardized component across the 6 individual order entry ticket applications, using the design system component to ensure consistency.</p>
+      <h3>Phase 3 — Scale — Platform-Wide <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· In Progress</span></h3>
+      <p>Rolled out the pattern to all 10 identified applications and established it as the default layout standard for data-dense contexts.</p>
+      <h3>Future — Generalize — Contextual Data Pattern <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· Planned</span></h3>
+      <p>Extend beyond positions to support account summaries, model benchmarks, compliance checks, and order history.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — phase cards.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>20 / 25</span></div>
+  </section>
+
+  <!-- ========== 21. MEASURING SUCCESS — CONSTRAINT ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcome</div>
+    <h2 class="slide-title">Measuring Success</h2>
+    <div class="copy">
+      <p>One of the biggest challenges on this project was the absence of mature analytics infrastructure. Legacy tooling didn't support event-level tracking, and there were no established baseline metrics for this feature area. Rather than let this become a blind spot, I worked to define what rigorous measurement would look like — both as a design deliverable and as a foundation for future instrumentation.</p>
+      <h4>The constraint</h4>
+      <p>When I asked stakeholders "What would make this successful?", the answer was: "We don't have strong enough analytics tools to tell us what success looks like today." Rather than viewing this as a blocker, I treated it as an opportunity to establish a measurement framework from the ground up — one that could be implemented as the new platform launched.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — text + constraint callout.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>21 / 25</span></div>
+  </section>
+
+  <!-- ========== 22. MEASURING SUCCESS — FRAMEWORK ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcome</div>
+    <h2 class="slide-title">Proposed Success Framework</h2>
+    <div class="copy">
+      <h3>Task Completion Rate <span style="font-weight:400;color:var(--clay);font-size:15px;">· Critical</span></h3>
+      <ul>
+        <li><strong>What:</strong> % of users who successfully complete an order entry with the new positions panel</li>
+        <li><strong>How:</strong> Event tracking: position_panel_task_completed</li>
+        <li><strong>Target:</strong> Baseline TBD → Improve by 25%+ within 60 days</li>
+      </ul>
+      <h3>Time to Complete Order <span style="font-weight:400;color:var(--clay);font-size:15px;">· Critical</span></h3>
+      <ul>
+        <li><strong>What:</strong> Average time from opening order entry to submitting order</li>
+        <li><strong>How:</strong> Timestamp delta: start_order → complete_order</li>
+        <li><strong>Target:</strong> Baseline TBD → Reduce by 30% (hypothesis: ~4min → ~2.5min)</li>
+      </ul>
+      <h3>Support Ticket Volume <span style="font-weight:400;color:var(--ink-mute);font-size:15px;">· High (Can measure now!)</span></h3>
+      <ul>
+        <li><strong>What:</strong> # of support tickets tagged "order entry" or "position tracking"</li>
+        <li><strong>How:</strong> Support system data (existing)</li>
+        <li><strong>Target:</strong> Current baseline ~240/month → Reduce to &lt;160/month (-30%)</li>
+      </ul>
+      <h3>Trading Efficiency (Orders/Hour) <span style="font-weight:400;color:var(--clay);font-size:15px;">· Critical</span></h3>
+      <ul>
+        <li><strong>What:</strong> Average orders completed per trading hour per user</li>
+        <li><strong>How:</strong> May be available in existing business systems</li>
+        <li><strong>Target:</strong> Current unknown → Improve by 20%+</li>
+      </ul>
+      <div class="callout"><em>In the interim, I tracked qualitative signals through user interviews and support ticket analysis to validate directional improvements while instrumentation was being built.</em></div>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — metric cards.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>22 / 25</span></div>
+  </section>
+
+  <!-- ========== 23. MEASURING SUCCESS — INSTRUMENTATION ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcome</div>
+    <h2 class="slide-title">Instrumentation Plan</h2>
+    <div class="copy">
+      <p>I collaborated with engineering to ensure the redesign included proper event architecture from day one — so that when the analytics platform launched, tracking would already be in place with no retroactive instrumentation needed.</p>
+      <h4>position_panel_opened</h4>
+      <p><strong>Trigger:</strong> User clicks to expand position panel<br><strong>Parameters:</strong> user_id, timestamp, panel_state (collapsed→expanded)</p>
+      <h4>order_entry_started</h4>
+      <p><strong>Trigger:</strong> User begins filling out order form<br><strong>Parameters:</strong> user_id, timestamp, order_type, source_screen</p>
+      <h4>order_entry_completed</h4>
+      <p><strong>Trigger:</strong> User successfully submits order<br><strong>Parameters:</strong> user_id, timestamp, order_id, time_to_complete, position_panel_used (boolean)</p>
+      <h4>order_entry_error</h4>
+      <p><strong>Trigger:</strong> User encounters an error during order entry<br><strong>Parameters:</strong> user_id, timestamp, error_type, error_message, step_in_flow</p>
+      <p>This spec became part of our engineering handoff documentation and enabled the team to measure all critical metrics outlined in the success framework above.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — event spec list.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>23 / 25</span></div>
+  </section>
+
+  <!-- ========== 24. RESULTS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcome</div>
+    <h2 class="slide-title">Results &amp; Impact</h2>
+    <div class="copy">
+      <h3>Improved Discoverability</h3>
+      <p>Positions information now visible without hunting through drawers or switching applications</p>
+      <h3>Better Scannability</h3>
+      <p>Horizontal layout leverages available screen real estate — more positions visible at once</p>
+      <h3>Platform Consistency</h3>
+      <p>Unified pattern across all trading pages reduces cognitive overhead when switching applications</p>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — icon result cards.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>24 / 25</span></div>
+  </section>
+
+  <!-- ========== 25. REFLECTIONS ========== -->
+  <section class="slide">
+    <div class="eyebrow">Reflection</div>
+    <h2 class="slide-title">Reflections &amp; Learnings</h2>
+    <div class="copy">
+      <h4>The best solutions often feel deceptively simple:</h4>
+      <p>The horizontal card pattern looks obvious in hindsight — but it required substantial research to understand why it was right, and substantial facilitation work to get alignment on reframing the problem before we could arrive there.</p>
+      <h4>Visualizing platform-level impact unlocked stakeholder alignment:</h4>
+      <p>Showing how a single design decision could scale to 10+ applications in a single diagram was more persuasive than any usability metric. This framing transformed a single-feature discussion into a platform strategy conversation.</p>
+      <div class="callout">Case study navigation: ← Previous — Inside the Rule Engine</div>
+    </div>
+    <div class="visuals"><b>Visuals</b> None — reflection callouts.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>25 / 25</span></div>
+  </section>
+
+</div>
+</body>
+</html>

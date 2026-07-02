@@ -8,6 +8,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const navRef = useRef(null)
 
   // Detect mobile viewport
@@ -52,8 +53,23 @@ export default function Nav() {
     }
   }, [isHome, pathname])
 
+  // All pages: auto-hide the nav while scrolling DOWN, reveal it on scroll UP
+  // (and always show it at the very top).
+  useEffect(() => {
+    let lastY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      if (y <= 8) setHidden(false)
+      else if (y > lastY + 4) setHidden(true)
+      else if (y < lastY - 4) setHidden(false)
+      lastY = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   // Close menu on route change
-  useEffect(() => { setOpen(false) }, [pathname])
+  useEffect(() => { setOpen(false); setHidden(false) }, [pathname])
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -81,7 +97,7 @@ export default function Nav() {
     <>
       <nav
         ref={navRef}
-        className={`nav ${isHome ? 'nav--home' : ''} ${isHome && scrolled ? 'nav--scrolled' : ''}`}
+        className={`nav ${isHome ? 'nav--home' : ''} ${isHome && scrolled ? 'nav--scrolled' : ''} ${hidden ? 'nav--hidden' : ''}`}
       >
         <div className="nav-inner">
           <Link to="/" className="wordmark" aria-label="kristin.garza">

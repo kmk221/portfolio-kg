@@ -1,4 +1,38 @@
+import { useState } from 'react'
 import Nav from '../components/Nav.jsx'
+
+// Embedded contact form. Submitting composes a pre-filled email to Kristin via
+// the visitor's mail client (mailto) — a real send with no backend required.
+function ContactForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const subject = encodeURIComponent(`Portfolio inquiry — ${name || 'hello'}`)
+    const body = encodeURIComponent(`${message}\n\n— ${name}${email ? ` · ${email}` : ''}`)
+    window.location.href = `mailto:kmkerney221@gmail.com?subject=${subject}&body=${body}`
+  }
+  return (
+    <form className="contact-form" onSubmit={onSubmit}>
+      <div className="contact-field-row">
+        <label className="contact-field">
+          <span>Name<span className="req">*</span></span>
+          <input type="text" required value={name} onChange={e => setName(e.target.value)} placeholder="Jane Doe" />
+        </label>
+        <label className="contact-field">
+          <span>Email<span className="req">*</span></span>
+          <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="jane@company.com" />
+        </label>
+      </div>
+      <label className="contact-field">
+        <span>Message<span className="req">*</span></span>
+        <textarea required rows={5} value={message} onChange={e => setMessage(e.target.value)} placeholder="Tell me a bit about what you're working on…" />
+      </label>
+      <button type="submit" className="btn btn--lg">Send message</button>
+    </form>
+  )
+}
 
 export default function About() {
   return (
@@ -178,7 +212,27 @@ export default function About() {
 
       </main>
 
-      <footer className="site-foot" id="contact">
+      {/* ── CONTACT — embedded email form (full-bleed blue band) ── */}
+      <section className="contact-band" id="contact">
+        <div className="contact-inner">
+          <div className="section-spread" style={{ marginBottom: 20 }}>
+            <span className="eyebrow">Contact</span>
+            <span className="rule" />
+          </div>
+          <h2 className="contact-title">Let&apos;s build something</h2>
+          <p className="contact-lede">I&apos;m always open to connecting with fellow builders, leaders, and teams. Whether you&apos;re navigating complex product ambiguity or looking to scale a high-performing design practice, I&apos;d love to hear from you.</p>
+          <p className="contact-subhead">Reach out if you want to discuss:</p>
+          <ul className="contact-list">
+            <li><strong>Product &amp; Systems Design:</strong> Bringing clarity to complex, high-stakes workflows.</li>
+            <li><strong>Design Systems:</strong> Scalable, reusable foundations teams actually enjoy using.</li>
+            <li><strong>AI-Augmented Design:</strong> Using AI as a multiplier — thoughtfully, not carelessly.</li>
+          </ul>
+          <p className="contact-talk">Let&apos;s talk.</p>
+          <ContactForm />
+        </div>
+      </section>
+
+      <footer className="site-foot">
         <div className="inner">
           <span className="left">kristin<span style={{ opacity: 0.6 }}>.garza</span> · UX Designer</span>
           <span className="right">

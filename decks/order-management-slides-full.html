@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Addition Through Subtraction — Kristin Garza</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Permanent+Marker&display=swap");
+
+:root{
+  --bg:#FFFEF5; --surface:#FFFFFF; --surface-2:#FBF6DD;
+  --hairline:#E7DFC4; --hairline-strong:#CDBF96;
+  --ink:#1F1A0F; --ink-2:#372B0B; --ink-3:#554B2E; --ink-mute:#8A7C5E; --ink-inverse:#FFFEF5;
+  --clay:#3F6CE0; --clay-deep:#2E54B8; --clay-ink:#2A4AA0; --clay-tint:#E5EBFB; --clay-edge:#AFC2F2;
+  --ochre:#DDCC33; --ochre-ink:#877D1C; --ochre-tint:#F8F4D3;
+  --slate:#6E84B0; --slate-deep:#3F5378; --slate-tint:#DCE3F0;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-script:"Permanent Marker",cursive;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--f-sans);color:var(--ink-2);background:#E7E0CC;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+/* ---------- deck / slide (16:9, content-first: min-height not fixed so text never clips) ---------- */
+.deck{display:flex;flex-direction:column;align-items:center;gap:26px;padding:32px 0;}
+.slide{position:relative;width:13.333in;min-height:7.5in;background:var(--bg);
+  padding:0.72in 0.9in 0.62in;display:flex;flex-direction:column;overflow:hidden;}
+.slide,.slide *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media screen{ .slide{box-shadow:0 14px 44px rgba(31,26,15,0.20);border-radius:6px;} }
+@page{ size:13.333in 7.5in; margin:0; }
+@media print{ body{background:#fff;} .deck{gap:0;padding:0;} .slide{box-shadow:none;border-radius:0;break-after:page;} .slide:last-child{break-after:auto;} }
+
+/* ---------- eyebrow / titles ---------- */
+.eyebrow{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:14px;}
+.eyebrow::after{content:"";width:64px;height:1px;background:var(--ochre);opacity:0.75;}
+.slide-title{font-family:var(--f-sans);font-weight:300;font-size:42px;line-height:1.08;letter-spacing:-0.015em;color:var(--ink-2);margin:16px 0 0;max-width:26ch;}
+.slide-kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay-ink);margin-top:10px;}
+
+/* ---------- archival copy (verbatim text) ---------- */
+.copy{margin-top:22px;max-width:94ch;}
+.copy h3{font-family:var(--f-sans);font-weight:600;font-size:23px;line-height:1.3;color:var(--ink-2);margin:26px 0 6px;letter-spacing:-0.01em;}
+.copy h4{font-family:var(--f-mono);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay-ink);margin:22px 0 6px;}
+.copy p{font-size:17px;line-height:1.62;color:var(--ink-2);margin:12px 0;}
+.copy p.lede{font-family:var(--f-sans);font-weight:300;font-size:21px;line-height:1.5;color:var(--ink-3);}
+.copy ul,.copy ol{margin:12px 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px;}
+.copy li{position:relative;padding-left:26px;font-size:17px;line-height:1.5;color:var(--ink-2);}
+.copy li::before{content:"";position:absolute;left:0;top:0.55em;width:8px;height:8px;background:var(--clay);border-radius:2px;}
+.copy ol{counter-reset:c;}
+.copy ol li{counter-increment:c;}
+.copy ol li::before{content:counter(c);top:0;width:auto;height:auto;background:none;color:var(--clay);font-family:var(--f-mono);font-weight:600;font-size:14px;}
+.copy strong{font-weight:600;color:var(--ink);}
+.copy blockquote{margin:18px 0;padding:6px 0 6px 20px;border-left:3px solid var(--clay);
+  font-family:var(--f-sans);font-style:italic;font-weight:300;font-size:20px;line-height:1.45;color:var(--ink-2);}
+.copy blockquote cite{display:block;font-style:normal;font-family:var(--f-mono);font-size:12px;letter-spacing:0.04em;color:var(--ink-mute);margin-top:8px;}
+.copy .callout{background:var(--surface-2);border:1px solid var(--hairline);border-left:3px solid var(--ochre);border-radius:0 8px 8px 0;padding:12px 18px;margin:14px 0;font-size:15px;color:var(--ink-3);}
+.copy .stat-row{display:flex;gap:40px;flex-wrap:wrap;margin:18px 0;}
+.copy .stat .n{font-weight:300;font-size:44px;line-height:1;color:var(--clay-deep);letter-spacing:-0.02em;}
+.copy .stat .l{font-family:var(--f-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:8px;max-width:22ch;}
+
+/* ---------- figures (embedded stills) ---------- */
+.figures{margin-top:24px;display:flex;flex-direction:column;gap:20px;}
+.fig{break-inside:avoid;}
+.fig img{display:block;width:100%;height:auto;border:1px solid var(--hairline);border-radius:8px;background:var(--surface);box-shadow:0 6px 18px rgba(55,43,11,0.06);}
+.fig figcaption{font-family:var(--f-mono);font-size:11px;letter-spacing:0.06em;color:var(--ink-mute);margin-top:8px;}
+.figrow{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.figrow.three{grid-template-columns:1fr 1fr 1fr;}
+/* placeholder for code-drawn / interactive components with no image file */
+.stub{break-inside:avoid;border:1px dashed var(--clay-edge);background:var(--clay-tint);border-radius:8px;
+  padding:22px 24px;color:var(--clay-ink);}
+.stub .k{font-family:var(--f-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay-ink);opacity:0.8;}
+.stub .t{font-family:var(--f-sans);font-weight:500;font-size:18px;margin-top:6px;color:var(--ink-2);}
+.stub .d{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:6px;}
+/* video-still badge */
+.fig.video figcaption::before{content:"▶ video still · ";color:var(--clay);}
+
+/* ---------- visuals list ---------- */
+.visuals{margin-top:24px;border-top:1px solid var(--hairline);padding-top:12px;font-size:13px;line-height:1.5;color:var(--ink-3);}
+.visuals b{font-family:var(--f-mono);font-weight:600;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--clay-ink);margin-right:10px;}
+.visuals code{font-family:var(--f-mono);font-size:12px;background:rgba(63,108,224,0.08);color:var(--clay-ink);padding:1px 6px;border-radius:4px;}
+
+/* ---------- footer ---------- */
+.slide-foot{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--hairline);font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);}
+.slide-foot .name{color:var(--ink-3);}
+
+/* ---------- title slide ---------- */
+.slide--title{background:var(--clay);color:var(--ink-inverse);justify-content:center;padding-top:0.9in;}
+.slide--title .eyebrow{color:rgba(255,254,245,0.85);}
+.slide--title .eyebrow::after{background:rgba(255,254,245,0.5);opacity:1;}
+.deck-h1{font-family:var(--f-sans);font-weight:300;font-size:72px;line-height:1.0;letter-spacing:-0.025em;color:var(--ink-inverse);margin:22px 0 0;}
+.deck-lede{font-family:var(--f-sans);font-weight:300;font-size:22px;line-height:1.45;color:rgba(255,254,245,0.92);margin:22px 0 0;max-width:64ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
+.meta span{font-family:var(--f-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,254,245,0.42);color:var(--ink-inverse);}
+.slide--title .slide-foot{border-top-color:rgba(255,254,245,0.28);color:rgba(255,254,245,0.72);}
+.slide--title .slide-foot .name{color:rgba(255,254,245,0.92);}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- ========== SLIDE 1 — TITLE ========== -->
+  <section class="slide slide--title">
+    <div class="eyebrow">Case Study · Order Management · 2025</div>
+    <h1 class="deck-h1">Addition Through Subtraction</h1>
+    <p class="deck-lede">Pivoting from a feature‑heavy dashboard to a focused, essential workflow that unlocked a clean component and layout pattern used across multiple applications.</p>
+    <div class="meta"><span>Research</span><span>Strategy</span><span>Product Design</span><span>Testing</span><span>Shipped ✓</span></div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>01 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 2 — tl;dr (Context) ========== -->
+  <section class="slide">
+    <div class="eyebrow">tl;dr · Context</div>
+    <h2 class="slide-title">tl;dr</h2>
+    <div class="copy">
+      <h4>Context</h4>
+      <ul>
+        <li>A redesign of a central trading surface as part of a platform modernization</li>
+        <li>An app that houses all trading activity and allows investment professionals to monitor and execute orders at the market</li>
+        <li>Used by traders across &gt;3,300 institutional advisory firms with ~$1.6T in AUM and 8.7M accounts</li>
+        <li>Trade errors on this surface carry enormous financial and regulatory consequences</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>02 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 3 — tl;dr (Approach & Outcome) ========== -->
+  <section class="slide">
+    <div class="eyebrow">tl;dr · Approach &amp; Outcome</div>
+    <h2 class="slide-title">tl;dr</h2>
+    <div class="copy">
+      <h4>Approach</h4>
+      <ul>
+        <li>Early research revealed our initial instinct — a feature-rich dashboard — was the wrong direction</li>
+        <li>Traders needed speed and inline context for critical actions, not more controls</li>
+        <li>I pivoted to an essentials-first redesign built within real technical and accessibility constraints</li>
+      </ul>
+      <h4>Outcome</h4>
+      <ul>
+        <li>A full redesign — shipped with 100% positive pilot feedback</li>
+        <li>A new filter component — adopted by 2 additional products immediately after launch</li>
+        <li>Design System adopting this filtering mechanism as platform-wide standard (impacting 15+ apps)</li>
+        <li>A shared AG-Grid stylesheet — enabling 20+ product teams and 30+ devs to consume a more robust data grid without custom code</li>
+      </ul>
+      <div class="callout">My Role: Lead UX Designer · ~9–12 months · Team: Design · Product · Engineering · Business · UXR · Shipped ✓</div>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>03 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 4 — Where Order Management sits ========== -->
+  <section class="slide">
+    <div class="eyebrow">Where Order Management sits</div>
+    <h2 class="slide-title">At the center of every trade</h2>
+    <div class="copy">
+      <p class="lede">A misstep on this screen ripples across every team and system that touches a trade.</p>
+    </div>
+    <div class="figures">
+      <figure class="fig"><img src="assets/order-management/map-x2.png" alt="Order Management ecosystem map showing order entry sources, compliance layer, and downstream actions"><figcaption>map-x2.png — Order Management ecosystem map</figcaption></figure>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>map-x2.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>04 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 5 — The Legacy Experience ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Legacy Experience</div>
+    <h2 class="slide-title">The system users lived in</h2>
+    <div class="copy">
+      <p>Here's what users were working with every day: three compounding pain points that made a high-stakes workflow harder than it needed to be.</p>
+      <h3>The Spatial Problem</h3>
+      <p>Filters and order details both expanded vertically, collapsing the orders table from opposite ends. Users couldn't filter, review details, and see their list at the same time — forcing constant trade-offs in a workflow where all three mattered.</p>
+    </div>
+    <div class="figures">
+      <figure class="fig video"><img src="assets/order-management/legacy-still.png" alt="Legacy Order Management interface"><figcaption>legacy-spatial-1.mov — still (legacy-still.png)</figcaption></figure>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-spatial-1.mov</code> (still).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>05 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 6 — Legacy: Hidden Actions & Blind Send ========== -->
+  <section class="slide">
+    <div class="eyebrow">The Legacy Experience</div>
+    <h2 class="slide-title">Hidden Actions &amp; the Blind Send Flow</h2>
+    <div class="copy">
+      <h3>Hidden Actions</h3>
+      <p>There was no visible way to select orders — bulk actions were buried behind shift-clicks and right-click menus. In a workflow built around acting on multiple orders at once, there was no visual affordance for this critical action.</p>
+      <h3>The Blind Send Flow</h3>
+      <p>The send flow offered no visibility into what was being sent or why errors existed — just vague options and a confirmation screen with nothing actionable. Sending orders is the highest-stakes moment in the workflow, and users were doing it blind.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/order-management/legacy-still.png" alt="Legacy Order Management interface"><figcaption>legacy-hidden-actions.mov — still (legacy-still.png)</figcaption></figure>
+        <figure class="fig video"><img src="assets/order-management/legacy-send-still.png" alt="Legacy send dropdown with vague blanket-send options"><figcaption>legacy-blind-send.mov — still (legacy-send-still.png)</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-hidden-actions.mov</code> (still), <code>legacy-blind-send.mov</code> (still).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>06 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 7 — Research: What users actually needed ========== -->
+  <section class="slide">
+    <div class="eyebrow">Hypothesis &amp; Research</div>
+    <h2 class="slide-title">What users actually needed</h2>
+    <div class="copy">
+      <p>Early signals suggested users needed a broader view — a centralized dashboard to monitor and act across orders. I tested that direction before committing to it, and what I found reframed the entire problem.</p>
+      <h3>01 — The list was the work.</h3>
+      <p>Users spent most of their time scanning and working through orders, not navigating a broad control center.</p>
+      <h3>02 — Details needed to be closer.</h3>
+      <p>Users wanted order-level context and alerts on the same surface, without opening a separate page.</p>
+      <h3>03 — Reliability beat flash.</h3>
+      <p>In time-sensitive work, predictability and speed mattered more than a sleek, feature-rich experience.</p>
+      <h3>04 — Confidence before sending.</h3>
+      <p>Before acting on a filtered set of orders, traders needed to be certain they were looking at exactly the right subset. Ambiguity at the send step isn't a UX inconvenience — it's a compliance and financial risk.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>07 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 8 — Testing the dashboard hypothesis ========== -->
+  <section class="slide">
+    <div class="eyebrow">Hypothesis &amp; Research</div>
+    <h2 class="slide-title">How I got there: Testing the dashboard hypothesis</h2>
+    <div class="copy">
+      <p>Exploratory interviews surfaced fragmentation as the core pain — orders, details, and actions spread across too many surfaces. That pointed toward a centralized dashboard as the natural fix, so I tested that direction with ~20 traders across clearing and custody using rough concept feedback as a gut check, not a polished study.</p>
+    </div>
+    <div class="figures">
+      <figure class="fig"><img src="assets/order-management/concept-1.png" alt="Lo-fi dashboard concept A shown to users"><figcaption>concept-1.png — lo-fi dashboard concept A</figcaption></figure>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>concept-1.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>08 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 9 — Eye path comparison ========== -->
+  <section class="slide">
+    <div class="eyebrow">Hypothesis &amp; Research</div>
+    <h2 class="slide-title">Dashboard vs. enhanced table — eye path comparison</h2>
+    <div class="copy">
+      <h4>Dashboard layout — chaotic eye path</h4>
+      <p>Numbered flow crosses the screen: 1 Check alerts → 2 Scan list → 3 Read details → 4 Act.</p>
+      <h4>Enhanced table — clean left-to-right scan</h4>
+      <p>Numbered flow reads cleanly left to right: 1 Filter icon in grid header → 2 Scan filtered list, spot highlighted row → 3 Check details in side panel.</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn SVG diagrams</div><div class="t">Eye-path comparison (two mockups)</div><div class="d">Two inline SVG wireframes rendered on the live site: a "dashboard layout" with a chaotic 4-step numbered eye path, and an "enhanced table" with a clean 3-step left-to-right scan. No image file — drawn in code.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b>Eye-path comparison SVGs (code-drawn, no image file).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>09 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 10 — The reframe & Honda Accord ========== -->
+  <section class="slide">
+    <div class="eyebrow">Hypothesis &amp; Research</div>
+    <h2 class="slide-title">The reframe</h2>
+    <div class="copy">
+      <p>The research told a different story. The dashboard was doing too much — they wanted the list, made faster. Their core need wasn't to see everything at once, but to move quickly between the order list and the few details needed to act without losing their place.</p>
+      <blockquote>"It works like a Honda Accord. Not flashy, but reliable."<cite>— Senior Adviser, Custody firm</cite></blockquote>
+      <p>That framing clarified something important: reliability wasn't just a preference. In a time-sensitive trading workflow, slow, broken, or inaccessible tools carry real cost.</p>
+    </div>
+    <div class="figures">
+      <div class="stub"><div class="k">Code-drawn SVG</div><div class="t">Honda Accord line illustration</div><div class="d">A single-line SVG illustration of a Honda Accord rendered in clay stroke, accompanying the pull quote. No image file — drawn in code.</div></div>
+    </div>
+    <div class="visuals"><b>Visuals</b>Honda Accord line illustration (code-drawn SVG, no image file).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>10 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 11 — Design Principles ========== -->
+  <section class="slide">
+    <div class="eyebrow">Design Principles</div>
+    <h2 class="slide-title">Rules for every decision</h2>
+    <div class="copy">
+      <p>Research and concept feedback shaped a set of guiding principles for the redesign.</p>
+      <h3>01 — Protect the table</h3>
+      <p>The order list never shrinks or hides.</p>
+      <h3>02 — Go horizontal</h3>
+      <p>Free up vertical space; move supporting UI into a horizontal layer.</p>
+      <h3>03 — Surface relevant actions</h3>
+      <p>The next step should be obvious from the state of the row.</p>
+      <h3>04 — Confirm, don't assume.</h3>
+      <p>The send step must make the active filter state and order subset unambiguous — so traders act with certainty, not hope.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>11 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 12 — Roadmap split ========== -->
+  <section class="slide">
+    <div class="eyebrow">Design Principles</div>
+    <h2 class="slide-title">Shipped in v1 vs. deferred to roadmap</h2>
+    <div class="copy">
+      <h4>Shipped in v1</h4>
+      <ul>
+        <li>Horizontal layout</li>
+        <li>Configurable views</li>
+        <li>Clear selection and bulk actions</li>
+        <li>Redesigned send flow</li>
+        <li>Order details panel</li>
+        <li>Active filter chips</li>
+      </ul>
+      <h4>Deferred to roadmap</h4>
+      <ul>
+        <li>Proactive alerting</li>
+        <li>Supporting utilities (live quotes, positions, balances)</li>
+        <li>Deeper cross-linking between workflow steps</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>12 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 13 — New Design: main surface ========== -->
+  <section class="slide">
+    <div class="eyebrow">New Design</div>
+    <h2 class="slide-title">A surface built to protect the list</h2>
+    <div class="copy">
+      <h3>Filters</h3>
+      <p>Wanted a pill-based filter pattern, but the design system couldn't support new components. I composed a horizontal, collapsible filter panel from existing atoms instead. Active filter pills above the table show at a glance what's included or excluded — the goal was for filtering to feel nearly automatic: set once per session, then out of the way.</p>
+      <h3>Table</h3>
+      <p>Rebalanced the table for a clean left‑to‑right scan: key signals first, status and alerts aligned by column, and hover/tap affordances that keep actions close to where work happens.</p>
+      <h3>Order Details</h3>
+      <p>Brought essential order details into a side panel so traders can inspect, fix, and confirm without losing their place in the list.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow three">
+        <figure class="fig video"><img src="assets/order-management/shipped-still.png" alt="Shipped Order Management surface"><figcaption>filters.mov — still (shipped-still.png)</figcaption></figure>
+        <figure class="fig video"><img src="assets/order-management/shipped-still.png" alt="Shipped Order Management surface"><figcaption>table.mov — still (shipped-still.png)</figcaption></figure>
+        <figure class="fig video"><img src="assets/order-management/shipped-still.png" alt="Shipped Order Management surface"><figcaption>order-details.mov — still (shipped-still.png)</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>filters.mov</code> (still), <code>table.mov</code> (still), <code>order-details.mov</code> (still).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>13 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 14 — New Design: send flow ========== -->
+  <section class="slide">
+    <div class="eyebrow">New Design</div>
+    <h2 class="slide-title">Surfacing the right next step.</h2>
+    <div class="copy">
+      <h3>Smart Selection</h3>
+      <p>Checkboxes plus a "Select…" dropdown with counts (on page, matching filters, all buys, all sells, etc.) turn bulk actions into clear, informed choices before sending.</p>
+      <h3>Verification Modal</h3>
+      <p>A verification step that reads back the action in plain language, highlights risk, and gives a clear escape hatch before anything goes out the door.</p>
+      <h3>Cross-Linking &amp; Feedback</h3>
+      <p>Subtle links and toasts connect this surface to related tools and states, so traders always know what happened and where to go next.</p>
+      <div class="callout">Open the clickable prototype ↗ &nbsp;(/order-management-prototype.html)</div>
+    </div>
+    <div class="figures">
+      <div class="figrow three">
+        <figure class="fig video"><img src="assets/order-management/shipped-still.png" alt="Shipped Order Management surface"><figcaption>smart-selection.mov — still (shipped-still.png)</figcaption></figure>
+        <figure class="fig video"><img src="assets/order-management/shipped-send-still.png" alt="Shipped Order Verification modal"><figcaption>verification-modal.mov — still (shipped-send-still.png)</figcaption></figure>
+        <figure class="fig video"><img src="assets/order-management/shipped-still.png" alt="Shipped Order Management surface"><figcaption>cross-linking-feedback.mov — still (shipped-still.png)</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>smart-selection.mov</code> (still), <code>verification-modal.mov</code> (still), <code>cross-linking-feedback.mov</code> (still).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>14 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 15 — Constraints ========== -->
+  <section class="slide">
+    <div class="eyebrow">Constraints</div>
+    <h2 class="slide-title">Working within reality</h2>
+    <div class="copy">
+      <p>Every design decision had to clear four hard constraints simultaneously — and those constraints defined what shipped. Each one had to reconcile AG Grid's capabilities, our design system, backend limits, and strict accessibility standards. The gap between ideal and shippable defined both the MVP and the backlog.</p>
+      <ul>
+        <li><strong>AG Grid filters vs. accessibility</strong> — Native in‑column filters failed accessibility and clashed with our system components, so I composed a persistent horizontal filter panel from existing atoms instead.</li>
+        <li><strong>Live quotes and logos</strong> — Security logos and live quotes were technically feasible, but loading live or even recent data across multiple rows created a noticeable performance cost. I kept the design ready and deferred the feature.</li>
+        <li><strong>Account‑level data for every trade</strong> — Showing full account context for each row would have overloaded the backend. I chose progressive disclosure instead and moved full account views to a later phase.</li>
+        <li><strong>Saved views</strong> — Saved views required backend persistence we didn't have in scope. I still designed for that future state and tracked it alongside in‑column filtering and other AG Grid enhancements for post‑MVP.</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>15 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 16 — Outcome ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcome</div>
+    <h2 class="slide-title">What shipped &amp; what it changed</h2>
+    <div class="copy">
+      <p class="lede">Post-launch analytics weren't surfaced to design in this institutional environment — outcomes reflect pilot observation and cross-team adoption signals.</p>
+      <h4>For users</h4>
+      <ul>
+        <li>Filter without losing the list.</li>
+        <li>See issues at a glance with row‑level indicators.</li>
+        <li>Select with clear, visible affordances for bulk actions.</li>
+        <li>Review with full error transparency before sending.</li>
+        <li>Track confirmation and execution states in one place.</li>
+        <li>Configure views to match daily workflow.</li>
+      </ul>
+      <h4>For the product &amp; org</h4>
+      <ul>
+        <li>The horizontal filter pattern was adopted by 2 product areas post-launch, with several more evaluating it and the design system team pursuing platform-wide adoption across ~15 filtering apps.</li>
+        <li>Pilot user office hours returned 100% positive feedback — the strongest signal available in an environment without post-launch analytics surfaced to design.</li>
+        <li>The work established a research-driven playbook and a clear roadmap for the next phase as backend and data constraints catch up.</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>16 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 17 — Outcome: Legacy vs Shipped ========== -->
+  <section class="slide">
+    <div class="eyebrow">Outcome</div>
+    <h2 class="slide-title">Legacy vs. Shipped</h2>
+    <div class="copy">
+      <h4>Order management surface</h4>
+      <h4>Send flow</h4>
+      <p>Legacy and shipped stills placed side by side for both the main surface and the send flow. On the live site these open in a full-screen compare tour (Order management surface, Send flow).</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig"><img src="assets/order-management/legacy-still.png" alt="Legacy Order Management interface"><figcaption>legacy-still.png — Order management surface (Legacy)</figcaption></figure>
+        <figure class="fig"><img src="assets/order-management/shipped-still.png" alt="Shipped Order Management interface"><figcaption>shipped-still.png — Order management surface (Shipped)</figcaption></figure>
+      </div>
+      <div class="figrow">
+        <figure class="fig"><img src="assets/order-management/legacy-send-still.png" alt="Legacy send dropdown"><figcaption>legacy-send-still.png — Send flow (Legacy)</figcaption></figure>
+        <figure class="fig"><img src="assets/order-management/shipped-send-still.png" alt="Shipped Order Verification modal"><figcaption>shipped-send-still.png — Send flow (Shipped)</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-still.png</code>, <code>shipped-still.png</code>, <code>legacy-send-still.png</code>, <code>shipped-send-still.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>17 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 18 — Pilot Feedback ========== -->
+  <section class="slide">
+    <div class="eyebrow">Pilot Feedback</div>
+    <h2 class="slide-title">What we learned after launch</h2>
+    <div class="copy">
+      <p>I piloted the new surface with users who had access to both the legacy and redesigned experiences. That gave us a clear read on where the changes landed and where the remaining friction still lived.</p>
+      <h3>Tab clarity</h3>
+      <p>Sent and Draft states weren't distinct enough; some users missed the state change. This pushed us to strengthen the tab treatment and rely less on subtle cues.</p>
+      <h3>Details interaction</h3>
+      <p>The drawer pattern interrupted grid scrolling. That feedback opened the door to a split-panel pattern that kept the list and details active at the same time.</p>
+      <h3>Error scanning</h3>
+      <p>Scanning for issues across large order sets still required too much visual effort. I used that signal to explore stronger row-level indicators and smarter defaults for error views.</p>
+    </div>
+    <div class="figures">
+      <div class="figrow">
+        <figure class="fig video"><img src="assets/order-management/legacy-still.png" alt="Piloted surface"><figcaption>pre.mov — still (legacy-still.png) · Piloted</figcaption></figure>
+        <figure class="fig video"><img src="assets/order-management/shipped-still.png" alt="Post-pilot surface"><figcaption>post.mov — still (shipped-still.png) · Post-Pilot</figcaption></figure>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>pre.mov</code> (still, Piloted), <code>post.mov</code> (still, Post-Pilot).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>18 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 19 — What's Next ========== -->
+  <section class="slide">
+    <div class="eyebrow">What's Next</div>
+    <h2 class="slide-title">Where this surface can grow</h2>
+    <div class="copy">
+      <p>Some high-value ideas were intentionally deferred — not because they lacked value, but because they depended on data, backend support, or more time in the wild. Saved views would let the surface open in a familiar, ready-to-work state, remembering the filters, columns, and sort preferences that matter most to each user. As accessibility and system support improve, filtering can evolve from the persistent panel toward lighter inline patterns. Deeper account context — positions, balances, relevant signals — can pull into the flow only when needed, and context-aware assistance can surface next-best actions without making the screen busier.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>19 / 20</span></div>
+  </section>
+
+  <!-- ========== SLIDE 20 — Reflection ========== -->
+  <section class="slide">
+    <div class="eyebrow">Reflection</div>
+    <h2 class="slide-title">Why the simpler answer was the right one</h2>
+    <div class="copy">
+      <p>There's a version of this case study where the punchline is a brand-new dashboard. Instead, what shipped was a better version of what users already trusted: modernized filtering, a layout that respects how people actually scan a list, order details you can reach without losing your place, and a send flow that builds confidence instead of anxiety. Exploring the heavier, feature-rich direction first gave us the evidence to walk back to the simple one with conviction. For me, that's the core of the work: use research to cut through "more" as the default answer, protect the parts of the system people already rely on, and ship only the changes that make their day feel calmer, clearer, and more automatic.</p>
+    </div>
+    <div class="visuals"><b>Visuals</b>None — text slide.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>20 / 20</span></div>
+  </section>
+
+</div>
+</body>
+</html>

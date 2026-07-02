@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Addition Through Subtraction — Kristin Garza</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Permanent+Marker&display=swap");
+
+:root{
+  --bg:#FFFEF5; --surface:#FFFFFF; --surface-2:#FBF6DD;
+  --hairline:#E7DFC4; --hairline-strong:#CDBF96;
+  --ink:#1F1A0F; --ink-2:#372B0B; --ink-3:#554B2E; --ink-mute:#8A7C5E; --ink-inverse:#FFFEF5;
+  --clay:#3F6CE0; --clay-deep:#2E54B8; --clay-ink:#2A4AA0; --clay-tint:#E5EBFB; --clay-edge:#AFC2F2;
+  --ochre:#DDCC33; --ochre-ink:#877D1C; --ochre-tint:#F8F4D3;
+  --slate:#6E84B0; --slate-deep:#3F5378; --slate-tint:#DCE3F0;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --f-script:"Permanent Marker",cursive;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--f-sans);color:var(--ink-2);background:#E7E0CC;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+.deck{display:flex;flex-direction:column;align-items:center;gap:26px;padding:32px 0;}
+.slide{position:relative;width:13.333in;height:7.5in;background:var(--bg);padding:0.72in 0.9in 1in;display:flex;flex-direction:column;overflow:hidden;}
+.slide,.slide *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@media screen{ .slide{box-shadow:0 14px 44px rgba(31,26,15,0.20);border-radius:6px;} }
+@page{ size:13.333in 7.5in; margin:0; }
+@media print{ body{background:#fff;} .deck{gap:0;padding:0;} .slide{box-shadow:none;border-radius:0;break-after:page;} .slide:last-child{break-after:auto;} }
+
+.eyebrow{font-family:var(--f-mono);font-weight:500;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:14px;}
+.eyebrow::after{content:"";width:64px;height:1px;background:var(--ochre);opacity:0.75;}
+
+.slide-title{font-family:var(--f-sans);font-weight:300;font-size:50px;line-height:1.06;letter-spacing:-0.015em;color:var(--ink-2);margin:20px 0 0;max-width:24ch;}
+.slide-body{flex:1;display:flex;flex-direction:column;justify-content:flex-start;min-height:0;}
+
+.bullets{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-direction:column;gap:15px;max-width:66ch;}
+.bullets li{position:relative;padding-left:28px;font-size:21px;line-height:1.4;color:var(--ink-2);}
+.bullets li::before{content:"";position:absolute;left:0;top:0.5em;width:9px;height:9px;background:var(--clay);border-radius:2px;}
+.bullets li strong{color:var(--clay-ink);font-weight:600;}
+
+.visuals{margin-top:22px;border-left:3px solid var(--clay);background:var(--surface-2);border-radius:0 8px 8px 0;padding:13px 20px;font-size:15px;line-height:1.5;color:var(--ink-3);max-width:88ch;}
+.visuals b{font-family:var(--f-mono);font-weight:600;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--clay-ink);margin-right:12px;}
+.visuals code{font-family:var(--f-mono);font-size:13px;background:rgba(63,108,224,0.08);color:var(--clay-ink);padding:1px 6px;border-radius:4px;}
+
+.slide-foot{position:absolute;left:0.9in;right:0.9in;bottom:0.5in;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--hairline);padding-top:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mute);}
+.slide-foot .name{color:var(--ink-3);}
+
+.slide--title{background:var(--clay);color:var(--ink-inverse);justify-content:center;padding-top:0.9in;}
+.slide--title .eyebrow{color:rgba(255,254,245,0.85);}
+.slide--title .eyebrow::after{background:rgba(255,254,245,0.5);opacity:1;}
+.deck-h1{font-family:var(--f-sans);font-weight:300;font-size:74px;line-height:1.0;letter-spacing:-0.025em;color:var(--ink-inverse);margin:22px 0 0;}
+.deck-lede{font-family:var(--f-sans);font-weight:300;font-size:22px;line-height:1.45;color:rgba(255,254,245,0.92);margin:22px 0 0;max-width:62ch;}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
+.meta span{font-family:var(--f-mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,254,245,0.42);color:var(--ink-inverse);}
+.slide--title .slide-foot{border-top-color:rgba(255,254,245,0.28);color:rgba(255,254,245,0.72);}
+.slide--title .slide-foot .name{color:rgba(255,254,245,0.92);}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:28px;}
+.compare .col{border:1px solid var(--hairline);border-radius:10px;padding:22px 24px;background:var(--surface);}
+.compare .col.after{border-color:var(--clay-edge);background:var(--clay-tint);}
+.compare h4{font-family:var(--f-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;margin:0 0 14px;}
+.compare .before h4{color:var(--ink-mute);}
+.compare .after h4{color:var(--clay-ink);}
+.compare ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
+.compare li{position:relative;padding-left:20px;font-size:17px;line-height:1.4;color:var(--ink-2);}
+.compare li::before{content:"";position:absolute;left:0;top:0.55em;width:7px;height:7px;border-radius:50%;}
+.compare .before li::before{background:var(--ink-mute);}
+.compare .after li::before{background:var(--clay);}
+
+.stats{display:flex;gap:44px;margin-top:30px;flex-wrap:wrap;}
+.stat .n{font-family:var(--f-sans);font-weight:300;font-size:56px;line-height:1;color:var(--clay-deep);letter-spacing:-0.02em;}
+.stat .l{font-family:var(--f-mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);margin-top:10px;max-width:22ch;}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1 -->
+  <section class="slide slide--title">
+    <div class="eyebrow">Case Study · Order Management</div>
+    <h1 class="deck-h1">Addition Through Subtraction</h1>
+    <p class="deck-lede">Pivoting from a feature-heavy dashboard to a focused, essential workflow — and a component pattern that scaled across the platform.</p>
+    <div class="meta">
+      <span>Lead UX Designer</span>
+      <span>~9–12 Months · 2025 · Shipped ✓</span>
+      <span>Order Management · Trading</span>
+      <span>Research · Strategy · Product Design · Testing</span>
+    </div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>01 / 12</span></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="eyebrow">Context &amp; Problem</div>
+    <h2 class="slide-title">At the center of every trade</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>The execution layer where trades are placed and checked</li>
+        <li>A daily surface across <strong>3,300+ firms, ~$1.6T AUM, 8.7M accounts</strong></li>
+        <li>Trade errors carry huge financial and regulatory cost</li>
+        <li>Part of a broader platform modernization</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>map-x2.png</code> ecosystem map; <code>legacy-still.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>02 / 12</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="eyebrow">Role &amp; Scope</div>
+    <h2 class="slide-title">My role &amp; scope</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li><strong>Lead UX Designer</strong> — owned research through ship</li>
+        <li>Drove the pivot from dashboard to essentials-first</li>
+        <li>Partnered with Product, Engineering, Business, and UXR</li>
+        <li>Designed within real technical and accessibility constraints</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Legacy problem videos; <code>map-x2.png</code> ecosystem map.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>03 / 12</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="eyebrow">Existing Experience</div>
+    <h2 class="slide-title">The system users lived in</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li><strong>Spatial problem:</strong> filters and details collapse the table from both ends</li>
+        <li><strong>Hidden actions:</strong> bulk select buried in shift-clicks and menus</li>
+        <li><strong>Blind send:</strong> no visibility into what's sent or why errors exist</li>
+        <li>The highest-stakes step was done with the least information</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-spatial-1.mov</code>, <code>legacy-hidden-actions.mov</code>, <code>legacy-blind-send.mov</code>; <code>legacy-still.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>04 / 12</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="eyebrow">Discovery &amp; Insights</div>
+    <h2 class="slide-title">What users actually needed</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Tested the dashboard hypothesis with <strong>~20 traders</strong></li>
+        <li>The list is the work — not a broad control center</li>
+        <li>Details need to be closer; reliability beat flash</li>
+        <li>Confidence before sending is a compliance need, not a nicety</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Dashboard vs. enhanced-table eye-path comparison; "It works like a Honda Accord" quote; <code>concept-1.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>05 / 12</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="eyebrow">The Pivot</div>
+    <h2 class="slide-title">Walk back to simple</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Feature-rich dashboard created a chaotic eye path (1→2→3→4)</li>
+        <li>Enhanced table gave a clean left-to-right scan (1→2→3)</li>
+        <li>I walked back to essentials-first — with evidence to defend it</li>
+        <li>Principles: <strong>protect the table, go horizontal, surface actions, confirm</strong></li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Eye-path diagram (dashboard vs. table); the four design principles.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>06 / 12</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="eyebrow">Working Within Reality</div>
+    <h2 class="slide-title">Designing within constraints</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Every decision cleared AG Grid, the design system, backend, and a11y</li>
+        <li>Native column filters failed a11y → composed a horizontal panel from atoms</li>
+        <li>Live quotes and logos deferred for performance</li>
+        <li>The gap between ideal and shippable defined the MVP and backlog</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Four-constraints panel; deferred <code>postmvp-*.png</code> concepts (saved views, inline filtering, live quotes).</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>07 / 12</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="eyebrow">Final Solution</div>
+    <h2 class="slide-title">A surface built to protect the list</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Horizontal collapsible filters with active pills above the table</li>
+        <li>Rebalanced table: key signals first, alerts aligned by column</li>
+        <li>Order details in a side panel — fix without losing your place</li>
+        <li>Smart selection plus a plain-language verification step before send</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>filters.mov</code>, <code>table.mov</code>, <code>order-details.mov</code>, <code>smart-selection.mov</code>, <code>verification-modal.mov</code>; <code>order-management-prototype.html</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>08 / 12</span></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="eyebrow">Legacy vs. Shipped</div>
+    <h2 class="slide-title">Before &amp; after</h2>
+    <div class="slide-body">
+      <div class="compare">
+        <div class="col before">
+          <h4>Legacy</h4>
+          <ul>
+            <li>Surface: cluttered, dense, hard to scan</li>
+            <li>Send: vague blanket options, no verification</li>
+            <li>Ambiguity at the riskiest moments</li>
+          </ul>
+        </div>
+        <div class="col after">
+          <h4>Shipped</h4>
+          <ul>
+            <li>Surface: clear hierarchy, scannable</li>
+            <li>Send: grouped totals + per-order detail</li>
+            <li>Traders act with certainty, not hope</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>legacy-still.png</code> vs <code>shipped-still.png</code>; <code>legacy-send-still.png</code> vs <code>shipped-send-still.png</code>.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>09 / 12</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="eyebrow">Validation · Pilot</div>
+    <h2 class="slide-title">What we learned after launch</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Piloted with users who had both legacy and redesign</li>
+        <li>Tab clarity: sent and draft states weren't distinct enough</li>
+        <li>Details drawer interrupted scrolling → opened a split-panel path</li>
+        <li>Error scanning still effortful → stronger row-level indicators</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b><code>pre.mov</code> vs <code>post.mov</code>; three pilot-feedback themes.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>10 / 12</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="eyebrow">Outcomes &amp; Impact</div>
+    <h2 class="slide-title">What shipped &amp; what it changed</h2>
+    <div class="slide-body">
+      <div class="stats">
+        <div class="stat"><div class="n">100%</div><div class="l">Positive pilot feedback</div></div>
+        <div class="stat"><div class="n">2 → 15+</div><div class="l">Products adopting the filter pattern</div></div>
+        <div class="stat"><div class="n">20+ / 30+</div><div class="l">Teams &amp; devs on the shared grid stylesheet</div></div>
+      </div>
+      <ul class="bullets">
+        <li>Established a research-driven playbook and a clear roadmap</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Adoption diagram; paired before/after viewer.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>11 / 12</span></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="eyebrow">Reflection</div>
+    <h2 class="slide-title">Why the simpler answer won</h2>
+    <div class="slide-body">
+      <ul class="bullets">
+        <li>Used research to cut through "more" as the default answer</li>
+        <li>Protected the parts of the system people already trusted</li>
+        <li>Shipped only the changes that make the day calmer and clearer</li>
+        <li>Walking the heavy path first gave conviction to ship simple</li>
+      </ul>
+    </div>
+    <div class="visuals"><b>Visuals</b>Legacy vs. shipped closing pair; what's-next roadmap.</div>
+    <div class="slide-foot"><span class="name">Kristin Garza</span><span>12 / 12</span></div>
+  </section>
+
+</div>
+</body>
+</html>

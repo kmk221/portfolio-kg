@@ -1,503 +1,198 @@
 import { useEffect, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 
+// Hover-story text, keyed by the illustration's front SVG filename.
+const stories = {
+  'Frame.svg': 'Surprised a friend with canvas beach bags for everyone at her bachelorette party on the cape',
+  'Frame 1.svg': 'A 60th birthday card for my mother in law',
+  'Frame 46new.svg': "Originally an engagement greeting card I'd made for a friend. I'd taken a photo of them and converted their outfits to bride and groom attire. They loved it so much they asked me to use it for their Save the Dates.",
+  'Frame 7.svg': 'A Christmas card I made for my husband the year we got married. A festive remake of one of our wedding photos on a chairlift in Crested Butte, CO - our venue and one of our favorite places.',
+  'Frame 5.svg': "A logo for a friend's pilates company",
+  'Group 397.svg': "Canvas bags for a family member's annual running group trip to a special home on Sea Island",
+  'Frame 3.svg': "A keepsake for a friend's baby shower",
+  'Frame 281.svg': 'A collaboration with a favorite textile artist that I met on a trip to Portugal',
+  'Group 60.svg': "Cocktail napkins for my brother's wedding",
+  'Frame 285.svg': "Embroidered cocktail napkins for friend's wedding gift",
+  'Group 62.svg': 'College reunion weekend itinerary',
+  'front2.svg': 'Wedding invite for friends with custom drawings of buildings from their favorite street and wedding venue in Denver',
+}
+
+// Masonry items. `flip` cards auto-rotate front↔back; `propped` gives the
+// Save-the-Date the whole-block "card leaning against a wall" treatment.
+// Order is interleaved so the 3 columns balance nicely.
+// Explicit 3-column layout (deterministic placement, top-to-bottom per column).
+// Non-flip PNGs sit inside a coloured frame (the tile bg shows as a mat via `pad`).
+// Flip PNGs (front `a` / back `b`) use the propped "leaning card on a coloured
+// wall" treatment — drop shadow + rounded corners, same as the old cards.
+const FRAME_PAD = '8%'
+const COLUMNS = [
+  // ── Column 1 ──
+  [
+    { front: '1a.png', back: '1b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 15% 15%', bg: '#F85636', alt: 'Save the Date — Victoria & Mike' },
+    { front: '4.png', bg: '#4A7A4A', pad: FRAME_PAD, alt: 'Dip-kiss dancers line drawing' },
+    { front: '7.png', bg: '#DDCC33', aspect: '1', pad: '23% 15%', alt: 'Giraffe baby-shower advice card' },
+    { front: '11.png', bg: '#F3A3CA', pad: FRAME_PAD, alt: 'Happy Birthday — life of every party' },
+    { front: '14.png', bg: '#4373ED', pad: FRAME_PAD, alt: 'MG Pilates logo' },
+  ],
+  // ── Column 2 ──
+  [
+    { front: '2.png', bg: '#DDCC33', aspect: '1.019', pad: '21.7% 22%', alt: 'Couple portrait with hearts' },
+    { front: '5a.png', back: '5b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 24% 15%', bg: '#F3A3CA', alt: 'S&P — Hey Kiddo Denver invite' },
+    { front: '8a.png', back: '8b.png', flip: true, propped: true, aspect: '1.4', bg: '#4373ED', alt: 'Cowboy & cowgirl' },
+    { front: '10.png', bg: '#F39238', aspect: '0.79', pad: '24.6% 15%', alt: 'Bride & groom on a Christmas chairlift' },
+    { front: '13.png', alt: 'Keeping Austin Weird weekend itinerary' },
+  ],
+  // ── Column 3 ──
+  [
+    { front: '3a.png', back: '3b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 15% 15%', bg: '#4373ED', alt: 'Sailboat — Cotuit 2024' },
+    { front: '6.png', bg: '#F39238', aspect: '0.79', pad: '28.3% 15%', alt: 'Doodle dog — I do too, xoxo Stevie' },
+    { front: '9.png', bg: '#F35D38', aspect: '0.79', pad: '39.6% 15%', alt: 'Sea Island house — running on Sea Island time' },
+    { front: '12.png', bg: '#4A7A4A', pad: FRAME_PAD, alt: 'Wedding couple' },
+  ],
+]
+
+const src = (f) => `/illustrations/${f}?v=3`
+
 export default function Illustrations() {
-  const [mainArtworks, setMainArtworks] = useState([])
-  const [decorativeArtworks, setDecorativeArtworks] = useState([])
-  const [flippedCards, setFlippedCards] = useState({ 'front2.svg': false, 'Frame 46new.svg': false, 'Frame 281.svg': false, 'Frame.svg': false })
+  const [flippedCards, setFlippedCards] = useState({
+    '1a.png': false, '3a.png': false, '5a.png': false, '8a.png': false,
+  })
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  useEffect(() => { window.scrollTo(0, 0) }, [])
 
+  // Auto-flip the invite/save-the-date cards every 3 seconds.
   useEffect(() => {
-    // Auto-flip invites every 3 seconds
-    const flipInterval = setInterval(() => {
+    const t = setInterval(() => {
       setFlippedCards(prev => ({
-        'front2.svg': !prev['front2.svg'],
-        'Frame 46new.svg': !prev['Frame 46new.svg'],
-        'Frame 281.svg': !prev['Frame 281.svg'],
-        'Frame.svg': !prev['Frame.svg']
+        '1a.png': !prev['1a.png'],
+        '3a.png': !prev['3a.png'],
+        '5a.png': !prev['5a.png'],
+        '8a.png': !prev['8a.png'],
       }))
     }, 3000)
-
-    return () => clearInterval(flipInterval)
+    return () => clearInterval(t)
   }, [])
 
-  const stories = {
-    'Frame.svg': 'Surprised a friend with canvas beach bags for everyone at her bachelorette party on the cape',
-    'Frame 1.svg': 'A 60th birthday card for my mother in law',
-    'Frame 46new.svg': 'Originally an engagement greeting card I\'d made for a friend. I\'d taken a photo of them and converted their outfits to bride and groom attire. They loved it so much they asked me to use it for their Save the Dates.',
-    'Frame 7.svg': 'A Christmas card I made for my husband the year we got married. A festive remake of one of our wedding photos on a chairlift in Crested Butte, CO - our venue and one of our favorite places.',
-    'Frame 5.svg': 'A logo for a friend\'s pilates company',
-    'Group 397.svg': 'Canvas bags for a family member\'s annual running group trip to a special home on Sea Island',
-    'Frame 3.svg': 'A keepsake for a friend\'s baby shower',
-    'Frame 281.svg': 'A collaboration with a favorite textile artist that I met on a trip to Portugal',
-    'Group 60.svg': 'Cocktail napkins for my brother\'s wedding',
-    'Frame 285.svg': 'Embroidered cocktail napkins for friend\'s wedding gift',
-    'Group 62.svg': 'College reunion weekend itinerary',
-    'front2.svg': 'Wedding invite for friends with custom drawings of buildings from their favorite street and wedding venue in Denver',
+  // Gentle, controlled slow-scroll to the About section at the bottom.
+  // Uses behavior:'instant' per frame so the global CSS scroll-behavior:smooth
+  // doesn't fight the animation.
+  const scrollToAbout = () => {
+    const el = document.getElementById('about-work')
+    if (!el) return
+    const startY = window.scrollY
+    const targetY = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 24)
+    const dist = targetY - startY
+    const duration = Math.min(2400, Math.max(1000, Math.abs(dist) * 0.5))
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+    let startT = null
+    const step = (ts) => {
+      if (startT === null) startT = ts
+      const p = Math.min((ts - startT) / duration, 1)
+      window.scrollTo({ top: startY + dist * ease(p), left: 0, behavior: 'instant' })
+      if (p < 1) requestAnimationFrame(step)
+    }
+    requestAnimationFrame(step)
   }
 
-  const featuredItems = ['Frame.svg', 'Frame 46new.svg', 'Frame 281.svg']
+  const renderTile = (item) => {
+    if (item.placeholder) {
+      return (
+        <div key={item.label} className="illo-tile illo-tile--placeholder" style={{ background: item.bg, aspectRatio: item.aspect || '1' }}>
+          <span className="illo-ph-label">{item.label}<br />{item.bg}</span>
+        </div>
+      )
+    }
+    const { front, back, flip, bg, pad, propPad, story, propped, alt, aspect } = item
+    const flipped = flip ? flippedCards[front] : false
+    const storyText = story ? stories[story] : null
+    const flipStyle = { transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }
+    const padStyle = pad ? { padding: pad } : undefined
+    // Per-card override for the leaning-card mat (shrinks the propped image).
+    const propPadStyle = propPad ? { padding: propPad } : undefined
 
-  useEffect(() => {
-    // Decorative/smaller illustrations
-    const decorative = [
-      'MARG.svg',
-      'Group 36.svg',
-      'Group 39.svg',
-      'Group 46.svg',
-      'Group 68.svg',
-      'Group 69.svg',
-    ]
-
-    // Main artworks
-    const main = [
-      'Frame 281.svg',
-      'Frame 46new.svg',
-      'Frame 1.svg',
-      'Frame 17.svg',
-      'Frame 284.svg',
-      'Frame 3.svg',
-      'Frame 5.svg',
-      'Frame 7.svg',
-      'Frame.svg',
-      'front2.svg',
-      'Group 397.svg',
-      'Group 60.svg',
-      'Group 62.svg',
-      'Frame 285.svg',
-    ]
-
-    setMainArtworks(main)
-    setDecorativeArtworks(decorative)
-  }, [])
-
-  const projects = [
-    {
-      category: 'Wedding Invitations',
-      title: 'Custom wedding invitation designs',
-      description: 'A series of hand-drawn invitation designs featuring custom line illustrations and architectural elements. Clean typography paired with playful scene illustrations created for friends and family.',
-      tags: ['Line Art', 'Print Design', 'Custom'],
-      accent: 'clay'
-    },
-    {
-      category: 'Event Poster',
-      title: 'S&P Event identity and poster',
-      description: 'Bold typography and illustrated cityscape for a high-energy market event. Features custom line art of buildings and urban scenery  -  exploring type-and-image hierarchy.',
-      tags: ['Poster Design', 'Typography', 'Illustration'],
-      accent: 'slate'
-    },
-    {
-      category: 'Character Work',
-      title: 'People and character illustrations',
-      description: 'A collection of character illustrations for various projects  -  from wedding guest portraits to lifestyle illustrations. Each piece explores different styles and expressive approaches.',
-      tags: ['Character Design', 'People', 'Custom Art'],
-      accent: 'ochre'
-    },
-    {
-      category: 'Scene & Story',
-      title: 'Moments, scenes, environments',
-      description: 'Illustrations of moments and scenes  -  families, sailboats, travel memories. Each piece tells a specific story or captures a feeling through minimal lines and careful composition.',
-      tags: ['Scene Art', 'Environmental', 'Storytelling'],
-      accent: 'slate'
-    },
-    {
-      category: 'Line Studies',
-      title: 'Graphic and line explorations',
-      description: 'Experimental line work, botanical illustrations, and graphic design studies exploring form, line weight, composition, and visual rhythm. Studies in constraint and craft.',
-      tags: ['Line Art', 'Graphic Design', 'Studies'],
-      accent: 'clay'
-    },
-    {
-      category: 'Custom Graphics',
-      title: 'Logos and branded work',
-      description: 'Hand-drawn graphics and custom artwork created for friends and family  -  logos, labels, and original illustrations for personal projects and commissions.',
-      tags: ['Graphics', 'Branding', 'Custom'],
-      accent: 'ochre'
-    },
-  ]
+    return (
+      <div key={front} className={`illo-tile${aspect ? ' illo-tile--framed' : ''}`} style={{ background: bg || 'transparent', ...(aspect ? { aspectRatio: aspect } : {}) }}>
+        {propped ? (
+          <div className="illo-flip" style={flipStyle}>
+            <div className="illo-prop-face" style={propPadStyle}>
+              <img src={src(front)} alt={`${alt} front`} className="illo-prop-img" />
+            </div>
+            <div className="illo-prop-face illo-prop-face--back" style={propPadStyle}>
+              <img src={src(back)} alt={`${alt} back`} className="illo-prop-img" />
+            </div>
+          </div>
+        ) : flip ? (
+          <div className="illo-flip" style={flipStyle}>
+            <img src={src(front)} alt={`${alt} front`} className="illo-front" style={padStyle} />
+            <img src={src(back)} alt={`${alt} back`} className="illo-back" style={padStyle} />
+          </div>
+        ) : (
+          <img src={src(front)} alt={alt} className="illo-img" style={padStyle} />
+        )}
+        {storyText && (
+          <div className="illo-story"><p>{storyText}</p></div>
+        )}
+      </div>
+    )
+  }
 
   return (
-    <div style={{ background: 'var(--surface)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--surface)', minHeight: '100vh', overflowX: 'clip' }}>
       <Nav />
       <main className="page" style={{ background: 'var(--surface)' }}>
 
-        {/* ── HERO ── */}
+        {/* ── HERO ── (shared page-hero format: eyebrow + light serif H1 + serif lede) */}
         <section className="page-section" style={{ paddingTop: 80, background: 'var(--surface)' }}>
-          <h1 style={{
-            fontFamily: 'var(--f-slab)',
-            fontSize: 'clamp(42px, 6vw, 72px)',
-            fontWeight: 400,
-            lineHeight: 1.08,
-            letterSpacing: '-0.01em',
-            color: 'var(--ink)',
-            margin: '0 0 16px',
-          }}>
-            Line Art & Characters.
+          <div style={{ marginBottom: 24 }}>
+            <span className="eyebrow">Just For Fun · Illustration</span>
+          </div>
+          <h1 style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.01em', lineHeight: 1.1, color: 'var(--ink)', margin: '0 0 22px' }}>
+            Line Art &amp; Characters.
           </h1>
-          <p style={{
-            fontFamily: 'var(--f-sans)',
-            fontSize: 18,
-            lineHeight: 1.7,
-            color: 'var(--ink-2)',
-            maxWidth: '72ch',
-            margin: '0 0 48px',
-          }}>
+          <p style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(19px, 1.9vw, 24px)', lineHeight: 1.45, letterSpacing: '-0.01em', color: 'var(--ink)', maxWidth: 560, margin: 0 }}>
             A collection of illustrations, character designs, and custom graphics created for friends and family. Personal projects that explore line work, visual storytelling, and the fundamentals of design applied beyond the screen.
           </p>
-        </section>
-
-        {/* ── ABOUT THIS WORK ── */}
-        <section className="page-section" style={{ background: 'var(--surface)', paddingTop: 80, paddingBottom: 80 }}>
-          <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '0 var(--side-p)' }}>
-            <div className="section-spread" style={{ marginBottom: 32 }}>
-              <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>About This Work</span>
-              <span className="rule" />
-            </div>
-            <p style={{
-              fontFamily: 'var(--f-sans)',
-              fontSize: 16,
-              lineHeight: 1.75,
-              color: 'var(--ink-2)',
-              maxWidth: '72ch',
-              margin: '0 0 16px',
-            }}>
-              Every piece here is hand-drawn by me, with a mouse, in Figma. No AI, no shortcuts. Just patient, click-by-click line work. These started as surprises: a birthday card here, a party favor there. Once friends and family saw a few, they started asking for more - wedding invites, custom canvas bags, embroidered keepsakes. Many of the illustrations are drawn from real photos or memories, but I like to add small twists that make them feel a little more personal.
-            </p>
-            <p style={{
-              fontFamily: 'var(--f-sans)',
-              fontSize: 16,
-              lineHeight: 1.75,
-              color: 'var(--ink-2)',
-              maxWidth: '72ch',
-              margin: 0,
-            }}>
-              There's something therapeutic about starting from nothing and slowly bringing a moment to life, click by click. I love the iteration: trying different versions, adjusting a line weight or composition until something feels inevitable. But what keeps me coming back is seeing someone's face when they recognize themselves or a memory in a drawing. That reaction is the same thing I'm chasing in my product work: using judgment to pick a direction, iterating with care, obsessing over details, and creating experiences that feel simple, human, and quietly delightful. In a world where anyone can generate an image, the value is in the taste, intention, and craft behind it, and in making something that feels deeply personal to the people it's made for.
-            </p>
+          <div style={{ marginTop: 40 }}>
+            <button type="button" className="btn btn--secondary" onClick={scrollToAbout}>
+              About this work
+              <span aria-hidden="true" style={{ display: 'inline-block', fontSize: '1.25em', lineHeight: 0, marginLeft: 2 }}>↓</span>
+            </button>
           </div>
         </section>
 
-        {/* ── IMAGE GALLERY ── */}
-        <section className="page-section" style={{ background: 'var(--surface)', paddingTop: 80, paddingBottom: 80 }}>
-          <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '0 var(--side-p)' }}>
-            <div className="section-spread" style={{ marginBottom: 60 }}>
+        {/* ── IMAGE GALLERY (full-bleed, 3-column masonry) ── */}
+        <section className="page-section" style={{ background: 'var(--surface)', paddingTop: 72, paddingBottom: 72, marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)', width: '100vw' }}>
+          <div style={{ maxWidth: 1480, margin: '0 auto', padding: '0 42px' }}>
+            <div className="section-spread" style={{ marginBottom: 48 }}>
               <span className="eyebrow">Illustrations</span>
               <span className="rule" />
             </div>
-
-            {/* ── ROW 1: Frame 46 left, Frame 1 + Frame 17 stacked right ── */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 0.65fr',
-              gridTemplateRows: '1.4fr 1fr',
-              gap: '16px',
-              marginBottom: 16,
-              aspectRatio: '1.6',
-            }}>
-              {/* Frame 46  -  flip card, spans both rows */}
-              <div style={{
-                gridRow: '1 / -1',
-                perspective: '1000px',
-                position: 'relative',
-                borderRadius: 0,
-                overflow: 'hidden',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-              }}>
-                <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '100%',
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.6s',
-                  transform: flippedCards['Frame 46new.svg'] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}>
-                  <img
-                    src={`/illustrations/Frame 46new.svg?v=${Date.now()}`}
-                    alt="Save the date front"
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', backfaceVisibility: 'hidden', display: 'block' }}
-                  />
-                  <img
-                    src={`/illustrations/Frame 47.svg?v=${Date.now()}`}
-                    alt="Save the date back"
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', display: 'block' }}
-                  />
+            <div className="illo-masonry">
+              {COLUMNS.map((col, ci) => (
+                <div className="illo-col" key={ci}>
+                  {col.map(renderTile)}
                 </div>
-                {stories['Frame 46new.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', borderRadius: 0, cursor: 'default' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 46new.svg']}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Frame 1  -  top right, taller rectangle */}
-              <div style={{ position: 'relative', borderRadius: 0, overflow: 'hidden', background: '#F3A3CA', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 1.svg?v=${Date.now()}`} alt="Birthday card" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-                {stories['Frame 1.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', borderRadius: 0 }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 1.svg']}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Frame 17  -  bottom right, more square */}
-              <div style={{ position: 'relative', borderRadius: 0, overflow: 'hidden', background: '#FAFCE1', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 17.svg?v=${Date.now()}`} alt="Couple illustration" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-              </div>
-            </div>
-
-            {/* ── ROW 2: Frame 285 (larger rect) + Frame 60 (smaller square) ── */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1.5fr 1fr',
-              gap: '16px',
-              marginBottom: 16,
-              height: '500px',
-            }}>
-              <div style={{ position: 'relative', borderRadius: 0, overflow: 'hidden', background: '#FFF1F1', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 285.svg?v=${Date.now()}`} alt="Embroidered cocktail napkins" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-                {stories['Frame 285.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', borderRadius: 0 }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 285.svg']}</p>
-                  </div>
-                )}
-              </div>
-              <div style={{ position: 'relative', borderRadius: 0, overflow: 'hidden', background: '#FAFFFE', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15%', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 60.svg?v=${Date.now()}`} alt="Cocktail napkins" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-                {stories['Group 60.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', borderRadius: 0 }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Group 60.svg']}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* ── ROW 3: Frame 281 (cowboys) full width ── */}
-            <div style={{
-              marginBottom: 16,
-              perspective: '1000px',
-              position: 'relative',
-              filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.06))',
-            }}>
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                transformStyle: 'preserve-3d',
-                transition: 'transform 0.6s',
-                transform: flippedCards['Frame 281.svg'] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-              }}>
-                <img src={`/illustrations/Frame 281.svg?v=${Date.now()}`} alt="Cowboys front" style={{ width: '100%', height: 'auto', display: 'block', backfaceVisibility: 'hidden' }} />
-                <img src={`/illustrations/Frame 286.svg?v=${Date.now()}`} alt="Cowboys back" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', display: 'block', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }} />
-              </div>
-              {stories['Frame 281.svg'] && (
-                <div
-                  style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', cursor: 'default' }}
-                  onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                  onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                >
-                  <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 281.svg']}</p>
-                </div>
-              )}
-            </div>
-
-            {/* ── ROW 4: Frame 284 (smaller left) + Group 397 (larger right) ── */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '0.7fr 1.3fr',
-              gap: '16px',
-              marginBottom: 16,
-              height: '500px',
-            }}>
-              <div style={{ position: 'relative', overflow: 'hidden', background: '#858DA3', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 284.svg?v=${Date.now()}`} alt="Wedding illustration" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-              </div>
-              <div style={{ position: 'relative', overflow: 'hidden', background: '#FFF7E5', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Group 397.svg?v=${Date.now()}`} alt="Canvas bags" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-                {stories['Group 397.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Group 397.svg']}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-            {/* ── ROW 5: front2 (smaller left) + Frame (larger right), both flip ── */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '0.65fr 1fr',
-              gap: '16px',
-              marginBottom: 16,
-              aspectRatio: '1.6',
-            }}>
-              {/* front2  -  flip card, zoomed out */}
-              <div style={{
-                perspective: '1000px',
-                position: 'relative',
-                overflow: 'hidden',
-                background: '#FFFEF5',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-              }}>
-                <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '100%',
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.6s',
-                  transform: flippedCards['front2.svg'] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}>
-                  <img
-                    src={`/illustrations/front2.svg?v=${Date.now()}`}
-                    alt="Wedding invite front"
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', backfaceVisibility: 'hidden', display: 'block' }}
-                  />
-                  <img
-                    src={`/illustrations/back 2.svg?v=${Date.now()}`}
-                    alt="Wedding invite back"
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', display: 'block' }}
-                  />
-                </div>
-                {stories['front2.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', cursor: 'default' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['front2.svg']}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Frame  -  flip card, same size as Row 1 left image */}
-              <div style={{
-                perspective: '1000px',
-                position: 'relative',
-                overflow: 'hidden',
-                background: flippedCards['Frame.svg'] ? '#4373ED' : '#FFFEF5',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-                transition: 'background 0.6s',
-              }}>
-                <div style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '100%',
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.6s',
-                  transform: flippedCards['Frame.svg'] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}>
-                  <img
-                    src={`/illustrations/Frame.svg?v=${Date.now()}`}
-                    alt="Sailboat front"
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', display: 'block', backfaceVisibility: 'hidden' }}
-                  />
-                  <img
-                    src={`/illustrations/Frame2.svg?v=${Date.now()}`}
-                    alt="Sailboat back"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', display: 'block' }}
-                  />
-                </div>
-                {stories['Frame.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px', cursor: 'default' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame.svg']}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-            {/* ── ROW 6: Frame 3 (larger left) + Frame 5 (smaller right, zoomed out) ── */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1.3fr 0.7fr',
-              gap: '16px',
-              marginBottom: 16,
-              height: '450px',
-            }}>
-              <div style={{ position: 'relative', overflow: 'hidden', background: '#FFECB9', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 3.svg?v=${Date.now()}`} alt="Baby shower keepsake" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
-                {stories['Frame 3.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 3.svg']}</p>
-                  </div>
-                )}
-              </div>
-              <div style={{ position: 'relative', overflow: 'hidden', background: '#344A53', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20%', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <img src={`/illustrations/Frame 5.svg?v=${Date.now()}`} alt="Pilates logo" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
-                {stories['Frame 5.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 5.svg']}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* ── ROW 7: Frame 7 + Group 62 ── */}
-            <div style={{
-              display: 'flex',
-              gap: '16px',
-              marginBottom: 16,
-              alignItems: 'stretch',
-            }}>
-              <div style={{ position: 'relative', overflow: 'hidden', background: '#F6F6FB', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', flex: '1 1 0' }}>
-                <img src={`/illustrations/Frame 7.svg?v=${Date.now()}`} alt="Christmas card chairlift" style={{ width: '105%', height: 'auto', objectFit: 'cover', display: 'block', marginLeft: '-2.5%' }} />
-                {stories['Frame 7.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Frame 7.svg']}</p>
-                  </div>
-                )}
-              </div>
-              <div style={{ position: 'relative', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', flexShrink: 0 }}>
-                <img src={`/illustrations/Group 62.svg?v=${Date.now()}`} alt="College reunion itinerary" style={{ height: '700px', width: 'auto', objectFit: 'contain', display: 'block' }} />
-                {stories['Group 62.svg'] && (
-                  <div
-                    style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s ease', padding: '20px' }}
-                    onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.opacity = '0' }}
-                  >
-                    <p style={{ color: 'rgba(245,232,211,0.96)', fontSize: 14, lineHeight: 1.6, textAlign: 'center', fontFamily: 'var(--f-sans)', margin: 0 }}>{stories['Group 62.svg']}</p>
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
           </div>
+        </section>
+
+        {/* ── ABOUT THIS WORK (below the gallery) ── */}
+        <section id="about-work" className="page-section" style={{ background: 'var(--surface)', paddingTop: 48, paddingBottom: 80 }}>
+          <div className="section-spread" style={{ marginBottom: 32 }}>
+            <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>About This Work</span>
+            <span className="rule" />
+          </div>
+          <p style={{ fontFamily: 'var(--f-sans)', fontSize: 16, lineHeight: 1.75, color: 'var(--ink-2)', maxWidth: '72ch', margin: '0 0 16px' }}>
+            Every piece here is hand-drawn by me, with a mouse, in Figma. No AI, no shortcuts. Just patient, click-by-click line work. These started as surprises: a birthday card here, a party favor there. Once friends and family saw a few, they started asking for more - wedding invites, custom canvas bags, embroidered keepsakes. Many of the illustrations are drawn from real photos or memories, but I like to add small twists that make them feel a little more personal.
+          </p>
+          <p style={{ fontFamily: 'var(--f-sans)', fontSize: 16, lineHeight: 1.75, color: 'var(--ink-2)', maxWidth: '72ch', margin: 0 }}>
+            There&apos;s something therapeutic about starting from nothing and slowly bringing a moment to life, click by click. I love the iteration: trying different versions, adjusting a line weight or composition until something feels inevitable. But what keeps me coming back is seeing someone&apos;s face when they recognize themselves or a memory in a drawing. That reaction is the same thing I&apos;m chasing in my product work: using judgment to pick a direction, iterating with care, obsessing over details, and creating experiences that feel simple, human, and quietly delightful. In a world where anyone can generate an image, the value is in the taste, intention, and craft behind it, and in making something that feels deeply personal to the people it&apos;s made for.
+          </p>
         </section>
 
       </main>
 
-      {/* ── FOOTER ── */}
       <nav className="cs-case-nav" aria-label="Bits navigation">
         <a href="/bits/shortlist" className="cs-case-nav-item cs-case-nav-item--prev">
           <span className="cs-case-nav-dir">← Previous</span>

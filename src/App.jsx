@@ -21,9 +21,9 @@ export default function Home() {
 
           <div className="ctas">
             <a href="#work" className="btn btn--lg">View work <span style={{ display: 'inline-block', transform: 'rotate(-90deg)', fontSize: '1.5em', lineHeight: 0, verticalAlign: '-0.08em' }}>←</span></a>
-            <a href="mailto:kmkerney221@gmail.com" className="btn btn--secondary btn--lg">
+            <Link to="/about#contact" className="btn btn--secondary btn--lg">
               Get in touch
-            </a>
+            </Link>
           </div>
 
           {/* Illustration shown below buttons on mobile only */}

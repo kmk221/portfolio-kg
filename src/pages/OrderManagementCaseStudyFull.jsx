@@ -1,0 +1,734 @@
+import { useEffect, useRef, useState } from 'react'
+import Nav from '../components/Nav.jsx'
+import bodyHtml from './OrderManagementCaseStudy.body.html?raw'
+
+// Split the lo-fi hero-animation (the first <section> in body.html) off so
+// it can render *inside* the same mustard-wash wrapper as the React hero.
+// Otherwise each section paints its own 135° gradient and a visible seam
+// appears where the two backgrounds meet.
+const HERO_ANIM_END = bodyHtml.indexOf('</section>') + '</section>'.length
+const HERO_ANIM_HTML = bodyHtml.slice(0, HERO_ANIM_END)
+const REST_BODY_HTML = bodyHtml.slice(HERO_ANIM_END)
+import './case-study-shared.css'
+import './OrderManagementCaseStudy.css'
+
+/**
+ * Order Management Case Study
+ *
+ * This page renders the full case study authored in OM-Case-Study.html.
+ * The HTML body is imported as a raw string (via Vite's ?raw suffix) and
+ * injected via dangerouslySetInnerHTML so the original markup, inline
+ * styles, and animations render exactly as designed.
+ *
+ * The page is wrapped in a home-style radial-gradient ambient background
+ * and introduced by a React-rendered hero (eyebrow + title + fadeUp pills)
+ * that mirrors the home page's aesthetic. [data-reveal] sections in the
+ * injected HTML fade up on scroll via the shared IntersectionObserver.
+ *
+ * The interactive "compare" lightbox (pre/post viewer) is implemented as
+ * globally exposed functions on `window` so the inline onclick="..."
+ * attributes inside the imported HTML continue to work. They are cleaned
+ * up on unmount.
+ */
+
+// Chapter list for the sticky scrollspy rail. Each `id` matches the
+// corresponding section's id in OrderManagementCaseStudy.body.html, and
+// `label` is the rail label shown on desktop (≥1200px).
+const CHAPTERS = [
+  { id: 'ch-product-context', label: 'Context' },
+  { id: 'ch-research',    label: 'Research' },
+  { id: 'ch-design',      label: 'Redesign' },
+  { id: 'ch-outcome',     label: 'Outcome' },
+  { id: 'ch-reflection',  label: 'Reflection' },
+]
+
+// Same hook used on the home page  -  adds .revealed to [data-reveal] elements
+// once they cross 10% into the viewport.
+function useScrollReveal() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const container = ref.current
+    if (!container) return
+    const targets = container.querySelectorAll('[data-reveal]')
+    if (!targets.length) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+    )
+    targets.forEach((t) => observer.observe(t))
+    return () => observer.disconnect()
+  }, [])
+  return ref
+}
+
+export default function OrderManagementCaseStudyFull() {
+  const pageRef = useScrollReveal()
+  const chapterBarRef = useRef(null)
+  const [activeChapter, setActiveChapter] = useState(CHAPTERS[0].id)
+  const [navVisible, setNavVisible] = useState(false)
+  const [navCollapsed, setNavCollapsed] = useState(false)
+
+  useEffect(() => {
+    // Scroll to top whenever this page mounts.
+    window.scrollTo(0, 0)
+
+    // --- Compare lightbox wiring (ported from the HTML's <script>) ---
+    const pairs = {
+      pilot:   { type: 'video', pre: '/om-assets/pre.mov',               post: '/om-assets/post.mov',              labels: ['Piloted', 'Post-Pilot']  },
+      surface: { type: 'image', pre: '/om-assets/legacy-still.png',      post: '/om-assets/shipped-still.png',     labels: ['Legacy', 'Shipped'] },
+      send:    { type: 'image', pre: '/om-assets/legacy-send-still.png', post: '/om-assets/shipped-send-still.png',labels: ['Legacy', 'Shipped'] },
+    }
+    // Tours: navigable sequences of pairs shown together in the lightbox
+    const tours = {
+      outcome: { pairs: ['surface', 'send'], titles: ['Order management surface', 'Send flow'] },
+    }
+    let current = null
+    let currentTour = null
+    let currentTourIndex = 0
+
+    const getEls = () => ({
+      lb: document.getElementById('compareLightbox'),
+      stage: document.getElementById('compareLightboxStage'),
+      toggle: document.getElementById('compareLightboxToggle'),
+      sectionToggle: document.getElementById('compareLightboxSectionToggle'),
+      controls: document.getElementById('compareLightboxControls'),
+      zoomControls: document.getElementById('compareZoomControls'),
+      zoomDisplay: document.getElementById('compareZoomDisplay'),
+    })
+
+    // Tracks the current openImage zoom level (1 = fit, > 1 = zoomed in).
+    let zoomLevel = 1
+    // Captures the image's rendered size at zoom=1 so zoom steps scale
+    // relative to the FIT size (not the stage width). Without this, going
+    // from 100% to 110% would compute against the stage container width and
+    // make a height-limited image explode in size on the first click.
+    let fitWidth = 0
+    let fitHeight = 0
+
+    const setControlsVisible = (visible) => {
+      const { controls, stage, lb, zoomControls } = getEls()
+      if (controls) controls.style.display = visible ? 'flex' : 'none'
+      if (zoomControls) zoomControls.style.display = visible ? 'none' : 'inline-flex'
+      if (!stage) return
+      // Compare mode: stage starts below the centered toggle controls.
+      // Single-image mode: stage spans the full viewport  -  close + zoom
+      // controls float on top so the image can fill the entire height.
+      stage.style.top = visible ? '170px' : '0'
+      stage.style.bottom = visible ? '32px' : '0'
+      // Reset any single-image overrides when re-entering compare mode.
+      // Important: explicitly set the dark backdrop here  -  relying on '' to
+      // fall back to the HTML inline style doesn't work because the inline
+      // attribute is mutated by openImage. Set it directly so the backdrop
+      // fully obscures page content.
+      if (visible) {
+        if (lb) {
+          lb.style.background = 'rgba(15, 12, 10, 0.92)'
+          lb.style.backdropFilter = 'blur(24px)'
+          lb.style.webkitBackdropFilter = 'blur(24px)'
+        }
+        stage.style.padding = '0 40px'
+        stage.style.alignItems = 'flex-start'
+        stage.style.overflow = ''
+        stage.style.touchAction = ''
+      }
+    }
+
+    const setActive = (mode) => {
+      const { toggle } = getEls()
+      if (!toggle) return
+      toggle.querySelectorAll('button').forEach((b) => {
+        const on = b.dataset.mode === mode
+        b.style.background = on ? '#fff' : 'transparent'
+        b.style.color = on ? '#1a1a1a' : '#fff'
+      })
+    }
+
+    const setLabels = (labels) => {
+      const { toggle } = getEls()
+      if (!toggle) return
+      const btns = toggle.querySelectorAll('button')
+      if (btns[0]) btns[0].textContent = labels[0]
+      if (btns[1]) btns[1].textContent = labels[1]
+    }
+
+    const setTourActive = () => {
+      const { sectionToggle } = getEls()
+      if (!sectionToggle) return
+      sectionToggle.querySelectorAll('button').forEach((b, i) => {
+        const on = i === currentTourIndex
+        b.style.background = on ? 'rgba(255,255,255,0.18)' : 'transparent'
+        b.style.color = on ? '#fff' : 'rgba(255,255,255,0.65)'
+      })
+    }
+
+    const renderTourSections = () => {
+      const { sectionToggle } = getEls()
+      if (!sectionToggle) return
+      if (!currentTour || !tours[currentTour]) {
+        sectionToggle.style.display = 'none'
+        sectionToggle.innerHTML = ''
+        return
+      }
+      const tour = tours[currentTour]
+      sectionToggle.innerHTML = tour.titles.map((title, i) =>
+        `<button type="button" data-tour-index="${i}" onclick="switchTour(${i})" style="border:0;background:transparent;color:rgba(255,255,255,0.65);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:7px 16px;border-radius:999px;cursor:pointer;font-family:inherit;">${title}</button>`
+      ).join('')
+      sectionToggle.style.display = 'inline-flex'
+      setTourActive()
+    }
+
+    const render = (mode) => {
+      if (!current) return
+      const pair = pairs[current]
+      const src = mode === 'pre' ? pair.pre : pair.post
+      const { stage } = getEls()
+      if (!stage) return
+      stage.innerHTML = ''
+      let el
+      if (pair.type === 'video') {
+        el = document.createElement('video')
+        el.autoplay = true
+        el.loop = true
+        el.muted = true
+        el.playsInline = true
+        el.setAttribute('playsinline', '')
+        el.style.cssText =
+          'max-width:100%;max-height:100%;display:block;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.6);background:#000;'
+        const s = document.createElement('source')
+        s.src = src
+        s.type = 'video/mp4'
+        el.appendChild(s)
+        el.load()
+      } else {
+        el = document.createElement('img')
+        el.src = src
+        el.style.cssText =
+          'max-width:100%;max-height:100%;display:block;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.6);background:#fff;object-fit:contain;'
+      }
+      stage.appendChild(el)
+      setActive(mode)
+    }
+
+    window.openCompare = (id, mode) => {
+      if (!pairs[id]) return
+      currentTour = null
+      currentTourIndex = 0
+      current = id
+      setControlsVisible(true)
+      renderTourSections()
+      setLabels(pairs[id].labels)
+      render(mode || 'pre')
+      const { lb } = getEls()
+      if (!lb) return
+      lb.style.display = 'flex'
+      document.body.style.overflow = 'hidden'
+    }
+
+    window.openImage = (src, alt) => {
+      currentTour = null
+      currentTourIndex = 0
+      current = null
+      zoomLevel = 1
+      const { stage, lb, zoomDisplay } = getEls()
+      if (!stage || !lb) return
+      setControlsVisible(false)
+      // Single-image mode: backdrop is the EXACT same composition as the OM
+      // page hero  -  mustard gradient at 0.55/0.65 alpha layered over cream.
+      // Cream base keeps it fully opaque so the page can't bleed through.
+      lb.style.background = '#F6F6F1'
+      lb.style.backdropFilter = 'blur(24px)'
+      lb.style.webkitBackdropFilter = 'blur(24px)'
+      stage.style.padding = '0'
+      stage.style.alignItems = 'center'
+      stage.style.overflow = 'auto'
+      stage.style.touchAction = 'pinch-zoom'
+      stage.innerHTML = ''
+      fitWidth = 0
+      fitHeight = 0
+      const el = document.createElement('img')
+      el.src = src
+      if (alt) el.alt = alt
+      // At zoom=1 the image fits the stage. After load, capture the rendered
+      // fit size  -  zoomImage multiplies that captured size by zoomLevel so
+      // each click is a true 10% increase relative to fit, not a jump from
+      // height-limited to width-100% of the stage.
+      el.style.cssText =
+        'max-width:100%;max-height:100%;display:block;background:transparent;object-fit:contain;margin:auto;touch-action:pinch-zoom;transition:width 200ms ease, height 200ms ease;'
+      el.addEventListener('load', () => {
+        if (!fitWidth) {
+          fitWidth = el.clientWidth
+          fitHeight = el.clientHeight
+        }
+      })
+      stage.appendChild(el)
+      if (zoomDisplay) zoomDisplay.textContent = '100%'
+      lb.style.display = 'flex'
+      document.body.style.overflow = 'hidden'
+    }
+
+    // Zoom controls for openImage mode. delta is the change (e.g. +0.10).
+    // Pass reset=true to snap back to fit (zoomLevel=1).
+    window.zoomImage = (delta, reset = false) => {
+      const { stage, zoomDisplay } = getEls()
+      const img = stage?.querySelector('img')
+      if (!img) return
+      // Lazily capture fit size if the load handler hasn't fired yet.
+      if (!fitWidth && img.clientWidth) {
+        fitWidth = img.clientWidth
+        fitHeight = img.clientHeight
+      }
+      zoomLevel = reset ? 1 : Math.max(0.5, Math.min(3, zoomLevel + delta))
+      if (zoomLevel === 1 || !fitWidth) {
+        // Fit-to-stage: respect natural aspect, no overflow
+        img.style.maxWidth = '100%'
+        img.style.maxHeight = '100%'
+        img.style.width = ''
+        img.style.height = ''
+      } else {
+        // Zoomed: scale the image's CSS pixel size relative to the FIT
+        // dimensions, so 110% really is 10% bigger than 100%.
+        img.style.maxWidth = 'none'
+        img.style.maxHeight = 'none'
+        img.style.width = `${Math.round(fitWidth * zoomLevel)}px`
+        img.style.height = `${Math.round(fitHeight * zoomLevel)}px`
+      }
+      if (zoomDisplay) zoomDisplay.textContent = `${Math.round(zoomLevel * 100)}%`
+    }
+
+    window.openCompareTour = (tourId, mode) => {
+      const tour = tours[tourId]
+      if (!tour) return
+      currentTour = tourId
+      currentTourIndex = 0
+      current = tour.pairs[0]
+      setControlsVisible(true)
+      renderTourSections()
+      setLabels(pairs[current].labels)
+      render(mode || 'pre')
+      const { lb } = getEls()
+      if (!lb) return
+      lb.style.display = 'flex'
+      document.body.style.overflow = 'hidden'
+    }
+
+    window.switchTour = (index) => {
+      if (!currentTour) return
+      const tour = tours[currentTour]
+      if (!tour || index < 0 || index >= tour.pairs.length) return
+      currentTourIndex = index
+      current = tour.pairs[index]
+      setTourActive()
+      setLabels(pairs[current].labels)
+      render('pre')
+    }
+
+    window.switchCompare = (mode) => render(mode)
+
+    window.closeCompare = () => {
+      const { lb, stage } = getEls()
+      if (lb) lb.style.display = 'none'
+      if (stage) stage.innerHTML = ''
+      current = null
+      currentTour = null
+      currentTourIndex = 0
+      renderTourSections()
+      setControlsVisible(true)
+      document.body.style.overflow = ''
+    }
+
+    // Clicking the lightbox backdrop (not the content) closes it.
+    const onBackdropClick = (e) => {
+      const { lb } = getEls()
+      if (lb && e.target === lb) window.closeCompare()
+    }
+
+    // Keyboard: Esc closes, arrows switch (pre/post within a section).
+    const onKey = (e) => {
+      const { lb } = getEls()
+      if (!lb || lb.style.display !== 'flex') return
+      if (e.key === 'Escape') window.closeCompare()
+      if (e.key === 'ArrowLeft') window.switchCompare('pre')
+      if (e.key === 'ArrowRight') window.switchCompare('post')
+    }
+
+    // Wait a tick so the injected HTML (and #compareLightbox) exists in the DOM.
+    const wireUp = () => {
+      const { lb } = getEls()
+      if (lb) lb.addEventListener('click', onBackdropClick)
+      document.addEventListener('keydown', onKey)
+    }
+    const rafId = requestAnimationFrame(wireUp)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      const { lb } = getEls()
+      if (lb) lb.removeEventListener('click', onBackdropClick)
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+      delete window.openCompare
+      delete window.openCompareTour
+      delete window.openImage
+      delete window.zoomImage
+      delete window.switchTour
+      delete window.switchCompare
+      delete window.closeCompare
+    }
+  }, [])
+
+  // --- Tabs: reusable progressive-disclosure pattern ---
+  // Finds every [data-om-tabs] group in the injected HTML, wires up click +
+  // arrow-key navigation, plays the active video and pauses hidden ones.
+  useEffect(() => {
+    const cleanups = []
+
+    const initTabGroup = (group) => {
+      const tabs = Array.from(group.querySelectorAll('[data-om-tab]'))
+      const panels = Array.from(group.querySelectorAll('[data-om-tabpanel]'))
+      if (!tabs.length || !panels.length) return
+
+      const setActive = (id) => {
+        tabs.forEach((t) => {
+          const on = t.dataset.omTab === id
+          t.setAttribute('aria-selected', on ? 'true' : 'false')
+          t.setAttribute('tabindex', on ? '0' : '-1')
+        })
+        panels.forEach((p) => {
+          const on = p.dataset.omTabpanel === id
+          if (on) {
+            p.removeAttribute('hidden')
+            const v = p.querySelector('video')
+            if (v) { try { v.currentTime = 0; v.play() } catch (_) { /* no-op */ } }
+          } else {
+            p.setAttribute('hidden', '')
+            const v = p.querySelector('video')
+            if (v) { try { v.pause() } catch (_) { /* no-op */ } }
+          }
+        })
+      }
+
+      // Ensure first panel's video starts playing on mount (autoplay removed
+      // from markup so we can control per-tab).
+      const initiallyActive = tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0]
+      setActive(initiallyActive.dataset.omTab)
+
+      const onClick = (e) => {
+        const btn = e.currentTarget
+        setActive(btn.dataset.omTab)
+        btn.focus()
+      }
+      const onKey = (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') return
+        e.preventDefault()
+        const idx = tabs.indexOf(e.currentTarget)
+        let next = idx
+        if (e.key === 'ArrowRight') next = (idx + 1) % tabs.length
+        if (e.key === 'ArrowLeft')  next = (idx - 1 + tabs.length) % tabs.length
+        if (e.key === 'Home')       next = 0
+        if (e.key === 'End')        next = tabs.length - 1
+        const target = tabs[next]
+        setActive(target.dataset.omTab)
+        target.focus()
+      }
+
+      tabs.forEach((t) => {
+        t.addEventListener('click', onClick)
+        t.addEventListener('keydown', onKey)
+      })
+
+      cleanups.push(() => {
+        tabs.forEach((t) => {
+          t.removeEventListener('click', onClick)
+          t.removeEventListener('keydown', onKey)
+        })
+      })
+    }
+
+    // Wait a frame so dangerouslySetInnerHTML content is in the DOM.
+    const rafId = requestAnimationFrame(() => {
+      document.querySelectorAll('[data-om-tabs]').forEach(initTabGroup)
+    })
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      cleanups.forEach((fn) => fn())
+    }
+  }, [])
+
+  // --- Expand cards: click peek to reveal more ---
+  // Markup: <div data-om-expand-card> with .om-expand-trigger button +
+  // .om-expand-content (initially [hidden]). Toggles aria-expanded, hidden,
+  // and a data-open attribute used by the CSS for the "+" → "×" rotation.
+  useEffect(() => {
+    const cleanups = []
+
+    const initExpandCard = (card) => {
+      // Find the trigger + content as DIRECT children of this card so nested
+      // expand-cards (a section-expand wrapping inner expand-cards) don't
+      // hijack each other's elements.
+      const trigger =
+        card.querySelector(':scope > .om-expand-trigger') ||
+        card.querySelector(':scope > .om-section-expand-trigger')
+      const content =
+        card.querySelector(':scope > .om-expand-content') ||
+        card.querySelector(':scope > .om-section-expand-content')
+      if (!trigger || !content) return
+
+      const setOpen = (open) => {
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false')
+        card.setAttribute('data-open', open ? 'true' : 'false')
+        if (open) content.removeAttribute('hidden')
+        else content.setAttribute('hidden', '')
+      }
+
+      const onClick = () => {
+        const open = trigger.getAttribute('aria-expanded') !== 'true'
+        setOpen(open)
+      }
+
+      trigger.addEventListener('click', onClick)
+      cleanups.push(() => trigger.removeEventListener('click', onClick))
+    }
+
+    const rafId = requestAnimationFrame(() => {
+      document
+        .querySelectorAll('[data-om-expand-card], [data-om-section-expand]')
+        .forEach(initExpandCard)
+    })
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      cleanups.forEach((fn) => fn())
+    }
+  }, [])
+
+  // --- Chapter nav: scrollspy + visibility ---
+  // Watches each chapter section. The "active" chapter is the topmost section
+  // whose top has crossed ~30% down the viewport  -  i.e. the one the reader is
+  // currently scrolling through. Nav fades in once the reader has scrolled
+  // past the hero, and out once they reach the closing reflection.
+  useEffect(() => {
+    const sections = CHAPTERS
+      .map((c) => document.getElementById(c.id))
+      .filter(Boolean)
+    if (!sections.length) return
+
+    // Track each section's top relative to viewport. Recompute on scroll +
+    // resize. We pick the last section whose top has crossed our threshold.
+    const threshold = () => Math.max(140, window.innerHeight * 0.28)
+
+    const update = () => {
+      const t = threshold()
+      let current = sections[0].id
+      for (const s of sections) {
+        const rect = s.getBoundingClientRect()
+        if (rect.top - t <= 0) current = s.id
+        else break
+      }
+      setActiveChapter((prev) => (prev === current ? prev : current))
+
+      // Show nav once we're past the hero (~520px into the page) and hide
+      // again once we're within ~600px of the bottom (the reflection coda).
+      const scrollY = window.scrollY || window.pageYOffset
+      const past = scrollY > 520
+      const docH = document.documentElement.scrollHeight
+      const viewH = window.innerHeight
+      const nearBottom = scrollY + viewH > docH - 600
+      setNavVisible(past && !nearBottom)
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  // When the active chapter changes, auto-center its label inside the
+  // bottom word bar (only relevant when the bar is the visible variant  - 
+  // overflow scrolling kicks in when the labels exceed viewport width).
+  useEffect(() => {
+    const bar = chapterBarRef.current
+    if (!bar) return
+    const active = bar.querySelector('.is-active')
+    if (!active) return
+    const barRect = bar.getBoundingClientRect()
+    const linkRect = active.getBoundingClientRect()
+    const offset = (linkRect.left - barRect.left) - (barRect.width - linkRect.width) / 2
+    bar.scrollTo({
+      left: bar.scrollLeft + offset,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+  }, [activeChapter])
+
+  // Smooth-scroll a chapter into view, accounting for the fixed top nav.
+  const scrollToChapter = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const navOffset = 88 // ≈ height of the top Nav so the section title isn't hidden
+    const top = el.getBoundingClientRect().top + window.scrollY - navOffset
+    window.scrollTo({
+      top,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+  }
+
+  // Hero pill tags  -  mirror the home page's fadeUp stagger.
+  const heroPills = [
+    { label: 'Research',       variant: 'blue' },
+    { label: 'Strategy',       variant: 'gold' },
+    { label: 'Product Design', variant: 'warm' },
+    { label: 'Testing',        variant: 'blue' },
+    { label: 'Shipped \u2713', variant: 'gold' },
+  ]
+
+  return (
+    <div ref={pageRef} className="cs-page" style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      <Nav />
+
+      {/* Sticky chapter nav  -  left rail at ≥1100px viewport. */}
+      <aside
+        className={`om-chapter-nav${navVisible ? ' is-visible' : ''}${navCollapsed ? ' is-collapsed' : ''}`}
+        aria-label="Case study chapters"
+      >
+        <div className="om-chapter-nav-header">
+          <span className="om-chapter-nav-title">{navCollapsed ? '' : "What's inside"}</span>
+          <button
+            type="button"
+            className="om-chapter-nav-toggle"
+            aria-label={navCollapsed ? 'Expand navigation' : 'Collapse navigation'}
+            onClick={() => setNavCollapsed(c => !c)}
+          >
+            {navCollapsed ? '›' : '‹'}
+          </button>
+        </div>
+        <ul className="om-chapter-nav-list">
+          {CHAPTERS.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                type="button"
+                className={`om-chapter-nav-link${activeChapter === id ? ' is-active' : ''}`}
+                aria-current={activeChapter === id ? 'true' : undefined}
+                onClick={() => scrollToChapter(id)}
+              >
+                <span className="om-chapter-nav-label">{label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      {/* Floating word bar  -  mid-viewport fallback (768–1439px). Same
+          scrollspy state drives the active label; the bar scrolls
+          horizontally if it overflows, with auto-centering on active. */}
+      <aside
+        ref={chapterBarRef}
+        className={`om-chapter-bar${navVisible ? ' is-visible' : ''}`}
+        aria-label="Case study chapter shortcuts"
+      >
+        <ul>
+          {CHAPTERS.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                type="button"
+                className={`om-chapter-bar-link${activeChapter === id ? ' is-active' : ''}`}
+                aria-current={activeChapter === id ? 'true' : undefined}
+                onClick={() => scrollToChapter(id)}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+
+      {/* Home-style ambient radial-gradient wrapper  -  same multi-color wash
+          behind the hero + body content. The case study is ~4-5x taller than
+          the home, so the 7-orb pattern used on home would leave visible
+          cream gaps between bursts. Scaled up to 11 larger, softer orbs that
+          cycle steel-blue → gold → terracotta down the full page length  - 
+          keeps the wash continuous and the individual pops subtle. */}
+      <div>
+        <section style={{ padding: 'clamp(80px, 10vw, 120px) 0 clamp(48px, 6vw, 80px)' }}>
+          <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 64px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32 }}>
+              <span className="eyebrow">Case Study · Order Management · 2025</span>
+            </div>
+            <h1 style={{
+              fontFamily: 'var(--f-serif)',
+              fontWeight: 300,
+              fontSize: 'clamp(36px, 5vw, 64px)',
+              letterSpacing: '-0.01em',
+              lineHeight: 1.1,
+              color: 'var(--ink-2)',
+              margin: '0 0 20px',
+            }}>
+              Addition Through Subtraction
+            </h1>
+            <p style={{
+              fontFamily: 'var(--f-serif)',
+              fontStyle: 'normal',
+              fontWeight: 300,
+              fontSize: 'clamp(17px, 1.5vw, 21px)',
+              lineHeight: 1.55,
+              color: 'var(--ink-2)',
+              maxWidth: 560,
+              margin: '0 0 36px',
+            }}>
+              Pivoting from a feature‑heavy dashboard to a focused, essential workflow that unlocked a clean component and layout pattern used across multiple applications.
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {heroPills.map(({ label }) => (
+                <span key={label} className="chip chip--neutral">{label}</span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <div className="om-page" style={{ padding: '0 0 clamp(48px, 6vw, 80px)' }}>
+          <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 64px' }}>
+            <video
+              src="/om-assets/post.mov"
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster="/om-assets/shipped-still.png"
+              style={{ width: '100%', borderRadius: 'var(--r-3)', display: 'block' }}
+            />
+          </div>
+        </div>
+
+        <div className="om-page" dangerouslySetInnerHTML={{ __html: REST_BODY_HTML }} />
+
+        {/* Case study navigation */}
+        <nav className="cs-case-nav" aria-label="Case study navigation">
+          <a href="/case-study/rules" className="cs-case-nav-item cs-case-nav-item--next" style={{ marginLeft: 'auto' }}>
+            <span className="cs-case-nav-dir">Next →</span>
+            <span className="cs-case-nav-title">Inside the Rule Engine</span>
+          </a>
+        </nav>
+
+        <footer className="site-foot" id="contact" style={{ marginTop: 0 }}>
+          <div className="inner">
+          <span className="left">kristin<span style={{ opacity: 0.6 }}>.garza</span> · UX Designer</span>
+          <span className="right">
+            <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="mailto:kmkerney221@gmail.com">Email</a>
+            <a href="/KristinGarzaResume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          </span>
+        </div>
+        </footer>
+      </div>
+    </div>
+  )
+}

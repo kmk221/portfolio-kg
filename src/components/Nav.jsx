@@ -87,7 +87,7 @@ export default function Nav() {
         )}
         <li><Link to="/bits">Bits &amp; Pieces</Link></li>
         <li><Link to="/about">About</Link></li>
-        <li><a href="mailto:kmkerney221@gmail.com">Get in touch</a></li>
+        <li><Link to="/about#contact">Get in touch</Link></li>
       </ul>
     </div>,
     document.body
@@ -115,9 +115,9 @@ export default function Nav() {
               <li><Link to="/bits">Bits &amp; Pieces</Link></li>
               <li><Link to="/about">About</Link></li>
               <li>
-                <a href="mailto:kmkerney221@gmail.com" className="btn btn--secondary btn--sm">
+                <Link to="/about#contact" className="btn btn--secondary btn--sm">
                   Get in touch
-                </a>
+                </Link>
               </li>
             </ul>
           )}

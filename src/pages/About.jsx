@@ -18,11 +18,11 @@ function ContactForm() {
       <div className="contact-field-row">
         <label className="contact-field">
           <span>Name<span className="req">*</span></span>
-          <input type="text" required value={name} onChange={e => setName(e.target.value)} placeholder="Jane Doe" />
+          <input type="text" required value={name} onChange={e => setName(e.target.value)} placeholder="David Rose" />
         </label>
         <label className="contact-field">
           <span>Email<span className="req">*</span></span>
-          <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="jane@company.com" />
+          <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="david@roseapothecary.com" />
         </label>
       </div>
       <label className="contact-field">
@@ -35,25 +35,53 @@ function ContactForm() {
 }
 
 export default function About() {
+  const [copied, setCopied] = useState(false)
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('kmkerney221@gmail.com')
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1600)
+    } catch { /* clipboard unavailable — no-op */ }
+  }
   return (
     <div>
       <Nav />
       <main className="page">
 
-        {/* ── HEADER ── */}
+        {/* ── HERO ── (shared page-hero format: eyebrow + light serif H1 + serif lede) */}
         <section className="page-section" style={{ paddingBottom: 0 }}>
-          <div className="section-spread" style={{ marginBottom: 24 }}>
+          <div style={{ marginBottom: 24 }}>
             <span className="eyebrow">About</span>
-            <span className="rule" />
           </div>
           <div className="about-header-layout">
-            <p className="about-header-bio">
-              Senior UX Designer with 10+ years of experience across enterprise financial services, product strategy, and leadership. I specialize in bringing clarity to complex institutional workflows and making data-dense tools feel simple, thoughtful, and human. My work is shaped by real needs and data but guided by instinct, bold choices, and design that challenges what's expected. My goal is to lower barriers, create momentum, and help people feel more capable, confident, and connected to what matters.
-            </p>
-            <div className="about-contact-pills">
-              <a href="mailto:kmkerney221@gmail.com">kmkerney221@gmail.com</a>
-              <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer">linkedin.com/in/kristin-garza</a>
-              <span>Austin, TX</span>
+            <div className="about-photo">
+              <img src="/kristin-photo.png" alt="Kristin Garza" />
+            </div>
+            <div className="about-header-main">
+              <h1 className="about-hero-title">Hi, I&apos;m Kristin.</h1>
+              <p className="about-hero-lede">
+                A Senior UX Designer who&apos;s spent the last 10 years thoughtfully untangling experiences that feel complex, daunting and burdensome and making them simple, approachable, and human — shaped by real needs and data, but guided by instinct and bold choices that challenge what&apos;s expected.
+              </p>
+              <div className="about-contact-pills">
+                <span className="chip chip--neutral about-email-pill">
+                  <a href="mailto:kmkerney221@gmail.com">kmkerney221@gmail.com</a>
+                  <button
+                    type="button"
+                    className={`about-copy-btn${copied ? ' is-copied' : ''}`}
+                    onClick={copyEmail}
+                    aria-label={copied ? 'Email address copied' : 'Copy email address'}
+                    title={copied ? 'Copied!' : 'Copy email'}
+                  >
+                    {copied ? (
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                    ) : (
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                    )}
+                  </button>
+                </span>
+                <a href="https://www.linkedin.com/in/kristin-garza" target="_blank" rel="noreferrer" className="chip chip--neutral">linkedin.com/in/kristin-garza</a>
+                <span className="chip chip--neutral">Austin, TX</span>
+              </div>
             </div>
           </div>
         </section>
@@ -210,6 +238,32 @@ export default function About() {
           </div>
         </section>
 
+        {/* ── OUTSIDE OF WORK ── */}
+        <section className="page-section" style={{ paddingTop: 0 }}>
+          <div className="section-spread" style={{ marginBottom: 24 }}>
+            <span className="eyebrow">Outside of Work</span>
+            <span className="rule" />
+          </div>
+          <div className="about-fun">
+            <p>Outside of work, I&apos;m happiest when I&apos;m with my family — my adventurous husband, our 7-month-old wild-child son, and our rambunctious furry daughter (our 10-year-old chocolate lab). We love sneaking away to the mountains to bike and ski, and to the coast of Maine to see family, friends, and the ocean.</p>
+            <p>Travel is my reset: finding new places, meeting people along the way, and tracking down really good food wherever I land. Most recently, I spent the most incredible 10 days exploring the mountains and beaches of Mallorca with my husband and baby. Highly recommend!</p>
+          </div>
+          <div className="about-reel" aria-label="Photos from life outside of work">
+            <div className="about-reel-track">
+              {Array.from({ length: 20 }, (_, i) => (
+                <img
+                  key={i}
+                  src={`/about-me/reel-${(i % 10) + 1}.jpg`}
+                  alt=""
+                  loading="lazy"
+                  draggable="false"
+                  aria-hidden={i >= 10 ? 'true' : undefined}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
       </main>
 
       {/* ── CONTACT — embedded email form (full-bleed blue band) ── */}
@@ -219,15 +273,15 @@ export default function About() {
             <span className="eyebrow">Contact</span>
             <span className="rule" />
           </div>
-          <h2 className="contact-title">Let&apos;s build something</h2>
-          <p className="contact-lede">I&apos;m always open to connecting with fellow builders, leaders, and teams. Whether you&apos;re navigating complex product ambiguity or looking to scale a high-performing design practice, I&apos;d love to hear from you.</p>
-          <p className="contact-subhead">Reach out if you want to discuss:</p>
+          <h2 className="contact-title">Let&apos;s Chat</h2>
+          <p className="contact-lede" style={{ marginBottom: 16 }}>I love connecting with other designers, builders, and entrepreneurs — especially if you&apos;re interested in:</p>
           <ul className="contact-list">
-            <li><strong>Product &amp; Systems Design:</strong> Bringing clarity to complex, high-stakes workflows.</li>
-            <li><strong>Design Systems:</strong> Scalable, reusable foundations teams actually enjoy using.</li>
-            <li><strong>AI-Augmented Design:</strong> Using AI as a multiplier — thoughtfully, not carelessly.</li>
+            <li>help with product design and custom illustrations</li>
+            <li>career development</li>
+            <li>collaboration on a side project</li>
+            <li>discussing the current state of design, technology, and AI</li>
           </ul>
-          <p className="contact-talk">Let&apos;s talk.</p>
+          <p className="contact-lede">Shoot me a message if you want to chat!</p>
           <ContactForm />
         </div>
       </section>

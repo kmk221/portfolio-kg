@@ -6,6 +6,10 @@ import Bits from './pages/Bits.jsx'
 import CaseStudy from './pages/CaseStudy.jsx'
 import RulesCaseStudy from './pages/RulesCaseStudy.jsx'
 import OrderManagementCaseStudy from './pages/OrderManagementCaseStudy.jsx'
+// Full (protected) reference versions — do not pare these down when simplifying the concise pages above.
+import CaseStudyFull from './pages/CaseStudyFull.jsx'
+import RulesCaseStudyFull from './pages/RulesCaseStudyFull.jsx'
+import OrderManagementCaseStudyFull from './pages/OrderManagementCaseStudyFull.jsx'
 import ColorPreview from './pages/ColorPreview.jsx'
 import About from './pages/About.jsx'
 import AIDesign from './pages/AIDesign.jsx'
@@ -55,6 +59,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/case-study/positions" element={<CaseStudy />} />
         <Route path="/case-study/rules" element={<RulesCaseStudy />} />
         <Route path="/case-study/order-management" element={<OrderManagementCaseStudy />} />
+        {/* Full (protected) reference versions */}
+        <Route path="/case-study/positions/full" element={<CaseStudyFull />} />
+        <Route path="/case-study/rules/full" element={<RulesCaseStudyFull />} />
+        <Route path="/case-study/order-management/full" element={<OrderManagementCaseStudyFull />} />
         <Route path="/about" element={<About />} />
         <Route path="/ai-design" element={<AIDesign />} />
         <Route path="/illustrations" element={<Illustrations />} />

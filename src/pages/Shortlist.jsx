@@ -113,7 +113,7 @@ export default function Shortlist() {
             </div>
             <figure className="sl-sketch">
               <img
-                src="/shortlist/shortlist-illustration.svg"
+                src="/shortlist/shortlist-illustration.png"
                 alt="Storyboard from endless scrolling to a trusted shortlist: a viewer overwhelmed by an endless wall of TV tiles, trying to remember a friend's recommendation, beside a calmer personal Shortlist on the TV."
               />
             </figure>

@@ -119,6 +119,9 @@ export default function AIDesign() {
       {/* ── HERO ── */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
+          <div style={{ marginBottom: 24 }}>
+            <span className="eyebrow">Content That Shapes My Thinking</span>
+          </div>
           <h1 className={styles.heroTitle}>AI × Design.</h1>
           <p className={styles.heroSub}>
             A running collection of the ideas, talks, and articles shaping how I think about
@@ -131,7 +134,7 @@ export default function AIDesign() {
       {/* ── MY TAKE ── */}
       <section className={styles.myTake}>
         <div className={styles.myTakeInner}>
-          <div className={styles.sectionLabelWrap}>
+          <div className={`${styles.sectionLabelWrap} ${styles.light}`}>
             <p className={styles.myTakeLabel}>My Take</p>
           </div>
           <blockquote className={styles.myTakeQuote}>

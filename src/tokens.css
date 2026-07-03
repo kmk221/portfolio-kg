@@ -8,6 +8,7 @@
   --bg:        #FFFEF5;            /* warm cream page background (theme-experiment) */
   --surface:   #FFFFFF;
   --surface-2: #FBF6DD;            /* warm cream tint */
+  --surface-nav: #FAF7F0;          /* neutral warm white — nav bar base + chip fill */
   --cream-100: #FFFEF5;            /* primitive: warm cream */
   --bg-warm:   var(--cream-100);   /* semantic: warm page canvas */
   --hairline:  #E7DFC4;            /* warm restrained divider */
@@ -430,7 +431,7 @@ nav.nav--home a:not(.wordmark):not(.btn):hover { color: var(--bg); opacity: 1; }
 .chip--clay  { background: var(--clay-tint);  color: var(--clay-ink);   border-color: rgba(142,74,46,0.18); }
 .chip--ochre { background: var(--ochre-tint); color: var(--ochre-ink);  border-color: rgba(122,90,28,0.20); }
 .chip--slate { background: var(--slate-tint); color: var(--slate-deep); border-color: rgba(47,79,184,0.20); }
-.chip--neutral { background: var(--surface-2); color: var(--ink-2); border-color: var(--hairline); }
+.chip--neutral { background: var(--surface-nav); color: var(--ink-2); border-color: var(--hairline); }
 .chip--solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
 /* ───────── FOOTER ───────── */

@@ -33,13 +33,13 @@
 }
 
 .heroTitle {
-  font-family: var(--f-slab);
-  font-size: clamp(40px, 5vw, 68px);
-  font-weight: 400;
-  line-height: 1.08;
+  font-family: var(--f-serif);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--ink);
-  margin-bottom: 28px;
+  margin-bottom: 22px;
   margin-top: 0;
 }
 
@@ -51,16 +51,18 @@
 }
 
 .heroSub {
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.7;
-  color: var(--ink-2);
-  max-width: 56ch;
+  font-family: var(--f-serif);
+  font-weight: 300;
+  font-size: clamp(19px, 1.9vw, 24px);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  max-width: 560px;
 }
 
 /* ── MY TAKE ── */
 .myTake {
-  background: var(--surface);
+  background: var(--clay);
   padding: 100px 0;
   position: relative;
 }
@@ -93,7 +95,7 @@
   font-size: 13px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--clay);
+  color: var(--bg);
   margin: 0;
   white-space: nowrap;
 }
@@ -105,8 +107,8 @@
   font-size: clamp(22px, 2.8vw, 30px);
   line-height: 1.55;
   letter-spacing: -0.012em;
-  color: var(--ink);
-  border-left: 3px solid var(--clay-deep);
+  color: var(--bg);
+  border-left: 3px solid var(--bg);
   padding-left: 32px;
   margin: 0;
 }
@@ -427,9 +429,6 @@
   .myTake {
     padding-top: 60px;
     padding-bottom: 60px;
-  }
-  .heroSub {
-    font-size: 16px;
   }
   .contentCard {
     min-width: 260px;

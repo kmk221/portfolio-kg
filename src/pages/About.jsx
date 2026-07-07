@@ -60,7 +60,7 @@ export default function About() {
             <div className="about-header-main">
               <h1 className="about-hero-title">Hi, I&apos;m Kristin.</h1>
               <p className="about-hero-lede">
-                A Senior UX Designer who&apos;s spent the last 10 years thoughtfully untangling experiences that feel complex, daunting and burdensome and making them simple, approachable, and human — shaped by real needs and data, but guided by instinct and bold choices that challenge what&apos;s expected.
+                A Senior UX Designer who&apos;s spent the last 10 years untangling experiences that feel complex, daunting and burdensome and making them simple, approachable, and human — shaped by real needs and data, but guided by instinct and bold choices that challenge what&apos;s expected.
               </p>
               <div className="about-contact-pills">
                 <span className="chip chip--neutral about-email-pill">

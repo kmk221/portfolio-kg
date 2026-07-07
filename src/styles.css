@@ -264,6 +264,113 @@
   margin: 0;
 }
 
+/* tiles are clickable to expand full-screen */
+.illo-tile { cursor: zoom-in; }
+.illo-tile:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+
+/* full-screen image viewer */
+.illo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(18,16,10,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 5vw;
+  cursor: zoom-out;
+  animation: illoLightboxIn 0.18s ease;
+}
+@keyframes illoLightboxIn { from { opacity: 0; } to { opacity: 1; } }
+.illo-lightbox-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  cursor: default;
+  perspective: 2000px;
+}
+.illo-lightbox-media {
+  display: block;
+  max-width: min(88vw, 1000px);
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  background: var(--surface);
+}
+/* fullscreen flip — driven by the same flippedCards state as the surface */
+.illo-lb-flip {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+.illo-lb-face { backface-visibility: hidden; }
+.illo-lb-face--back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotateY(180deg);
+}
+/* prev / next arrows */
+.illo-lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease;
+}
+.illo-lightbox-nav:hover { background: rgba(255,255,255,0.24); }
+.illo-lightbox-prev { left: 20px; }
+.illo-lightbox-next { right: 20px; }
+@media (max-width: 640px) {
+  .illo-lightbox-nav { width: 42px; height: 42px; font-size: 26px; }
+  .illo-lightbox-prev { left: 8px; }
+  .illo-lightbox-next { right: 8px; }
+}
+.illo-lightbox-figure figcaption {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(245,240,230,0.92);
+  text-align: center;
+  max-width: 60ch;
+}
+.illo-lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease;
+}
+.illo-lightbox-close:hover { background: rgba(255,255,255,0.24); }
+
 /* ───────── ABOUT PAGE ───────── */
 .about-header-layout {
   display: grid;

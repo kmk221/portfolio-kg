@@ -45,7 +45,7 @@ export default function Home() {
             <div className="home-about-layout">
               <div className="home-about-text">
                 <p className="body" style={{ color: 'var(--ink-3)', margin: '0 0 var(--s-5)' }}>
-                  I'm a senior UX designer who specializes in bringing clarity to complex systems and making products feel simple, thoughtful, and human. I care about craft, warmth, and designing experiences that feel intuitive without losing depth. I'm drawn to designing for people and products that help make life a little better. My work is shaped by real needs and data, but also guided by instinct and bold choices that challenge what's expected and create moments of surprise and delight. My goal is to lower barriers, create momentum, and help people feel more capable, confident, and connected to what matters.
+                  I'm a senior UX designer who specializes in bringing clarity to complex systems and making products feel simple, useful, and human. I care about craft, warmth, and designing experiences that feel intuitive without losing depth. I'm drawn to designing for people and products that help make life a little better. My work is shaped by real needs and data, but also guided by instinct and bold choices that challenge what's expected and create moments of surprise and delight. My goal is to lower barriers, create momentum, and help people feel more capable, confident, and connected to what matters.
                 </p>
                 <Link to="/about" className="btn btn--secondary">
                   More + resume →

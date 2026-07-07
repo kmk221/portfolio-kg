@@ -5,11 +5,11 @@
 
 :root {
   /* Surfaces */
-  --bg:        #FFFEF5;            /* warm cream page background (theme-experiment) */
+  --bg:        #FFFEFA;            /* soft warm off-white page background (between cream + white) */
   --surface:   #FFFFFF;
   --surface-2: #FBF6DD;            /* warm cream tint */
   --surface-nav: #FAF7F0;          /* neutral warm white — nav bar base + chip fill */
-  --cream-100: #FFFEF5;            /* primitive: warm cream */
+  --cream-100: #FFFEFA;            /* primitive: soft warm off-white (page canvas) */
   --bg-warm:   var(--cream-100);   /* semantic: warm page canvas */
   --hairline:  #E7DFC4;            /* warm restrained divider */
   --hairline-strong: #CDBF96;

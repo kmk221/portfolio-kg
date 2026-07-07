@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
 import Nav from '../components/Nav.jsx'
 
-// Hover-story text, keyed by the illustration's front SVG filename.
-const stories = {
-  'Frame.svg': 'Surprised a friend with canvas beach bags for everyone at her bachelorette party on the cape',
-  'Frame 1.svg': 'A 60th birthday card for my mother in law',
-  'Frame 46new.svg': "Originally an engagement greeting card I'd made for a friend. I'd taken a photo of them and converted their outfits to bride and groom attire. They loved it so much they asked me to use it for their Save the Dates.",
-  'Frame 7.svg': 'A Christmas card I made for my husband the year we got married. A festive remake of one of our wedding photos on a chairlift in Crested Butte, CO - our venue and one of our favorite places.',
-  'Frame 5.svg': "A logo for a friend's pilates company",
-  'Group 397.svg': "Canvas bags for a family member's annual running group trip to a special home on Sea Island",
-  'Frame 3.svg': "A keepsake for a friend's baby shower",
-  'Frame 281.svg': 'A collaboration with a favorite textile artist that I met on a trip to Portugal',
-  'Group 60.svg': "Cocktail napkins for my brother's wedding",
-  'Frame 285.svg': "Embroidered cocktail napkins for friend's wedding gift",
-  'Group 62.svg': 'College reunion weekend itinerary',
-  'front2.svg': 'Wedding invite for friends with custom drawings of buildings from their favorite street and wedding venue in Denver',
-}
+// Captions live inline on each tile via its `story` field — shown as a hover
+// overlay and in the fullscreen viewer. Below are the ORIGINAL captions from the
+// older site, kept for reference. Ones not yet placed (send text to assign):
+//   • couple portrait · sailboat (Cotuit) · dip-kiss dancers · S&P invite ·
+//     "I do too" dog · Happy Birthday · wedding couple · Austin itinerary
+//   Reusable originals still available:
+//   • "A 60th birthday card for my mother in law"
+//   • "Cocktail napkins for my brother's wedding"
+//   • "Embroidered cocktail napkins for friend's wedding gift"
+//   • "College reunion weekend itinerary"
+//   • "Wedding invite for friends with custom drawings of buildings from their favorite street and wedding venue in Denver"
+//   • "Surprised a friend with canvas beach bags for everyone at her bachelorette party on the cape"
 
 // Masonry items. `flip` cards auto-rotate front↔back; `propped` gives the
 // Save-the-Date the whole-block "card leaning against a wall" treatment.
@@ -28,28 +25,36 @@ const FRAME_PAD = '8%'
 const COLUMNS = [
   // ── Column 1 ──
   [
-    { front: '1a.png', back: '1b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 15% 15%', bg: '#F85636', alt: 'Save the Date — Victoria & Mike' },
-    { front: '4.png', bg: '#4A7A4A', pad: FRAME_PAD, alt: 'Dip-kiss dancers line drawing' },
-    { front: '7.png', bg: '#DDCC33', aspect: '1', pad: '23% 15%', alt: 'Giraffe baby-shower advice card' },
-    { front: '11.png', bg: '#F3A3CA', pad: FRAME_PAD, alt: 'Happy Birthday — life of every party' },
-    { front: '14.png', bg: '#4373ED', pad: FRAME_PAD, alt: 'MG Pilates logo' },
+    { front: '1a.png', back: '1b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 15% 15%', bg: '#F85636', alt: 'Save the Date — Victoria & Mike', story: "Originally an engagement greeting card I'd made for a friend. I'd taken a photo of them and converted their outfits to bride and groom attire. They loved it so much they asked me to use it for their Save the Dates." },
+    { front: '4.png', bg: '#4A7A4A', pad: FRAME_PAD, alt: 'Dip-kiss dancers line drawing', story: "Embroidered cocktail napkins for friend's wedding gift" },
+    { front: '7.png', bg: '#DDCC33', aspect: '1', pad: '23% 15%', alt: 'Giraffe baby-shower advice card', story: "A keepsake for a friend's baby shower" },
+    { front: '11.png', bg: '#F3A3CA', pad: FRAME_PAD, alt: 'Happy Birthday — life of every party', story: 'A 60th birthday card for my mother in law' },
+    { front: '14.png', bg: '#4373ED', pad: FRAME_PAD, alt: 'MG Pilates logo', story: "A logo for a friend's pilates company" },
   ],
   // ── Column 2 ──
   [
     { front: '2.png', bg: '#DDCC33', aspect: '1.019', pad: '21.7% 22%', alt: 'Couple portrait with hearts' },
-    { front: '5a.png', back: '5b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 24% 15%', bg: '#F3A3CA', alt: 'S&P — Hey Kiddo Denver invite' },
-    { front: '8a.png', back: '8b.png', flip: true, propped: true, aspect: '1.4', bg: '#4373ED', alt: 'Cowboy & cowgirl' },
-    { front: '10.png', bg: '#F39238', aspect: '0.79', pad: '24.6% 15%', alt: 'Bride & groom on a Christmas chairlift' },
-    { front: '13.png', alt: 'Keeping Austin Weird weekend itinerary' },
+    { front: '5a.png', back: '5b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 24% 15%', bg: '#F3A3CA', alt: 'S&P — Hey Kiddo Denver invite', story: 'Wedding invite for friends with custom drawings of buildings from their favorite street and wedding venue in Denver' },
+    { front: '8a.png', back: '8b.png', flip: true, propped: true, aspect: '1.4', bg: '#4373ED', alt: 'Cowboy & cowgirl', story: 'A collaboration with a favorite textile artist that I met on a trip to Portugal' },
+    { front: '10.png', bg: '#F39238', aspect: '0.79', pad: '24.6% 15%', alt: 'Bride & groom on a Christmas chairlift', story: 'A Christmas card I made for my husband the year we got married. A festive remake of one of our wedding photos on a chairlift in Crested Butte, CO — our venue and one of our favorite places.' },
+    { front: '13.png', alt: 'Keeping Austin Weird weekend itinerary', story: 'College reunion weekend itinerary' },
   ],
   // ── Column 3 ──
   [
-    { front: '3a.png', back: '3b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 15% 15%', bg: '#4373ED', alt: 'Sailboat — Cotuit 2024' },
-    { front: '6.png', bg: '#F39238', aspect: '0.79', pad: '28.3% 15%', alt: 'Doodle dog — I do too, xoxo Stevie' },
-    { front: '9.png', bg: '#F35D38', aspect: '0.79', pad: '39.6% 15%', alt: 'Sea Island house — running on Sea Island time' },
+    { front: '3a.png', back: '3b.png', flip: true, propped: true, aspect: '0.79', propPad: '15% 15% 15%', bg: '#4373ED', alt: 'Sailboat — Cotuit 2024', story: 'Surprised a friend with canvas beach bags for everyone at her bachelorette party on the cape' },
+    { front: '6.png', bg: '#F39238', aspect: '0.79', pad: '28.3% 15%', alt: 'Doodle dog — I do too, xoxo Stevie', story: "Cocktail napkins for my brother's wedding" },
+    { front: '9.png', bg: '#F35D38', aspect: '0.79', pad: '39.6% 15%', alt: 'Sea Island house — running on Sea Island time', story: "Canvas bags for a family member's annual running group trip to a special home on Sea Island" },
     { front: '12.png', bg: '#4A7A4A', pad: FRAME_PAD, alt: 'Wedding couple' },
   ],
 ]
+
+// Flat, row-major order (matches the 1–14 numbering) for lightbox prev/next.
+const FLAT = (() => {
+  const out = []
+  const rows = Math.max(...COLUMNS.map((c) => c.length))
+  for (let r = 0; r < rows; r++) for (let c = 0; c < COLUMNS.length; c++) if (COLUMNS[c][r]) out.push(COLUMNS[c][r])
+  return out
+})()
 
 const src = (f) => `/illustrations/${f}?v=3`
 
@@ -58,7 +63,28 @@ export default function Illustrations() {
     '1a.png': false, '3a.png': false, '5a.png': false, '8a.png': false,
   })
 
+  // Fullscreen viewer holds the index into FLAT (row-major), or null.
+  const [lbIndex, setLbIndex] = useState(null)
+  const current = lbIndex != null ? FLAT[lbIndex] : null
+  const openLightbox = (item) => setLbIndex(FLAT.indexOf(item))
+  const closeLightbox = () => setLbIndex(null)
+  const lbStep = (d) => setLbIndex((i) => (i + d + FLAT.length) % FLAT.length)
+
   useEffect(() => { window.scrollTo(0, 0) }, [])
+
+  // Fullscreen viewer: Esc closes, ←/→ navigate; lock body scroll while open.
+  useEffect(() => {
+    if (lbIndex == null) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') closeLightbox()
+      else if (e.key === 'ArrowRight') lbStep(1)
+      else if (e.key === 'ArrowLeft') lbStep(-1)
+    }
+    window.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev }
+  }, [lbIndex])
 
   // Auto-flip the invite/save-the-date cards every 3 seconds.
   useEffect(() => {
@@ -104,14 +130,23 @@ export default function Illustrations() {
     }
     const { front, back, flip, bg, pad, propPad, story, propped, alt, aspect } = item
     const flipped = flip ? flippedCards[front] : false
-    const storyText = story ? stories[story] : null
+    const storyText = story || null
     const flipStyle = { transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }
     const padStyle = pad ? { padding: pad } : undefined
     // Per-card override for the leaning-card mat (shrinks the propped image).
     const propPadStyle = propPad ? { padding: propPad } : undefined
 
     return (
-      <div key={front} className={`illo-tile${aspect ? ' illo-tile--framed' : ''}`} style={{ background: bg || 'transparent', ...(aspect ? { aspectRatio: aspect } : {}) }}>
+      <div
+        key={front}
+        className={`illo-tile${aspect ? ' illo-tile--framed' : ''}`}
+        style={{ background: bg || 'transparent', ...(aspect ? { aspectRatio: aspect } : {}) }}
+        role="button"
+        tabIndex={0}
+        aria-label={`Expand ${alt}`}
+        onClick={() => openLightbox(item)}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(item) } }}
+      >
         {propped ? (
           <div className="illo-flip" style={flipStyle}>
             <div className="illo-prop-face" style={propPadStyle}>
@@ -137,12 +172,12 @@ export default function Illustrations() {
   }
 
   return (
-    <div style={{ background: 'var(--surface)', minHeight: '100vh', overflowX: 'clip' }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'clip' }}>
       <Nav />
-      <main className="page" style={{ background: 'var(--surface)' }}>
+      <main className="page" style={{ background: 'var(--bg)' }}>
 
         {/* ── HERO ── (shared page-hero format: eyebrow + light serif H1 + serif lede) */}
-        <section className="page-section" style={{ paddingTop: 80, background: 'var(--surface)' }}>
+        <section className="page-section" style={{ paddingTop: 'clamp(60px, 10vw, 120px)', paddingBottom: 0, background: 'var(--bg)' }}>
           <div style={{ marginBottom: 24 }}>
             <span className="eyebrow">Just For Fun · Illustration</span>
           </div>
@@ -150,18 +185,18 @@ export default function Illustrations() {
             Line Art &amp; Characters.
           </h1>
           <p style={{ fontFamily: 'var(--f-serif)', fontWeight: 300, fontSize: 'clamp(19px, 1.9vw, 24px)', lineHeight: 1.45, letterSpacing: '-0.01em', color: 'var(--ink)', maxWidth: 560, margin: 0 }}>
-            A collection of illustrations, character designs, and custom graphics created for friends and family. Personal projects that explore line work, visual storytelling, and the fundamentals of design applied beyond the screen.
+            A fun hobby that kept growing, and taught me how storytelling and thoughtful design can bring people joy beyond the screen.
           </p>
           <div style={{ marginTop: 40 }}>
             <button type="button" className="btn btn--secondary" onClick={scrollToAbout}>
-              About this work
+              Read more
               <span aria-hidden="true" style={{ display: 'inline-block', fontSize: '1.25em', lineHeight: 0, marginLeft: 2 }}>↓</span>
             </button>
           </div>
         </section>
 
         {/* ── IMAGE GALLERY (full-bleed, 3-column masonry) ── */}
-        <section className="page-section" style={{ background: 'var(--surface)', paddingTop: 72, paddingBottom: 72, marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)', width: '100vw' }}>
+        <section className="page-section" style={{ background: 'var(--bg)', paddingTop: 72, paddingBottom: 72, marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)', width: '100vw' }}>
           <div style={{ maxWidth: 1480, margin: '0 auto', padding: '0 42px' }}>
             <div className="section-spread" style={{ marginBottom: 48 }}>
               <span className="eyebrow">Illustrations</span>
@@ -178,7 +213,7 @@ export default function Illustrations() {
         </section>
 
         {/* ── ABOUT THIS WORK (below the gallery) ── */}
-        <section id="about-work" className="page-section" style={{ background: 'var(--surface)', paddingTop: 48, paddingBottom: 80 }}>
+        <section id="about-work" className="page-section" style={{ background: 'var(--bg)', paddingTop: 48, paddingBottom: 80 }}>
           <div className="section-spread" style={{ marginBottom: 32 }}>
             <span className="eyebrow" style={{ color: 'var(--ink-mute)' }}>About This Work</span>
             <span className="rule" />
@@ -214,6 +249,25 @@ export default function Illustrations() {
           </span>
         </div>
       </footer>
+
+      {current && (
+        <div className="illo-lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label={current.alt}>
+          <button type="button" className="illo-lightbox-close" onClick={closeLightbox} aria-label="Close">×</button>
+          <button type="button" className="illo-lightbox-nav illo-lightbox-prev" onClick={(e) => { e.stopPropagation(); lbStep(-1) }} aria-label="Previous illustration">‹</button>
+          <figure className="illo-lightbox-figure" onClick={(e) => e.stopPropagation()}>
+            {current.flip ? (
+              <div className="illo-lb-flip" style={{ transform: flippedCards[current.front] ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
+                <img className="illo-lightbox-media illo-lb-face" src={src(current.front)} alt={current.alt} />
+                <img className="illo-lightbox-media illo-lb-face illo-lb-face--back" src={src(current.back)} alt={`${current.alt} (back)`} />
+              </div>
+            ) : (
+              <img className="illo-lightbox-media" src={src(current.front)} alt={current.alt} />
+            )}
+            {current.story && <figcaption>{current.story}</figcaption>}
+          </figure>
+          <button type="button" className="illo-lightbox-nav illo-lightbox-next" onClick={(e) => { e.stopPropagation(); lbStep(1) }} aria-label="Next illustration">›</button>
+        </div>
+      )}
     </div>
   )
 }
